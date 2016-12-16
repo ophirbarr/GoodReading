@@ -41,7 +41,7 @@ public class WorkerCriteria extends AbstractORMCriteria {
 	}
 	
 	public WorkerCriteria() throws PersistentException {
-		this(personnel.UntitledPersistentManager.instance().getSession());
+		this(personnel.GoodReadingPersistentManager.instance().getSession());
 	}
 	
 	public Worker uniqueWorker() {

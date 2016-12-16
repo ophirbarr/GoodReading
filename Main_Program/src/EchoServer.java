@@ -3,7 +3,12 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import java.util.ArrayList;
+
 import ocsf.server.*;
+import org.orm.*;
+import personnel.Worker;
+import org.hibernate.*;
 
 /**
  * This class overrides some of the methods in the abstract 
@@ -45,16 +50,105 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
+  /*
   public void handleMessageFromClient
     (Object msg, ConnectionToClient client)
   {
 	    System.out.println("Message received: " + msg + " from " + client);
-	    //this.sendToAllClients(msg);
+	    this.sendToAllClients(msg);   
+  }
+  */
+  
+  /**
+   * This method handles any messages received from the client.
+   *
+   * @param msg The message received from the client in a form of an arraylist.
+   * @param client The connection from which the message originated.
+   */
+  public void handleMessageFromClient(Object msg, ConnectionToClient client)
+  {
+	  ArrayList<String> arrMsg = (ArrayList<String>) msg;
+	  System.out.println("##Message received: " + msg + " from " + client);
+	  //this.sendToAllClients(msg);
 	    
-	    // SWITCH HERE
+	  switch(arrMsg.get(0))
+	  {
+	  case "1": // get worker details //
+		try {
+			client.sendToClient(getWorkerDetails(Integer.parseInt(arrMsg.get(1))));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		  break;
+	    	
+	  case "2":
+		  try {
+			client.sendToClient(updateDepartmentForWorker(Integer.parseInt(arrMsg.get(1)), arrMsg.get(2)));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		  break;
+	    	
+	  default: 
+		  try {
+			client.sendToClient("Invalid command.\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	  }
 	    
   }
+/**
+ * Use hibernate to read worker details from database.
+ * 
+ * @param id key of worker
+ * @return string of object worker
+ */
+  public String getWorkerDetails(int id)
+  {
+	  PersistentSession con;
+	  Worker w;
+	  
+	  try 
+	  {
+		con = personnel.GoodReadingPersistentManager.instance().getSession();
+		w = personnel.Worker.loadWorkerByORMID(con, id);
+		return w.toString();
+	  } 
+	  catch (PersistentException e) 
+	  {
+		e.printStackTrace();
+		return "Worker #" + id + " was not found in database.\n";
+	  }
+  }
+  
+  /**
+   * update the department field of a worker
+   * @param id key of worker
+   * @param dep new department name
+   * @return feedback string
+   */
+  public String updateDepartmentForWorker(int id, String dep)
+  {
+	  PersistentSession connection;
+	  PersistentTransaction transaction;
+	  Worker w;
+	try {
+		connection = personnel.GoodReadingPersistentManager.instance().getSession();
+		transaction = connection.beginTransaction();
+		w = personnel.Worker.loadWorkerByORMID(connection, id);
+		w.setDepartment(dep);
 
+		connection.update(w);
+		transaction.commit();
+		connection.close();
+		return "Done.\n";
+		
+	} catch (PersistentException e) {
+		e.printStackTrace();
+		return "Worker #" + id + " was not found in database.\n";
+	}
+  }
     
   /**
    * This method overrides the one in the superclass.  Called

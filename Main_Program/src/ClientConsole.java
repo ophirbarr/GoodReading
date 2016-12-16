@@ -68,6 +68,13 @@ public class ClientConsole implements ChatIF
   {
 	  ArrayList<String> arrMsg = new ArrayList<String>();
 	  
+	  String menu = new String("GOOD-READING PROTOTYPE \n"
+	  		+ "------------------------\n"
+	  		+ " 1. GET WORKER INFO: type \"1\" [enter] [ID] [enter] \"send\" \n"
+	  		+ " 2. CHANGE WORKER'S DEPARTMENT: type \"2\" [enter] [ID] [enter] [NEW-DEP] [enter] \"send\"\n"
+	  		+ " 3. DISPLAY MENU: type \"menu\"\n");
+	  System.out.print(menu);
+	  
     try
     {
       BufferedReader fromConsole = 
@@ -81,6 +88,10 @@ public class ClientConsole implements ChatIF
         {
         	client.handleMessageFromClientUI(arrMsg);
         	arrMsg.clear();
+        }
+        if (message.equals("menu") || message.equals("Menu") || message.equals("MENU"))
+        {
+      	  System.out.print(menu);
         }
         else arrMsg.add(message);
       }

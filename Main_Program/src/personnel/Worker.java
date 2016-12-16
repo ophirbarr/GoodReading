@@ -24,7 +24,7 @@ public class Worker {
 	
 	public static Worker loadWorkerByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return loadWorkerByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -35,7 +35,7 @@ public class Worker {
 	
 	public static Worker getWorkerByORMID(int ID) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return getWorkerByORMID(session, ID);
 		}
 		catch (Exception e) {
@@ -46,7 +46,7 @@ public class Worker {
 	
 	public static Worker loadWorkerByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return loadWorkerByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -57,7 +57,7 @@ public class Worker {
 	
 	public static Worker getWorkerByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return getWorkerByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
@@ -108,7 +108,7 @@ public class Worker {
 	
 	public static List queryWorker(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return queryWorker(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -119,7 +119,7 @@ public class Worker {
 	
 	public static List queryWorker(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return queryWorker(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -130,7 +130,7 @@ public class Worker {
 	
 	public static Worker[] listWorkerByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return listWorkerByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -141,7 +141,7 @@ public class Worker {
 	
 	public static Worker[] listWorkerByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return listWorkerByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -207,7 +207,7 @@ public class Worker {
 	
 	public static Worker loadWorkerByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return loadWorkerByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -218,7 +218,7 @@ public class Worker {
 	
 	public static Worker loadWorkerByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return loadWorkerByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -245,7 +245,7 @@ public class Worker {
 	
 	public static java.util.Iterator iterateWorkerByQuery(String condition, String orderBy) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return iterateWorkerByQuery(session, condition, orderBy);
 		}
 		catch (Exception e) {
@@ -256,7 +256,7 @@ public class Worker {
 	
 	public static java.util.Iterator iterateWorkerByQuery(String condition, String orderBy, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			PersistentSession session = personnel.UntitledPersistentManager.instance().getSession();
+			PersistentSession session = personnel.GoodReadingPersistentManager.instance().getSession();
 			return iterateWorkerByQuery(session, condition, orderBy, lockMode);
 		}
 		catch (Exception e) {
@@ -316,7 +316,7 @@ public class Worker {
 	
 	public boolean save() throws PersistentException {
 		try {
-			personnel.UntitledPersistentManager.instance().saveObject(this);
+			personnel.GoodReadingPersistentManager.instance().saveObject(this);
 			return true;
 		}
 		catch (Exception e) {
@@ -327,7 +327,7 @@ public class Worker {
 	
 	public boolean delete() throws PersistentException {
 		try {
-			personnel.UntitledPersistentManager.instance().deleteObject(this);
+			personnel.GoodReadingPersistentManager.instance().deleteObject(this);
 			return true;
 		}
 		catch (Exception e) {
@@ -338,7 +338,7 @@ public class Worker {
 	
 	public boolean refresh() throws PersistentException {
 		try {
-			personnel.UntitledPersistentManager.instance().getSession().refresh(this);
+			personnel.GoodReadingPersistentManager.instance().getSession().refresh(this);
 			return true;
 		}
 		catch (Exception e) {
@@ -349,7 +349,7 @@ public class Worker {
 	
 	public boolean evict() throws PersistentException {
 		try {
-			personnel.UntitledPersistentManager.instance().getSession().evict(this);
+			personnel.GoodReadingPersistentManager.instance().getSession().evict(this);
 			return true;
 		}
 		catch (Exception e) {
@@ -423,7 +423,25 @@ public class Worker {
 	}
 	
 	public String toString() {
-		return String.valueOf(getID());
+		return toString(false);
+	}
+	
+	public String toString(boolean idOnly) {
+		if (idOnly) {
+			return String.valueOf(getID());
+		}
+		else {
+			StringBuffer sb = new StringBuffer();
+			sb.append("Worker[ ");
+			sb.append("ID=").append(getID()).append(" ");
+			sb.append("FirstName=").append(getFirstName()).append(" ");
+			sb.append("LastName=").append(getLastName()).append(" ");
+			sb.append("Email=").append(getEmail()).append(" ");
+			sb.append("Role=").append(getRole()).append(" ");
+			sb.append("Department=").append(getDepartment()).append(" ");
+			sb.append("]");
+			return sb.toString();
+		}
 	}
 	
 }
