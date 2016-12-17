@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OCSF"/>
 	<classpathentry kind="lib" path="C:/Users/yair/Google Drive/הנדסת תוכנה/סמסטר ז/מעבדה בהנדסת תכנה/פרוייקט/GoodReading/Assignment2/Prototype/Main_Program/lib/orm.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ophir/Documents/GoodReading/Assignment2/Prototype/ORM/lib/orm.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
