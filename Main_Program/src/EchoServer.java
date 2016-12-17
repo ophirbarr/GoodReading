@@ -69,8 +69,7 @@ public class EchoServer extends AbstractServer
   {
 	  ArrayList<String> arrMsg = (ArrayList<String>) msg;
 	  System.out.println("##Message received: " + msg + " from " + client);
-	  //this.sendToAllClients(msg);
-	    
+	  
 	  switch(arrMsg.get(0))
 	  {
 	  case "1": // get worker details //
@@ -81,7 +80,7 @@ public class EchoServer extends AbstractServer
 		}
 		  break;
 	    	
-	  case "2":
+	  case "2": // set worler's department
 		  try {
 			client.sendToClient(updateDepartmentForWorker(Integer.parseInt(arrMsg.get(1)), arrMsg.get(2)));
 		} catch (IOException e1) {
