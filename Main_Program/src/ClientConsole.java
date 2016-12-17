@@ -68,17 +68,17 @@ public class ClientConsole implements ChatIF
   {
 	  ArrayList<String> arrMsg = new ArrayList<String>();
 	  
-	  String menu = new String("GOOD-READING PROTOTYPE \n"
-	  		+ "------------------------\n"
-	  		+ " 1. GET WORKER INFO: type \"1\" [enter] [ID] [enter] \"send\" \n"
-	  		+ " 2. CHANGE WORKER'S DEPARTMENT: type \"2\" [enter] [ID] [enter] [NEW-DEP] [enter] \"send\"\n"
-	  		+ " 3. DISPLAY MENU: type \"menu\"\n");
+	  System.out.println("GOOD-READING PROTOTYPE\n"
+	  		+ "-----------------------");
+	  String menu = new String("(Type menu number and parameters seperated by ENTER, then \"send\")\n"
+	  		+ "  1. GET WORKER INFO: [ID] \n"
+	  		+ "  2. CHANGE WORKER'S DEPARTMENT: [ID] [DEP]\n"
+	  		+ "  3. DISPLAY MENU\n");
 	  System.out.print(menu);
 	  
     try
     {
-      BufferedReader fromConsole = 
-        new BufferedReader(new InputStreamReader(System.in));
+      BufferedReader fromConsole = new BufferedReader(new InputStreamReader(System.in));
       String message;
 
       while (true) 
@@ -89,9 +89,10 @@ public class ClientConsole implements ChatIF
         	client.handleMessageFromClientUI(arrMsg);
         	arrMsg.clear();
         }
-        if (message.equals("menu") || message.equals("Menu") || message.equals("MENU"))
+        else if (message.equals("3"))
         {
-      	  System.out.print(menu);
+        	System.out.print(menu);
+        	arrMsg.clear();
         }
         else arrMsg.add(message);
       }
