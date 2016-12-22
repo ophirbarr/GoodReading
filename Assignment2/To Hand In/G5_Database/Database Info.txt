@@ -1,0 +1,9 @@
+Database Info:
+
+Database Name: goodreading
+
+Login Name: root
+
+Password: 4521
+
+Host: localhost
