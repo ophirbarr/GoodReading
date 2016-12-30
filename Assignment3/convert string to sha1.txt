@@ -1,0 +1,4 @@
+import org.apache.commons.codec.digest.DigestUtils;
+
+String pass1 = "12345";
+String digest1 = DigestUtils.sha1Hex(pass1);
