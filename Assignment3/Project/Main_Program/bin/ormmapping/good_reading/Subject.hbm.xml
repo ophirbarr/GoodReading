@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Ort Braude College
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="good_reading.Subject" table="Subject" lazy="false">
+		<id name="_sid" column="_sid" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="_name" column="_name" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_did" column="_did" type="integer" length="10" not-null="true" lazy="false"/>
+	</class>
+</hibernate-mapping>
