@@ -371,17 +371,13 @@ public class Book implements Serializable {
 	
 	private Boolean _viewStatus;
 	
-	private double _price;
+	private float _price;
 	
 	private String _searchLog;
 	
 	private String _purchaseLog;
 	
 	private int _purchaseCount;
-	
-	private String _author;
-	
-	private String _keywords;
 	
 	private String _bookFormat;
 	
@@ -403,14 +399,6 @@ public class Book implements Serializable {
 	
 	public String get_title() {
 		return _title;
-	}
-	
-	public void set_author(String value) {
-		this._author = value;
-	}
-	
-	public String get_author() {
-		return _author;
 	}
 	
 	public void set_language(String value) {
@@ -437,14 +425,6 @@ public class Book implements Serializable {
 		return _TableOfContents;
 	}
 	
-	public void set_keywords(String value) {
-		this._keywords = value;
-	}
-	
-	public String get_keywords() {
-		return _keywords;
-	}
-	
 	public void set_viewStatus(boolean value) {
 		set_viewStatus(new Boolean(value));
 	}
@@ -457,11 +437,11 @@ public class Book implements Serializable {
 		return _viewStatus;
 	}
 	
-	public void set_price(double value) {
+	public void set_price(float value) {
 		this._price = value;
 	}
 	
-	public double get_price() {
+	public float get_price() {
 		return _price;
 	}
 	
@@ -498,32 +478,7 @@ public class Book implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_bid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Book[ ");
-			sb.append("_bid=").append(get_bid()).append(" ");
-			sb.append("_title=").append(get_title()).append(" ");
-			sb.append("_language=").append(get_language()).append(" ");
-			sb.append("_summary=").append(get_summary()).append(" ");
-			sb.append("_TableOfContents=").append(get_TableOfContents()).append(" ");
-			sb.append("_viewStatus=").append(get_viewStatus()).append(" ");
-			sb.append("_price=").append(get_price()).append(" ");
-			sb.append("_searchLog=").append(get_searchLog()).append(" ");
-			sb.append("_purchaseLog=").append(get_purchaseLog()).append(" ");
-			sb.append("_purchaseCount=").append(get_purchaseCount()).append(" ");
-			sb.append("_author=").append(get_author()).append(" ");
-			sb.append("_keywords=").append(get_keywords()).append(" ");
-			sb.append("_bookFormat=").append(get_bookFormat()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_bid());
 	}
 	
 }

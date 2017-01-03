@@ -424,25 +424,7 @@ public class SystemUser implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_uid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("SystemUser[ ");
-			sb.append("_uid=").append(get_uid()).append(" ");
-			sb.append("_firstName=").append(get_firstName()).append(" ");
-			sb.append("_lastName=").append(get_lastName()).append(" ");
-			sb.append("_userName=").append(get_userName()).append(" ");
-			sb.append("_password=").append(get_password()).append(" ");
-			sb.append("_userStatus=").append(get_userStatus()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_uid());
 	}
 	
 }

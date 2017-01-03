@@ -363,8 +363,6 @@ public class Subject implements Serializable {
 	
 	private String _name;
 	
-	private int _did;
-	
 	public void set_sid(int value) {
 		this._sid = value;
 	}
@@ -385,31 +383,8 @@ public class Subject implements Serializable {
 		return _name;
 	}
 	
-	public void set_did(int value) {
-		this._did = value;
-	}
-	
-	public int get_did() {
-		return _did;
-	}
-	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_sid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Subject[ ");
-			sb.append("_sid=").append(get_sid()).append(" ");
-			sb.append("_name=").append(get_name()).append(" ");
-			sb.append("_did=").append(get_did()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_sid());
 	}
 	
 }

@@ -19,11 +19,12 @@ License Type: Academic
 		<!-- mapping files -->
 		<mapping resource="ormmapping/good_reading/Book.hbm.xml" />
 		<mapping resource="ormmapping/good_reading/BookReview.hbm.xml" />
+		<mapping resource="ormmapping/good_reading/Book_Author.hbm.xml" />
+		<mapping resource="ormmapping/good_reading/Book_Keywords.hbm.xml" />
 		<mapping resource="ormmapping/good_reading/Book_Subject.hbm.xml" />
-		<mapping resource="ormmapping/good_reading/Costumer.hbm.xml" />
+		<mapping resource="ormmapping/good_reading/Customer_Book.hbm.xml" />
 		<mapping resource="ormmapping/good_reading/Domain.hbm.xml" />
 		<mapping resource="ormmapping/good_reading/Subject.hbm.xml" />
 		<mapping resource="ormmapping/good_reading/SystemUser.hbm.xml" />
-		<mapping resource="ormmapping/good_reading/Worker.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

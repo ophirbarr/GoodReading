@@ -19,7 +19,7 @@ import org.hibernate.LockMode;
 import java.util.List;
 
 import java.io.Serializable;
-public class Worker implements Serializable {
+public class Worker extends good_reading.SystemUser implements Serializable {
 	public Worker() {
 	}
 	
@@ -315,62 +315,6 @@ public class Worker implements Serializable {
 		return new good_reading.Worker();
 	}
 	
-	public boolean save() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().saveObject(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean delete() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().deleteObject(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean refresh() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().getSession().refresh(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean evict() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().getSession().evict(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	private int _uid;
-	
-	private String _firstName;
-	
-	private String _lastName;
-	
-	private String _userName;
-	
-	private String _password;
-	
-	private int _userStatus;
-	
 	private int _wid;
 	
 	private String _role;
@@ -378,58 +322,6 @@ public class Worker implements Serializable {
 	private String _email;
 	
 	private String _department;
-	
-	public void set_uid(int value) {
-		this._uid = value;
-	}
-	
-	public int get_uid() {
-		return _uid;
-	}
-	
-	public int getORMID() {
-		return get_uid();
-	}
-	
-	public void set_firstName(String value) {
-		this._firstName = value;
-	}
-	
-	public String get_firstName() {
-		return _firstName;
-	}
-	
-	public void set_lastName(String value) {
-		this._lastName = value;
-	}
-	
-	public String get_lastName() {
-		return _lastName;
-	}
-	
-	public void set_userName(String value) {
-		this._userName = value;
-	}
-	
-	public String get_userName() {
-		return _userName;
-	}
-	
-	public void set_password(String value) {
-		this._password = value;
-	}
-	
-	public String get_password() {
-		return _password;
-	}
-	
-	public void set_userStatus(int value) {
-		this._userStatus = value;
-	}
-	
-	public int get_userStatus() {
-		return _userStatus;
-	}
 	
 	public void set_wid(int value) {
 		this._wid = value;
@@ -464,29 +356,7 @@ public class Worker implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_uid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Worker[ ");
-			sb.append("_uid=").append(get_uid()).append(" ");
-			sb.append("_firstName=").append(get_firstName()).append(" ");
-			sb.append("_lastName=").append(get_lastName()).append(" ");
-			sb.append("_userName=").append(get_userName()).append(" ");
-			sb.append("_password=").append(get_password()).append(" ");
-			sb.append("_userStatus=").append(get_userStatus()).append(" ");
-			sb.append("_wid=").append(get_wid()).append(" ");
-			sb.append("_role=").append(get_role()).append(" ");
-			sb.append("_email=").append(get_email()).append(" ");
-			sb.append("_department=").append(get_department()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return super.toString();
 	}
 	
 }

@@ -21,13 +21,11 @@ import org.orm.criteria.*;
 public class SubjectCriteria extends AbstractORMCriteria {
 	public final IntegerExpression _sid;
 	public final StringExpression _name;
-	public final IntegerExpression _did;
 	
 	public SubjectCriteria(Criteria criteria) {
 		super(criteria);
 		_sid = new IntegerExpression("_sid", this);
 		_name = new StringExpression("_name", this);
-		_did = new IntegerExpression("_did", this);
 	}
 	
 	public SubjectCriteria(PersistentSession session) {

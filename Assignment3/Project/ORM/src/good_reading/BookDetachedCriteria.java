@@ -25,12 +25,10 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression _summary;
 	public final StringExpression _TableOfContents;
 	public final BooleanExpression _viewStatus;
-	public final DoubleExpression _price;
+	public final FloatExpression _price;
 	public final StringExpression _searchLog;
 	public final StringExpression _purchaseLog;
 	public final IntegerExpression _purchaseCount;
-	public final StringExpression _author;
-	public final StringExpression _keywords;
 	public final StringExpression _bookFormat;
 	
 	public BookDetachedCriteria() {
@@ -41,12 +39,10 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 		_summary = new StringExpression("_summary", this.getDetachedCriteria());
 		_TableOfContents = new StringExpression("_TableOfContents", this.getDetachedCriteria());
 		_viewStatus = new BooleanExpression("_viewStatus", this.getDetachedCriteria());
-		_price = new DoubleExpression("_price", this.getDetachedCriteria());
+		_price = new FloatExpression("_price", this.getDetachedCriteria());
 		_searchLog = new StringExpression("_searchLog", this.getDetachedCriteria());
 		_purchaseLog = new StringExpression("_purchaseLog", this.getDetachedCriteria());
 		_purchaseCount = new IntegerExpression("_purchaseCount", this.getDetachedCriteria());
-		_author = new StringExpression("_author", this.getDetachedCriteria());
-		_keywords = new StringExpression("_keywords", this.getDetachedCriteria());
 		_bookFormat = new StringExpression("_bookFormat", this.getDetachedCriteria());
 	}
 	
@@ -58,12 +54,10 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 		_summary = new StringExpression("_summary", this.getDetachedCriteria());
 		_TableOfContents = new StringExpression("_TableOfContents", this.getDetachedCriteria());
 		_viewStatus = new BooleanExpression("_viewStatus", this.getDetachedCriteria());
-		_price = new DoubleExpression("_price", this.getDetachedCriteria());
+		_price = new FloatExpression("_price", this.getDetachedCriteria());
 		_searchLog = new StringExpression("_searchLog", this.getDetachedCriteria());
 		_purchaseLog = new StringExpression("_purchaseLog", this.getDetachedCriteria());
 		_purchaseCount = new IntegerExpression("_purchaseCount", this.getDetachedCriteria());
-		_author = new StringExpression("_author", this.getDetachedCriteria());
-		_keywords = new StringExpression("_keywords", this.getDetachedCriteria());
 		_bookFormat = new StringExpression("_bookFormat", this.getDetachedCriteria());
 	}
 	

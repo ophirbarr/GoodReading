@@ -384,21 +384,7 @@ public class Domain implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_did());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Domain[ ");
-			sb.append("_did=").append(get_did()).append(" ");
-			sb.append("_name=").append(get_name()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_did());
 	}
 	
 }

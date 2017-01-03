@@ -15,12 +15,10 @@ License Type: Academic
 		<property name="_summary" column="_summary" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_TableOfContents" column="_TableOfContents" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_viewStatus" column="_viewStatus" type="boolean" not-null="false" lazy="false"/>
-		<property name="_price" column="_price" type="double" not-null="true" lazy="false"/>
+		<property name="_price" column="_price" type="float" length="10" not-null="true" lazy="false"/>
 		<property name="_searchLog" column="_searchLog" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_purchaseLog" column="_purchaseLog" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_purchaseCount" column="_purchaseCount" type="integer" length="10" not-null="true" lazy="false"/>
-		<property name="_author" column="_author" type="string" length="255" not-null="false" lazy="false"/>
-		<property name="_keywords" column="_keywords" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_bookFormat" column="_bookFormat" type="string" length="255" not-null="false" lazy="false"/>
 	</class>
 </hibernate-mapping>

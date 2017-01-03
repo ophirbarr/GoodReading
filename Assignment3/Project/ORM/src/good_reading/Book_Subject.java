@@ -384,21 +384,7 @@ public class Book_Subject implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_bid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Book_Subject[ ");
-			sb.append("_bid=").append(get_bid()).append(" ");
-			sb.append("_sid=").append(get_sid()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_bid());
 	}
 	
 }

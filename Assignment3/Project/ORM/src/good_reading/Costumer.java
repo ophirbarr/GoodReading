@@ -19,7 +19,7 @@ import org.hibernate.LockMode;
 import java.util.List;
 
 import java.io.Serializable;
-public class Costumer implements Serializable {
+public class Costumer extends good_reading.SystemUser implements Serializable {
 	public Costumer() {
 	}
 	
@@ -315,62 +315,6 @@ public class Costumer implements Serializable {
 		return new good_reading.Costumer();
 	}
 	
-	public boolean save() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().saveObject(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean delete() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().deleteObject(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean refresh() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().getSession().refresh(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	public boolean evict() throws PersistentException {
-		try {
-			good_reading.GoodReadingPersistentManager.instance().getSession().evict(this);
-			return true;
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			throw new PersistentException(e);
-		}
-	}
-	
-	private int _uid;
-	
-	private String _firstName;
-	
-	private String _lastName;
-	
-	private String _userName;
-	
-	private String _password;
-	
-	private int _userStatus;
-	
 	private int _accountType;
 	
 	private java.util.Date _endDate;
@@ -378,58 +322,6 @@ public class Costumer implements Serializable {
 	private boolean _accountStatus;
 	
 	private int _waitingForChangeType;
-	
-	public void set_uid(int value) {
-		this._uid = value;
-	}
-	
-	public int get_uid() {
-		return _uid;
-	}
-	
-	public int getORMID() {
-		return get_uid();
-	}
-	
-	public void set_firstName(String value) {
-		this._firstName = value;
-	}
-	
-	public String get_firstName() {
-		return _firstName;
-	}
-	
-	public void set_lastName(String value) {
-		this._lastName = value;
-	}
-	
-	public String get_lastName() {
-		return _lastName;
-	}
-	
-	public void set_userName(String value) {
-		this._userName = value;
-	}
-	
-	public String get_userName() {
-		return _userName;
-	}
-	
-	public void set_password(String value) {
-		this._password = value;
-	}
-	
-	public String get_password() {
-		return _password;
-	}
-	
-	public void set_userStatus(int value) {
-		this._userStatus = value;
-	}
-	
-	public int get_userStatus() {
-		return _userStatus;
-	}
 	
 	public void set_accountType(int value) {
 		this._accountType = value;
@@ -464,29 +356,7 @@ public class Costumer implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_uid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("Costumer[ ");
-			sb.append("_uid=").append(get_uid()).append(" ");
-			sb.append("_firstName=").append(get_firstName()).append(" ");
-			sb.append("_lastName=").append(get_lastName()).append(" ");
-			sb.append("_userName=").append(get_userName()).append(" ");
-			sb.append("_password=").append(get_password()).append(" ");
-			sb.append("_userStatus=").append(get_userStatus()).append(" ");
-			sb.append("_accountType=").append(get_accountType()).append(" ");
-			sb.append("_endDate=").append(get_endDate()).append(" ");
-			sb.append("_accountStatus=").append(get_accountStatus()).append(" ");
-			sb.append("_waitingForChangeType=").append(get_waitingForChangeType()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return super.toString();
 	}
 	
 }

@@ -73,6 +73,30 @@ public class ListGoodReadingUMLAllData {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
+		System.out.println("Listing Customer_Book...");
+		good_reading.Customer_Book[] good_ReadingCustomer_Books = good_reading.Customer_Book.listCustomer_BookByQuery(null, null);
+		length = Math.min(good_ReadingCustomer_Books.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(good_ReadingCustomer_Books[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
+		System.out.println("Listing Book_Author...");
+		good_reading.Book_Author[] good_ReadingBook_Authors = good_reading.Book_Author.listBook_AuthorByQuery(null, null);
+		length = Math.min(good_ReadingBook_Authors.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(good_ReadingBook_Authors[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
+		System.out.println("Listing Book_Keywords...");
+		good_reading.Book_Keywords[] good_ReadingBook_Keywordses = good_reading.Book_Keywords.listBook_KeywordsByQuery(null, null);
+		length = Math.min(good_ReadingBook_Keywordses.length, ROW_COUNT);
+		for (int i = 0; i < length; i++) {
+			System.out.println(good_ReadingBook_Keywordses[i]);
+		}
+		System.out.println(length + " record(s) retrieved.");
+		
 	}
 	
 	public void listByCriteria() throws PersistentException {
@@ -171,6 +195,42 @@ public class ListGoodReadingUMLAllData {
 			 System.out.println(good_ReadingBook_Subjects[i]);
 		}
 		System.out.println(length + " Book_Subject record(s) retrieved."); 
+		
+		System.out.println("Listing Customer_Book by Criteria...");
+		good_reading.Customer_BookCriteria good_ReadingCustomer_BookCriteria = new good_reading.Customer_BookCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//good_ReadingCustomer_BookCriteria._uid.eq();
+		good_ReadingCustomer_BookCriteria.setMaxResults(ROW_COUNT);
+		good_reading.Customer_Book[] good_ReadingCustomer_Books = good_ReadingCustomer_BookCriteria.listCustomer_Book();
+		length =good_ReadingCustomer_Books== null ? 0 : Math.min(good_ReadingCustomer_Books.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(good_ReadingCustomer_Books[i]);
+		}
+		System.out.println(length + " Customer_Book record(s) retrieved."); 
+		
+		System.out.println("Listing Book_Author by Criteria...");
+		good_reading.Book_AuthorCriteria good_ReadingBook_AuthorCriteria = new good_reading.Book_AuthorCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//good_ReadingBook_AuthorCriteria._bid.eq();
+		good_ReadingBook_AuthorCriteria.setMaxResults(ROW_COUNT);
+		good_reading.Book_Author[] good_ReadingBook_Authors = good_ReadingBook_AuthorCriteria.listBook_Author();
+		length =good_ReadingBook_Authors== null ? 0 : Math.min(good_ReadingBook_Authors.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(good_ReadingBook_Authors[i]);
+		}
+		System.out.println(length + " Book_Author record(s) retrieved."); 
+		
+		System.out.println("Listing Book_Keywords by Criteria...");
+		good_reading.Book_KeywordsCriteria good_ReadingBook_KeywordsCriteria = new good_reading.Book_KeywordsCriteria();
+		// Please uncomment the follow line and fill in parameter(s) 
+		//good_ReadingBook_KeywordsCriteria._bid.eq();
+		good_ReadingBook_KeywordsCriteria.setMaxResults(ROW_COUNT);
+		good_reading.Book_Keywords[] good_ReadingBook_Keywordses = good_ReadingBook_KeywordsCriteria.listBook_Keywords();
+		length =good_ReadingBook_Keywordses== null ? 0 : Math.min(good_ReadingBook_Keywordses.length, ROW_COUNT); 
+		for (int i = 0; i < length; i++) {
+			 System.out.println(good_ReadingBook_Keywordses[i]);
+		}
+		System.out.println(length + " Book_Keywords record(s) retrieved."); 
 		
 	}
 	

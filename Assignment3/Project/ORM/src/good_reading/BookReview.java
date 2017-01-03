@@ -414,24 +414,7 @@ public class BookReview implements Serializable {
 	}
 	
 	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(get_rid());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("BookReview[ ");
-			sb.append("_rid=").append(get_rid()).append(" ");
-			sb.append("_bid=").append(get_bid()).append(" ");
-			sb.append("_review=").append(get_review()).append(" ");
-			sb.append("_costumerName=").append(get_costumerName()).append(" ");
-			sb.append("_approved=").append(get_approved()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
+		return String.valueOf(get_rid());
 	}
 	
 }

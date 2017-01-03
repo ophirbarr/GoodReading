@@ -25,12 +25,10 @@ public class BookCriteria extends AbstractORMCriteria {
 	public final StringExpression _summary;
 	public final StringExpression _TableOfContents;
 	public final BooleanExpression _viewStatus;
-	public final DoubleExpression _price;
+	public final FloatExpression _price;
 	public final StringExpression _searchLog;
 	public final StringExpression _purchaseLog;
 	public final IntegerExpression _purchaseCount;
-	public final StringExpression _author;
-	public final StringExpression _keywords;
 	public final StringExpression _bookFormat;
 	
 	public BookCriteria(Criteria criteria) {
@@ -41,12 +39,10 @@ public class BookCriteria extends AbstractORMCriteria {
 		_summary = new StringExpression("_summary", this);
 		_TableOfContents = new StringExpression("_TableOfContents", this);
 		_viewStatus = new BooleanExpression("_viewStatus", this);
-		_price = new DoubleExpression("_price", this);
+		_price = new FloatExpression("_price", this);
 		_searchLog = new StringExpression("_searchLog", this);
 		_purchaseLog = new StringExpression("_purchaseLog", this);
 		_purchaseCount = new IntegerExpression("_purchaseCount", this);
-		_author = new StringExpression("_author", this);
-		_keywords = new StringExpression("_keywords", this);
 		_bookFormat = new StringExpression("_bookFormat", this);
 	}
 	
