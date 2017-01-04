@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `goodreading` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `goodreading`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: goodreading
@@ -262,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-04 19:31:54
+-- Dump completed on 2017-01-04 22:32:51
