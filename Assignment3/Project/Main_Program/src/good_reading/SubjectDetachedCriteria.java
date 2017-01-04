@@ -21,17 +21,20 @@ import org.orm.criteria.*;
 public class SubjectDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final IntegerExpression _sid;
 	public final StringExpression _name;
+	public final IntegerExpression _did;
 	
 	public SubjectDetachedCriteria() {
 		super(good_reading.Subject.class, good_reading.SubjectCriteria.class);
 		_sid = new IntegerExpression("_sid", this.getDetachedCriteria());
 		_name = new StringExpression("_name", this.getDetachedCriteria());
+		_did = new IntegerExpression("_did", this.getDetachedCriteria());
 	}
 	
 	public SubjectDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, good_reading.SubjectCriteria.class);
 		_sid = new IntegerExpression("_sid", this.getDetachedCriteria());
 		_name = new StringExpression("_name", this.getDetachedCriteria());
+		_did = new IntegerExpression("_did", this.getDetachedCriteria());
 	}
 	
 	public Subject uniqueSubject(PersistentSession session) {

@@ -11,5 +11,6 @@ License Type: Academic
 			</generator>
 		</id>
 		<property name="_name" column="_name" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_did" column="_did" type="integer" length="11" not-null="true" lazy="false"/>
 	</class>
 </hibernate-mapping>

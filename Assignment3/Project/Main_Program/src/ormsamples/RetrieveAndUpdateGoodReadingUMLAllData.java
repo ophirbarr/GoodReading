@@ -18,9 +18,9 @@ public class RetrieveAndUpdateGoodReadingUMLAllData {
 			good_reading.SystemUser good_ReadingSystemUser = good_reading.SystemUser.loadSystemUserByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingSystemUser.save();
-			good_reading.Costumer good_ReadingCostumer = good_reading.Costumer.loadCostumerByQuery(null, null);
+			good_reading.Customer good_ReadingCustomer = good_reading.Customer.loadCustomerByQuery(null, null);
 			// Update the properties of the persistent object
-			good_ReadingCostumer.save();
+			good_ReadingCustomer.save();
 			good_reading.Book good_ReadingBook = good_reading.Book.loadBookByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingBook.save();
@@ -69,11 +69,11 @@ public class RetrieveAndUpdateGoodReadingUMLAllData {
 		//good_ReadingSystemUserCriteria._uid.eq();
 		System.out.println(good_ReadingSystemUserCriteria.uniqueSystemUser());
 		
-		System.out.println("Retrieving Costumer by CostumerCriteria");
-		good_reading.CostumerCriteria good_ReadingCostumerCriteria = new good_reading.CostumerCriteria();
+		System.out.println("Retrieving Customer by CustomerCriteria");
+		good_reading.CustomerCriteria good_ReadingCustomerCriteria = new good_reading.CustomerCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//good_ReadingCostumerCriteria._uid.eq();
-		System.out.println(good_ReadingCostumerCriteria.uniqueCostumer());
+		//good_ReadingCustomerCriteria._uid.eq();
+		System.out.println(good_ReadingCustomerCriteria.uniqueCustomer());
 		
 		System.out.println("Retrieving Book by BookCriteria");
 		good_reading.BookCriteria good_ReadingBookCriteria = new good_reading.BookCriteria();

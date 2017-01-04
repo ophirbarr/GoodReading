@@ -15,8 +15,8 @@ public class DeleteGoodReadingUMLAllData {
 			good_ReadingDomain.delete();
 			good_reading.SystemUser good_ReadingSystemUser = good_reading.SystemUser.loadSystemUserByQuery(null, null);
 			good_ReadingSystemUser.delete();
-			good_reading.Costumer good_ReadingCostumer = good_reading.Costumer.loadCostumerByQuery(null, null);
-			good_ReadingCostumer.delete();
+			good_reading.Customer good_ReadingCustomer = good_reading.Customer.loadCustomerByQuery(null, null);
+			good_ReadingCustomer.delete();
 			good_reading.Book good_ReadingBook = good_reading.Book.loadBookByQuery(null, null);
 			good_ReadingBook.delete();
 			good_reading.Subject good_ReadingSubject = good_reading.Subject.loadSubjectByQuery(null, null);

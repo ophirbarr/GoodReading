@@ -33,11 +33,11 @@ public class ListGoodReadingUMLAllData {
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
-		System.out.println("Listing Costumer...");
-		good_reading.Costumer[] good_ReadingCostumers = good_reading.Costumer.listCostumerByQuery(null, null);
-		length = Math.min(good_ReadingCostumers.length, ROW_COUNT);
+		System.out.println("Listing Customer...");
+		good_reading.Customer[] good_ReadingCustomers = good_reading.Customer.listCustomerByQuery(null, null);
+		length = Math.min(good_ReadingCustomers.length, ROW_COUNT);
 		for (int i = 0; i < length; i++) {
-			System.out.println(good_ReadingCostumers[i]);
+			System.out.println(good_ReadingCustomers[i]);
 		}
 		System.out.println(length + " record(s) retrieved.");
 		
@@ -136,17 +136,17 @@ public class ListGoodReadingUMLAllData {
 		}
 		System.out.println(length + " SystemUser record(s) retrieved."); 
 		
-		System.out.println("Listing Costumer by Criteria...");
-		good_reading.CostumerCriteria good_ReadingCostumerCriteria = new good_reading.CostumerCriteria();
+		System.out.println("Listing Customer by Criteria...");
+		good_reading.CustomerCriteria good_ReadingCustomerCriteria = new good_reading.CustomerCriteria();
 		// Please uncomment the follow line and fill in parameter(s) 
-		//good_ReadingCostumerCriteria._uid.eq();
-		good_ReadingCostumerCriteria.setMaxResults(ROW_COUNT);
-		good_reading.Costumer[] good_ReadingCostumers = good_ReadingCostumerCriteria.listCostumer();
-		length =good_ReadingCostumers== null ? 0 : Math.min(good_ReadingCostumers.length, ROW_COUNT); 
+		//good_ReadingCustomerCriteria._uid.eq();
+		good_ReadingCustomerCriteria.setMaxResults(ROW_COUNT);
+		good_reading.Customer[] good_ReadingCustomers = good_ReadingCustomerCriteria.listCustomer();
+		length =good_ReadingCustomers== null ? 0 : Math.min(good_ReadingCustomers.length, ROW_COUNT); 
 		for (int i = 0; i < length; i++) {
-			 System.out.println(good_ReadingCostumers[i]);
+			 System.out.println(good_ReadingCustomers[i]);
 		}
-		System.out.println(length + " Costumer record(s) retrieved."); 
+		System.out.println(length + " Customer record(s) retrieved."); 
 		
 		System.out.println("Listing Book by Criteria...");
 		good_reading.BookCriteria good_ReadingBookCriteria = new good_reading.BookCriteria();

@@ -363,6 +363,8 @@ public class Subject implements Serializable {
 	
 	private String _name;
 	
+	private int _did;
+	
 	public void set_sid(int value) {
 		this._sid = value;
 	}
@@ -381,6 +383,14 @@ public class Subject implements Serializable {
 	
 	public String get_name() {
 		return _name;
+	}
+	
+	public void set_did(int value) {
+		this._did = value;
+	}
+	
+	public int get_did() {
+		return _did;
 	}
 	
 	public String toString() {
