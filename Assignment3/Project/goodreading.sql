@@ -81,7 +81,7 @@ CREATE TABLE `book-keywords` (
   `_bid` int(11) NOT NULL AUTO_INCREMENT,
   `_keyword` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,6 +114,82 @@ CREATE TABLE `book-subject` (
 LOCK TABLES `book-subject` WRITE;
 /*!40000 ALTER TABLE `book-subject` DISABLE KEYS */;
 /*!40000 ALTER TABLE `book-subject` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book__author`
+--
+
+DROP TABLE IF EXISTS `book__author`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `book__author` (
+  `Book_bid` int(10) NOT NULL,
+  `BookIndex` int(10) NOT NULL,
+  `_author` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Book_bid`,`BookIndex`),
+  KEY `FKBook__auth833047` (`Book_bid`),
+  CONSTRAINT `FKBook__auth833047` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book__author`
+--
+
+LOCK TABLES `book__author` WRITE;
+/*!40000 ALTER TABLE `book__author` DISABLE KEYS */;
+/*!40000 ALTER TABLE `book__author` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book__bookformat`
+--
+
+DROP TABLE IF EXISTS `book__bookformat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `book__bookformat` (
+  `Book_bid` int(10) NOT NULL,
+  `BookIndex` int(10) NOT NULL,
+  PRIMARY KEY (`Book_bid`,`BookIndex`),
+  KEY `FKBook__book212284` (`Book_bid`),
+  CONSTRAINT `FKBook__book212284` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book__bookformat`
+--
+
+LOCK TABLES `book__bookformat` WRITE;
+/*!40000 ALTER TABLE `book__bookformat` DISABLE KEYS */;
+/*!40000 ALTER TABLE `book__bookformat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book__keywords`
+--
+
+DROP TABLE IF EXISTS `book__keywords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `book__keywords` (
+  `Book_bid` int(10) NOT NULL,
+  `BookIndex` int(10) NOT NULL,
+  PRIMARY KEY (`Book_bid`,`BookIndex`),
+  KEY `FKBook__keyw284853` (`Book_bid`),
+  CONSTRAINT `FKBook__keyw284853` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book__keywords`
+--
+
+LOCK TABLES `book__keywords` WRITE;
+/*!40000 ALTER TABLE `book__keywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `book__keywords` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -198,6 +274,7 @@ DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject` (
   `_sid` int(10) NOT NULL AUTO_INCREMENT,
   `_name` varchar(255) DEFAULT NULL,
+  `_did` int(11) NOT NULL,
   PRIMARY KEY (`_sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -234,8 +311,12 @@ CREATE TABLE `systemuser` (
   `_email` varchar(255) DEFAULT NULL,
   `_department` varchar(255) DEFAULT NULL,
   `Discriminator` varchar(255) NOT NULL,
-  PRIMARY KEY (`_uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`_uid`),
+  UNIQUE KEY `_uid_UNIQUE` (`_uid`),
+  UNIQUE KEY `_email_UNIQUE` (`_email`),
+  UNIQUE KEY `_wid_UNIQUE` (`_wid`),
+  UNIQUE KEY `_userName_UNIQUE` (`_userName`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +325,7 @@ CREATE TABLE `systemuser` (
 
 LOCK TABLES `systemuser` WRITE;
 /*!40000 ALTER TABLE `systemuser` DISABLE KEYS */;
-INSERT INTO `systemuser` VALUES (1,'Jim','McJim','jmcjim','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'User'),(2,'Tom','Tuna','tomtuna','4321',0,1,'2004-01-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(3,'Ruth','A','rruth','1243',0,NULL,NULL,NULL,NULL,1111,'Librarian','rutha@goodreading.com','Sales','Worker');
+INSERT INTO `systemuser` VALUES (1,'Jim','McJim','jmcjim','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'User'),(2,'Tom','Tuna','tomtuna','444321',0,1,'2004-01-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(3,'Ruth','A','rruth','1243',0,NULL,NULL,NULL,NULL,2222,'Librarian','rutha@goodreading.com','Sales','Worker'),(5,'Jule',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,3333,NULL,NULL,NULL,'Worker'),(6,'aa',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser');
 /*!40000 ALTER TABLE `systemuser` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -257,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-03 10:32:42
+-- Dump completed on 2017-01-04 19:16:37
