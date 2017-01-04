@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `book`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book` (
   `_bid` int(10) NOT NULL AUTO_INCREMENT,
-  `_title` varchar(255) DEFAULT NULL,
-  `_language` varchar(255) DEFAULT NULL,
+  `_title` varchar(255) NOT NULL,
+  `_language` varchar(255) NOT NULL,
   `_summary` varchar(255) DEFAULT NULL,
   `_TableOfContents` varchar(255) DEFAULT NULL,
-  `_viewStatus` tinyint(1) DEFAULT NULL,
+  `_viewStatus` tinyint(1) NOT NULL,
   `_price` float NOT NULL,
   `_searchLog` varchar(255) DEFAULT NULL,
   `_purchaseLog` varchar(255) DEFAULT NULL,
@@ -56,8 +56,8 @@ DROP TABLE IF EXISTS `book-author`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book-author` (
   `_bid` int(11) NOT NULL AUTO_INCREMENT,
-  `_author` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`_bid`)
+  `_author` varchar(255) NOT NULL,
+  PRIMARY KEY (`_bid`,`_author`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -79,8 +79,8 @@ DROP TABLE IF EXISTS `book-keywords`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book-keywords` (
   `_bid` int(11) NOT NULL AUTO_INCREMENT,
-  `_keyword` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`_bid`)
+  `_keyword` varchar(255) NOT NULL,
+  PRIMARY KEY (`_bid`,`_keyword`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS `book-subject`;
 CREATE TABLE `book-subject` (
   `_bid` int(10) NOT NULL AUTO_INCREMENT,
   `_sid` int(10) NOT NULL,
-  PRIMARY KEY (`_bid`)
+  PRIMARY KEY (`_bid`,`_sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -117,82 +117,6 @@ LOCK TABLES `book-subject` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `book__author`
---
-
-DROP TABLE IF EXISTS `book__author`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `book__author` (
-  `Book_bid` int(10) NOT NULL,
-  `BookIndex` int(10) NOT NULL,
-  `_author` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`Book_bid`,`BookIndex`),
-  KEY `FKBook__auth833047` (`Book_bid`),
-  CONSTRAINT `FKBook__auth833047` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `book__author`
---
-
-LOCK TABLES `book__author` WRITE;
-/*!40000 ALTER TABLE `book__author` DISABLE KEYS */;
-/*!40000 ALTER TABLE `book__author` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `book__bookformat`
---
-
-DROP TABLE IF EXISTS `book__bookformat`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `book__bookformat` (
-  `Book_bid` int(10) NOT NULL,
-  `BookIndex` int(10) NOT NULL,
-  PRIMARY KEY (`Book_bid`,`BookIndex`),
-  KEY `FKBook__book212284` (`Book_bid`),
-  CONSTRAINT `FKBook__book212284` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `book__bookformat`
---
-
-LOCK TABLES `book__bookformat` WRITE;
-/*!40000 ALTER TABLE `book__bookformat` DISABLE KEYS */;
-/*!40000 ALTER TABLE `book__bookformat` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `book__keywords`
---
-
-DROP TABLE IF EXISTS `book__keywords`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `book__keywords` (
-  `Book_bid` int(10) NOT NULL,
-  `BookIndex` int(10) NOT NULL,
-  PRIMARY KEY (`Book_bid`,`BookIndex`),
-  KEY `FKBook__keyw284853` (`Book_bid`),
-  CONSTRAINT `FKBook__keyw284853` FOREIGN KEY (`Book_bid`) REFERENCES `book` (`_bid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `book__keywords`
---
-
-LOCK TABLES `book__keywords` WRITE;
-/*!40000 ALTER TABLE `book__keywords` DISABLE KEYS */;
-/*!40000 ALTER TABLE `book__keywords` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `bookreview`
 --
 
@@ -202,8 +126,8 @@ DROP TABLE IF EXISTS `bookreview`;
 CREATE TABLE `bookreview` (
   `_rid` int(10) NOT NULL AUTO_INCREMENT,
   `_bid` int(10) NOT NULL,
-  `_review` varchar(255) DEFAULT NULL,
-  `_costumerName` varchar(255) DEFAULT NULL,
+  `_review` varchar(255) NOT NULL,
+  `_costumerName` varchar(255) NOT NULL,
   `_approved` tinyint(1) NOT NULL,
   PRIMARY KEY (`_rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -228,7 +152,7 @@ DROP TABLE IF EXISTS `customer-book`;
 CREATE TABLE `customer-book` (
   `_uid` int(10) NOT NULL AUTO_INCREMENT,
   `_bid` int(10) NOT NULL,
-  PRIMARY KEY (`_uid`)
+  PRIMARY KEY (`_uid`,`_bid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,7 +174,7 @@ DROP TABLE IF EXISTS `domain`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `domain` (
   `_did` int(10) NOT NULL AUTO_INCREMENT,
-  `_name` varchar(255) DEFAULT NULL,
+  `_name` varchar(255) NOT NULL,
   PRIMARY KEY (`_did`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -273,7 +197,7 @@ DROP TABLE IF EXISTS `subject`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subject` (
   `_sid` int(10) NOT NULL AUTO_INCREMENT,
-  `_name` varchar(255) DEFAULT NULL,
+  `_name` varchar(255) NOT NULL,
   `_did` int(11) NOT NULL,
   PRIMARY KEY (`_sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -297,11 +221,11 @@ DROP TABLE IF EXISTS `systemuser`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `systemuser` (
   `_uid` int(10) NOT NULL AUTO_INCREMENT,
-  `_firstName` varchar(255) DEFAULT NULL,
-  `_lastName` varchar(255) DEFAULT NULL,
-  `_userName` varchar(255) DEFAULT NULL,
-  `_password` varchar(255) DEFAULT NULL,
-  `_userStatus` int(10) DEFAULT NULL,
+  `_firstName` varchar(255) NOT NULL,
+  `_lastName` varchar(255) NOT NULL,
+  `_userName` varchar(255) NOT NULL,
+  `_password` varchar(255) NOT NULL,
+  `_userStatus` int(10) NOT NULL,
   `_accountType` int(10) DEFAULT NULL,
   `_endDate` date DEFAULT NULL,
   `_accountStatus` tinyint(1) DEFAULT NULL,
@@ -313,9 +237,9 @@ CREATE TABLE `systemuser` (
   `Discriminator` varchar(255) NOT NULL,
   PRIMARY KEY (`_uid`),
   UNIQUE KEY `_uid_UNIQUE` (`_uid`),
+  UNIQUE KEY `_userName_UNIQUE` (`_userName`),
   UNIQUE KEY `_email_UNIQUE` (`_email`),
-  UNIQUE KEY `_wid_UNIQUE` (`_wid`),
-  UNIQUE KEY `_userName_UNIQUE` (`_userName`)
+  UNIQUE KEY `_wid_UNIQUE` (`_wid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -325,7 +249,7 @@ CREATE TABLE `systemuser` (
 
 LOCK TABLES `systemuser` WRITE;
 /*!40000 ALTER TABLE `systemuser` DISABLE KEYS */;
-INSERT INTO `systemuser` VALUES (1,'Jim','McJim','jmcjim','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'User'),(2,'Tom','Tuna','tomtuna','444321',0,1,'2004-01-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(3,'Ruth','A','rruth','1243',0,NULL,NULL,NULL,NULL,2222,'Librarian','rutha@goodreading.com','Sales','Worker'),(5,'Jule',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,3333,NULL,NULL,NULL,'Worker'),(6,'aa',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser');
+INSERT INTO `systemuser` VALUES (1,'Jim','McJim','jmcjim','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'User'),(2,'Tom','Tuna','tomtuna','444321',0,1,'2004-01-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(3,'Ruth','A','rruth','1243',0,NULL,NULL,NULL,NULL,2222,'Librarian','rutha@goodreading.com','Sales','Worker');
 /*!40000 ALTER TABLE `systemuser` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -338,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-04 19:16:37
+-- Dump completed on 2017-01-04 19:31:54
