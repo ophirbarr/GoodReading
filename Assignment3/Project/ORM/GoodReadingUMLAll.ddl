@@ -1,0 +1,12 @@
+ALTER TABLE BookReview modify column _approved tinyint(1) NOT NULL;
+ALTER TABLE SystemUser modify column _accountStatus tinyint(1);
+ALTER TABLE Book modify column _viewStatus tinyint(1);
+ALTER TABLE book__author DROP PRIMARY KEY;
+ALTER TABLE Book__author modify column BookIndex int(10);
+ALTER TABLE Book__author ADD PRIMARY KEY(Book_bid, BookIndex);
+ALTER TABLE book__keywords DROP PRIMARY KEY;
+ALTER TABLE Book__keywords modify column BookIndex int(10);
+ALTER TABLE Book__keywords ADD PRIMARY KEY(Book_bid, BookIndex);
+ALTER TABLE book__bookformat DROP PRIMARY KEY;
+ALTER TABLE Book__bookFormat modify column BookIndex int(10);
+ALTER TABLE Book__bookFormat ADD PRIMARY KEY(Book_bid, BookIndex);

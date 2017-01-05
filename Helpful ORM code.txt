@@ -1,0 +1,52 @@
+Add new Customer to DB
+-----------------------------
+
+PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+
+//----create object
+Customer customer = Customer.createCustomer();
+customer.set_firstName("Joe");
+...
+...
+
+//----add obj to database
+PersistentTransaction t = session.beginTransaction();
+session.save(customer);
+t.commit();
+
+session.close();
+
+------------------------------------------------------------------------------------------------------------------------
+
+Update existing Customer in DB
+------------------------------------
+
+PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+	
+//-----receive object with id
+Customer customer= Customer.loadCustomerByORMID(id);
+
+//----update obj in database
+PersistentTransaction t = session.beginTransaction();
+session.update(customer);
+t.commit();
+
+session.close();
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+Get array of Customers using CustomerCriteria 
+------------------------------------------------------
+
+// WHERE [ (name="Bob" OR name="Joe" OR name="Kelly") AND accountStatus=1 ]
+
+//----create new criteria
+CustomerCriteria customerCriteria = new CustomerCriteria();
+
+//----set criteria parameters
+customerCriteria.name.in(new String[]{"Bob", "Joe", "Kelly"});
+staffCriteria.accountStatus.eq(1);
+
+//----get results in array
+Customer[] result = customerCriteria.listCustomer();

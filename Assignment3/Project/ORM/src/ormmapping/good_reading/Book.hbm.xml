@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Ort Braude College
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="good_reading.Book" table="Book" lazy="false">
+		<id name="_bid" column="_bid" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="_title" column="_title" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_language" column="_language" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_summary" column="_summary" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_TableOfContents" column="_TableOfContents" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_viewStatus" column="_viewStatus" type="boolean" not-null="false" lazy="false"/>
+		<property name="_price" column="_price" type="float" length="10" not-null="true" lazy="false"/>
+		<property name="_searchLog" column="_searchLog" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_purchaseLog" column="_purchaseLog" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_purchaseCount" column="_purchaseCount" type="integer" length="10" not-null="true" lazy="false"/>
+		<property name="_bookFormat" column="_bookFormat" type="string" length="255" not-null="false" lazy="false"/>
+	</class>
+</hibernate-mapping>
