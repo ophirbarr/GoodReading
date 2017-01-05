@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 public class MainGUI extends JPanel {
 	
 	private ClientConsole client;
+	
 
 	/**
 	 * Create the panel.

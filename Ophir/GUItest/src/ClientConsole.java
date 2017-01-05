@@ -17,7 +17,7 @@ public class ClientConsole
 
         loginPanel = new JPanel();
         loginPanel.setOpaque(true);
-        loginPanel.setBackground(Color.BLUE);
+        loginPanel.setBackground(Color.YELLOW);
 
 
         loginButton = new JButton("Login");
@@ -38,7 +38,7 @@ public class ClientConsole
         loginPanel.add(loginButton);
 
         frame.add(loginPanel);
-        frame.setSize(900, 700);
+        frame.setSize(500, 400);
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }

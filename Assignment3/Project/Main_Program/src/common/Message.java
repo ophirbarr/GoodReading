@@ -23,7 +23,7 @@ public class Message
 	public Message(String action)
 	{
 		parameters = new ArrayList<String>();
-		this.action = action;
+		this.action = action; 
 	}
 	
 	// add parameters with this method
@@ -32,3 +32,4 @@ public class Message
 		parameters.add(param);
 	}
 }
+
