@@ -24,7 +24,7 @@ Update existing Customer in DB
 PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 	
 //-----receive object with id
-Customer obj = Customer.loadCustomerByORMID(id);
+Customer customer= Customer.loadCustomerByORMID(id);
 
 //----update obj in database
 PersistentTransaction t = session.beginTransaction();
