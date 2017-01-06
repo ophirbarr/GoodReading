@@ -25,6 +25,7 @@ public class WorkerCriteria extends AbstractORMCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	public final IntegerExpression _wid;
 	public final StringExpression _role;
 	public final StringExpression _email;
@@ -38,6 +39,7 @@ public class WorkerCriteria extends AbstractORMCriteria {
 		_userName = new StringExpression("_userName", this);
 		_password = new StringExpression("_password", this);
 		_userStatus = new IntegerExpression("_userStatus", this);
+		_ssn = new IntegerExpression("_ssn", this);
 		_wid = new IntegerExpression("_wid", this);
 		_role = new StringExpression("_role", this);
 		_email = new StringExpression("_email", this);

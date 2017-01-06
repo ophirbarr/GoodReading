@@ -25,6 +25,7 @@ public class SystemUserCriteria extends AbstractORMCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	
 	public SystemUserCriteria(Criteria criteria) {
 		super(criteria);
@@ -34,6 +35,7 @@ public class SystemUserCriteria extends AbstractORMCriteria {
 		_userName = new StringExpression("_userName", this);
 		_password = new StringExpression("_password", this);
 		_userStatus = new IntegerExpression("_userStatus", this);
+		_ssn = new IntegerExpression("_ssn", this);
 	}
 	
 	public SystemUserCriteria(PersistentSession session) {

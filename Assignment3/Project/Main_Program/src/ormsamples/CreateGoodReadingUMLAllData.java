@@ -16,7 +16,7 @@ public class CreateGoodReadingUMLAllData {
 			// Initialize the properties of the persistent object here
 			good_ReadingDomain.save();
 			good_reading.SystemUser good_ReadingSystemUser = good_reading.SystemUser.createSystemUser();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _userStatus
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _ssn, _userStatus
 			good_ReadingSystemUser.save();
 			good_reading.Customer good_ReadingCustomer = good_reading.Customer.createCustomer();
 			// Initialize the properties of the persistent object here

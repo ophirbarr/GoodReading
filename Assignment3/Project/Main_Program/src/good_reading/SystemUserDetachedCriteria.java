@@ -25,6 +25,7 @@ public class SystemUserDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	
 	public SystemUserDetachedCriteria() {
 		super(good_reading.SystemUser.class, good_reading.SystemUserCriteria.class);
@@ -34,6 +35,7 @@ public class SystemUserDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 	}
 	
 	public SystemUserDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -44,6 +46,7 @@ public class SystemUserDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 	}
 	
 	public SystemUser uniqueSystemUser(PersistentSession session) {

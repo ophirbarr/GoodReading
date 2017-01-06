@@ -25,6 +25,7 @@ public class CustomerDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	public final IntegerExpression _accountType;
 	public final DateExpression _endDate;
 	public final BooleanExpression _accountStatus;
@@ -38,6 +39,7 @@ public class CustomerDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 		_accountType = new IntegerExpression("_accountType", this.getDetachedCriteria());
 		_endDate = new DateExpression("_endDate", this.getDetachedCriteria());
 		_accountStatus = new BooleanExpression("_accountStatus", this.getDetachedCriteria());
@@ -52,6 +54,7 @@ public class CustomerDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 		_accountType = new IntegerExpression("_accountType", this.getDetachedCriteria());
 		_endDate = new DateExpression("_endDate", this.getDetachedCriteria());
 		_accountStatus = new BooleanExpression("_accountStatus", this.getDetachedCriteria());
