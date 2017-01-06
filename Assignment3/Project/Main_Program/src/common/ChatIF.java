@@ -19,4 +19,10 @@ public interface ChatIF
    * a UI.
    */
   public abstract void display(String message);
+  
+  public abstract void setMsgFromServer(Object msg);
+  public abstract Object getMsgFromServer();
+  public abstract void setMsgAvailable(boolean bool);
+  public abstract boolean isMsgAvailable();
+ 
 }

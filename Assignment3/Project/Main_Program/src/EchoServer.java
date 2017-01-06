@@ -3,6 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+import common.Message;
 import ocsf.server.*;
 
 /**
@@ -45,12 +46,30 @@ public class EchoServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
-  public void handleMessageFromClient
-    (Object msg, ConnectionToClient client)
+  public void handleMessageFromClient(Object msg, ConnectionToClient client)
   {
-	    System.out.println("Message received: " + msg + " from " + client);
-	    this.sendToAllClients(msg);
+	  //System.out.println("Message received: " + msg + " from " + client);
+	  //this.sendToAllClients(msg);
+	  
+	  Message message = (Message)msg;
+	  switch(message.getAction())
+	  {
+	  case "LogIn":
+		  try {
+			client.sendToClient(controllers.SystemUserController.LogIn(message.getParameters().get(0), message.getParameters().get(1)));
+		} catch (IOException e) {
+			e.printStackTrace();}
+		  break;
+		  
+		  
+	  case "LogOut":
+		  controllers.SystemUserController.LogOut(message.getParameters().get(0));
+		  break;
+
+	  
 	  }
+	  
+  }
 
     
   /**

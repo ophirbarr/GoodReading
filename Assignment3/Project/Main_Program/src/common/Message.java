@@ -1,5 +1,6 @@
 package common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @param parameters The parameters of the above action
  *
  */
-public class Message 
+public class Message implements Serializable
 {
 	private String action;
 	private ArrayList<String> parameters;
@@ -30,6 +31,16 @@ public class Message
 	public void add(String param)
 	{
 		parameters.add(param);
+	}
+	
+	public String getAction()
+	{
+		return action;
+	}
+	
+	public ArrayList<String> getParameters()
+	{
+		return parameters;
 	}
 }
 

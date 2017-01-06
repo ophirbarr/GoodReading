@@ -5,6 +5,7 @@
 import java.io.*;
 import client.*;
 import common.*;
+import good_reading.SystemUser;
 
 /**
  * This class constructs the UI for a chat client.  It implements the
@@ -20,6 +21,10 @@ public class ClientConsole implements ChatIF
 {
   //Class variables *************************************************
   
+	protected Object msgFromServer;
+	protected boolean msgAvailable = false;
+	protected SystemUser user;
+	
   /**
    * The default port to connect on.
    */
@@ -118,5 +123,26 @@ public class ClientConsole implements ChatIF
     ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
     chat.accept();  //Wait for console data
   }
+  
+	public void setMsgFromServer(Object msg)
+	{
+		msgFromServer = msg;
+	}
+	
+	public Object getMsgFromServer()
+	{
+		return msgFromServer;
+	}
+	
+	public void setMsgAvailable(boolean bool)
+	{
+		msgAvailable = bool;
+	}
+	
+	public boolean isMsgAvailable()
+	{
+		return msgAvailable;
+	}
+
 }
 //End of ConsoleChat class
