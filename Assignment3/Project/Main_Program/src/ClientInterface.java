@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ClientInterface extends ClientConsole 
 {
@@ -79,6 +81,25 @@ public class ClientInterface extends ClientConsole
 	 */
 	private void initialize() {
 		frame = new JFrame("Good Reading [CLIENT]");
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) 
+			{
+				if (user != null)
+					if (user.get_userStatus() == 1)
+					{
+						try {
+							clientInterface.client.openConnection();
+							Message msg = new Message("LogOut");
+							msg.add(clientInterface.user.get_userName());
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();}
+						
+						clientInterface.user = null;
+					}
+			}
+		});
 		frame.setBackground(UIManager.getColor("InternalFrame.borderColor"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -112,6 +133,7 @@ public class ClientInterface extends ClientConsole
         lblGoodReading.setFont(new Font("Narkisim", Font.BOLD, 65));
         lblGoodReading.setBounds(203, 239, 508, 88);
         loginPanel.add(lblGoodReading);
+        
         
         JButton btnLogin = new JButton("LOGIN");
         btnLogin.addActionListener(new ActionListener() {
