@@ -10,13 +10,13 @@ public class CreateGoodReadingUMLAllData {
 		PersistentTransaction t = good_reading.GoodReadingPersistentManager.instance().getSession().beginTransaction();
 		try {
 			good_reading.BookReview good_ReadingBookReview = good_reading.BookReview.createBookReview();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _approved, _bid
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _bid
 			good_ReadingBookReview.save();
 			good_reading.Domain good_ReadingDomain = good_reading.Domain.createDomain();
 			// Initialize the properties of the persistent object here
 			good_ReadingDomain.save();
 			good_reading.SystemUser good_ReadingSystemUser = good_reading.SystemUser.createSystemUser();
-			// Initialize the properties of the persistent object here
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _userStatus
 			good_ReadingSystemUser.save();
 			good_reading.Customer good_ReadingCustomer = good_reading.Customer.createCustomer();
 			// Initialize the properties of the persistent object here
@@ -30,17 +30,17 @@ public class CreateGoodReadingUMLAllData {
 			good_reading.Worker good_ReadingWorker = good_reading.Worker.createWorker();
 			// Initialize the properties of the persistent object here
 			good_ReadingWorker.save();
-			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.createBook_Subject();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _sid
-			good_ReadingBook_Subject.save();
 			good_reading.Customer_Book good_ReadingCustomer_Book = good_reading.Customer_Book.createCustomer_Book();
-			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _bid
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _bid, _uid
 			good_ReadingCustomer_Book.save();
 			good_reading.Book_Author good_ReadingBook_Author = good_reading.Book_Author.createBook_Author();
-			// Initialize the properties of the persistent object here
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _bid
 			good_ReadingBook_Author.save();
+			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.createBook_Subject();
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _sid, _bid
+			good_ReadingBook_Subject.save();
 			good_reading.Book_Keywords good_ReadingBook_Keywords = good_reading.Book_Keywords.createBook_Keywords();
-			// Initialize the properties of the persistent object here
+			// TODO Initialize the properties of the persistent object here, the following properties must be initialized before saving : _bid
 			good_ReadingBook_Keywords.save();
 			t.commit();
 		}

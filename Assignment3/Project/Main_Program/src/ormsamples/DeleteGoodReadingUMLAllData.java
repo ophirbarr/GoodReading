@@ -23,12 +23,12 @@ public class DeleteGoodReadingUMLAllData {
 			good_ReadingSubject.delete();
 			good_reading.Worker good_ReadingWorker = good_reading.Worker.loadWorkerByQuery(null, null);
 			good_ReadingWorker.delete();
-			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.loadBook_SubjectByQuery(null, null);
-			good_ReadingBook_Subject.delete();
 			good_reading.Customer_Book good_ReadingCustomer_Book = good_reading.Customer_Book.loadCustomer_BookByQuery(null, null);
 			good_ReadingCustomer_Book.delete();
 			good_reading.Book_Author good_ReadingBook_Author = good_reading.Book_Author.loadBook_AuthorByQuery(null, null);
 			good_ReadingBook_Author.delete();
+			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.loadBook_SubjectByQuery(null, null);
+			good_ReadingBook_Subject.delete();
 			good_reading.Book_Keywords good_ReadingBook_Keywords = good_reading.Book_Keywords.loadBook_KeywordsByQuery(null, null);
 			good_ReadingBook_Keywords.delete();
 			t.commit();

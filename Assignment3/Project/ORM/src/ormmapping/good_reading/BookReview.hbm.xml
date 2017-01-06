@@ -13,6 +13,6 @@ License Type: Academic
 		<property name="_bid" column="_bid" type="integer" length="10" not-null="true" lazy="false"/>
 		<property name="_review" column="_review" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_costumerName" column="_costumerName" type="string" length="255" not-null="false" lazy="false"/>
-		<property name="_approved" column="_approved" type="boolean" not-null="true" lazy="false"/>
+		<property name="_approved" column="_approved" type="boolean" not-null="false" lazy="false"/>
 	</class>
 </hibernate-mapping>

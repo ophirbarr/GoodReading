@@ -25,6 +25,7 @@ public class CustomerCriteria extends AbstractORMCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	public final IntegerExpression _accountType;
 	public final DateExpression _endDate;
 	public final BooleanExpression _accountStatus;
@@ -38,6 +39,7 @@ public class CustomerCriteria extends AbstractORMCriteria {
 		_userName = new StringExpression("_userName", this);
 		_password = new StringExpression("_password", this);
 		_userStatus = new IntegerExpression("_userStatus", this);
+		_ssn = new IntegerExpression("_ssn", this);
 		_accountType = new IntegerExpression("_accountType", this);
 		_endDate = new DateExpression("_endDate", this);
 		_accountStatus = new BooleanExpression("_accountStatus", this);

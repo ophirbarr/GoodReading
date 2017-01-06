@@ -25,6 +25,7 @@ public class WorkerDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression _userName;
 	public final StringExpression _password;
 	public final IntegerExpression _userStatus;
+	public final IntegerExpression _ssn;
 	public final IntegerExpression _wid;
 	public final StringExpression _role;
 	public final StringExpression _email;
@@ -38,6 +39,7 @@ public class WorkerDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 		_wid = new IntegerExpression("_wid", this.getDetachedCriteria());
 		_role = new StringExpression("_role", this.getDetachedCriteria());
 		_email = new StringExpression("_email", this.getDetachedCriteria());
@@ -52,6 +54,7 @@ public class WorkerDetachedCriteria extends AbstractORMDetachedCriteria {
 		_userName = new StringExpression("_userName", this.getDetachedCriteria());
 		_password = new StringExpression("_password", this.getDetachedCriteria());
 		_userStatus = new IntegerExpression("_userStatus", this.getDetachedCriteria());
+		_ssn = new IntegerExpression("_ssn", this.getDetachedCriteria());
 		_wid = new IntegerExpression("_wid", this.getDetachedCriteria());
 		_role = new StringExpression("_role", this.getDetachedCriteria());
 		_email = new StringExpression("_email", this.getDetachedCriteria());

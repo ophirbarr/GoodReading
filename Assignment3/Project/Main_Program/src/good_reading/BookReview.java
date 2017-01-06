@@ -367,7 +367,7 @@ public class BookReview implements Serializable {
 	
 	private String _costumerName;
 	
-	private boolean _approved;
+	private Boolean _approved;
 	
 	public void set_rid(int value) {
 		this._rid = value;
@@ -406,10 +406,14 @@ public class BookReview implements Serializable {
 	}
 	
 	public void set_approved(boolean value) {
+		set_approved(new Boolean(value));
+	}
+	
+	public void set_approved(Boolean value) {
 		this._approved = value;
 	}
 	
-	public boolean get_approved() {
+	public Boolean get_approved() {
 		return _approved;
 	}
 	

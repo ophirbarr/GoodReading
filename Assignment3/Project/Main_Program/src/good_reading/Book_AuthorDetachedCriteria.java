@@ -19,17 +19,20 @@ import org.orm.PersistentSession;
 import org.orm.criteria.*;
 
 public class Book_AuthorDetachedCriteria extends AbstractORMDetachedCriteria {
+	public final IntegerExpression ID;
 	public final IntegerExpression _bid;
 	public final StringExpression _author;
 	
 	public Book_AuthorDetachedCriteria() {
 		super(good_reading.Book_Author.class, good_reading.Book_AuthorCriteria.class);
+		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		_bid = new IntegerExpression("_bid", this.getDetachedCriteria());
 		_author = new StringExpression("_author", this.getDetachedCriteria());
 	}
 	
 	public Book_AuthorDetachedCriteria(DetachedCriteria aDetachedCriteria) {
 		super(aDetachedCriteria, good_reading.Book_AuthorCriteria.class);
+		ID = new IntegerExpression("ID", this.getDetachedCriteria());
 		_bid = new IntegerExpression("_bid", this.getDetachedCriteria());
 		_author = new StringExpression("_author", this.getDetachedCriteria());
 	}

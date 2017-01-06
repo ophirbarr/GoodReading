@@ -19,11 +19,13 @@ import org.orm.PersistentSession;
 import org.orm.criteria.*;
 
 public class Book_AuthorCriteria extends AbstractORMCriteria {
+	public final IntegerExpression ID;
 	public final IntegerExpression _bid;
 	public final StringExpression _author;
 	
 	public Book_AuthorCriteria(Criteria criteria) {
 		super(criteria);
+		ID = new IntegerExpression("ID", this);
 		_bid = new IntegerExpression("_bid", this);
 		_author = new StringExpression("_author", this);
 	}

@@ -19,11 +19,13 @@ import org.orm.PersistentSession;
 import org.orm.criteria.*;
 
 public class Book_SubjectCriteria extends AbstractORMCriteria {
+	public final IntegerExpression ID;
 	public final IntegerExpression _bid;
 	public final IntegerExpression _sid;
 	
 	public Book_SubjectCriteria(Criteria criteria) {
 		super(criteria);
+		ID = new IntegerExpression("ID", this);
 		_bid = new IntegerExpression("_bid", this);
 		_sid = new IntegerExpression("_sid", this);
 	}

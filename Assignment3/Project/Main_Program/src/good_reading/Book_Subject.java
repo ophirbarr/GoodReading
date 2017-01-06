@@ -23,10 +23,10 @@ public class Book_Subject implements Serializable {
 	public Book_Subject() {
 	}
 	
-	public static Book_Subject loadBook_SubjectByORMID(int _bid) throws PersistentException {
+	public static Book_Subject loadBook_SubjectByORMID(int ID) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
-			return loadBook_SubjectByORMID(session, _bid);
+			return loadBook_SubjectByORMID(session, ID);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -34,10 +34,10 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject getBook_SubjectByORMID(int _bid) throws PersistentException {
+	public static Book_Subject getBook_SubjectByORMID(int ID) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
-			return getBook_SubjectByORMID(session, _bid);
+			return getBook_SubjectByORMID(session, ID);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -45,10 +45,10 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject loadBook_SubjectByORMID(int _bid, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static Book_Subject loadBook_SubjectByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
-			return loadBook_SubjectByORMID(session, _bid, lockMode);
+			return loadBook_SubjectByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -56,10 +56,10 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject getBook_SubjectByORMID(int _bid, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static Book_Subject getBook_SubjectByORMID(int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
-			return getBook_SubjectByORMID(session, _bid, lockMode);
+			return getBook_SubjectByORMID(session, ID, lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -67,9 +67,9 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject loadBook_SubjectByORMID(PersistentSession session, int _bid) throws PersistentException {
+	public static Book_Subject loadBook_SubjectByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Book_Subject) session.load(good_reading.Book_Subject.class, new Integer(_bid));
+			return (Book_Subject) session.load(good_reading.Book_Subject.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -77,9 +77,9 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject getBook_SubjectByORMID(PersistentSession session, int _bid) throws PersistentException {
+	public static Book_Subject getBook_SubjectByORMID(PersistentSession session, int ID) throws PersistentException {
 		try {
-			return (Book_Subject) session.get(good_reading.Book_Subject.class, new Integer(_bid));
+			return (Book_Subject) session.get(good_reading.Book_Subject.class, new Integer(ID));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -87,9 +87,9 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject loadBook_SubjectByORMID(PersistentSession session, int _bid, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static Book_Subject loadBook_SubjectByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Book_Subject) session.load(good_reading.Book_Subject.class, new Integer(_bid), lockMode);
+			return (Book_Subject) session.load(good_reading.Book_Subject.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -97,9 +97,9 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
-	public static Book_Subject getBook_SubjectByORMID(PersistentSession session, int _bid, org.hibernate.LockMode lockMode) throws PersistentException {
+	public static Book_Subject getBook_SubjectByORMID(PersistentSession session, int ID, org.hibernate.LockMode lockMode) throws PersistentException {
 		try {
-			return (Book_Subject) session.get(good_reading.Book_Subject.class, new Integer(_bid), lockMode);
+			return (Book_Subject) session.get(good_reading.Book_Subject.class, new Integer(ID), lockMode);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -359,9 +359,23 @@ public class Book_Subject implements Serializable {
 		}
 	}
 	
+	private int ID;
+	
 	private int _bid;
 	
 	private int _sid;
+	
+	public void setID(int value) {
+		this.ID = value;
+	}
+	
+	public int getID() {
+		return ID;
+	}
+	
+	public int getORMID() {
+		return getID();
+	}
 	
 	public void set_bid(int value) {
 		this._bid = value;
@@ -369,10 +383,6 @@ public class Book_Subject implements Serializable {
 	
 	public int get_bid() {
 		return _bid;
-	}
-	
-	public int getORMID() {
-		return get_bid();
 	}
 	
 	public void set_sid(int value) {
@@ -384,7 +394,7 @@ public class Book_Subject implements Serializable {
 	}
 	
 	public String toString() {
-		return String.valueOf(get_bid());
+		return String.valueOf(getID());
 	}
 	
 }

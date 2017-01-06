@@ -371,6 +371,8 @@ public class SystemUser implements Serializable {
 	
 	private int _userStatus;
 	
+	private int _ssn;
+	
 	public void set_uid(int value) {
 		this._uid = value;
 	}
@@ -381,6 +383,14 @@ public class SystemUser implements Serializable {
 	
 	public int getORMID() {
 		return get_uid();
+	}
+	
+	public void set_ssn(int value) {
+		this._ssn = value;
+	}
+	
+	public int get_ssn() {
+		return _ssn;
 	}
 	
 	public void set_firstName(String value) {

@@ -26,18 +26,18 @@ DROP TABLE IF EXISTS `book`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book` (
   `_bid` int(10) NOT NULL AUTO_INCREMENT,
-  `_title` varchar(255) NOT NULL,
-  `_language` varchar(255) NOT NULL,
+  `_title` varchar(255) DEFAULT NULL,
+  `_language` varchar(255) DEFAULT NULL,
   `_summary` varchar(255) DEFAULT NULL,
   `_TableOfContents` varchar(255) DEFAULT NULL,
-  `_viewStatus` tinyint(1) NOT NULL,
+  `_viewStatus` tinyint(1) DEFAULT NULL,
   `_price` float NOT NULL,
   `_searchLog` varchar(255) DEFAULT NULL,
   `_purchaseLog` varchar(255) DEFAULT NULL,
   `_purchaseCount` int(10) NOT NULL,
   `_bookFormat` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,9 +57,10 @@ DROP TABLE IF EXISTS `book-author`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book-author` (
-  `_bid` int(11) NOT NULL AUTO_INCREMENT,
-  `_author` varchar(255) NOT NULL,
-  PRIMARY KEY (`_bid`,`_author`)
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `_bid` int(10) NOT NULL,
+  `_author` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -80,9 +81,10 @@ DROP TABLE IF EXISTS `book-keywords`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book-keywords` (
-  `_bid` int(11) NOT NULL AUTO_INCREMENT,
-  `_keyword` varchar(255) NOT NULL,
-  PRIMARY KEY (`_bid`,`_keyword`)
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `_bid` int(10) NOT NULL,
+  `_keyword` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -103,9 +105,10 @@ DROP TABLE IF EXISTS `book-subject`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `book-subject` (
-  `_bid` int(10) NOT NULL AUTO_INCREMENT,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `_bid` int(10) NOT NULL,
   `_sid` int(10) NOT NULL,
-  PRIMARY KEY (`_bid`,`_sid`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,9 +131,9 @@ DROP TABLE IF EXISTS `bookreview`;
 CREATE TABLE `bookreview` (
   `_rid` int(10) NOT NULL AUTO_INCREMENT,
   `_bid` int(10) NOT NULL,
-  `_review` varchar(255) NOT NULL,
-  `_costumerName` varchar(255) NOT NULL,
-  `_approved` tinyint(1) NOT NULL,
+  `_review` varchar(255) DEFAULT NULL,
+  `_costumerName` varchar(255) DEFAULT NULL,
+  `_approved` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`_rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -152,9 +155,10 @@ DROP TABLE IF EXISTS `customer-book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer-book` (
-  `_uid` int(10) NOT NULL AUTO_INCREMENT,
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `_uid` int(10) NOT NULL,
   `_bid` int(10) NOT NULL,
-  PRIMARY KEY (`_uid`,`_bid`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,7 +180,7 @@ DROP TABLE IF EXISTS `domain`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `domain` (
   `_did` int(10) NOT NULL AUTO_INCREMENT,
-  `_name` varchar(255) NOT NULL,
+  `_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`_did`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -199,8 +203,8 @@ DROP TABLE IF EXISTS `subject`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subject` (
   `_sid` int(10) NOT NULL AUTO_INCREMENT,
-  `_name` varchar(255) NOT NULL,
-  `_did` int(11) NOT NULL,
+  `_name` varchar(255) DEFAULT NULL,
+  `_did` int(10) NOT NULL,
   PRIMARY KEY (`_sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -223,10 +227,11 @@ DROP TABLE IF EXISTS `systemuser`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `systemuser` (
   `_uid` int(10) NOT NULL AUTO_INCREMENT,
-  `_firstName` varchar(255) NOT NULL,
-  `_lastName` varchar(255) NOT NULL,
-  `_userName` varchar(255) NOT NULL,
-  `_password` varchar(255) NOT NULL,
+  `_ssn` int(11) NOT NULL,
+  `_firstName` varchar(255) DEFAULT NULL,
+  `_lastName` varchar(255) DEFAULT NULL,
+  `_userName` varchar(255) DEFAULT NULL,
+  `_password` varchar(255) DEFAULT NULL,
   `_userStatus` int(10) NOT NULL,
   `_accountType` int(10) DEFAULT NULL,
   `_endDate` date DEFAULT NULL,
@@ -238,11 +243,10 @@ CREATE TABLE `systemuser` (
   `_department` varchar(255) DEFAULT NULL,
   `Discriminator` varchar(255) NOT NULL,
   PRIMARY KEY (`_uid`),
-  UNIQUE KEY `_uid_UNIQUE` (`_uid`),
-  UNIQUE KEY `_userName_UNIQUE` (`_userName`),
+  UNIQUE KEY `_ssn_UNIQUE` (`_ssn`),
   UNIQUE KEY `_email_UNIQUE` (`_email`),
   UNIQUE KEY `_wid_UNIQUE` (`_wid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +255,7 @@ CREATE TABLE `systemuser` (
 
 LOCK TABLES `systemuser` WRITE;
 /*!40000 ALTER TABLE `systemuser` DISABLE KEYS */;
-INSERT INTO `systemuser` VALUES (1,'Jim','McJim','jmcjim','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'User'),(2,'Tom','Tuna','tomtuna','444321',0,1,'2004-01-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(3,'Ruth','A','rruth','1243',0,NULL,NULL,NULL,NULL,2222,'Librarian','rutha@goodreading.com','Sales','Worker');
+INSERT INTO `systemuser` VALUES (1,300994783,'Tom','Tuna','tunatom','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser'),(2,300123647,'Ruth','McRuth','ruthy88','4321',0,0,NULL,1,0,NULL,NULL,NULL,NULL,'Customer'),(3,305649264,'John','Test','john_t','1111',0,NULL,NULL,NULL,NULL,100,'Certified Editor','john_t@goodreading.com','Sales','Worker');
 /*!40000 ALTER TABLE `systemuser` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -264,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-04 22:32:51
+-- Dump completed on 2017-01-06 11:05:32

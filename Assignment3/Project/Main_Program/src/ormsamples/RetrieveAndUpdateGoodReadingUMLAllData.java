@@ -30,15 +30,15 @@ public class RetrieveAndUpdateGoodReadingUMLAllData {
 			good_reading.Worker good_ReadingWorker = good_reading.Worker.loadWorkerByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingWorker.save();
-			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.loadBook_SubjectByQuery(null, null);
-			// Update the properties of the persistent object
-			good_ReadingBook_Subject.save();
 			good_reading.Customer_Book good_ReadingCustomer_Book = good_reading.Customer_Book.loadCustomer_BookByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingCustomer_Book.save();
 			good_reading.Book_Author good_ReadingBook_Author = good_reading.Book_Author.loadBook_AuthorByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingBook_Author.save();
+			good_reading.Book_Subject good_ReadingBook_Subject = good_reading.Book_Subject.loadBook_SubjectByQuery(null, null);
+			// Update the properties of the persistent object
+			good_ReadingBook_Subject.save();
 			good_reading.Book_Keywords good_ReadingBook_Keywords = good_reading.Book_Keywords.loadBook_KeywordsByQuery(null, null);
 			// Update the properties of the persistent object
 			good_ReadingBook_Keywords.save();
@@ -93,28 +93,28 @@ public class RetrieveAndUpdateGoodReadingUMLAllData {
 		//good_ReadingWorkerCriteria._uid.eq();
 		System.out.println(good_ReadingWorkerCriteria.uniqueWorker());
 		
-		System.out.println("Retrieving Book_Subject by Book_SubjectCriteria");
-		good_reading.Book_SubjectCriteria good_ReadingBook_SubjectCriteria = new good_reading.Book_SubjectCriteria();
-		// Please uncomment the follow line and fill in parameter(s)
-		//good_ReadingBook_SubjectCriteria._bid.eq();
-		System.out.println(good_ReadingBook_SubjectCriteria.uniqueBook_Subject());
-		
 		System.out.println("Retrieving Customer_Book by Customer_BookCriteria");
 		good_reading.Customer_BookCriteria good_ReadingCustomer_BookCriteria = new good_reading.Customer_BookCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//good_ReadingCustomer_BookCriteria._uid.eq();
+		//good_ReadingCustomer_BookCriteria.ID.eq();
 		System.out.println(good_ReadingCustomer_BookCriteria.uniqueCustomer_Book());
 		
 		System.out.println("Retrieving Book_Author by Book_AuthorCriteria");
 		good_reading.Book_AuthorCriteria good_ReadingBook_AuthorCriteria = new good_reading.Book_AuthorCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//good_ReadingBook_AuthorCriteria._bid.eq();
+		//good_ReadingBook_AuthorCriteria.ID.eq();
 		System.out.println(good_ReadingBook_AuthorCriteria.uniqueBook_Author());
+		
+		System.out.println("Retrieving Book_Subject by Book_SubjectCriteria");
+		good_reading.Book_SubjectCriteria good_ReadingBook_SubjectCriteria = new good_reading.Book_SubjectCriteria();
+		// Please uncomment the follow line and fill in parameter(s)
+		//good_ReadingBook_SubjectCriteria.ID.eq();
+		System.out.println(good_ReadingBook_SubjectCriteria.uniqueBook_Subject());
 		
 		System.out.println("Retrieving Book_Keywords by Book_KeywordsCriteria");
 		good_reading.Book_KeywordsCriteria good_ReadingBook_KeywordsCriteria = new good_reading.Book_KeywordsCriteria();
 		// Please uncomment the follow line and fill in parameter(s)
-		//good_ReadingBook_KeywordsCriteria._bid.eq();
+		//good_ReadingBook_KeywordsCriteria.ID.eq();
 		System.out.println(good_ReadingBook_KeywordsCriteria.uniqueBook_Keywords());
 		
 	}
