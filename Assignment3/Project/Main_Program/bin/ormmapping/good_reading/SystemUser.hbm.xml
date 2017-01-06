@@ -15,8 +15,8 @@ License Type: Academic
 		<property name="_lastName" column="_lastName" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_userName" column="_userName" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_password" column="_password" type="string" length="255" not-null="false" lazy="false"/>
-		<property name="_userStatus" column="_userStatus" type="integer" length="10" not-null="false" lazy="false"/>
-		<subclass name="good_reading.Customer" discriminator-value="Costumer" lazy="false">
+		<property name="_userStatus" column="_userStatus" type="integer" length="10" not-null="true" lazy="false"/>
+		<subclass name="good_reading.Customer" discriminator-value="Customer" lazy="false">
 			<property name="_accountType" column="_accountType" type="integer" length="10" not-null="false" lazy="false"/>
 			<property name="_endDate" column="_endDate" type="date" not-null="false" lazy="false"/>
 			<property name="_accountStatus" column="_accountStatus" type="boolean" not-null="false" lazy="false"/>
