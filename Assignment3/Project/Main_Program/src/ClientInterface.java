@@ -21,6 +21,9 @@ import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 public class ClientInterface extends ClientConsole 
 {
@@ -85,19 +88,7 @@ public class ClientInterface extends ClientConsole
 			@Override
 			public void windowClosing(WindowEvent arg0) 
 			{
-				if (user != null)
-					if (user.get_userStatus() == 1)
-					{
-						try {
-							clientInterface.client.openConnection();
-							Message msg = new Message("LogOut");
-							msg.add(clientInterface.user.get_userName());
-							clientInterface.client.sendToServer(msg);
-						} catch (IOException e1) {
-							e1.printStackTrace();}
-						
-						clientInterface.user = null;
-					}
+				logOut();
 			}
 		});
 		frame.setBackground(UIManager.getColor("InternalFrame.borderColor"));
@@ -111,27 +102,27 @@ public class ClientInterface extends ClientConsole
         loginPanel.setLayout(null);
         
         fieldUsername = new JTextField();
-        fieldUsername.setBounds(313, 328, 173, 26);
+        fieldUsername.setBounds(230, 207, 173, 26);
         loginPanel.add(fieldUsername);
         fieldUsername.setColumns(10);
         
         fieldPassword = new JPasswordField();
-        fieldPassword.setBounds(313, 357, 173, 26);
+        fieldPassword.setBounds(230, 236, 173, 26);
         loginPanel.add(fieldPassword);
         
         JLabel lblUsername = new JLabel("Username:");
         lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblUsername.setBounds(226, 332, 90, 14);
+        lblUsername.setBounds(143, 211, 90, 14);
         loginPanel.add(lblUsername);
         
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblPassword.setBounds(226, 361, 90, 14);
+        lblPassword.setBounds(143, 240, 90, 14);
         loginPanel.add(lblPassword);
         
         lblGoodReading = new JLabel("Good Reading");
         lblGoodReading.setFont(new Font("Narkisim", Font.BOLD, 65));
-        lblGoodReading.setBounds(203, 239, 508, 88);
+        lblGoodReading.setBounds(120, 118, 508, 88);
         loginPanel.add(lblGoodReading);
         
         
@@ -174,14 +165,41 @@ public class ClientInterface extends ClientConsole
         });
         btnLogin.setFont(new Font("Tahoma", Font.BOLD, 11));
         btnLogin.setIcon(new ImageIcon(ClientInterface.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
-        btnLogin.setBounds(496, 328, 90, 55);
+        btnLogin.setBounds(413, 207, 90, 55);
         loginPanel.add(btnLogin);
-        frame.setSize(900, 700);
+        
+        JLabel lblOrSignUp = new JLabel("or sign up");
+        lblOrSignUp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        lblOrSignUp.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent arg0) 
+        	{
+        		// TODO change to signup panel here
+        		System.out.println("sign up"); 
+        	}
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		lblOrSignUp.setFont(new Font("Tahoma", Font.BOLD, 16));
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent arg0) {
+        		lblOrSignUp.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        	}
+        });
+        lblOrSignUp.setBounds(423, 266, 105, 20);
+        loginPanel.add(lblOrSignUp);
+        frame.setSize(700, 450);
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 	}
 	
 
+	// custom ClientInterface methods
+	
+	
+	/**
+	 * When this method is called, the client will wait until a message from the server is received.
+	 */
 	public void waitForServer()
 	{
 		while (!isMsgAvailable())
@@ -193,5 +211,26 @@ public class ClientInterface extends ClientConsole
 			}
 		}
 		setMsgAvailable(false);
+	}
+	
+	/**
+	 * This method is called when user logs out or when program terminates.
+	 * It sends a "LogOut" request to server.
+	 */
+	public void logOut()
+	{
+		if (user != null)
+			if (user.get_userStatus() == 1)
+			{
+				try {
+					client.openConnection();
+					Message msg = new Message("LogOut");
+					msg.add(user.get_userName());
+					client.sendToServer(msg);
+				} catch (IOException e1) {
+					e1.printStackTrace();}
+				
+				user = null;
+			}
 	}
 }

@@ -1,10 +1,6 @@
-/client/
-/common/
-/controllers/
-/MainGUI$2.class
-/ormsamples/
-/ClientInterface$1.class
-/ClientInterface$2.class
-/good_reading/
-/ormmapping/
-/ClientInterface$3.class
+/SearchBookGUI.class
+/MainGUI$4.class
+/SearchBookGUI$1.class
+/SearchBookGUI$2.class
+/SearchBookGUI$3.class
+/SearchBookGUI$4.class

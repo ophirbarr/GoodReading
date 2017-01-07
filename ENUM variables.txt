@@ -1,0 +1,22 @@
+#SystemUser
+	_userStatus:
+	0 - DISCONNECTED
+	1 - CONNECTED
+	2 - WAITING
+	3 - BLOCKED
+
+#Customer
+	_accountType:
+	0 - PER BOOK
+	1 - MONTHLY
+	2 - YEARLY
+
+	_accountStatus
+	0 - NO PERMISSION
+	1 - FULL PERMISSION
+
+	_waitingForChangeType
+	0 - FALSE
+	1 - MONTHLY
+	2 - YEARLY
+	
