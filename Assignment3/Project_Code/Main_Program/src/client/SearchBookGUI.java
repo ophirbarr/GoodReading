@@ -4,12 +4,17 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JList;
+import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -31,7 +36,7 @@ public class SearchBookGUI extends JPanel
 		this.clientInterface = clientInterface;
 		
 		setLayout(null);
-		
+
 		JPanel radioPanel = new JPanel();
 		radioPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		radioPanel.setBounds(22, 49, 100, 64);
@@ -137,5 +142,9 @@ public class SearchBookGUI extends JPanel
 		btnSearch.setBounds(272, 124, 93, 23);
 		add(btnSearch);
 		
+		JPanel imagePanel = new JPanel();
+		imagePanel.setBounds(0, 0, 727, 588);
+		imagePanel.setBackground(new Color(250, 243, 232));
+		add(imagePanel);
 	}
 }

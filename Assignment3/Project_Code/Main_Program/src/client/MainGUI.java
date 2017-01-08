@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
@@ -15,6 +17,10 @@ import javax.swing.UIManager;
 import common.Message;
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 
 public class MainGUI extends JPanel {
 	
@@ -29,17 +35,26 @@ public class MainGUI extends JPanel {
 		super();
 		this.clientInterface = clientInterface;
 		
-		setLayout(new BorderLayout(0, 0));
+		setLayout(null);
+		
+		File ImageFile = new File("src\\design\\g20543.png");
+		BufferedImage myImage = null;
+		try {
+			myImage = ImageIO.read(ImageFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ImagePanel barPanel = new ImagePanel(myImage);
+		barPanel.setBounds(0, 475, 900, 84);
+		add(barPanel);
 		
 		JPanel menu = new JPanel();
+		menu.setBounds(0, 1, 176, 587);
 		menu.setForeground(Color.BLACK);
-		menu.setBackground(new Color(153, 204, 255));
+		menu.setBackground(new Color(171, 201, 194));
 		add(menu, BorderLayout.WEST);
-		menu.setLayout(new MigLayout("", "[105px]", "[30px][23px][23px][23px][23px][23px][23px][][][][][][][]"));
+		menu.setLayout(new MigLayout("", "[150px]", "[30px][23px][23px][23px][23px][23px][23px][][][][][][][]"));
 		
-		JLabel lblGoodReading = new JLabel("Good Reading");
-		lblGoodReading.setFont(new Font("Narkisim", Font.BOLD, 16));
-		menu.add(lblGoodReading, "cell 0 0,alignx left,aligny top");
 		
 		JButton btnExit = new JButton("EXIT");
 		btnExit.addActionListener(new ActionListener() {
@@ -65,6 +80,11 @@ public class MainGUI extends JPanel {
 			}
 		});
 		
+		JLabel lblGoodReading_1 = new JLabel("Good Reading");
+		menu.add(lblGoodReading_1, "cell 0 0");
+		lblGoodReading_1.setFont(new Font("Courier New", Font.BOLD, 16));
+		lblGoodReading_1.setIcon(new ImageIcon(MainGUI.class.getResource("/design/g10628.png")));
+		
 		JButton btnSearchBook = new JButton("Search Book");
 		btnSearchBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
@@ -77,10 +97,7 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnSearchBook, "cell 0 1,alignx center,aligny top");
-		
-		JButton btnNewButton_1 = new JButton("New button");
-		menu.add(btnNewButton_1, "cell 0 2,alignx center,aligny top");
+		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
 		JButton btnNewButton_2 = new JButton("New button");
 		menu.add(btnNewButton_2, "cell 0 3,alignx center,aligny top");
@@ -91,12 +108,16 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnNewButton_3, "cell 0 4,alignx center,aligny top");
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		menu.add(btnNewButton_1, "cell 0 5,alignx center,aligny top");
 		menu.add(btnLogout, "cell 0 12,alignx center,aligny top");
 		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
 		
 		currentPanel = new SearchBookGUI(clientInterface);
+		currentPanel.setBounds(176, 1, 724, 475);
 		currentPanel.setBackground(new Color(255, 255, 255));
-		add(currentPanel, BorderLayout.CENTER);
+		add(currentPanel);
 		currentPanel.setLayout(null);
 
 	}

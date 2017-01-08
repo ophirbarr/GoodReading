@@ -92,7 +92,7 @@ public class ClientInterface extends ClientConsole
 		frame = new JFrame("Good Reading");
 		frame.setBounds(250, 70, 900, 588);
 		frame.setResizable(false);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\design\\g10629.png"));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\design\\g10628.png"));
 		frame.setFont(new Font("AdamaMF", Font.PLAIN, 16));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(UIManager.getColor("InternalFrame.borderColor"));
