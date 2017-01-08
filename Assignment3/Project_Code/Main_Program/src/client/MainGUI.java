@@ -91,7 +91,10 @@ public class MainGUI extends JPanel {
 			{
 				remove(currentPanel);
 				currentPanel = new SearchBookGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(255, 255, 255));
 				add(currentPanel);
+				currentPanel.setLayout(null);
 				currentPanel.revalidate(); // For Java 1.7 or above.
         		// frame.getContentPane().validate(); // For Java 1.6 or below.
 				currentPanel.repaint();
@@ -115,7 +118,7 @@ public class MainGUI extends JPanel {
 		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
 		
 		currentPanel = new SearchBookGUI(clientInterface);
-		currentPanel.setBounds(176, 1, 724, 475);
+		currentPanel.setBounds(176, 1, 619, 475);
 		currentPanel.setBackground(new Color(255, 255, 255));
 		add(currentPanel);
 		currentPanel.setLayout(null);

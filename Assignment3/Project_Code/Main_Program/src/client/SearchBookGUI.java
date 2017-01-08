@@ -80,9 +80,9 @@ public class SearchBookGUI extends JPanel
 		
 		JLabel lblIWantTo = new JLabel("I am looking for...");
 		lblIWantTo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblIWantTo.setBounds(22, 24, 141, 14);
+		lblIWantTo.setBounds(22, 20, 141, 23);
 		add(lblIWantTo);
-		scrollPane.setBounds(22, 198, 520, 195);
+		scrollPane.setBounds(22, 198, 520, 245);
 		add(scrollPane);
 		
 		JList list = new JList();
