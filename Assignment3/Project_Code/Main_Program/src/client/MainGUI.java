@@ -93,7 +93,10 @@ public class MainGUI extends JPanel {
 			{
 				remove(currentPanel);
 				currentPanel = new SearchBookGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(255, 255, 255));
 				add(currentPanel);
+				currentPanel.setLayout(null);
 				currentPanel.revalidate(); // For Java 1.7 or above.
         		// frame.getContentPane().validate(); // For Java 1.6 or below.
 				currentPanel.repaint();
@@ -121,6 +124,23 @@ public class MainGUI extends JPanel {
 		currentPanel.setBackground(new Color(255, 255, 255));
 		add(currentPanel);
 		currentPanel.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(250, 243, 232));
+		panel.setBounds(0, 0, 915, 626);
+		currentPanel.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblWelcome = new JLabel("Welcome,");
+		lblWelcome.setFont(new Font("Segoe Print", Font.BOLD, 45));
+		lblWelcome.setBounds(133, 188, 265, 49);
+		panel.add(lblWelcome);
+		
+		JLabel lblName = new JLabel(clientInterface.user.get_firstName() + " " + clientInterface.user.get_lastName());
+		lblName.setForeground(new Color(0, 153, 0));
+		lblName.setFont(new Font("Narkisim", Font.BOLD, 26));
+		lblName.setBounds(144, 238, 371, 21);
+		panel.add(lblName);
 
 	}
 }
