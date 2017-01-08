@@ -1,4 +1,5 @@
 package client;
+
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
@@ -36,7 +37,7 @@ public class SearchBookGUI extends JPanel
 		this.clientInterface = clientInterface;
 		
 		setLayout(null);
-
+		
 		JPanel radioPanel = new JPanel();
 		radioPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		radioPanel.setBounds(22, 49, 100, 64);
@@ -142,9 +143,11 @@ public class SearchBookGUI extends JPanel
 		btnSearch.setBounds(272, 124, 93, 23);
 		add(btnSearch);
 		
+		
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBounds(0, 0, 727, 588);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
+		
 	}
 }

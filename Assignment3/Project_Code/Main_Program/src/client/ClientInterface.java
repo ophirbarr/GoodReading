@@ -90,7 +90,7 @@ public class ClientInterface extends ClientConsole
 	 */
 	private void initialize() {
 		frame = new JFrame("Good Reading");
-		frame.setBounds(250, 70, 900, 588);
+		frame.setBounds(250, 70, 900, 617);
 		frame.setResizable(false);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\design\\g10628.png"));
 		frame.setFont(new Font("AdamaMF", Font.PLAIN, 16));
@@ -105,7 +105,7 @@ public class ClientInterface extends ClientConsole
 		});
 		
         loginPanel = new JPanel();
-        loginPanel.setBounds(new Rectangle(0, 0, 900, 588));
+        loginPanel.setBounds(new Rectangle(0, 0, 900, 617));
         loginPanel.setOpaque(true);
         loginPanel.setBackground(new Color(153, 204, 255));
 
@@ -204,9 +204,10 @@ public class ClientInterface extends ClientConsole
         lblOrSignUp.setBounds(585, 415, 105, 20);
         loginPanel.add(lblOrSignUp);
         
-        ImagePanel imagePanel = new ImagePanel(myImage);
-        imagePanel.setBounds(0, 0, 900, 588);
-        loginPanel.add(imagePanel);
+        JLabel lblbackground = new JLabel("");
+        lblbackground.setIcon(new ImageIcon(ClientInterface.class.getResource("/design/bitmap.png")));
+        lblbackground.setBounds(0, 0, 894, 588);
+        loginPanel.add(lblbackground);
 	}
 	
 

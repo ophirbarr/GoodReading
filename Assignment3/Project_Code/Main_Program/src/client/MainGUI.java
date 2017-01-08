@@ -1,4 +1,5 @@
 package client;
+
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -20,7 +21,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-
 
 public class MainGUI extends JPanel {
 	
@@ -44,9 +44,11 @@ public class MainGUI extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		ImagePanel barPanel = new ImagePanel(myImage);
-		barPanel.setBounds(0, 475, 900, 84);
-		add(barPanel);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(MainGUI.class.getResource("/design/g20543.png")));
+		label.setBounds(0, 504, 900, 84);
+		add(label);
 		
 		JPanel menu = new JPanel();
 		menu.setBounds(0, 1, 176, 587);
@@ -115,7 +117,7 @@ public class MainGUI extends JPanel {
 		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
 		
 		currentPanel = new SearchBookGUI(clientInterface);
-		currentPanel.setBounds(176, 1, 724, 475);
+		currentPanel.setBounds(176, 1, 724, 504);
 		currentPanel.setBackground(new Color(255, 255, 255));
 		add(currentPanel);
 		currentPanel.setLayout(null);
