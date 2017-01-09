@@ -119,7 +119,7 @@ public class MainGUI extends JPanel {
 		menu.add(btnLogout, "cell 0 12,alignx center,aligny top");
 		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
 		
-		currentPanel = new SearchBookGUI(clientInterface);
+		currentPanel = new JPanel();  // WELCOME SCREEN
 		currentPanel.setBounds(176, 1, 724, 504);
 		currentPanel.setBackground(new Color(255, 255, 255));
 		add(currentPanel);
@@ -133,13 +133,13 @@ public class MainGUI extends JPanel {
 		
 		JLabel lblWelcome = new JLabel("Welcome,");
 		lblWelcome.setFont(new Font("Segoe Print", Font.BOLD, 45));
-		lblWelcome.setBounds(133, 188, 265, 49);
+		lblWelcome.setBounds(79, 153, 265, 49);
 		panel.add(lblWelcome);
 		
 		JLabel lblName = new JLabel(clientInterface.user.get_firstName() + " " + clientInterface.user.get_lastName());
 		lblName.setForeground(new Color(0, 153, 0));
 		lblName.setFont(new Font("Narkisim", Font.BOLD, 26));
-		lblName.setBounds(144, 238, 371, 21);
+		lblName.setBounds(176, 208, 371, 21);
 		panel.add(lblName);
 
 	}
