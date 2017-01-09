@@ -39,6 +39,7 @@ public class ClientInterface extends ClientConsole
 	private static String host = "";
 	protected static ClientInterface clientInterface;
 	
+	
 	// GUI fields
 	protected JFrame frame;
 	protected JPanel loginPanel;
@@ -212,7 +213,6 @@ public class ClientInterface extends ClientConsole
 	
 
 	// custom ClientInterface methods
-	
 	
 	/**
 	 * When this method is called, the client will wait until a message from the server is received.

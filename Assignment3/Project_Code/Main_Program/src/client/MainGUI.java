@@ -138,7 +138,7 @@ public class MainGUI extends JPanel {
 		
 		JLabel lblName = new JLabel(clientInterface.user.get_firstName() + " " + clientInterface.user.get_lastName());
 		lblName.setForeground(new Color(0, 153, 0));
-		lblName.setFont(new Font("Narkisim", Font.BOLD, 26));
+		lblName.setFont(new Font("Times New Roman", Font.BOLD, 26));
 		lblName.setBounds(176, 208, 371, 21);
 		panel.add(lblName);
 
