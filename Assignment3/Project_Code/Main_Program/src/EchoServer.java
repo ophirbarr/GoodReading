@@ -3,6 +3,9 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+
+import org.orm.PersistentException;
+
 import common.Message;
 import ocsf.server.*;
 
@@ -64,6 +67,18 @@ public class EchoServer extends AbstractServer
 		  
 	  case "LogOut":
 		  controllers.SystemUserController.LogOut(message.getParameters().get(0));
+		  break;
+		  
+	  case "getInspectReview":
+		  try {
+			client.sendToClient(controllers.BookInspectReview.getInspectReview());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		  break;
 
 	  
