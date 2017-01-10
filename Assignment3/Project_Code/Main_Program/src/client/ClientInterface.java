@@ -22,6 +22,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -64,7 +67,7 @@ public class ClientInterface extends ClientConsole
 	    {
 	      host = "localhost";
 	    }
-	    
+	    	
 	    //ClientInterface clientInterface = new ClientInterface(host, DEFAULT_PORT);
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
