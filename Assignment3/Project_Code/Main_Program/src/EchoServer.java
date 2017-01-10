@@ -56,8 +56,9 @@ public class EchoServer extends AbstractServer
 	  
 	  Message message = (Message)msg;
 	  String action = message.getAction();
+	  String controller = message.getController();
 	  
-	  switch(action)
+	  switch(controller)
 	  {
 	  
 	  case "SystemUserController":
