@@ -1,5 +1,6 @@
+/client/
+/common/
+/controllers/
 /good_reading/
 /ormsamples/
-/client/
-/controllers/
-/common/
+/design/
