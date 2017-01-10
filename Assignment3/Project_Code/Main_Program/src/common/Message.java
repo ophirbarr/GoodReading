@@ -20,18 +20,18 @@ public class Message implements Serializable
 {
 	private String action;
 	private String controller;
-	private ArrayList<String> parameters;
+	private ArrayList<Object> parameters;
 	
 	// constructor 
 	public Message(String action, String controller)
 	{
-		parameters = new ArrayList<String>();
+		parameters = new ArrayList<Object>();
 		this.action = action; 
 		this.controller = controller;
 	}
 	
 	// add parameters with this method
-	public void add(String param)
+	public void add(Object param)
 	{
 		parameters.add(param);
 	}
@@ -46,7 +46,7 @@ public class Message implements Serializable
 		return controller;
 	}
 	
-	public ArrayList<String> getParameters()
+	public ArrayList<Object> getParameters()
 	{
 		return parameters;
 	}

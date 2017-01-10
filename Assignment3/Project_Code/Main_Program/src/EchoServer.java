@@ -66,13 +66,16 @@ public class EchoServer extends AbstractServer
 		  {
 		  case "LogIn":
 			  try {
-				client.sendToClient(controllers.SystemUserController.LogIn(message.getParameters().get(0), message.getParameters().get(1)));
+				client.sendToClient(controllers.SystemUserController.LogIn((String)message.getParameters().get(0), (String)message.getParameters().get(1)));
 				} catch (IOException e) {e.printStackTrace();}
 			  break;
 			  
 		  case "LogOut":
-			  controllers.SystemUserController.LogOut(message.getParameters().get(0));
+			  controllers.SystemUserController.LogOut((String)message.getParameters().get(0));
 			  break;
+			  
+		  case "SearchBooks":
+			  controllers.SystemUserController.SearchBooks((String)message.getParameters().get(0), (boolean[])message.getParameters().get(1));
 		  }
 		  
 		  break;

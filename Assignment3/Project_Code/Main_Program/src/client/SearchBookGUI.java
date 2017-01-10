@@ -5,20 +5,22 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
+
+import common.Message;
+import good_reading.Book;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JList;
-import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
 
 public class SearchBookGUI extends JPanel
 {
@@ -27,7 +29,8 @@ public class SearchBookGUI extends JPanel
 	JRadioButton rdbtnBook;
 	JRadioButton rdbtnReview;
 	private final JScrollPane scrollPane = new JScrollPane();
-	private JTextField textField;
+	private JTextField fieldSearch;
+	private Object[] result;
 
 	
 	public SearchBookGUI(ClientInterface clientInterface)
@@ -83,12 +86,12 @@ public class SearchBookGUI extends JPanel
 		lblIWantTo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblIWantTo.setBounds(22, 20, 141, 23);
 		add(lblIWantTo);
-		scrollPane.setBounds(22, 198, 520, 245);
+		scrollPane.setBounds(22, 183, 520, 245);
 		add(scrollPane);
 		
 		JList list = new JList();
 		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "1            MyTitle        Hebrew                59.99          Author1, Author2, Author3"};
+			String[] values = new String[] {"1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "2            MyTitle        Hebrew                59.99          Author1, Author2, Author3"};
 			public int getSize() {
 				return values.length;
 			}
@@ -98,41 +101,49 @@ public class SearchBookGUI extends JPanel
 		});
 		scrollPane.setViewportView(list);
 		
-		JLabel lblFghfghfg = new JLabel("ID          Title           Language          Price          Authors");
-		lblFghfghfg.setFont(new Font("Tahoma", Font.BOLD, 11));
-		scrollPane.setColumnHeaderView(lblFghfghfg);
+		JLabel lblResultTitle = new JLabel("ID          Title           Language          Price          Authors");
+		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
+		scrollPane.setColumnHeaderView(lblResultTitle);
 		
 		JLabel lblResults = new JLabel("Results:");
 		lblResults.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblResults.setBounds(22, 173, 100, 14);
+		lblResults.setBounds(22, 158, 100, 14);
 		add(lblResults);
 		
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panel.setBounds(174, 49, 191, 64);
-		add(panel);
+		JPanel categoryPanel = new JPanel();
+		categoryPanel.setLayout(null);
+		categoryPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		categoryPanel.setBounds(174, 49, 268, 64);
+		add(categoryPanel);
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
 		chckbxTitle.setBounds(6, 7, 74, 23);
-		panel.add(chckbxTitle);
+		categoryPanel.add(chckbxTitle);
 		
 		JCheckBox chckbxAuthor = new JCheckBox("Author");
 		chckbxAuthor.setBounds(6, 33, 74, 23);
-		panel.add(chckbxAuthor);
+		categoryPanel.add(chckbxAuthor);
 		
 		JCheckBox chckbxLanguage = new JCheckBox("Language");
-		chckbxLanguage.setBounds(82, 7, 103, 23);
-		panel.add(chckbxLanguage);
+		chckbxLanguage.setBounds(82, 7, 81, 23);
+		categoryPanel.add(chckbxLanguage);
 		
 		JCheckBox chckbxPrice = new JCheckBox("Price");
-		chckbxPrice.setBounds(82, 33, 103, 23);
-		panel.add(chckbxPrice);
+		chckbxPrice.setBounds(82, 33, 65, 23);
+		categoryPanel.add(chckbxPrice);
 		
-		textField = new JTextField();
-		textField.setBounds(22, 124, 240, 23);
-		add(textField);
-		textField.setColumns(10);
+		JCheckBox chckbxKeyword = new JCheckBox("Keyword");
+		chckbxKeyword.setBounds(164, 7, 86, 23);
+		categoryPanel.add(chckbxKeyword);
+		
+		JCheckBox chckbxSubject = new JCheckBox("Subject");
+		chckbxSubject.setBounds(164, 33, 74, 23);
+		categoryPanel.add(chckbxSubject);
+		
+		fieldSearch = new JTextField();
+		fieldSearch.setBounds(22, 124, 240, 23);
+		add(fieldSearch);
+		fieldSearch.setColumns(10);
 		
 		JLabel lblByCategory = new JLabel("By category...");
 		lblByCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -140,12 +151,51 @@ public class SearchBookGUI extends JPanel
 		add(lblByCategory);
 		
 		JButton btnSearch = new JButton("SEARCH");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				String searchString = new String(fieldSearch.getText());
+				String action = rdbtnBook.isSelected() ? new String("SearchBooks") : new String("SearchReviews");
+				Message msg = new Message("SystemUserController", action);
+				msg.add(searchString);
+				
+				boolean[] chkbx = new boolean[6]; 
+				if (chckbxTitle.isSelected())
+					chkbx[0] = true;
+				if (chckbxLanguage.isSelected())
+					chkbx[1] = true;
+				if (chckbxPrice.isSelected())
+					chkbx[2] = true;
+				if (chckbxAuthor.isSelected())
+					chkbx[3] = true;
+				if (chckbxKeyword.isSelected())
+					chkbx[4] = true;
+				if (chckbxSubject.isSelected())
+					chkbx[5] = true;
+				msg.add(chkbx);
+				
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				clientInterface.waitForServer();
+				
+				result = (Object[]) clientInterface.msgFromServer;
+				
+				
+
+
+			}
+		});
 		btnSearch.setBounds(272, 124, 93, 23);
 		add(btnSearch);
 		
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(0, 0, 727, 588);
+		imagePanel.setBounds(-15, 0, 731, 599);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		
