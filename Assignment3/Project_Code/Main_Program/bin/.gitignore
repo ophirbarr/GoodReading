@@ -1,9 +1,5 @@
-/EchoServer.class
-/client/
-/common/
 /controllers/
-/design/
 /good_reading/
-/orm.jar
-/ormmapping/
 /ormsamples/
+/client/
+/design/

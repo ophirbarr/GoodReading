@@ -43,7 +43,7 @@ public class ClientInterface extends ClientConsole
 	// GUI fields
 	protected JFrame frame;
 	protected JPanel loginPanel;
-	protected MainGUI mainPanel;
+	public MainGUI mainPanel;
 	private JTextField fieldUsername;
 	private JPasswordField fieldPassword;
 
@@ -112,15 +112,7 @@ public class ClientInterface extends ClientConsole
 
         frame.getContentPane().add(loginPanel);
         loginPanel.setLayout(null);
-        
-        File ImageFile = new File("src\\design\\bitmap.png");
-		BufferedImage myImage = null;
-		try {
-			myImage = ImageIO.read(ImageFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+        		
         fieldUsername = new JTextField();
         fieldUsername.setBounds(284, 349, 251, 36);
         loginPanel.add(fieldUsername);

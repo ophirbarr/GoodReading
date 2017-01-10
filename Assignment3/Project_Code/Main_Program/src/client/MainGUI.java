@@ -16,6 +16,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 
 import common.Message;
+import controllers.BookController;
+import good_reading.Book;
+
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
 
@@ -25,7 +28,7 @@ import javax.swing.ImageIcon;
 public class MainGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
-	private JPanel currentPanel;
+	public JPanel currentPanel;
 
 	/**
 	 * Create the panel.
@@ -36,14 +39,6 @@ public class MainGUI extends JPanel {
 		this.clientInterface = clientInterface;
 		
 		setLayout(null);
-		
-		File ImageFile = new File("src\\design\\g20543.png");
-		BufferedImage myImage = null;
-		try {
-			myImage = ImageIO.read(ImageFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(MainGUI.class.getResource("/design/g20543.png")));
@@ -94,7 +89,7 @@ public class MainGUI extends JPanel {
 				remove(currentPanel);
 				currentPanel = new SearchBookGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
-				currentPanel.setBackground(new Color(255, 255, 255));
+				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
 				currentPanel.setLayout(null);
 				currentPanel.revalidate(); // For Java 1.7 or above.
@@ -114,7 +109,12 @@ public class MainGUI extends JPanel {
 		});
 		menu.add(btnNewButton_3, "cell 0 4,alignx center,aligny top");
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("Test View Book");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BookController.ViewBook(clientInterface, new Book(325, "Harry Potter", "English", "Once upon a time...", "chapter 1 \t\t\t page 4\nchapter 2 \t\t\t page 32",true, 29, "", "", 0, ""));
+			}
+		});
 		menu.add(btnNewButton_1, "cell 0 5,alignx center,aligny top");
 		menu.add(btnLogout, "cell 0 12,alignx center,aligny top");
 		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
