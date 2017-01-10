@@ -55,35 +55,43 @@ public class EchoServer extends AbstractServer
 	  //this.sendToAllClients(msg);
 	  
 	  Message message = (Message)msg;
-	  switch(message.getAction())
+	  String action = message.getAction();
+	  
+	  switch(action)
 	  {
-	  case "LogIn":
-		  try {
-			client.sendToClient(controllers.SystemUserController.LogIn(message.getParameters().get(0), message.getParameters().get(1)));
-		} catch (IOException e) {
-			e.printStackTrace();}
-		  break;
-		  
-		  
-	  case "LogOut":
-		  controllers.SystemUserController.LogOut(message.getParameters().get(0));
-		  break;
-		  
-	  case "getInspectReview":
-		  try {
-			client.sendToClient(controllers.BookInspectReview.getInspectReview());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		  break;
-
 	  
+	  case "SystemUserController":
+		  switch(action)
+		  {
+		  case "LogIn":
+			  try {
+				client.sendToClient(controllers.SystemUserController.LogIn(message.getParameters().get(0), message.getParameters().get(1)));
+				} catch (IOException e) {e.printStackTrace();}
+			  break;
+			  
+		  case "LogOut":
+			  controllers.SystemUserController.LogOut(message.getParameters().get(0));
+			  break;
+		  }
+		  
+		  break;
+		  
+	  case "BookInspectReview":
+		  switch(action)
+		  {
+		  case "getInspectReview":
+			  try {
+				client.sendToClient(controllers.BookInspectReview.getInspectReview());
+				} catch (IOException e) {e.printStackTrace();} 
+			  catch (PersistentException e) {e.printStackTrace();}
+			  break;
+		  }
+		  break;
+		  
+	  case "BookController":
+		  
+		  break;
 	  }
-	  
   }
 
     

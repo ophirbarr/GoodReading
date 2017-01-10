@@ -36,7 +36,7 @@ public class InspectReviewGUI extends JPanel {
 		button.setFont(new Font("Dialog", Font.ITALIC, 12));
 		button.setBounds(212, 259, 69, 19);
 		add(button);
-		Message msg = new Message("getInspectReview");
+		Message msg = new Message("getInspectReview", "BookInspectReview");
 		
 		try {
 			clientInterface.client.openConnection();

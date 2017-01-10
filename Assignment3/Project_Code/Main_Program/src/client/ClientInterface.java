@@ -139,7 +139,7 @@ public class ClientInterface extends ClientConsole
         	{
         		msgFromServer = null;
 
-        		Message msg = new Message("LogIn");
+        		Message msg = new Message("LogIn", "SystemUserController");
         		msg.add(fieldUsername.getText());
         		msg.add(new String(fieldPassword.getPassword()));
         		try {
@@ -233,7 +233,7 @@ public class ClientInterface extends ClientConsole
 			{
 				try {
 					client.openConnection();
-					Message msg = new Message("LogOut");
+					Message msg = new Message("LogOut", "SystemUserController");
 					msg.add(user.get_userName());
 					client.sendToServer(msg);
 				} catch (IOException e1) {

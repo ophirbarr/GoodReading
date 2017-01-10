@@ -12,19 +12,22 @@ import java.util.ArrayList;
  * 		client.handleMessageFromClientUI(msg);
  * 
  * @param action A string code through which the server knows what action to perform
+ * @param controller A string code through which the server knows what controller the action is stored in
  * @param parameters The parameters of the above action
  *
  */
 public class Message implements Serializable
 {
 	private String action;
+	private String controller;
 	private ArrayList<String> parameters;
 	
 	// constructor 
-	public Message(String action)
+	public Message(String action, String controller)
 	{
 		parameters = new ArrayList<String>();
 		this.action = action; 
+		this.controller = controller;
 	}
 	
 	// add parameters with this method
@@ -36,6 +39,11 @@ public class Message implements Serializable
 	public String getAction()
 	{
 		return action;
+	}
+	
+	public String getController()
+	{
+		return controller;
 	}
 	
 	public ArrayList<String> getParameters()
