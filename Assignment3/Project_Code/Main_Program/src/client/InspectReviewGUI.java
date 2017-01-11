@@ -1,6 +1,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import common.Message;
@@ -18,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.ScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,14 +33,23 @@ public class InspectReviewGUI extends JPanel  {
 	private BookReview[] br ;
 	private int size;
 	private DefaultListModel model;
+	private String[] name_book;
+		
 	
 	
 	public InspectReviewGUI(ClientInterface clientInterface) {
 		super();
 		this.clientInterface = clientInterface;
 		InspectReview();
-		br = (BookReview[]) clientInterface.msgFromServer;
+		
+		//br = (BookReview[]) ((Message) clientInterface.getMsgFromServer()).getParameters().get(0);
+		
+		Message msg = (Message) clientInterface.getMsgFromServer();
+		//ArrayList<Object> arr = (ArrayList<Object>) ((Message) msg).getParameters();
+		br = (BookReview[])msg.getParameters().get(0);
+		name_book = (String[]) msg.getParameters().get(1);
 		size = br.length;
+		
 		model = new DefaultListModel();
 		setLayout(null);
 		
@@ -55,8 +66,14 @@ public class InspectReviewGUI extends JPanel  {
 		list.addListSelectionListener(new ListSelectionListener() { 
 			public void valueChanged(ListSelectionEvent e) {
 				int index = list.getSelectedIndex();
-				BookReview Review_selected = br[index];
-				
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new BookreviewGUI(clientInterface,br[index],name_book[index]);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
 				
 			}
 		});
