@@ -9,6 +9,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
 
 import common.Message;
+import controllers.BookController;
 import good_reading.Book;
 
 import javax.swing.event.ChangeEvent;
@@ -16,6 +17,7 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -71,6 +73,7 @@ public class SearchBookGUI extends JPanel
 		radioPanel.add(rdbtnBook);
 		
 		rdbtnReview = new JRadioButton("reviews");
+		rdbtnReview.setEnabled(false);
 		rdbtnReview.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -91,22 +94,14 @@ public class SearchBookGUI extends JPanel
 		lblIWantTo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblIWantTo.setBounds(331, 20, 93, 23);
 		add(lblIWantTo);
-		scrollPane.setBounds(22, 252, 520, 178);
+		scrollPane.setBounds(22, 252, 520, 182);
 		add(scrollPane);
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1            MyTitle        Hebrew                59.99          Author1, Author2, Author3", "2            MyTitle        Hebrew                59.99          Author1, Author2, Author3"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		JList<String> list = new JList<String>( listModel );
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel("ID          Title           Language          Price          Authors");
+		JLabel lblResultTitle = new JLabel(String.format("%-10s%-32s%-16s%-15s%s", "ID", "Title", "Language", "Price", "Summary"));
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -123,26 +118,68 @@ public class SearchBookGUI extends JPanel
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
 		chckbxTitle.setSelected(true);
+		chckbxTitle.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) 
+			{
+				if (chckbxTitle.isSelected()) searchTitle.setEnabled(true);
+				else searchTitle.setEnabled(false);
+			}
+		});
 		chckbxTitle.setBounds(6, 7, 74, 23);
 		categoryPanel.add(chckbxTitle);
 		
 		JCheckBox chckbxAuthor = new JCheckBox("Author");
+		chckbxAuthor.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchAuthor.setEnabled(true);
+				else searchAuthor.setEnabled(false);
+			}
+		});
 		chckbxAuthor.setBounds(6, 33, 74, 23);
 		categoryPanel.add(chckbxAuthor);
 		
 		JCheckBox chckbxLanguage = new JCheckBox("Language");
+		chckbxLanguage.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchLanguage.setEnabled(true);
+				else searchLanguage.setEnabled(false);
+			}
+		});
 		chckbxLanguage.setBounds(6, 59, 86, 23);
 		categoryPanel.add(chckbxLanguage);
 		
 		JCheckBox chckbxPrice = new JCheckBox("Price");
+		chckbxPrice.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchPrice.setEnabled(true);
+				else searchPrice.setEnabled(false);
+			}
+		});
 		chckbxPrice.setBounds(6, 86, 65, 23);
 		categoryPanel.add(chckbxPrice);
 		
 		JCheckBox chckbxKeyword = new JCheckBox("Keyword");
+		chckbxKeyword.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchKeyword.setEnabled(true);
+				else searchKeyword.setEnabled(false);
+			}
+		});
 		chckbxKeyword.setBounds(6, 112, 86, 23);
 		categoryPanel.add(chckbxKeyword);
 		
 		JCheckBox chckbxSubject = new JCheckBox("Subject");
+		chckbxSubject.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchSubject.setEnabled(true);
+				else searchSubject.setEnabled(false);
+			}
+		});
 		chckbxSubject.setBounds(6, 138, 74, 23);
 		categoryPanel.add(chckbxSubject);
 		
@@ -152,26 +189,31 @@ public class SearchBookGUI extends JPanel
 		searchTitle.setColumns(10);
 		
 		searchAuthor = new JTextField();
+		searchAuthor.setEnabled(false);
 		searchAuthor.setBounds(105, 34, 158, 20);
 		categoryPanel.add(searchAuthor);
 		searchAuthor.setColumns(10);
 		
 		searchLanguage = new JTextField();
+		searchLanguage.setEnabled(false);
 		searchLanguage.setBounds(105, 60, 158, 20);
 		categoryPanel.add(searchLanguage);
 		searchLanguage.setColumns(10);
 		
 		searchPrice = new JTextField();
+		searchPrice.setEnabled(false);
 		searchPrice.setBounds(105, 87, 158, 20);
 		categoryPanel.add(searchPrice);
 		searchPrice.setColumns(10);
 		
 		searchKeyword = new JTextField();
+		searchKeyword.setEnabled(false);
 		searchKeyword.setBounds(105, 113, 158, 20);
 		categoryPanel.add(searchKeyword);
 		searchKeyword.setColumns(10);
 		
 		searchSubject = new JTextField();
+		searchSubject.setEnabled(false);
 		searchSubject.setBounds(105, 139, 158, 20);
 		categoryPanel.add(searchSubject);
 		searchSubject.setColumns(10);
@@ -190,33 +232,33 @@ public class SearchBookGUI extends JPanel
 				Message msg = new Message(action, "SystemUserController");
 				boolean[] chkbx = new boolean[6]; 
 				String[] searchString = new String[6];
-				if (chckbxTitle.isSelected())
+				if (chckbxTitle.isSelected() && !searchTitle.getText().equals(""))
 				{
 					chkbx[0] = true;
 					searchString[0] = searchTitle.getText();
 				}
-				if (chckbxLanguage.isSelected())
+				if (chckbxLanguage.isSelected() && !searchLanguage.getText().equals(""))
 				{
 					chkbx[1] = true;
 					searchString[1] = searchLanguage.getText();
 				}
-				if (chckbxPrice.isSelected())
+				if (chckbxPrice.isSelected() && !searchPrice.getText().equals(""))
 				{
 					chkbx[2] = true;
 					searchString[2] = searchPrice.getText();
 
 				}
-				if (chckbxAuthor.isSelected())
+				if (chckbxAuthor.isSelected() && !searchAuthor.getText().equals(""))
 				{
 					chkbx[3] = true;
 					searchString[3] = searchAuthor.getText();
 				}
-				if (chckbxKeyword.isSelected())
+				if (chckbxKeyword.isSelected() && !searchKeyword.getText().equals(""))
 				{
 					chkbx[4] = true;
 					searchString[4] = searchKeyword.getText();
 				}
-				if (chckbxSubject.isSelected())
+				if (chckbxSubject.isSelected() && !searchSubject.getText().equals(""))
 				{
 					chkbx[5] = true;
 					searchString[5] = searchSubject.getText();
@@ -233,8 +275,13 @@ public class SearchBookGUI extends JPanel
 				
 				clientInterface.waitForServer();
 				
-				result = (Object[]) clientInterface.msgFromServer;
-				
+				result = (Object[]) clientInterface.getMsgFromServer();
+				listModel.clear();
+				for (Object book : result)
+				{
+					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
+				}
 				
 
 
@@ -244,13 +291,47 @@ public class SearchBookGUI extends JPanel
 		add(btnSearch);
 		
 		JButton btnShowAll = new JButton("SHOW ALL");
+		btnShowAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Message msg = new Message("GetAllBooks", "SystemUserController");
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				clientInterface.waitForServer();
+				
+				result = (Book[])clientInterface.getMsgFromServer();
+				listModel.clear();
+				for (Object book : result)
+				{
+					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
+				}
+				
+			}
+		});
 		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnShowAll.setBounds(331, 192, 100, 27);
 		add(btnShowAll);
 		
+		JButton btnDisplayBook = new JButton("DISPLAY BOOK");
+		btnDisplayBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int i = list.getSelectedIndex();
+				BookController.AddToSearchLog((Book)result[i]);
+				BookController.ViewBook(clientInterface, (Book)result[i]);
+			}
+		});
+		btnDisplayBook.setBounds(402, 445, 140, 23);
+		add(btnDisplayBook);
+		
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(-17, 11, 731, 599);
+		imagePanel.setBounds(-23, -18, 731, 599);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		

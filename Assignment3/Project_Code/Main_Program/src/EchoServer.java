@@ -80,6 +80,14 @@ public class EchoServer extends AbstractServer
 			}
 			  break;
 			  
+		  case "GetAllBooks":
+			  try {
+				client.sendToClient(controllers.SystemUserController.GetAllBooks());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			  break;
+			  
 		  }
 		  
 		  break;
