@@ -117,6 +117,7 @@ public class SearchBookGUI extends JPanel
 		add(categoryPanel);
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
+		chckbxTitle.setSelected(true);
 		chckbxTitle.setBounds(6, 7, 74, 23);
 		categoryPanel.add(chckbxTitle);
 		
@@ -156,7 +157,7 @@ public class SearchBookGUI extends JPanel
 			{
 				String searchString = new String(fieldSearch.getText());
 				String action = rdbtnBook.isSelected() ? new String("SearchBooks") : new String("SearchReviews");
-				Message msg = new Message("SystemUserController", action);
+				Message msg = new Message(action, "SystemUserController");
 				msg.add(searchString);
 				
 				boolean[] chkbx = new boolean[6]; 

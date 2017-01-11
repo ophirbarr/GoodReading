@@ -75,7 +75,13 @@ public class EchoServer extends AbstractServer
 			  break;
 			  
 		  case "SearchBooks":
-			  controllers.SystemUserController.SearchBooks((String)message.getParameters().get(0), (boolean[])message.getParameters().get(1));
+			  try {
+				client.sendToClient(controllers.SystemUserController.SearchBooks((String)message.getParameters().get(0), (boolean[])message.getParameters().get(1)));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			  
 		  }
 		  
 		  break;

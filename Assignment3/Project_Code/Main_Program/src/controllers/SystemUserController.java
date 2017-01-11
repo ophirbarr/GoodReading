@@ -1,21 +1,25 @@
 
 package controllers;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
 import good_reading.Book;
+import good_reading.Book_Author;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
 public class SystemUserController {
 	
 	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return
+	 * User is attempting to log in. If successful, the instance of SystemUser will be returned from the database and his login status updated.
+	 * @param userName User Name of the person logging in
+	 * @param password Password of the person logging in
+	 * @return instance of SystemUser if success, or null if failed to login
 	 */
 	public static SystemUser LogIn(String userName, String password)
 	{
@@ -48,7 +52,10 @@ public class SystemUserController {
 		return null;
 	}
 	
-	
+	/**
+	 * Instance of SystemUser is retrieved from DB, and the login status is then updated to DISCONNECTED.
+	 * @param userName UserName of the person logging out
+	 */
 	public static void LogOut(String userName)
 	{
 		PersistentSession session = null;
@@ -66,28 +73,63 @@ public class SystemUserController {
 		}
 	}
 	
-	
+	/**
+	 * SystemUser is attempting to search for books.
+	 * @param searchString the string input written in the search bar
+	 * @param chckbx indicated which categories were selected for search
+	 * @return result of search
+	 */
 	public static Book[] SearchBooks(String searchString, boolean[] chckbx)
 	{
-		Book[] result = null;
-		String condition = new String("");
+	    Set<Book> bookSet = new TreeSet<Book>();
+		Book[] result0, result3, result4, result5 = null;
+		String condition = new String("_viewStatus = '1' AND (");
 		
 		if (chckbx[0] == true)
-			condition = condition + "_title = '" + searchString + "' AND";
+			condition = condition + "_title = '" + searchString + "' OR ";
 		if (chckbx[1] == true)
-			condition = condition + "_language = '" + searchString + "' AND";
+			condition = condition + "_language = '" + searchString + "' OR ";
 		if (chckbx[2] == true)
-			condition = condition + "_price = '" + searchString + "' AND";
+			condition = condition + "_price = '" + searchString + "' OR ";
+		condition = condition.substring(0, condition.length() - 4);
+		condition = condition + ")";
 		
-		Book book1 = new Book();
-		book1.set_bid(1);
-		Book book2 = new Book();
-		book2.set_bid(1);
-		if (book1.equals(book2)) System.out.println("equals = 1");
-		else System.out.println("equals = 0");
+		try {
+			result0 = Book.listBookByQuery(condition, "_title");
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		
+		if (chckbx[3] == true) // search by Authors
+		{
+			try {
+				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString + "'", null);
+				condition = "_viewStatus = '1' AND (";
+				for (int i = 0; i < book_author.length; i++)
+					condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
+				condition = condition.substring(0, condition.length() - 4);
+				condition = condition + ")";
+				result3 = Book.listBookByQuery(condition, "_title");
+				
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		/*
+		 
+		 Collection<HealthMessage> collection = new ArrayList<HealthMessage>();
+		collection.addAll(Arrays.asList(healthMessages1));
+		collection.addAll(Arrays.asList(healthMessages2));
+
+		HealthMessage[] healthMessagesAll = collection.toArray(new HealthMessage[] {});
+		 
+		 
+		 
+		 */
 		
 		
-		return result;
+		return null;
 	}
 	
 	
