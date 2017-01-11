@@ -89,8 +89,14 @@ public class EchoServer extends AbstractServer
 				} catch (IOException e) {e.printStackTrace();} 
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
+		  case "EraseReview":
+			  controllers.BookInspectReview.EraseReview((int)message.getParameters().get(0));
+			  break;
+		  case "Publish":
+			  controllers.BookInspectReview.Publish((int)message.getParameters().get(0));
+			  break;
 		  }
-		  break;
+
 		  
 	  case "BookController":
 		  

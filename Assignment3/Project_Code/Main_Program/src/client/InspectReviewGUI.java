@@ -28,44 +28,48 @@ import javax.swing.AbstractListModel;
 public class InspectReviewGUI extends JPanel  {
 	
 	private ClientInterface clientInterface;
-	private BookReview[] br;
+	private BookReview[] br ;
+	private int size;
+	private DefaultListModel model;
 	
 	
 	public InspectReviewGUI(ClientInterface clientInterface) {
 		super();
 		this.clientInterface = clientInterface;
+		InspectReview();
+		br = (BookReview[]) clientInterface.msgFromServer;
+		size = br.length;
+		model = new DefaultListModel();
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(106, 57, 277, 212);
+		scrollPane.setBounds(106, 63, 277, 212);
 		add(scrollPane);
-		
 		JList list = new JList();
+		if(size==0) model.addElement("There is no reviews that waiting for approval!" ); 
+		else for(int i=0;i<size;i++)
+				model.addElement(br[i].get_review());
+		
+		list.setModel(model);
+		
 		list.addListSelectionListener(new ListSelectionListener() { 
 			public void valueChanged(ListSelectionEvent e) {
 				int index = list.getSelectedIndex();
-				if(index == 1)
-					System.out.println("row number 1 selected");
-				else if(index==2)System.out.println("row number 2 selected");
+				BookReview Review_selected = br[index];
+				
 				
 			}
 		});
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Review 1", "Review 2 "};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+	
+		
 		scrollPane.setViewportView(list);
 		
-		JLabel lblTheReviewsThat = new JLabel("The Reviews that wait to approve:");
+		JLabel lblTheReviewsThat = new JLabel("The Reviews that waiting for approve:");
 		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
-		lblTheReviewsThat.setBounds(102, 11, 295, 26);
+		lblTheReviewsThat.setBounds(106, 11, 295, 26);
 		add(lblTheReviewsThat);
-		InspectReview();
+		
 	
 	
 }
