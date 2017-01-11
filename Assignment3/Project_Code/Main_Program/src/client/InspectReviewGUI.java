@@ -42,10 +42,8 @@ public class InspectReviewGUI extends JPanel  {
 		this.clientInterface = clientInterface;
 		InspectReview();
 		
-		//br = (BookReview[]) ((Message) clientInterface.getMsgFromServer()).getParameters().get(0);
-		
+	
 		Message msg = (Message) clientInterface.getMsgFromServer();
-		//ArrayList<Object> arr = (ArrayList<Object>) ((Message) msg).getParameters();
 		br = (BookReview[])msg.getParameters().get(0);
 		name_book = (String[]) msg.getParameters().get(1);
 		size = br.length;
@@ -59,7 +57,7 @@ public class InspectReviewGUI extends JPanel  {
 		JList list = new JList();
 		if(size==0) model.addElement("There is no reviews that waiting for approval!" ); 
 		else for(int i=0;i<size;i++)
-				model.addElement(br[i].get_review());
+				model.addElement(String.format("%-50s%-40s", name_book[i],br[i].get_review()));
 		
 		list.setModel(model);
 		
@@ -81,6 +79,9 @@ public class InspectReviewGUI extends JPanel  {
 	
 		
 		scrollPane.setViewportView(list);
+		
+		JLabel lblWrittenForBook = new JLabel("Written for Book:                            The Review:");
+		scrollPane.setColumnHeaderView(lblWrittenForBook);
 		
 		JLabel lblTheReviewsThat = new JLabel("The Reviews that waiting for approve:");
 		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
