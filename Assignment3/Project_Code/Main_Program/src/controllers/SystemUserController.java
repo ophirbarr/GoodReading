@@ -118,8 +118,6 @@ public class SystemUserController {
 			}
 		}
 		
-		
-
 		if (chckbx[0])
 		{
 			collection.addAll(Arrays.asList(result0));
@@ -149,6 +147,16 @@ public class SystemUserController {
 		return result;
 	}
 	
+	
+	public static Book[] GetAllBooks()
+	{
+		try {
+			return Book.listBookByQuery("_viewStatus = '1'", "_Title");
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/*
 	public static boolean SignUp(){

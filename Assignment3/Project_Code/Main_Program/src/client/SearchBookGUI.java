@@ -73,6 +73,7 @@ public class SearchBookGUI extends JPanel
 		radioPanel.add(rdbtnBook);
 		
 		rdbtnReview = new JRadioButton("reviews");
+		rdbtnReview.setEnabled(false);
 		rdbtnReview.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -98,16 +99,6 @@ public class SearchBookGUI extends JPanel
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
-		/*list.setModel(new AbstractListModel() {
-			String[] values = new String[] {};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		*/
 		scrollPane.setViewportView(list);
 		
 		JLabel lblResultTitle = new JLabel(String.format("%-10s%-32s%-16s%-15s%s", "ID", "Title", "Language", "Price", "Summary"));
@@ -127,26 +118,68 @@ public class SearchBookGUI extends JPanel
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
 		chckbxTitle.setSelected(true);
+		chckbxTitle.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) 
+			{
+				if (chckbxTitle.isSelected()) searchTitle.setEnabled(true);
+				else searchTitle.setEnabled(false);
+			}
+		});
 		chckbxTitle.setBounds(6, 7, 74, 23);
 		categoryPanel.add(chckbxTitle);
 		
 		JCheckBox chckbxAuthor = new JCheckBox("Author");
+		chckbxAuthor.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchAuthor.setEnabled(true);
+				else searchAuthor.setEnabled(false);
+			}
+		});
 		chckbxAuthor.setBounds(6, 33, 74, 23);
 		categoryPanel.add(chckbxAuthor);
 		
 		JCheckBox chckbxLanguage = new JCheckBox("Language");
+		chckbxLanguage.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchLanguage.setEnabled(true);
+				else searchLanguage.setEnabled(false);
+			}
+		});
 		chckbxLanguage.setBounds(6, 59, 86, 23);
 		categoryPanel.add(chckbxLanguage);
 		
 		JCheckBox chckbxPrice = new JCheckBox("Price");
+		chckbxPrice.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchPrice.setEnabled(true);
+				else searchPrice.setEnabled(false);
+			}
+		});
 		chckbxPrice.setBounds(6, 86, 65, 23);
 		categoryPanel.add(chckbxPrice);
 		
 		JCheckBox chckbxKeyword = new JCheckBox("Keyword");
+		chckbxKeyword.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchKeyword.setEnabled(true);
+				else searchKeyword.setEnabled(false);
+			}
+		});
 		chckbxKeyword.setBounds(6, 112, 86, 23);
 		categoryPanel.add(chckbxKeyword);
 		
 		JCheckBox chckbxSubject = new JCheckBox("Subject");
+		chckbxSubject.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				if (chckbxAuthor.isSelected()) searchSubject.setEnabled(true);
+				else searchSubject.setEnabled(false);
+			}
+		});
 		chckbxSubject.setBounds(6, 138, 74, 23);
 		categoryPanel.add(chckbxSubject);
 		
@@ -156,26 +189,31 @@ public class SearchBookGUI extends JPanel
 		searchTitle.setColumns(10);
 		
 		searchAuthor = new JTextField();
+		searchAuthor.setEnabled(false);
 		searchAuthor.setBounds(105, 34, 158, 20);
 		categoryPanel.add(searchAuthor);
 		searchAuthor.setColumns(10);
 		
 		searchLanguage = new JTextField();
+		searchLanguage.setEnabled(false);
 		searchLanguage.setBounds(105, 60, 158, 20);
 		categoryPanel.add(searchLanguage);
 		searchLanguage.setColumns(10);
 		
 		searchPrice = new JTextField();
+		searchPrice.setEnabled(false);
 		searchPrice.setBounds(105, 87, 158, 20);
 		categoryPanel.add(searchPrice);
 		searchPrice.setColumns(10);
 		
 		searchKeyword = new JTextField();
+		searchKeyword.setEnabled(false);
 		searchKeyword.setBounds(105, 113, 158, 20);
 		categoryPanel.add(searchKeyword);
 		searchKeyword.setColumns(10);
 		
 		searchSubject = new JTextField();
+		searchSubject.setEnabled(false);
 		searchSubject.setBounds(105, 139, 158, 20);
 		categoryPanel.add(searchSubject);
 		searchSubject.setColumns(10);
@@ -253,6 +291,28 @@ public class SearchBookGUI extends JPanel
 		add(btnSearch);
 		
 		JButton btnShowAll = new JButton("SHOW ALL");
+		btnShowAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Message msg = new Message("GetAllBooks", "SystemUserController");
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				clientInterface.waitForServer();
+				
+				result = (Book[])clientInterface.getMsgFromServer();
+				listModel.clear();
+				for (Object book : result)
+				{
+					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
+				}
+				
+			}
+		});
 		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnShowAll.setBounds(331, 192, 100, 27);
 		add(btnShowAll);
