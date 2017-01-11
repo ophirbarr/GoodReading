@@ -3,9 +3,7 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
-
 import org.orm.PersistentException;
-
 import common.Message;
 import ocsf.server.*;
 
@@ -76,11 +74,11 @@ public class EchoServer extends AbstractServer
 			  
 		  case "SearchBooks":
 			  try {
-				client.sendToClient(controllers.SystemUserController.SearchBooks((String)message.getParameters().get(0), (boolean[])message.getParameters().get(1)));
+				client.sendToClient(controllers.SystemUserController.SearchBooks((boolean[])message.getParameters().get(0), (String[])message.getParameters().get(1)));
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			  break;
 			  
 		  }
 		  
