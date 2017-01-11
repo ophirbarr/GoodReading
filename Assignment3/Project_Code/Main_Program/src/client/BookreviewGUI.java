@@ -3,10 +3,12 @@ package client;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
+import common.Message;
 import good_reading.BookReview;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
@@ -19,6 +21,7 @@ public class BookreviewGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
 	private String nameBook;
+	private String message;
 	
 	public BookreviewGUI(ClientInterface clientInterface,BookReview br,String nameBook){
 		super();
@@ -26,28 +29,47 @@ public class BookreviewGUI extends JPanel {
 		this.nameBook = nameBook;
 		setLayout(null);
 		
-		JButton btnReject = new JButton("Reject");
+		JButton btnReject = new JButton("Erase");
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				message= "EraseReview";
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
-		btnReject.setBounds(332, 79, 118, 23);
+		btnReject.setBounds(332, 79, 135, 23);
 		add(btnReject);
 		
 		JButton btnPublish = new JButton("Publish");
 		btnPublish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				message = "Publish";
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
-		btnPublish.setBounds(332, 11, 118, 23);
+		btnPublish.setBounds(332, 11, 135, 23);
 		add(btnPublish);
 		
 		JButton btnPublish_partially = new JButton("Publish partially");
 		btnPublish_partially.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				message = "Publish_partially";
 			}
 		});
-		btnPublish_partially.setBounds(332, 45, 118, 23);
+		btnPublish_partially.setBounds(332, 45, 135, 23);
 		add(btnPublish_partially);
 		
 		JLabel lblTheReviewWritten = new JLabel("The review written by:");

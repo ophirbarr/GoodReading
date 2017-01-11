@@ -34,10 +34,10 @@ public class BookInspectReview {
 	
 	public static void EraseReview(int rid){
 		try {
-			String Review_num = ""+rid;
 			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
-			session.createQuery("DELETE FROM bookreview WHERE _rid = "+Review_num);
+			BookReview br = BookReview.getBookReviewByORMID(rid);
+			session.delete(br);
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
@@ -48,11 +48,13 @@ public class BookInspectReview {
 	}
 	public static void Publish(int rid){
 		BookReview br = null;
+		PersistentSession session = null;
+		
 		try {
 			br = BookReview.getBookReviewByORMID(rid);
-			br.set_approved(true);
-			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
+			br.set_approved(true);
 			session.update(br);
 			t.commit();
 			session.close();
