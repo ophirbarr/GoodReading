@@ -1,13 +1,15 @@
 
 package controllers;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
-
 import good_reading.Book;
 import good_reading.Book_Author;
 import good_reading.GoodReadingPersistentManager;
@@ -76,39 +78,39 @@ public class SystemUserController {
 	/**
 	 * SystemUser is attempting to search for books.
 	 * @param searchString the string input written in the search bar
-	 * @param chckbx indicated which categories were selected for search
+	 * @param chckbx indicates which categories were selected for search
 	 * @return result of search
 	 */
-	public static Book[] SearchBooks(String searchString, boolean[] chckbx)
+	public static Book[] SearchBooks(boolean[] chckbx, String[] searchString)
 	{
-	    Set<Book> bookSet = new TreeSet<Book>();
-		Book[] result0, result3, result4, result5 = null;
-		String condition = new String("_viewStatus = '1' AND (");
+		Collection<Book> collection = new ArrayList<Book>();
+		boolean isSetEmpty = true;
+		Book[] result0 = null, result3 = null, result4 = null, result5 = null;
 		
+		
+		String condition = new String("_viewStatus = '1' AND ");
 		if (chckbx[0] == true)
-			condition = condition + "_title = '" + searchString + "' OR ";
+			condition = condition + "_title = '" + searchString[0] + "' AND ";
 		if (chckbx[1] == true)
-			condition = condition + "_language = '" + searchString + "' OR ";
+			condition = condition + "_language = '" + searchString[1] + "' AND ";
 		if (chckbx[2] == true)
-			condition = condition + "_price = '" + searchString + "' OR ";
-		condition = condition.substring(0, condition.length() - 4);
-		condition = condition + ")";
-		
+			condition = condition + "_price = '" + searchString[2] + "' AND ";
+		condition = condition.substring(0, condition.length() - 5);	
 		try {
 			result0 = Book.listBookByQuery(condition, "_title");
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
 		
+		
 		if (chckbx[3] == true) // search by Authors
 		{
 			try {
-				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString + "'", null);
-				condition = "_viewStatus = '1' AND (";
+				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString[3] + "'", null);
+				condition = "_viewStatus = '1' AND ";
 				for (int i = 0; i < book_author.length; i++)
-					condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
-				condition = condition.substring(0, condition.length() - 4);
-				condition = condition + ")";
+					condition = condition + "_bid = '" + book_author[i].get_bid() + "' AND ";
+				condition = condition.substring(0, condition.length() - 5);
 				result3 = Book.listBookByQuery(condition, "_title");
 				
 			} catch (PersistentException e) {
@@ -116,20 +118,35 @@ public class SystemUserController {
 			}
 		}
 		
-		/*
-		 
-		 Collection<HealthMessage> collection = new ArrayList<HealthMessage>();
-		collection.addAll(Arrays.asList(healthMessages1));
-		collection.addAll(Arrays.asList(healthMessages2));
+		
 
-		HealthMessage[] healthMessagesAll = collection.toArray(new HealthMessage[] {});
-		 
-		 
-		 
-		 */
+		if (chckbx[0])
+		{
+			collection.addAll(Arrays.asList(result0));
+			isSetEmpty = false;
+		}
+		if (chckbx[3] && isSetEmpty)
+		{
+			collection.addAll(Arrays.asList(result3));
+			isSetEmpty = false;
+		}
+		else if (chckbx[3]) collection.retainAll(Arrays.asList(result3));
+		if (chckbx[4] && isSetEmpty)
+		{
+			collection.addAll(Arrays.asList(result4));
+			isSetEmpty = false;
+		}
+		else if (chckbx[4]) collection.retainAll(Arrays.asList(result4));
+		if (chckbx[5] && isSetEmpty)
+		{
+			collection.addAll(Arrays.asList(result5));
+			isSetEmpty = false;
+		}
+		else if (chckbx[5]) collection.retainAll(Arrays.asList(result5));
 		
+		Book[] result = collection.toArray(new Book[] {});
 		
-		return null;
+		return result;
 	}
 	
 	
