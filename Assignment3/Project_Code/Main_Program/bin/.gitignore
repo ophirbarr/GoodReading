@@ -1,6 +1,9 @@
+/client/
+/common/
+<<<<<<< HEAD
+=======
+/controllers/
 /good_reading/
 /ormsamples/
-/client/
-/controllers/
-/common/
+>>>>>>> origin/master
 /design/

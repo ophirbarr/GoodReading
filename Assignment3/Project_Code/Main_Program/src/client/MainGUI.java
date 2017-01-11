@@ -92,8 +92,7 @@ public class MainGUI extends JPanel {
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
 				currentPanel.setLayout(null);
-				currentPanel.revalidate(); // For Java 1.7 or above.
-        		// frame.getContentPane().validate(); // For Java 1.6 or below.
+				currentPanel.revalidate();
 				currentPanel.repaint();
 			}
 		});
@@ -102,9 +101,18 @@ public class MainGUI extends JPanel {
 		JButton btnNewButton_2 = new JButton("New button");
 		menu.add(btnNewButton_2, "cell 0 3,alignx center,aligny top");
 		
-		JButton btnNewButton_3 = new JButton("New button");
+		JButton btnNewButton_3 = new JButton("Inspect Review");
 		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				remove(currentPanel);
+				currentPanel = new InspectReviewGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
 			}
 		});
 		menu.add(btnNewButton_3, "cell 0 4,alignx center,aligny top");
