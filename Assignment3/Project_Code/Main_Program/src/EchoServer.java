@@ -102,10 +102,20 @@ public class EchoServer extends AbstractServer
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
 		  case "EraseReview":
-			  controllers.BookInspectReview.EraseReview((int)message.getParameters().get(0));
+			  try {
+				client.sendToClient(controllers.BookInspectReview.EraseReview((int)message.getParameters().get(0)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			  break;
 		  case "Publish":
-			  controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1));
+			  try {
+				client.sendToClient(controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			  break;
 		 /* case "PublishPartially":
 			  controllers.BookInspectReview.PublishPartially((Integer)message.getParameters().get(0),(String)message.getParameters().get(1));

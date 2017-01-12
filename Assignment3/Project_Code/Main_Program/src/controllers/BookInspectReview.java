@@ -32,7 +32,7 @@ public class BookInspectReview {
 		return msg;
 	}
 	
-	public static void EraseReview(int rid){
+	public static int EraseReview(int rid){
 		try {
 			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
@@ -43,10 +43,11 @@ public class BookInspectReview {
 		} catch (PersistentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
-		
+		return 1;
 	}
-	public static void Publish(int rid,String textReview){
+	public static int Publish(int rid,String textReview){
 		BookReview br = null;
 		PersistentSession session = null;
 		
@@ -63,6 +64,7 @@ public class BookInspectReview {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 1;
 	}
 	/*public static void PublishPartially(int rid,String NewReview){
 		

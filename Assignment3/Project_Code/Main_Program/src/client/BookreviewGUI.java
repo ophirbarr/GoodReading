@@ -63,23 +63,7 @@ public class BookreviewGUI extends JPanel {
 		btnPublish.setBounds(332, 11, 135, 23);
 		add(btnPublish);
 		
-		/*JButton btnPublish_partially = new JButton("Publish partially");
-		btnPublish_partially.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				message = "PublishPartially";
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
-				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate();
-				clientInterface.mainPanel.currentPanel.repaint();
-			}
-		});
-		btnPublish_partially.setBounds(332, 45, 135, 23);
-		add(btnPublish_partially);
-		*/
+		
 		JLabel lblTheReviewWritten = new JLabel("The review written by:");
 		lblTheReviewWritten.setForeground(Color.BLUE);
 		lblTheReviewWritten.setBounds(10, 15, 152, 23);
