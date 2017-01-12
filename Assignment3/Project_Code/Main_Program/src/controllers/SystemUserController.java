@@ -10,6 +10,8 @@ import java.util.TreeSet;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
+
+import common.Message;
 import good_reading.Book;
 import good_reading.Book_Author;
 import good_reading.Book_Keywords;
@@ -201,7 +203,10 @@ public class SystemUserController {
 		return result;
 	}
 	
-	
+	/**
+	 * Get a list of all books available in the catalog
+	 * @return full list of books
+	 */
 	public static Book[] GetAllBooks()
 	{
 		try {
@@ -212,14 +217,48 @@ public class SystemUserController {
 		return null;
 	}
 	
-	/*
-	public static boolean SignUp(){
+	
+	/**
+	 * Sign-up request. if successful, a new SystemUser will be added to database
+	 * @return success or failure
+	 */
+	public static boolean SignUp(ArrayList<Object> peremeters)
+	{
+		SystemUser user = null;
+		String username = (String)peremeters.get(0);
+		int ssn = (Integer)peremeters.get(4);
+		try {
+			user = SystemUser.loadSystemUserByQuery("_username = '" + username + "' OR _SSN = '" + ssn + "'", null);
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		if (user != null)
+			return false;
 		
-	}
-	public static void SearchBook(){
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			
+			user = SystemUser.createSystemUser();
+			user.set_userName(username);
+			user.set_password((String)peremeters.get(1));
+			user.set_firstName((String)peremeters.get(2));
+			user.set_lastName((String)peremeters.get(3));
+			user.set_ssn(ssn);
+			user.set_userStatus(0);
+			
+			PersistentTransaction t = session.beginTransaction();
+			session.save(user);
+			t.commit();
+
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+			return false;
+		}
 		
+		return true;
 	}
-	*/
+	
 	
 	
 	

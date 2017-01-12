@@ -88,6 +88,14 @@ public class EchoServer extends AbstractServer
 			}
 			  break;
 			  
+		  case "SignUp":
+			  try {
+				client.sendToClient(controllers.SystemUserController.SignUp(message.getParameters()));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			  break;
+			  
 		  }
 		  
 		  break;

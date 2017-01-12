@@ -45,8 +45,9 @@ public class ClientInterface extends ClientConsole
 	
 	// GUI fields
 	protected JFrame frame;
-	protected JPanel loginPanel;
+	public JPanel loginPanel;
 	public MainGUI mainPanel;
+	public SignUpGUI signUpPanel;
 	private JTextField fieldUsername;
 	private JPasswordField fieldPassword;
 
@@ -185,8 +186,12 @@ public class ClientInterface extends ClientConsole
         	@Override
         	public void mouseClicked(MouseEvent arg0) 
         	{
-        		// TODO change to signup panel here
-        		System.out.println("sign up"); 
+        		signUpPanel = new SignUpGUI(clientInterface);
+    			frame.remove(loginPanel);
+    			frame.getContentPane().add(signUpPanel);
+    			frame.revalidate(); // For Java 1.7 or above.
+    			// frame.getContentPane().validate(); // For Java 1.6 or below.
+    			frame.repaint();
         	}
         	@Override
         	public void mouseEntered(MouseEvent e) {
