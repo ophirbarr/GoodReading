@@ -17,20 +17,21 @@ public class MessageToClientGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
 	private int rid;
-	private String message;
+	private String typeMessage;
+	private String textReview;
 	
-	
-	public MessageToClientGUI(ClientInterface clientInterface,int rid,String message){
+	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage,String textReview){
 		super();
 		this.clientInterface = clientInterface;
 		this.rid = rid;
-		this.message = message;
+		this.typeMessage = typeMessage;
+		this.textReview =textReview;
 		String temp;
 		
 		setLayout(null);
-		if(message == "Publish") temp = "The Review was Published!";
-		else if(message == "EraseReview") temp = "The Review was erased!";
-		else temp = "The Review was Published partially!";
+		if(typeMessage == "Publish") temp = "The Review was Published!";
+		else temp = "The Review was erased!";
+		//else temp = "The Review was Published partially!";
 		PublishReview();
 		JLabel lblTheReviewPublished = new JLabel(temp);
 		lblTheReviewPublished.setForeground(Color.BLUE);
@@ -51,8 +52,10 @@ public class MessageToClientGUI extends JPanel {
 	}
 	public void PublishReview(){
 		
-		Message msg = new Message(message, "BookInspectReview");
+		Message msg = new Message(typeMessage, "BookInspectReview");
 		msg.add(rid);
+		if(typeMessage == "Publish") msg.add(textReview);
+		
 		clientInterface.msgFromServer = null;
 		try {
 			clientInterface.client.openConnection();

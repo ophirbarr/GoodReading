@@ -105,8 +105,11 @@ public class EchoServer extends AbstractServer
 			  controllers.BookInspectReview.EraseReview((int)message.getParameters().get(0));
 			  break;
 		  case "Publish":
-			  controllers.BookInspectReview.Publish((int)message.getParameters().get(0));
+			  controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1));
 			  break;
+		 /* case "PublishPartially":
+			  controllers.BookInspectReview.PublishPartially((Integer)message.getParameters().get(0),(String)message.getParameters().get(1));
+			  break;*/
 		  }
 
 		break;

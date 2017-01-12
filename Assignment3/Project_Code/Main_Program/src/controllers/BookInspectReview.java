@@ -46,14 +46,15 @@ public class BookInspectReview {
 		}
 		
 	}
-	public static void Publish(int rid){
+	public static void Publish(int rid,String textReview){
 		BookReview br = null;
 		PersistentSession session = null;
 		
 		try {
-			br = BookReview.getBookReviewByORMID(rid);
 			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
+			br = BookReview.getBookReviewByORMID(rid);
+			br.set_review(textReview);
 			br.set_approved(true);
 			session.update(br);
 			t.commit();
@@ -63,6 +64,27 @@ public class BookInspectReview {
 			e.printStackTrace();
 		}
 	}
+	/*public static void PublishPartially(int rid,String NewReview){
+		
+		PersistentSession session = null;
+		
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+			BookReview br = BookReview.getBookReviewByORMID(rid);
+			br.set_review(NewReview);
+			session.update(br);
+			t.commit();
+			session.close();
+			
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}*/
 	
+		
 	
 }
