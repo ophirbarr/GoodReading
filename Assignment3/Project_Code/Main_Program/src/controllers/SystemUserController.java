@@ -111,8 +111,8 @@ public class SystemUserController {
 				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString[3] + "'", null);
 				condition = "_viewStatus = '1' AND ";
 				for (int i = 0; i < book_author.length; i++)
-					condition = condition + "_bid = '" + book_author[i].get_bid() + "' AND ";
-				condition = condition.substring(0, condition.length() - 5);
+					condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
+				condition = condition.substring(0, condition.length() - 4);
 				result3 = Book.listBookByQuery(condition, "_title");
 			} catch (PersistentException e) {
 				e.printStackTrace();
@@ -124,8 +124,8 @@ public class SystemUserController {
 				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_keyword = '" + searchString[4] + "'", null);
 				condition = "_viewStatus = '1' AND ";
 				for (int i = 0; i < book_keywords.length; i++)
-					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' AND ";
-				condition = condition.substring(0, condition.length() - 5);
+					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
+				condition = condition.substring(0, condition.length() - 4);
 				result4 = Book.listBookByQuery(condition, "_title");
 			} catch (PersistentException e) {
 				e.printStackTrace();
@@ -138,7 +138,7 @@ public class SystemUserController {
 				Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_subject = '" + searchString[4] + "'", null);
 				condition = "_viewStatus = '1' AND ";
 				for (int i = 0; i < book_keywords.length; i++)
-					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' AND ";
+					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
 				condition = condition.substring(0, condition.length() - 5);
 				result4 = Book.listBookByQuery(condition, "_title");
 			} catch (PersistentException e) {

@@ -151,6 +151,7 @@ public class SearchBookGUI extends JPanel
 		categoryPanel.add(chckbxLanguage);
 		
 		JCheckBox chckbxPrice = new JCheckBox("Price");
+		chckbxPrice.setEnabled(false);
 		chckbxPrice.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -162,6 +163,7 @@ public class SearchBookGUI extends JPanel
 		categoryPanel.add(chckbxPrice);
 		
 		JCheckBox chckbxKeyword = new JCheckBox("Keyword");
+		chckbxKeyword.setEnabled(false);
 		chckbxKeyword.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
