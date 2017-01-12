@@ -15,6 +15,7 @@ import good_reading.Book_Author;
 import good_reading.Book_Keywords;
 import good_reading.Book_Subject;
 import good_reading.GoodReadingPersistentManager;
+import good_reading.Subject;
 import good_reading.SystemUser;
 
 public class SystemUserController {
@@ -88,32 +89,39 @@ public class SystemUserController {
 		Collection<Book> collection = new ArrayList<Book>();
 		boolean isSetEmpty = true;
 		Book[] result0 = null, result3 = null, result4 = null, result5 = null;
+		String condition;
 		
-		
-		String condition = new String("_viewStatus = '1' AND ");
-		if (chckbx[0] == true)
-			condition = condition + "_title = '" + searchString[0] + "' AND ";
-		if (chckbx[1] == true)
-			condition = condition + "_language = '" + searchString[1] + "' AND ";
-		if (chckbx[2] == true)
-			condition = condition + "_price = '" + searchString[2] + "' AND ";
-		condition = condition.substring(0, condition.length() - 5);	
-		try {
-			result0 = Book.listBookByQuery(condition, "_title");
-		} catch (PersistentException e) {
-			e.printStackTrace();
+		if (chckbx[0] || chckbx[1] || chckbx[2])
+		{
+			condition = "_viewStatus = '1' AND ";
+			if (chckbx[0] == true)
+				condition = condition + "_title = '" + searchString[0] + "' AND ";
+			if (chckbx[1] == true)
+				condition = condition + "_language = '" + searchString[1] + "' AND ";
+			if (chckbx[2] == true)
+				condition = condition + "_price BETWEEN " + (Double.parseDouble(searchString[2]) - 0.001) + " AND " + (Double.parseDouble(searchString[2]) + 0.001) + " AND ";
+			condition = condition.substring(0, condition.length() - 5);	
+			try {
+				result0 = Book.listBookByQuery(condition, "_title");
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
 		}
-		
 		
 		if (chckbx[3] == true) // search by Author
 		{
 			try {
 				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString[3] + "'", null);
-				condition = "_viewStatus = '1' AND ";
-				for (int i = 0; i < book_author.length; i++)
-					condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
-				condition = condition.substring(0, condition.length() - 4);
-				result3 = Book.listBookByQuery(condition, "_title");
+				if (book_author.length > 0)
+				{
+					condition = "_viewStatus = '1' AND (";
+					for (int i = 0; i < book_author.length; i++)
+						condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
+					condition = condition.substring(0, condition.length() - 4);
+					condition = condition + ")";
+					result3 = Book.listBookByQuery(condition, "_title");
+				}
+				else result3 = new Book[0];
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
@@ -122,30 +130,46 @@ public class SystemUserController {
 		{
 			try {
 				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_keyword = '" + searchString[4] + "'", null);
-				condition = "_viewStatus = '1' AND ";
-				for (int i = 0; i < book_keywords.length; i++)
-					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
-				condition = condition.substring(0, condition.length() - 4);
-				result4 = Book.listBookByQuery(condition, "_title");
+				if (book_keywords.length > 0)
+				{
+					condition = "_viewStatus = '1' AND (";
+					for (int i = 0; i < book_keywords.length; i++)
+						condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
+					condition = condition.substring(0, condition.length() - 4);
+					condition = condition + ")";
+
+					result4 = Book.listBookByQuery(condition, "_title");
+				}
+				else result4 = new Book[0];
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
 		}
-		/*
 		if (chckbx[5] == true) // search by Subject
 		{
 			try {
-				Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_subject = '" + searchString[4] + "'", null);
-				condition = "_viewStatus = '1' AND ";
-				for (int i = 0; i < book_keywords.length; i++)
-					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
-				condition = condition.substring(0, condition.length() - 5);
-				result4 = Book.listBookByQuery(condition, "_title");
+				Subject subject = Subject.loadSubjectByQuery("_name = '" + searchString[5] + "'", null);
+				if (subject != null)
+				{
+					int sid = subject.get_sid();
+					Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_sid = '" + sid + "'", null);
+					if (book_subject.length > 0)
+					{
+						condition = "_viewStatus = '1' AND (";
+						for (int i = 0; i < book_subject.length; i++)
+							condition = condition + "_bid = '" + book_subject[i].get_bid() + "' OR ";
+						condition = condition.substring(0, condition.length() - 4);
+						condition = condition + ")";
+
+						result5 = Book.listBookByQuery(condition, "_title");
+					}
+					else result5 = new Book[0];
+				}
+				else result5 = new Book[0];
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
 		}
-			*/
 			
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
