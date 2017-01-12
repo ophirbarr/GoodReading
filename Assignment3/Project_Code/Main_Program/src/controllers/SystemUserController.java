@@ -12,6 +12,8 @@ import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 import good_reading.Book;
 import good_reading.Book_Author;
+import good_reading.Book_Keywords;
+import good_reading.Book_Subject;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
@@ -103,7 +105,7 @@ public class SystemUserController {
 		}
 		
 		
-		if (chckbx[3] == true) // search by Authors
+		if (chckbx[3] == true) // search by Author
 		{
 			try {
 				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString[3] + "'", null);
@@ -112,13 +114,41 @@ public class SystemUserController {
 					condition = condition + "_bid = '" + book_author[i].get_bid() + "' AND ";
 				condition = condition.substring(0, condition.length() - 5);
 				result3 = Book.listBookByQuery(condition, "_title");
-				
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
 		}
+		if (chckbx[4] == true) // search by Keyword
+		{
+			try {
+				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_keyword = '" + searchString[4] + "'", null);
+				condition = "_viewStatus = '1' AND ";
+				for (int i = 0; i < book_keywords.length; i++)
+					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' AND ";
+				condition = condition.substring(0, condition.length() - 5);
+				result4 = Book.listBookByQuery(condition, "_title");
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+		}
+		/*
+		if (chckbx[5] == true) // search by Subject
+		{
+			try {
+				Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_subject = '" + searchString[4] + "'", null);
+				condition = "_viewStatus = '1' AND ";
+				for (int i = 0; i < book_keywords.length; i++)
+					condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' AND ";
+				condition = condition.substring(0, condition.length() - 5);
+				result4 = Book.listBookByQuery(condition, "_title");
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+		}
+			*/
+			
 		
-		if (chckbx[0])
+		if (chckbx[0] || chckbx[1] || chckbx[2])
 		{
 			collection.addAll(Arrays.asList(result0));
 			isSetEmpty = false;

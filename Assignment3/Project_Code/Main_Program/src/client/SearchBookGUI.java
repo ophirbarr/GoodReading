@@ -143,7 +143,7 @@ public class SearchBookGUI extends JPanel
 		chckbxLanguage.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
-				if (chckbxAuthor.isSelected()) searchLanguage.setEnabled(true);
+				if (chckbxLanguage.isSelected()) searchLanguage.setEnabled(true);
 				else searchLanguage.setEnabled(false);
 			}
 		});
@@ -154,7 +154,7 @@ public class SearchBookGUI extends JPanel
 		chckbxPrice.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
-				if (chckbxAuthor.isSelected()) searchPrice.setEnabled(true);
+				if (chckbxPrice.isSelected()) searchPrice.setEnabled(true);
 				else searchPrice.setEnabled(false);
 			}
 		});
@@ -165,7 +165,7 @@ public class SearchBookGUI extends JPanel
 		chckbxKeyword.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
-				if (chckbxAuthor.isSelected()) searchKeyword.setEnabled(true);
+				if (chckbxKeyword.isSelected()) searchKeyword.setEnabled(true);
 				else searchKeyword.setEnabled(false);
 			}
 		});
@@ -173,10 +173,11 @@ public class SearchBookGUI extends JPanel
 		categoryPanel.add(chckbxKeyword);
 		
 		JCheckBox chckbxSubject = new JCheckBox("Subject");
+		chckbxSubject.setEnabled(false);
 		chckbxSubject.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
-				if (chckbxAuthor.isSelected()) searchSubject.setEnabled(true);
+				if (chckbxSubject.isSelected()) searchSubject.setEnabled(true);
 				else searchSubject.setEnabled(false);
 			}
 		});
@@ -282,6 +283,7 @@ public class SearchBookGUI extends JPanel
 					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 						//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
 				}
+				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				
 
 
@@ -321,9 +323,12 @@ public class SearchBookGUI extends JPanel
 		btnDisplayBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				int i = list.getSelectedIndex();
-				BookController.AddToSearchLog((Book)result[i]);
-				BookController.ViewBook(clientInterface, (Book)result[i]);
+				if (!list.getSelectedValue().equals("There are no matching results to your query."))
+				{
+					int i = list.getSelectedIndex();
+					BookController.AddToSearchLog((Book)result[i]);
+					BookController.ViewBook(clientInterface, (Book)result[i]);
+				}
 			}
 		});
 		btnDisplayBook.setBounds(402, 445, 140, 23);
