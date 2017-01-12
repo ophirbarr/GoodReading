@@ -244,7 +244,7 @@ public class SystemUserController {
 			user.set_firstName((String)peremeters.get(2));
 			user.set_lastName((String)peremeters.get(3));
 			user.set_ssn(ssn);
-			user.set_userStatus(0);
+			user.set_userStatus(2);
 			
 			PersistentTransaction t = session.beginTransaction();
 			session.save(user);

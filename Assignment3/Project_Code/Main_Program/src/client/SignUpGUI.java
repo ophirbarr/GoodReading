@@ -96,7 +96,7 @@ public class SignUpGUI extends JPanel
 				
 				if ((boolean)clientInterface.getMsgFromServer())
 				{
-					JOptionPane.showMessageDialog(clientInterface.frame, "Success!");  
+					JOptionPane.showMessageDialog(clientInterface.frame, "A sign-up form was sent to a librarian for approval.");  
 					clientInterface.frame.remove(clientInterface.signUpPanel);
 					clientInterface.frame.getContentPane().add(clientInterface.loginPanel);
 					clientInterface.frame.revalidate();
