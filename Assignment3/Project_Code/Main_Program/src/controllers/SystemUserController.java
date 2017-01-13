@@ -97,9 +97,9 @@ public class SystemUserController {
 		{
 			condition = "_viewStatus = '1' AND ";
 			if (chckbx[0] == true)
-				condition = condition + "_title = '" + searchString[0] + "' AND ";
+				condition = condition + "_title like '%%" + searchString[0] + "%%' AND ";
 			if (chckbx[1] == true)
-				condition = condition + "_language = '" + searchString[1] + "' AND ";
+				condition = condition + "_language like '%%" + searchString[1] + "%%' AND ";
 			if (chckbx[2] == true)
 				condition = condition + "_price BETWEEN " + (Double.parseDouble(searchString[2]) - 0.001) + " AND " + (Double.parseDouble(searchString[2]) + 0.001) + " AND ";
 			condition = condition.substring(0, condition.length() - 5);	
@@ -113,7 +113,7 @@ public class SystemUserController {
 		if (chckbx[3] == true) // search by Author
 		{
 			try {
-				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author = '" + searchString[3] + "'", null);
+				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author like '%%" + searchString[3] + "%%'", null);
 				if (book_author.length > 0)
 				{
 					condition = "_viewStatus = '1' AND (";

@@ -24,6 +24,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JTextField;
 
 public class MainGUI extends JPanel {
 	
@@ -50,7 +51,7 @@ public class MainGUI extends JPanel {
 		menu.setForeground(Color.BLACK);
 		menu.setBackground(new Color(171, 201, 194));
 		add(menu, BorderLayout.WEST);
-		menu.setLayout(new MigLayout("", "[150px]", "[30px][23px][23px][23px][23px][23px][23px][][][][][][][]"));
+		menu.setLayout(new MigLayout("", "[150px]", "[30px][23px][23px][23px][23px][23px][23px][][][][][][][][][]"));
 		
 		
 		JButton btnExit = new JButton("EXIT");
@@ -124,8 +125,27 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnNewButton_1, "cell 0 5,alignx center,aligny top");
-		menu.add(btnLogout, "cell 0 12,alignx center,aligny top");
-		menu.add(btnExit, "cell 0 13,alignx center,aligny top");
+		
+		JLabel lblOnlyShowsFor = new JLabel("temp -- will only show for librarian");
+		menu.add(lblOnlyShowsFor, "cell 0 10");
+		
+		JButton btnNewButton = new JButton("Librarian Actions");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				remove(currentPanel);
+				currentPanel = new LibrarianGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+			}
+		});
+		menu.add(btnNewButton, "cell 0 11,alignx center,aligny center");
+		menu.add(btnLogout, "cell 0 14,alignx center,aligny top");
+		menu.add(btnExit, "cell 0 15,alignx center,aligny top");
 		
 		currentPanel = new JPanel();  // WELCOME SCREEN
 		currentPanel.setBounds(176, 1, 724, 504);
