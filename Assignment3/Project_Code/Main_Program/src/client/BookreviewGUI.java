@@ -16,13 +16,14 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class BookreviewGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
 	private String nameBook;
 	private String message;
-	private JTextArea Review;
+	private JTextArea theReview;
 	public BookreviewGUI(ClientInterface clientInterface,BookReview br,String nameBook){
 		super();
 		this.clientInterface = clientInterface;
@@ -34,7 +35,7 @@ public class BookreviewGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				message= "EraseReview";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message,Review.getText());
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
 				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
 				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
 				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
@@ -43,7 +44,7 @@ public class BookreviewGUI extends JPanel {
 				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
-		btnReject.setBounds(332, 45, 135, 23);
+		btnReject.setBounds(332, 75, 135, 23);
 		add(btnReject);
 		
 		JButton btnPublish = new JButton("Publish");
@@ -51,7 +52,7 @@ public class BookreviewGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				message = "Publish";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message,Review.getText());
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
 				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
 				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
 				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
@@ -79,23 +80,32 @@ public class BookreviewGUI extends JPanel {
 		lblTheReview.setBounds(10, 98, 67, 14);
 		add(lblTheReview);
 		
-		JTextArea wirttenBy = new JTextArea();
-		wirttenBy.setFont(new Font("David", Font.ITALIC, 15));
-		wirttenBy.setBounds(143, 16, 152, 23);
-		add(wirttenBy);
-		wirttenBy.setText(br.get_costumerName());
+		JLabel lblThewritten = new JLabel(br.get_costumerName());
+		lblThewritten.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+		lblThewritten.setBounds(153, 12, 167, 27);
+		add(lblThewritten);
 		
-		JTextArea bookName = new JTextArea();
-		bookName.setFont(new Font("David", Font.ITALIC, 15));
-		bookName.setBounds(98, 61, 180, 23);
-		add(bookName);
-		bookName.setText(nameBook);
+		JLabel lblNamebook = new JLabel(nameBook);
+		lblNamebook.setFont(new Font("Times New Roman", Font.ITALIC, 15));
+		lblNamebook.setBounds(95, 53, 227, 27);
+		add(lblNamebook);
 		
-		Review = new JTextArea();
-		Review.setFont(new Font("David", Font.ITALIC, 15));
-		Review.setBounds(10, 123, 430, 152);
-		add(Review);
-		Review.setText(br.get_review());
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				theReview.setEnabled(true);
+				
+			}
+		});
+		btnEdit.setBounds(332, 45, 135, 23);
+		add(btnEdit);
+		
+		theReview = new JTextArea();
+		theReview.setText(br.get_review());
+		theReview.setFont(new Font("Courier New", Font.ITALIC, 15));
+		theReview.setEditable(false);
+		theReview.setBounds(87, 109, 335, 239);
+		add(theReview);
 	
 	}
 }

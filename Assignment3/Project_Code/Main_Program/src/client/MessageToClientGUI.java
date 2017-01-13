@@ -20,7 +20,7 @@ public class MessageToClientGUI extends JPanel {
 	private String typeMessage;
 	private String textReview;
 	
-	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage,String textReview){
+	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage){
 		super();
 		this.clientInterface = clientInterface;
 		this.rid = rid;
