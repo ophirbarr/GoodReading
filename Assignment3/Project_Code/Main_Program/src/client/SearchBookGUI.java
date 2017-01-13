@@ -94,9 +94,10 @@ public class SearchBookGUI extends JPanel
 		lblIWantTo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblIWantTo.setBounds(331, 20, 93, 23);
 		add(lblIWantTo);
+		
 		scrollPane.setBounds(22, 252, 520, 182);
 		add(scrollPane);
-		
+
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
 		scrollPane.setViewportView(list);

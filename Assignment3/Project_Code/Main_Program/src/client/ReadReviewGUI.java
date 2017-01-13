@@ -13,7 +13,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import common.Message;
-import controllers.SystemUserController;
+import controllers.CostumerController;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
-public class SubmitReviewGUI extends JPanel {
+public class ReadReviewGUI extends JPanel {
 
 	private ClientInterface clientInterface;
 	private JLabel textField;
@@ -32,7 +32,7 @@ public class SubmitReviewGUI extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SubmitReviewGUI(ClientInterface clientInterface, Book book) {
+	public ReadReviewGUI(ClientInterface clientInterface, Book book) {
 		super();
 		setBounds(new Rectangle(10, -11, 727, 588));
 		setBackground(Color.WHITE);
@@ -52,17 +52,17 @@ public class SubmitReviewGUI extends JPanel {
 		imagePanel.add(textField);
 		
 		JLabel lblBookpicture = new JLabel("book_picture");
-		lblBookpicture.setIcon(new ImageIcon(SubmitReviewGUI.class.getResource("/design/harry_potter2.png")));
+		lblBookpicture.setIcon(new ImageIcon(ReadReviewGUI.class.getResource("/design/harry_potter2.png")));
 		lblBookpicture.setBounds(445, 101, 184, 270);
 		imagePanel.add(lblBookpicture);
 		
-		JButton btnReadReviews = new JButton("Read Reviews");
-		btnReadReviews.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnSubmitReview = new JButton("Submit A Review");
+		btnSubmitReview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				MainGUI mainGUI = clientInterface.mainPanel;
 				JPanel currentPanel = mainGUI.currentPanel;
 				mainGUI.remove(currentPanel);
-				currentPanel = new ReadReviewGUI(clientInterface, book);
+				currentPanel = new SubmitReviewGUI(clientInterface, book);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(255, 255, 255));
 				mainGUI.add(currentPanel);
@@ -72,33 +72,15 @@ public class SubmitReviewGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		btnReadReviews.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnReadReviews.setBounds(471, 426, 135, 29);
-		imagePanel.add(btnReadReviews);
-		
-		JButton btnSubmitReview = new JButton("Submit Review");
-		btnSubmitReview.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				BookReview review = new BookReview(book.get_bid(),textField.getText(),book.get_title(),false);
-				Message msg = new Message("SubmitReview", "CustomerController");
-				msg.add(review);
-				try {
-					clientInterface.client.openConnection();
-					clientInterface.client.sendToServer(msg);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnSubmitReview.setBounds(145, 426, 135, 29);
+		btnSubmitReview.setBounds(471, 426, 135, 29);
 		imagePanel.add(btnSubmitReview);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(32, 103, 371, 270);
 		imagePanel.add(textArea);
 		
-		JLabel lblBookReview = new JLabel("Submit Book Review: ");
+		JLabel lblBookReview = new JLabel("Read Book Review: ");
 		lblBookReview.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblBookReview.setBounds(32, 56, 184, 20);
 		imagePanel.add(lblBookReview);
