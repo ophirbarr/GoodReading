@@ -23,6 +23,14 @@ public class BookReview implements Serializable {
 	public BookReview() {
 	}
 	
+	public BookReview(int _bid, String _review, String _costumerName, boolean _approved) {
+		super();
+		this._bid = _bid;
+		this._review = _review;
+		this._costumerName = _costumerName;
+		this._approved = _approved;
+	}
+	
 	public static BookReview loadBookReviewByORMID(int _rid) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
@@ -367,7 +375,7 @@ public class BookReview implements Serializable {
 	
 	private String _costumerName;
 	
-	private Boolean _approved;
+	private boolean _approved;
 	
 	public void set_rid(int value) {
 		this._rid = value;
@@ -406,14 +414,10 @@ public class BookReview implements Serializable {
 	}
 	
 	public void set_approved(boolean value) {
-		set_approved(new Boolean(value));
-	}
-	
-	public void set_approved(Boolean value) {
 		this._approved = value;
 	}
 	
-	public Boolean get_approved() {
+	public boolean get_approved() {
 		return _approved;
 	}
 	

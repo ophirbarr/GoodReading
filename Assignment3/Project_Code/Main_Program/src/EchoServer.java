@@ -5,6 +5,10 @@
 import java.io.*;
 import org.orm.PersistentException;
 import common.Message;
+import controllers.BookController;
+import controllers.CostumerController;
+import good_reading.Book;
+import good_reading.BookReview;
 import ocsf.server.*;
 
 /**
@@ -133,7 +137,25 @@ public class EchoServer extends AbstractServer
 		break;
 		
 	  case "BookController":
+		  switch(action)
+		  {
+		  case "AddToSearchLog":
+			  BookController.AddToSearchLog((Book)message.getParameters().get(0));
+			  break;
+			  
+		  case "AddToPurchaseLog":
+			  BookController.AddToPurchaseLog((Book)message.getParameters().get(0));
+			  break;
+		  }
+		  break;
 		  
+		  
+	  case "CostumerController":
+		  switch(action)
+		  {
+		  case "SubmitReview":
+			  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+		  }
 		  break;
 	  }
   }
