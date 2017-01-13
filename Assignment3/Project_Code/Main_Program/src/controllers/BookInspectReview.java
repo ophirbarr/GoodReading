@@ -32,11 +32,15 @@ public class BookInspectReview {
 		return msg;
 	}
 	
-	public static int EraseReview(int rid){
+	public static int RejectReview(int rid){
+		
+		BookReview br = null;
+		PersistentSession session = null;
+		
 		try {
-			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
-			BookReview br = BookReview.getBookReviewByORMID(rid);
+			br = BookReview.getBookReviewByORMID(rid);
 			session.delete(br);
 			t.commit();
 			session.close();
@@ -66,26 +70,7 @@ public class BookInspectReview {
 		}
 		return 1;
 	}
-	/*public static void PublishPartially(int rid,String NewReview){
-		
-		PersistentSession session = null;
-		
-		try {
-			session = GoodReadingPersistentManager.instance().getSession();
-			PersistentTransaction t = session.beginTransaction();
-			BookReview br = BookReview.getBookReviewByORMID(rid);
-			br.set_review(NewReview);
-			session.update(br);
-			t.commit();
-			session.close();
-			
-		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}*/
+	
 	
 		
 	

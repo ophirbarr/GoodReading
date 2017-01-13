@@ -20,7 +20,7 @@ public class MessageToClientGUI extends JPanel {
 	private String typeMessage;
 	private String textReview;
 	
-	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage){
+	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage,String textReview){
 		super();
 		this.clientInterface = clientInterface;
 		this.rid = rid;
@@ -30,9 +30,9 @@ public class MessageToClientGUI extends JPanel {
 		
 		setLayout(null);
 		if(typeMessage == "Publish") temp = "The Review was Published!";
-		else temp = "The Review was erased!";
-		//else temp = "The Review was Published partially!";
-		PublishReview();
+		else temp = "The Review was Rejected!";
+		
+		Publish_Reject_Review();
 		JLabel lblTheReviewPublished = new JLabel(temp);
 		lblTheReviewPublished.setForeground(Color.BLUE);
 		lblTheReviewPublished.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
@@ -42,6 +42,14 @@ public class MessageToClientGUI extends JPanel {
 		Button button = new Button("OK");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new InspectReviewGUI(clientInterface);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
 		button.setFont(new Font("Dialog", Font.BOLD | Font.ITALIC, 15));
@@ -50,7 +58,7 @@ public class MessageToClientGUI extends JPanel {
 		
 		
 	}
-	public void PublishReview(){
+	public void Publish_Reject_Review(){
 		
 		Message msg = new Message(typeMessage, "BookInspectReview");
 		msg.add(rid);
@@ -63,9 +71,9 @@ public class MessageToClientGUI extends JPanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		//System.out.println("debug1");
+		
 		clientInterface.waitForServer();
-	//	System.out.println("debug2");
+		
 			
 	}
 }

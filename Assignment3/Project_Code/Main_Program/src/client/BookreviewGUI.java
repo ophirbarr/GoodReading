@@ -22,20 +22,22 @@ public class BookreviewGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
 	private String nameBook;
-	private String message;
+	private String typeMessage;
 	private JTextArea theReview;
+	private JButton btnEdit;
+	
 	public BookreviewGUI(ClientInterface clientInterface,BookReview br,String nameBook){
 		super();
 		this.clientInterface = clientInterface;
 		this.nameBook = nameBook;
 		setLayout(null);
 		
-		JButton btnReject = new JButton("Erase");
+		JButton btnReject = new JButton("Reject");
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				message= "EraseReview";
+				typeMessage= "RejectReview";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),typeMessage,theReview.getText());
 				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
 				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
 				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
@@ -50,9 +52,9 @@ public class BookreviewGUI extends JPanel {
 		JButton btnPublish = new JButton("Publish");
 		btnPublish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				message = "Publish";
+				typeMessage = "Publish";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),message);
+				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),typeMessage,theReview.getText());
 				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
 				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
 				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
@@ -90,10 +92,11 @@ public class BookreviewGUI extends JPanel {
 		lblNamebook.setBounds(95, 53, 227, 27);
 		add(lblNamebook);
 		
-		JButton btnEdit = new JButton("Edit");
+		btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				theReview.setEnabled(true);
+				theReview.setEditable(true);
+				btnEdit.setEnabled(false);
 				
 			}
 		});

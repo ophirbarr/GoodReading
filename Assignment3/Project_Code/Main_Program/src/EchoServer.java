@@ -6,7 +6,7 @@ import java.io.*;
 import org.orm.PersistentException;
 import common.Message;
 import controllers.BookController;
-import controllers.CostumerController;
+//avihai  import controllers.CostumerController;
 import good_reading.Book;
 import good_reading.BookReview;
 import ocsf.server.*;
@@ -113,14 +113,15 @@ public class EchoServer extends AbstractServer
 				} catch (IOException e) {e.printStackTrace();} 
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
-		  case "EraseReview":
-			  try {
-				client.sendToClient(controllers.BookInspectReview.EraseReview((int)message.getParameters().get(0)));
-			} catch (IOException e) {
+		  case "RejectReview":
+				  try {
+					  System.out.println("111");
+					  client.sendToClient(controllers.BookInspectReview.RejectReview((int)message.getParameters().get(0)));
+						} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			  break;
+							e.printStackTrace();
+						}
+				  break;
 		  case "Publish":
 			  try {
 				client.sendToClient(controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
@@ -129,9 +130,7 @@ public class EchoServer extends AbstractServer
 				e.printStackTrace();
 			}
 			  break;
-		 /* case "PublishPartially":
-			  controllers.BookInspectReview.PublishPartially((Integer)message.getParameters().get(0),(String)message.getParameters().get(1));
-			  break;*/
+		 
 		  }
 
 		break;
@@ -154,7 +153,7 @@ public class EchoServer extends AbstractServer
 		  switch(action)
 		  {
 		  case "SubmitReview":
-			  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+		  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
 		  }
 		  break;
 	  }
