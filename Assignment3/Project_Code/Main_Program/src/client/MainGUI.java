@@ -99,9 +99,6 @@ public class MainGUI extends JPanel {
 		});
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		menu.add(btnNewButton_2, "cell 0 3,alignx center,aligny top");
-		
 		JButton btnNewButton_3 = new JButton("Inspect Review");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
@@ -144,6 +141,22 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnNewButton, "cell 0 11,alignx center,aligny center");
+		
+		JButton btnNewButton_2 = new JButton("Manage Database");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				remove(currentPanel);
+				currentPanel = new ManageDatabaseGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+			}
+		});
+		menu.add(btnNewButton_2, "cell 0 12,alignx center,aligny top");
 		menu.add(btnLogout, "cell 0 14,alignx center,aligny top");
 		menu.add(btnExit, "cell 0 15,alignx center,aligny top");
 		

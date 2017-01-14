@@ -248,53 +248,43 @@ public class SearchBookGUI extends JPanel
 				Message msg = new Message(action, "SystemUserController");
 				boolean[] chkbx = new boolean[7]; 
 				String[] searchString = new String[7];
-				if (chckbxTitle.isSelected() && !searchTitle.getText().equals(""))
-				{
+				if (chckbxTitle.isSelected() && !searchTitle.getText().equals("")){
 					chkbx[0] = true;
 					searchString[0] = searchTitle.getText();
 				}
-				if (chckbxLanguage.isSelected() && !searchLanguage.getText().equals(""))
-				{
+				if (chckbxLanguage.isSelected() && !searchLanguage.getText().equals("")){
 					chkbx[1] = true;
 					searchString[1] = searchLanguage.getText();
 				}
-				if (chckbxPrice.isSelected() && !searchPrice.getText().equals(""))
-				{
+				if (chckbxPrice.isSelected() && !searchPrice.getText().equals("")){
 					chkbx[2] = true;
 					searchString[2] = searchPrice.getText();
-
 				}
-				if (chckbxAuthor.isSelected() && !searchAuthor.getText().equals(""))
-				{
+				if (chckbxAuthor.isSelected() && !searchAuthor.getText().equals("")){
 					chkbx[3] = true;
 					searchString[3] = searchAuthor.getText();
 				}
-				if (chckbxKeyword.isSelected() && !searchKeyword.getText().equals(""))
-				{
+				if (chckbxKeyword.isSelected() && !searchKeyword.getText().equals("")){
 					chkbx[4] = true;
 					searchString[4] = searchKeyword.getText();
 				}
-				if (chckbxSubject.isSelected() && !searchSubject.getText().equals(""))
-				{
+				if (chckbxSubject.isSelected() && !searchSubject.getText().equals("")){
 					chkbx[5] = true;
 					searchString[5] = searchSubject.getText();
 				}
-				if (chckbxDomain.isSelected() && !searchDomain.getText().equals(""))
-				{
+				if (chckbxDomain.isSelected() && !searchDomain.getText().equals("")){
 					chkbx[6] = true;
 					searchString[6] = searchDomain.getText();
 				}
 				msg.add(chkbx);
 				msg.add(searchString);
-				msg.add(true); // search in catalog
-				
+				msg.add(true); // search in catalog	
 				try {
 					clientInterface.client.openConnection();
 					clientInterface.client.sendToServer(msg);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
 				clientInterface.waitForServer();
 				
 				result = (Object[]) clientInterface.getMsgFromServer();
@@ -305,9 +295,6 @@ public class SearchBookGUI extends JPanel
 						//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
 				}
 				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
-				
-
-
 			}
 		});
 		btnSearch.setBounds(331, 124, 100, 57);
