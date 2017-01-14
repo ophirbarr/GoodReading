@@ -7,16 +7,13 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
-
 import common.Message;
 import controllers.BookController;
 import good_reading.Book;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JList;
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -38,6 +35,7 @@ public class SearchBookGUI extends JPanel
 	private JTextField searchPrice;
 	private JTextField searchKeyword;
 	private JTextField searchSubject;
+	private JTextField searchDomain;
 
 	
 	public SearchBookGUI(ClientInterface clientInterface)
@@ -95,7 +93,7 @@ public class SearchBookGUI extends JPanel
 		lblIWantTo.setBounds(331, 20, 93, 23);
 		add(lblIWantTo);
 		
-		scrollPane.setBounds(22, 252, 520, 182);
+		scrollPane.setBounds(23, 275, 520, 152);
 		add(scrollPane);
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
@@ -108,13 +106,13 @@ public class SearchBookGUI extends JPanel
 		
 		JLabel lblResults = new JLabel("Results:");
 		lblResults.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblResults.setBounds(22, 227, 100, 14);
+		lblResults.setBounds(23, 250, 100, 14);
 		add(lblResults);
 		
 		JPanel categoryPanel = new JPanel();
 		categoryPanel.setLayout(null);
 		categoryPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		categoryPanel.setBounds(23, 49, 282, 171);
+		categoryPanel.setBounds(23, 49, 282, 196);
 		add(categoryPanel);
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
@@ -184,6 +182,17 @@ public class SearchBookGUI extends JPanel
 		chckbxSubject.setBounds(6, 138, 74, 23);
 		categoryPanel.add(chckbxSubject);
 		
+		JCheckBox chckbxDomain = new JCheckBox("Domain");
+		chckbxDomain.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) 
+			{
+				if (chckbxDomain.isSelected()) searchDomain.setEnabled(true);
+				else searchDomain.setEnabled(false);
+			}
+		});
+		chckbxDomain.setBounds(6, 164, 97, 23);
+		categoryPanel.add(chckbxDomain);
+		
 		searchTitle = new JTextField();
 		searchTitle.setBounds(105, 8, 158, 20);
 		categoryPanel.add(searchTitle);
@@ -219,6 +228,12 @@ public class SearchBookGUI extends JPanel
 		categoryPanel.add(searchSubject);
 		searchSubject.setColumns(10);
 		
+		searchDomain = new JTextField();
+		searchDomain.setEnabled(false);
+		searchDomain.setBounds(105, 165, 158, 20);
+		categoryPanel.add(searchDomain);
+		searchDomain.setColumns(10);
+		
 		JLabel lblByCategory = new JLabel("Search by category...");
 		lblByCategory.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblByCategory.setBounds(22, 18, 187, 27);
@@ -231,8 +246,8 @@ public class SearchBookGUI extends JPanel
 			{
 				String action = rdbtnBook.isSelected() ? new String("SearchBooks") : new String("SearchReviews");
 				Message msg = new Message(action, "SystemUserController");
-				boolean[] chkbx = new boolean[6]; 
-				String[] searchString = new String[6];
+				boolean[] chkbx = new boolean[7]; 
+				String[] searchString = new String[7];
 				if (chckbxTitle.isSelected() && !searchTitle.getText().equals(""))
 				{
 					chkbx[0] = true;
@@ -264,8 +279,14 @@ public class SearchBookGUI extends JPanel
 					chkbx[5] = true;
 					searchString[5] = searchSubject.getText();
 				}
+				if (chckbxDomain.isSelected() && !searchDomain.getText().equals(""))
+				{
+					chkbx[6] = true;
+					searchString[6] = searchDomain.getText();
+				}
 				msg.add(chkbx);
 				msg.add(searchString);
+				msg.add(true); // search in catalog
 				
 				try {
 					clientInterface.client.openConnection();
@@ -297,6 +318,7 @@ public class SearchBookGUI extends JPanel
 			public void actionPerformed(ActionEvent e) 
 			{
 				Message msg = new Message("GetAllBooks", "SystemUserController");
+				msg.add(true); // search in catalog
 				try {
 					clientInterface.client.openConnection();
 					clientInterface.client.sendToServer(msg);
@@ -341,12 +363,12 @@ public class SearchBookGUI extends JPanel
 				}
 			}
 		});
-		btnDisplayBook.setBounds(402, 445, 140, 23);
+		btnDisplayBook.setBounds(403, 438, 140, 23);
 		add(btnDisplayBook);
 		
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(-23, -18, 731, 599);
+		imagePanel.setBounds(-33, -14, 731, 599);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		

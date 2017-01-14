@@ -16,6 +16,8 @@ import good_reading.Book;
 import good_reading.Book_Author;
 import good_reading.Book_Keywords;
 import good_reading.Book_Subject;
+import good_reading.Customer;
+import good_reading.Domain;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.Subject;
 import good_reading.SystemUser;
@@ -84,18 +86,19 @@ public class SystemUserController {
 	 * SystemUser is attempting to search for books.
 	 * @param searchString the string input written in the search bar
 	 * @param chckbx indicates which categories were selected for search
+	 * @param catalog Whether we search in entire DB (false), or just in catalog (true)
 	 * @return result of search
 	 */
-	public static Book[] SearchBooks(boolean[] chckbx, String[] searchString)
+	public static Book[] SearchBooks(boolean[] chckbx, String[] searchString, boolean catalog)
 	{
 		Collection<Book> collection = new ArrayList<Book>();
 		boolean isSetEmpty = true;
-		Book[] result0 = null, result3 = null, result4 = null, result5 = null;
+		Book[] result0 = null, result3 = null, result4 = null, result5 = null, result6 = null;
 		String condition;
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
 		{
-			condition = "_viewStatus = '1' AND ";
+			condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND ";
 			if (chckbx[0] == true)
 				condition = condition + "_title like '%%" + searchString[0] + "%%' AND ";
 			if (chckbx[1] == true)
@@ -116,7 +119,7 @@ public class SystemUserController {
 				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author like '%%" + searchString[3] + "%%'", null);
 				if (book_author.length > 0)
 				{
-					condition = "_viewStatus = '1' AND (";
+					condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
 					for (int i = 0; i < book_author.length; i++)
 						condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
 					condition = condition.substring(0, condition.length() - 4);
@@ -134,7 +137,7 @@ public class SystemUserController {
 				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_keyword = '" + searchString[4] + "'", null);
 				if (book_keywords.length > 0)
 				{
-					condition = "_viewStatus = '1' AND (";
+					condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
 					for (int i = 0; i < book_keywords.length; i++)
 						condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
 					condition = condition.substring(0, condition.length() - 4);
@@ -157,7 +160,7 @@ public class SystemUserController {
 					Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_sid = '" + sid + "'", null);
 					if (book_subject.length > 0)
 					{
-						condition = "_viewStatus = '1' AND (";
+						condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
 						for (int i = 0; i < book_subject.length; i++)
 							condition = condition + "_bid = '" + book_subject[i].get_bid() + "' OR ";
 						condition = condition.substring(0, condition.length() - 4);
@@ -168,6 +171,41 @@ public class SystemUserController {
 					else result5 = new Book[0];
 				}
 				else result5 = new Book[0];
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+		}
+		if (chckbx[6] == true) // search by Domain
+		{
+			try {
+				Domain domain = Domain.loadDomainByQuery("_name = '" + searchString[6] + "'", null);
+				Subject[] subject;
+				Book_Subject[] book_subject;
+				if (domain != null)
+				{
+					subject = Subject.listSubjectByQuery("_did = '" + domain.get_did() + "'", "_name");
+					if (subject.length > 0)
+					{
+						// get book_subject's
+						condition = "";
+						for (int i = 0; i < subject.length; i++)
+							condition = condition + "_sid = '" + subject[i].get_sid() + "' OR ";
+						condition = condition.substring(0, condition.length() - 4);
+						book_subject = Book_Subject.listBook_SubjectByQuery(condition, null);
+						
+						// get books
+						condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
+						for (int i = 0; i < book_subject.length; i++)
+							condition = condition + "_bid = '" + book_subject[i].get_bid() + "' OR ";
+						condition = condition.substring(0, condition.length() - 4);
+						condition = condition + ")";
+
+						result6 = Book.listBookByQuery(condition, "_title");
+					}
+					else result6 = new Book[0];
+				}
+				else result6 = new Book[0];
+				
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
@@ -197,6 +235,12 @@ public class SystemUserController {
 			isSetEmpty = false;
 		}
 		else if (chckbx[5]) collection.retainAll(Arrays.asList(result5));
+		if (chckbx[6] && isSetEmpty)
+		{
+			collection.addAll(Arrays.asList(result6));
+			isSetEmpty = false;
+		}
+		else if (chckbx[6]) collection.retainAll(Arrays.asList(result6));
 		
 		Book[] result = collection.toArray(new Book[] {});
 		
@@ -207,10 +251,10 @@ public class SystemUserController {
 	 * Get a list of all books available in the catalog
 	 * @return full list of books
 	 */
-	public static Book[] GetAllBooks()
+	public static Book[] GetAllBooks(boolean catalog)
 	{
 		try {
-			return Book.listBookByQuery("_viewStatus = '1'", "_Title");
+			return Book.listBookByQuery("_viewStatus = '" + (catalog ? "1" : "0") + "'", "_Title");
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
@@ -257,6 +301,45 @@ public class SystemUserController {
 		}
 		
 		return true;
+	}
+	
+	
+	// UNTESTED -- WAITING FOR GUI IMPLEMENTATION
+	
+	/**
+	 * Create a locked(=cannot purchase) Customer and replace it with given SystemUser in DB.
+	 * @param user the user wanting to open an account
+	 * @return an instance of the new Customer, or null if failure
+	 */
+	public static Customer OpenAccount(SystemUser user)
+	{
+		Customer customer = Customer.createCustomer();
+		customer.set_ssn(user.get_ssn());
+		customer.set_firstName(user.get_firstName());
+		customer.set_lastName(user.get_lastName());
+		customer.set_userName(user.get_userName());
+		customer.set_password(user.get_password());
+		customer.set_userStatus(user.get_userStatus());
+		
+		customer.set_accountType(0);
+		customer.set_accountStatus(false);;    // cannot make purchases
+		customer.set_waitingForChangeType(3);  // awaiting approval
+
+		
+		PersistentSession session;
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+			session.delete(user);
+			session.save(customer);
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return customer;
 	}
 	
 	
