@@ -286,6 +286,7 @@ public class SearchBookGUI extends JPanel
 				}
 				msg.add(chkbx);
 				msg.add(searchString);
+				msg.add(true); // search in catalog
 				
 				try {
 					clientInterface.client.openConnection();
@@ -317,6 +318,7 @@ public class SearchBookGUI extends JPanel
 			public void actionPerformed(ActionEvent e) 
 			{
 				Message msg = new Message("GetAllBooks", "SystemUserController");
+				msg.add(true); // search in catalog
 				try {
 					clientInterface.client.openConnection();
 					clientInterface.client.sendToServer(msg);

@@ -78,7 +78,7 @@ public class EchoServer extends AbstractServer
 			  
 		  case "SearchBooks":
 			  try {
-				client.sendToClient(controllers.SystemUserController.SearchBooks((boolean[])message.getParameters().get(0), (String[])message.getParameters().get(1)));
+				client.sendToClient(controllers.SystemUserController.SearchBooks((boolean[])message.getParameters().get(0), (String[])message.getParameters().get(1), (boolean)message.getParameters().get(2)));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -86,7 +86,7 @@ public class EchoServer extends AbstractServer
 			  
 		  case "GetAllBooks":
 			  try {
-				client.sendToClient(controllers.SystemUserController.GetAllBooks());
+				client.sendToClient(controllers.SystemUserController.GetAllBooks((boolean)message.getParameters().get(0)));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -153,7 +153,7 @@ public class EchoServer extends AbstractServer
 		  switch(action)
 		  {
 		  case "SubmitReview":
-		  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+	//	  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
 		  }
 		  break;
 	  }
