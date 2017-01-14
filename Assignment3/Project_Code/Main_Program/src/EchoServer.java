@@ -103,26 +103,27 @@ public class EchoServer extends AbstractServer
 		  }
 		  
 		  break;
-		  
+		  /**
+		   * Book Review Controller
+		   */
 	  case "BookInspectReview":
 		  switch(action)
 		  {
-		  case "getInspectReview":
+		  case "getInspectReview":  //Sends to client a list of all awaiting approval reviews
 			  try {
 				client.sendToClient(controllers.BookInspectReview.getInspectReview());
 				} catch (IOException e) {e.printStackTrace();} 
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
-		  case "RejectReview":
+		  case "RejectReview": //Getting the id review and delete it from database
 				  try {
-					  System.out.println("111");
 					  client.sendToClient(controllers.BookInspectReview.RejectReview((int)message.getParameters().get(0)));
 						} catch (IOException e) {
 				// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 				  break;
-		  case "Publish":
+		  case "Publish":  //Getting the id review and text review and publishes it
 			  try {
 				client.sendToClient(controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
 			} catch (IOException e) {

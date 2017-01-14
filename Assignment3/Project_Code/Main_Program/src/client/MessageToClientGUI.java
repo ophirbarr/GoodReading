@@ -12,7 +12,11 @@ import java.io.IOException;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * 
+ * @author avihai
+ *class GUI which displays message that the review published/rejected
+ */
 public class MessageToClientGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
@@ -20,13 +24,20 @@ public class MessageToClientGUI extends JPanel {
 	private String typeMessage;
 	private String textReview;
 	
+	/**
+	 * constructor
+	 * @param clientInterface User Object
+	 * @param rid review id
+	 * @param typeMessage  type action: Publish || RejectReview
+	 * @param textReview  String of the Review
+	 */
 	public MessageToClientGUI(ClientInterface clientInterface,int rid,String typeMessage,String textReview){
 		super();
 		this.clientInterface = clientInterface;
 		this.rid = rid;
 		this.typeMessage = typeMessage;
 		this.textReview =textReview;
-		String temp;
+		String temp;    //the message appears on the screen
 		
 		setLayout(null);
 		if(typeMessage == "Publish") temp = "The Review was Published!";
@@ -41,6 +52,9 @@ public class MessageToClientGUI extends JPanel {
 		
 		Button button = new Button("OK");
 		button.addActionListener(new ActionListener() {
+			/**
+			 * OK button Listener - go to previous page
+			 */
 			public void actionPerformed(ActionEvent e) {
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
 				clientInterface.mainPanel.currentPanel = new InspectReviewGUI(clientInterface);
@@ -58,6 +72,11 @@ public class MessageToClientGUI extends JPanel {
 		
 		
 	}
+	/**
+	 * Sends a request to the server 
+	 * if typeMessage = RejectReview : erase the review
+	 * if typeMessage = Publish : publish the review
+	 */
 	public void Publish_Reject_Review(){
 		
 		Message msg = new Message(typeMessage, "BookInspectReview");
@@ -72,7 +91,7 @@ public class MessageToClientGUI extends JPanel {
 				e.printStackTrace();
 			}
 		
-		clientInterface.waitForServer();
+		clientInterface.waitForServer();   // Waiting for approval from the server
 		
 			
 	}

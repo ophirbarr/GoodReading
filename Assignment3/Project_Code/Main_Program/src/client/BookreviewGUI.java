@@ -1,6 +1,7 @@
 package client;
 
 import javax.swing.JPanel;
+
 import javax.swing.border.EtchedBorder;
 
 import common.Message;
@@ -18,13 +19,28 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * @author avihai
+ *class GUI which displays all the review that pending approval 
+ */
+
+
 public class BookreviewGUI extends JPanel {
-	
+	//Class variables
 	private ClientInterface clientInterface;
 	private String nameBook;
-	private String typeMessage;
-	private JTextArea theReview;
+	private String typeMessage;   //type action: publish || reject depending on the button pressed
+	private JTextArea theReview;  //String of review
 	private JButton btnEdit;
+	
+	/**
+	 * constructor
+	 * @param clientInterface User Object
+	 * @param br The Review Object
+	 * @param nameBook Title book for the review
+	 */
+	
 	
 	public BookreviewGUI(ClientInterface clientInterface,BookReview br,String nameBook){
 		super();
@@ -32,8 +48,13 @@ public class BookreviewGUI extends JPanel {
 		this.nameBook = nameBook;
 		setLayout(null);
 		
+		
+		
 		JButton btnReject = new JButton("Reject");
 		btnReject.addActionListener(new ActionListener() {
+			/**
+			 *Reject Listener button -  permanently erases the Review
+			 */
 			public void actionPerformed(ActionEvent e) {
 				typeMessage= "RejectReview";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
@@ -51,6 +72,9 @@ public class BookreviewGUI extends JPanel {
 		
 		JButton btnPublish = new JButton("Publish");
 		btnPublish.addActionListener(new ActionListener() {
+			/**
+			 * Publish Listener button - publish the review
+			 */
 			public void actionPerformed(ActionEvent e) {
 				typeMessage = "Publish";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
@@ -94,6 +118,9 @@ public class BookreviewGUI extends JPanel {
 		
 		btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
+			/**
+			 * Edit Listener button - go into edit mode so that it can delete parts review
+			 */
 			public void actionPerformed(ActionEvent e) {
 				theReview.setEditable(true);
 				btnEdit.setEnabled(false);

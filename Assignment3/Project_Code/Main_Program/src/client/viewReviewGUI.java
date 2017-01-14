@@ -7,12 +7,20 @@ import good_reading.BookReview;
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 import java.awt.Font;
-
+/**
+ * 
+ * @author avihai
+ *class GUI which displays selected review in detail
+ */
 public class viewReviewGUI extends JPanel{
-	
+	//Class variable
 	private ClientInterface clientInterface;
 	
-	
+	/**
+	 * constructor
+	 * @param clientInterface User Object
+	 * @param br The Review Object
+	 */
 	public viewReviewGUI(ClientInterface clientInterface, BookReview br){
 		super();
 		setBackground(SystemColor.info);
