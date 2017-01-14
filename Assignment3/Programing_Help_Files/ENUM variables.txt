@@ -2,8 +2,9 @@
 	_userStatus:
 	0 - DISCONNECTED
 	1 - CONNECTED
-	2 - WAITING
-	3 - BLOCKED
+	2 - WAITING_USER
+	3 - WAITING_CUSTOMER
+	4 - BLOCKED
 
 #Customer
 	_accountType:
@@ -19,4 +20,5 @@
 	0 - FALSE
 	1 - MONTHLY
 	2 - YEARLY
+	3 - FROM_USER_TO_CUSTOMER
 	
