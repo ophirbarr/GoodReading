@@ -59,17 +59,15 @@ public class SubmitReviewGUI extends JPanel {
 		JButton btnReadReviews = new JButton("Read Reviews");
 		btnReadReviews.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MainGUI mainGUI = clientInterface.mainPanel;
-				JPanel currentPanel = mainGUI.currentPanel;
-				mainGUI.remove(currentPanel);
-				currentPanel = new ReadReviewGUI(clientInterface, book);
-				currentPanel.setBounds(176, 1, 724, 475);
-				currentPanel.setBackground(new Color(255, 255, 255));
-				mainGUI.add(currentPanel);
-				currentPanel.setLayout(null);
-				currentPanel.revalidate(); // For Java 1.7 or above.
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new ReadReviewGUI(clientInterface, book);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate(); // For Java 1.7 or above.
 				// frame.getContentPane().validate(); // For Java 1.6 or below.
-				currentPanel.repaint();
+				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
 		btnReadReviews.setFont(new Font("Tahoma", Font.PLAIN, 14));

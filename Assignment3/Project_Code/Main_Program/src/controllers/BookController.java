@@ -17,17 +17,14 @@ public class BookController {
 
 	public static void ViewBook(ClientInterface clientInterface, Book book)
 	{
-		MainGUI mainGUI = clientInterface.mainPanel;
-		JPanel currentPanel = mainGUI.currentPanel;
-		mainGUI.remove(currentPanel);
-		currentPanel = new ViewBookGUI(clientInterface, book);
-		currentPanel.setBounds(176, 1, 724, 475);
-		currentPanel.setBackground(new Color(255, 255, 255));
-		mainGUI.add(currentPanel);
-		currentPanel.setLayout(null);
-		currentPanel.revalidate(); // For Java 1.7 or above.
-		// frame.getContentPane().validate(); // For Java 1.6 or below.
-		currentPanel.repaint();
+		clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+		clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, book);
+		clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+		clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
+		clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+		clientInterface.mainPanel.currentPanel.setLayout(null);
+		clientInterface.mainPanel.currentPanel.revalidate();
+		clientInterface.mainPanel.currentPanel.repaint();
 	}
 	
 	public static void AddToSearchLog(Book book)
