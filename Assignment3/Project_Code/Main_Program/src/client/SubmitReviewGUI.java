@@ -74,10 +74,14 @@ public class SubmitReviewGUI extends JPanel {
 		btnReadReviews.setBounds(471, 426, 135, 29);
 		imagePanel.add(btnReadReviews);
 		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(32, 103, 371, 270);
+		imagePanel.add(textArea);
+		
 		JButton btnSubmitReview = new JButton("Submit Review");
 		btnSubmitReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BookReview review = new BookReview(book.get_bid(),textField.getText(),book.get_title(),false);
+				BookReview review = new BookReview(book.get_bid(),textArea.getText(),clientInterface.user.get_userName(),false);
 				Message msg = new Message("SubmitReview", "CustomerController");
 				msg.add(review);
 				try {
@@ -91,10 +95,6 @@ public class SubmitReviewGUI extends JPanel {
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSubmitReview.setBounds(145, 426, 135, 29);
 		imagePanel.add(btnSubmitReview);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(32, 103, 371, 270);
-		imagePanel.add(textArea);
 		
 		JLabel lblBookReview = new JLabel("Submit Book Review: ");
 		lblBookReview.setFont(new Font("Tahoma", Font.PLAIN, 16));

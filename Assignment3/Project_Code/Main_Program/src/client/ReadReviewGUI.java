@@ -23,6 +23,8 @@ import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 public class ReadReviewGUI extends JPanel {
 
@@ -74,13 +76,16 @@ public class ReadReviewGUI extends JPanel {
 		btnSubmitReview.setBounds(471, 426, 135, 29);
 		imagePanel.add(btnSubmitReview);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(32, 103, 371, 270);
-		imagePanel.add(textArea);
-		
 		JLabel lblBookReview = new JLabel("Read Book Review: ");
 		lblBookReview.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblBookReview.setBounds(32, 56, 184, 20);
 		imagePanel.add(lblBookReview);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(104, 155, 23, 20);
+		imagePanel.add(scrollPane);
+		
+		JList list = new JList();
+		scrollPane.setViewportView(list);
 	}
 }

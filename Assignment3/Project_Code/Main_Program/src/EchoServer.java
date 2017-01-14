@@ -6,6 +6,7 @@ import java.io.*;
 import org.orm.PersistentException;
 import common.Message;
 import controllers.BookController;
+import controllers.CostumerController;
 //avihai  import controllers.CostumerController;
 import good_reading.Book;
 import good_reading.BookReview;
@@ -154,7 +155,7 @@ public class EchoServer extends AbstractServer
 		  switch(action)
 		  {
 		  case "SubmitReview":
-	//	  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+		  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
 		  }
 		  break;
 	  }
