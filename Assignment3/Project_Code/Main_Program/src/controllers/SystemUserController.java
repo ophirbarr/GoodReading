@@ -210,7 +210,6 @@ public class SystemUserController {
 				e.printStackTrace();
 			}
 		}
-			
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
 		{
