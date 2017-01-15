@@ -99,21 +99,6 @@ public class MainGUI extends JPanel {
 		});
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
-		JButton btnInspectReview = new JButton("Inspect Review");
-		btnInspectReview.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				remove(currentPanel);
-				currentPanel = new InspectReviewGUI(clientInterface);
-				currentPanel.setBounds(176, 1, 724, 475);
-				currentPanel.setBackground(new Color(250, 243, 232));
-				add(currentPanel);
-				currentPanel.setLayout(null);
-				currentPanel.revalidate();
-				currentPanel.repaint();
-			}
-		});
-		
 		JButton MyBooks = new JButton("My Books");
 		MyBooks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -140,6 +125,22 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnNewButton_1, "cell 0 5,alignx center,aligny top");
+		
+		JButton btnInspectReview = new JButton("Inspect Review");
+		btnInspectReview.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				remove(currentPanel);
+				currentPanel = new InspectReviewGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+			}
+		});
+		menu.add(btnInspectReview, "cell 0 6,alignx center");
 		
 		JLabel lblOnlyShowsFor = new JLabel("temp -- will only show for librarian");
 		menu.add(lblOnlyShowsFor, "cell 0 10");
