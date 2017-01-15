@@ -108,7 +108,7 @@ public class InspectReviewGUI extends JPanel  {
 	 */
 public void InspectReview(){
 		
-	Message msg = new Message("getInspectReview", "BookInspectReview");
+	Message msg = new Message("InspectReviews", "InspectReviewController");
 		clientInterface.msgFromServer = null;
 		try {
 			clientInterface.client.openConnection();
