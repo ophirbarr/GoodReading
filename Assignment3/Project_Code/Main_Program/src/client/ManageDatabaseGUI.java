@@ -9,14 +9,23 @@ import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.event.ChangeListener;
+
+import common.Message;
+import good_reading.Book;
+
 import javax.swing.event.ChangeEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
 
 public class ManageDatabaseGUI extends JPanel
 {
 	private ClientInterface clientInterface;
+	private Object[] result;
 	private JTextField searchTitle;
 	private JTextField searchAuthor;
 	private JTextField searchLanguage;
@@ -42,7 +51,8 @@ public class ManageDatabaseGUI extends JPanel
 		scrollPane.setBounds(22, 274, 520, 152);
 		add(scrollPane);
 		
-		JList list = new JList();
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		JList<String> list = new JList<String>( listModel );
 		scrollPane.setViewportView(list);
 		
 		JLabel lblResultTitle = new JLabel("ID        Title                           Language        Price          Summary");
@@ -183,16 +193,7 @@ public class ManageDatabaseGUI extends JPanel
 		lblSearchParameters.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblSearchParameters.setBounds(22, 11, 187, 27);
 		add(lblSearchParameters);
-		
-		JButton btnSearch = new JButton("SEARCH");
-		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSearch.setBounds(339, 143, 100, 57);
-		add(btnSearch);
-		
-		JButton btnShowAll = new JButton("SHOW ALL");
-		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnShowAll.setBounds(339, 211, 100, 27);
-		add(btnShowAll);
+	
 		
 		JButton btnDisplayBook = new JButton("DISPLAY BOOK");
 		btnDisplayBook.setBounds(417, 437, 125, 23);
@@ -232,70 +233,145 @@ public class ManageDatabaseGUI extends JPanel
 		rdbtnDomains.setBounds(6, 60, 88, 23);
 		typePanel.add(rdbtnDomains);
 		
-		JPanel imagePanel = new JPanel();
-		imagePanel.setBackground(new Color(250, 243, 232));
-		imagePanel.setBounds(-12, -12, 907, 649);
-		add(imagePanel);
-		
-		rdbtnBooks.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) 
+		rdbtnBooks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
 			{
 				if (rdbtnBooks.isSelected())
 				{
 					rdbtnSubjects.setSelected(false);
 					rdbtnDomains.setSelected(false);
-					chckbxTitle.setEnabled(true); 				chckbxTitle.setSelected(true);
-					chckbxAuthor.setEnabled(true);				chckbxAuthor.setSelected(false);
-					chckbxLanguage.setEnabled(true);			chckbxLanguage.setSelected(false);
-					chckbxPrice.setEnabled(true);				chckbxPrice.setSelected(false);
-					chckbxKeyword.setEnabled(true);				chckbxKeyword.setSelected(false);
-					chckbxSubject.setEnabled(true);				chckbxSubject.setSelected(false);
-					chckbxDomain.setEnabled(true);				chckbxDomain.setSelected(false);
+					chckbxTitle.setEnabled(true); 		chckbxTitle.setSelected(true);
+					chckbxAuthor.setEnabled(true);		chckbxAuthor.setSelected(false);
+					chckbxLanguage.setEnabled(true);	chckbxLanguage.setSelected(false);
+					chckbxPrice.setEnabled(true);		chckbxPrice.setSelected(false);
+					chckbxKeyword.setEnabled(true);		chckbxKeyword.setSelected(false);
+					chckbxSubject.setEnabled(true);		chckbxSubject.setSelected(false);
+					chckbxDomain.setEnabled(true);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(true);
 					btnAdd.setText("ADD NEW BOOK");
 					lblResultTitle.setText("ID        Title                           Language        Price          Summary");
 				}
 			}
 		});
-		rdbtnSubjects.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) 
+		rdbtnSubjects.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
 			{
 				if (rdbtnSubjects.isSelected())
 				{
 					rdbtnBooks.setSelected(false);
 					rdbtnDomains.setSelected(false);
-					chckbxTitle.setEnabled(false); 				chckbxTitle.setSelected(false);
-					chckbxAuthor.setEnabled(false);				chckbxAuthor.setSelected(false);
-					chckbxLanguage.setEnabled(false);			chckbxLanguage.setSelected(false);
-					chckbxPrice.setEnabled(false);				chckbxPrice.setSelected(false);
-					chckbxKeyword.setEnabled(false);			chckbxKeyword.setSelected(false);
-					chckbxSubject.setEnabled(false);			chckbxSubject.setSelected(true);
-					chckbxDomain.setEnabled(false);				chckbxDomain.setSelected(false);
+					chckbxTitle.setEnabled(false); 		chckbxTitle.setSelected(false);
+					chckbxAuthor.setEnabled(false);		chckbxAuthor.setSelected(false);
+					chckbxLanguage.setEnabled(false);	chckbxLanguage.setSelected(false);
+					chckbxPrice.setEnabled(false);		chckbxPrice.setSelected(false);
+					chckbxKeyword.setEnabled(false);	chckbxKeyword.setSelected(false);
+					chckbxSubject.setEnabled(false);	chckbxSubject.setSelected(true);
+					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(false);
 					btnAdd.setText("ADD NEW SUBJECT");
 					lblResultTitle.setText("SID          Name                         DID");
 				}
 			}
 		});
-		rdbtnDomains.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) 
+		rdbtnDomains.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
 			{
 				if (rdbtnDomains.isSelected())
 				{
 					rdbtnBooks.setSelected(false);
 					rdbtnSubjects.setSelected(false);
-					chckbxTitle.setEnabled(false); 				chckbxTitle.setSelected(false);
-					chckbxAuthor.setEnabled(false);				chckbxAuthor.setSelected(false);
-					chckbxLanguage.setEnabled(false);			chckbxLanguage.setSelected(false);
-					chckbxPrice.setEnabled(false);				chckbxPrice.setSelected(false);
-					chckbxKeyword.setEnabled(false);			chckbxKeyword.setSelected(false);
-					chckbxSubject.setEnabled(false);			chckbxSubject.setSelected(false);
-					chckbxDomain.setEnabled(false);				chckbxDomain.setSelected(true);
+					chckbxTitle.setEnabled(false); 		chckbxTitle.setSelected(false);
+					chckbxAuthor.setEnabled(false);		chckbxAuthor.setSelected(false);
+					chckbxLanguage.setEnabled(false);	chckbxLanguage.setSelected(false);
+					chckbxPrice.setEnabled(false);		chckbxPrice.setSelected(false);
+					chckbxKeyword.setEnabled(false);	chckbxKeyword.setSelected(false);
+					chckbxSubject.setEnabled(false);	chckbxSubject.setSelected(false);
+					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(true);
 					btnDisplayBook.setEnabled(false);
 					btnAdd.setText("ADD NEW DOMAIN");
 					lblResultTitle.setText("DID          Name");
 				}
 			}
 		});
+		
+		JButton btnSearch = new JButton("SEARCH");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				if (rdbtnBooks.isSelected())
+				{
+					String action = new String("SearchBooks");
+					Message msg = new Message(action, "SystemUserController");
+					boolean[] chkbx = new boolean[7]; 
+					String[] searchString = new String[7];
+					if (chckbxTitle.isSelected() && !searchTitle.getText().equals("")){
+						chkbx[0] = true;
+						searchString[0] = searchTitle.getText();
+					}
+					if (chckbxLanguage.isSelected() && !searchLanguage.getText().equals("")){
+						chkbx[1] = true;
+						searchString[1] = searchLanguage.getText();
+					}
+					if (chckbxPrice.isSelected() && !searchPrice.getText().equals("")){
+						chkbx[2] = true;
+						searchString[2] = searchPrice.getText();
+					}
+					if (chckbxAuthor.isSelected() && !searchAuthor.getText().equals("")){
+						chkbx[3] = true;
+						searchString[3] = searchAuthor.getText();
+					}
+					if (chckbxKeyword.isSelected() && !searchKeyword.getText().equals("")){
+						chkbx[4] = true;
+						searchString[4] = searchKeyword.getText();
+					}
+					if (chckbxSubject.isSelected() && !searchSubject.getText().equals("")){
+						chkbx[5] = true;
+						searchString[5] = searchSubject.getText();
+					}
+					if (chckbxDomain.isSelected() && !searchDomain.getText().equals("")){
+						chkbx[6] = true;
+						searchString[6] = searchDomain.getText();
+					}
+					msg.add(chkbx);
+					msg.add(searchString);
+					msg.add(false); // search in entire DB
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					result = (Object[]) clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object book : result)
+					{
+						listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+							//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
+					}
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+				}
+				
+				else if (rdbtnSubjects.isSelected())
+				{
+					
+				}
+			}
+		});
+		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSearch.setBounds(339, 143, 100, 57);
+		add(btnSearch);
+		
+		JButton btnShowAll = new JButton("SHOW ALL");
+		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnShowAll.setBounds(339, 211, 100, 27);
+		add(btnShowAll);
+		
+		JPanel imagePanel = new JPanel();
+		imagePanel.setBackground(new Color(250, 243, 232));
+		imagePanel.setBounds(-12, -12, 907, 649);
+		add(imagePanel);
+		
 	}
 }

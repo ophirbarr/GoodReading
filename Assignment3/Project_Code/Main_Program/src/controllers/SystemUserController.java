@@ -1,16 +1,11 @@
-
 package controllers;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
-import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Book_Author;
@@ -94,11 +89,11 @@ public class SystemUserController {
 		Collection<Book> collection = new ArrayList<Book>();
 		boolean isSetEmpty = true;
 		Book[] result0 = null, result3 = null, result4 = null, result5 = null, result6 = null;
-		String condition;
+		String condition = "";
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
 		{
-			condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND ";
+			if (catalog) condition = "_viewStatus = '1' AND "; else condition = "";
 			if (chckbx[0] == true)
 				condition = condition + "_title like '%%" + searchString[0] + "%%' AND ";
 			if (chckbx[1] == true)
@@ -119,11 +114,11 @@ public class SystemUserController {
 				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_author like '%%" + searchString[3] + "%%'", null);
 				if (book_author.length > 0)
 				{
-					condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
+					if (catalog) condition = "_viewStatus = '1' AND ("; else condition = "";
 					for (int i = 0; i < book_author.length; i++)
 						condition = condition + "_bid = '" + book_author[i].get_bid() + "' OR ";
 					condition = condition.substring(0, condition.length() - 4);
-					condition = condition + ")";
+					if (catalog) condition = condition + ")";
 					result3 = Book.listBookByQuery(condition, "_title");
 				}
 				else result3 = new Book[0];
@@ -137,11 +132,11 @@ public class SystemUserController {
 				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_keyword = '" + searchString[4] + "'", null);
 				if (book_keywords.length > 0)
 				{
-					condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
+					if (catalog) condition = "_viewStatus = '1' AND ("; else condition = "";
 					for (int i = 0; i < book_keywords.length; i++)
 						condition = condition + "_bid = '" + book_keywords[i].get_bid() + "' OR ";
 					condition = condition.substring(0, condition.length() - 4);
-					condition = condition + ")";
+					if (catalog) condition = condition + ")";
 
 					result4 = Book.listBookByQuery(condition, "_title");
 				}
@@ -160,11 +155,11 @@ public class SystemUserController {
 					Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_sid = '" + sid + "'", null);
 					if (book_subject.length > 0)
 					{
-						condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
+						if (catalog) condition = "_viewStatus = '1' AND ("; else condition = "";
 						for (int i = 0; i < book_subject.length; i++)
 							condition = condition + "_bid = '" + book_subject[i].get_bid() + "' OR ";
 						condition = condition.substring(0, condition.length() - 4);
-						condition = condition + ")";
+						if (catalog) condition = condition + ")";
 
 						result5 = Book.listBookByQuery(condition, "_title");
 					}
@@ -194,11 +189,11 @@ public class SystemUserController {
 						book_subject = Book_Subject.listBook_SubjectByQuery(condition, null);
 						
 						// get books
-						condition = "_viewStatus = '" + (catalog ? "1" : "0") + "' AND (";
+						if (catalog) condition = "_viewStatus = '1' AND ("; else condition = "";
 						for (int i = 0; i < book_subject.length; i++)
 							condition = condition + "_bid = '" + book_subject[i].get_bid() + "' OR ";
 						condition = condition.substring(0, condition.length() - 4);
-						condition = condition + ")";
+						if (catalog) condition = condition + ")";
 
 						result6 = Book.listBookByQuery(condition, "_title");
 					}
