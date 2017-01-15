@@ -346,10 +346,7 @@ public class ManageDatabaseGUI extends JPanel
 					result = (Object[]) clientInterface.getMsgFromServer();
 					listModel.clear();
 					for (Object book : result)
-					{
 						listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-							//	"" + ((Book)book).get_bid() + "\t\t" + ((Book)book).get_title() + "\t\t" + ((Book)book).get_language() + "\t\t" + ((Book)book).get_price() + "\t\t" + ((Book)book).get_summary());
-					}
 					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				
@@ -364,6 +361,30 @@ public class ManageDatabaseGUI extends JPanel
 		add(btnSearch);
 		
 		JButton btnShowAll = new JButton("SHOW ALL");
+		btnShowAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (rdbtnBooks.isSelected())
+				{
+					Message msg = new Message("GetAllBooks", "SystemUserController");
+					msg.add(false); // search in entire DB
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					result = (Book[])clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object book : result)
+					{
+						listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+					}
+				}
+			}
+		});
 		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
 		btnShowAll.setBounds(339, 211, 100, 27);
 		add(btnShowAll);

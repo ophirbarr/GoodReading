@@ -248,7 +248,8 @@ public class SystemUserController {
 	public static Book[] GetAllBooks(boolean catalog)
 	{
 		try {
-			return Book.listBookByQuery("_viewStatus = '" + (catalog ? "1" : "0") + "'", "_Title");
+			if (catalog) return Book.listBookByQuery("_viewStatus = '1'", "_Title");
+			else return Book.listBookByQuery(null, "_Title");
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}

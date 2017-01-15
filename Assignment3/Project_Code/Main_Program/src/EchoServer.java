@@ -171,6 +171,43 @@ public class EchoServer extends AbstractServer
 			  break;
 		  }
 		  break;
+		  
+	  case "DatabaseManagementController":
+		  switch(action)
+		  {
+		  case "GetSubjects":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.GetSubjects((String) message.getParameters().get(0)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			  break;
+			  
+		  case "GetAllSubjects":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.GetAllSubjects());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			  break;
+			  
+		  case "GetDomains":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.GetDomains((String) message.getParameters().get(0)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			  break;
+			  
+		  case "GetAllDomains":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.GetAllDomains());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			  break;
+		  }
+		  break;
 	  }
   }
 
