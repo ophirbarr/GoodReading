@@ -13,6 +13,7 @@ import org.orm.PersistentTransaction;
 
 import common.Message;
 import good_reading.Book;
+import good_reading.BookReview;
 import good_reading.Book_Author;
 import good_reading.Book_Keywords;
 import good_reading.Book_Subject;
@@ -342,7 +343,9 @@ public class SystemUserController {
 	}
 	
 	
-	// ReadReviews (bid)
-	
-
+	public static BookReview[] ReadReviews(int bid)
+	{
+		BookReview[] review = null;
+		return review;
+	}
 }

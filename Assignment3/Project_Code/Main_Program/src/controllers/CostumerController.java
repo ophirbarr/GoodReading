@@ -50,12 +50,29 @@ public class CostumerController {
 		
 	}
 	
-	public static void BuyBook()
+	public static void BuyBook(SystemUser user, Book book)
 	{
-		
+		float price = book.get_price();
+		try {
+			if(Customer.getCustomerByORMID(user.get_uid()) != null)
+			{
+				if(ValidateAccount(user))
+					if(((Customer)user).get_accountType() == Define.ACCOUNT_MONTHLY)
+						price = price*(float)(1-0.25);
+					else if(((Customer)user).get_accountType() == Define.ACCOUNT_YEARLY)
+						price = price*(float)(1-0.5);
+				
+				//////////////////////////////////////
+				
+				
+			}
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public static Book[] MyBooks(SystemUser user)
+	public static Book[] MyBooks(SystemUser user) // need to check
 	{
 		Book books[] = null;
 		Customer_Book customerBook[];

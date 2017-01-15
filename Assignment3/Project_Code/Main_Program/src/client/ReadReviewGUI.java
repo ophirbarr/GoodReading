@@ -16,6 +16,7 @@ import common.Message;
 import controllers.CostumerController;
 
 import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -81,11 +82,39 @@ public class ReadReviewGUI extends JPanel {
 		lblBookReview.setBounds(32, 56, 184, 20);
 		imagePanel.add(lblBookReview);
 		
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(104, 155, 23, 20);
 		imagePanel.add(scrollPane);
 		
-		JList list = new JList();
+		//TODO
+		////////////////////////////////////////////
+		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		
+		JList<String> list = new JList<String>(listModel);
 		scrollPane.setViewportView(list);
+		
+		Message msg = new Message("SystemUserController","ReadReviews");
+		msg.add(book);
+		
+		try {
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		clientInterface.waitForServer();
+		
+		Object[] result = (Object[])clientInterface.getMsgFromServer();
+		listModel.clear();
+		
+		if (result.length == 0) 
+			listModel.addElement("There are no matching results to your query.");
+		else
+			for (Object review : result)
+			{
+				listModel.addElement(String.format("%-30s%-15s", (((BookReview)review)).get_review(), ((BookReview)review).get_costumerName()));
+			}
+		////////////////////////////////////////////////////
 	}
 }
