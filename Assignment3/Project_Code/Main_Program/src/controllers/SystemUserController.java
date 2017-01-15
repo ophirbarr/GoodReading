@@ -10,7 +10,6 @@ import java.util.TreeSet;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
-
 import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
@@ -50,7 +49,7 @@ public class SystemUserController {
 			try {
 				session = GoodReadingPersistentManager.instance().getSession();
 				PersistentTransaction t = session.beginTransaction();
-				user.set_userStatus(1);
+				user.set_userStatus(common.Define.USER_CONNECTED);
 				session.update(user);
 				t.commit();
 				session.close();
@@ -74,7 +73,7 @@ public class SystemUserController {
 			session = GoodReadingPersistentManager.instance().getSession();
 			user = SystemUser.loadSystemUserByQuery("_userName = '" + userName +"'", null);
 			PersistentTransaction t = session.beginTransaction();
-			user.set_userStatus(0);
+			user.set_userStatus(common.Define.USER_DISCONNECTED);
 			session.update(user);
 			t.commit();
 			session.close();
@@ -288,7 +287,7 @@ public class SystemUserController {
 			user.set_firstName((String)peremeters.get(2));
 			user.set_lastName((String)peremeters.get(3));
 			user.set_ssn(ssn);
-			user.set_userStatus(2);
+			user.set_userStatus(common.Define.USER_WAITING);
 			
 			PersistentTransaction t = session.beginTransaction();
 			session.save(user);
@@ -321,9 +320,9 @@ public class SystemUserController {
 		customer.set_password(user.get_password());
 		customer.set_userStatus(user.get_userStatus());
 		
-		customer.set_accountType(0);
+		customer.set_accountType(common.Define.ACCOUNT_PER_BOOK);
 		customer.set_accountStatus(false);;    // cannot make purchases
-		customer.set_waitingForChangeType(3);  // awaiting approval
+		customer.set_waitingForChangeType(common.Define.FROM_USER_TO_CUSTOMER);  // awaiting approval
 
 		
 		PersistentSession session;
@@ -342,10 +341,19 @@ public class SystemUserController {
 		return customer;
 	}
 	
-	
+	/**
+	 * Return all reviews for a requested book.
+	 * @param bid Book ID
+	 * @return An array of book reviews of BID
+	 */
 	public static BookReview[] ReadReviews(int bid)
 	{
-		BookReview[] review = null;
-		return review;
+		BookReview[] result = null;
+		try {
+			result = BookReview.listBookReviewByQuery("_bid = '" + bid + "'", null);
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
