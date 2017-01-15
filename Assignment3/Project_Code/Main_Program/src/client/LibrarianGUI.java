@@ -33,8 +33,8 @@ public class LibrarianGUI extends JPanel
 		add(menuPanel);
 		menuPanel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Approve new user");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnApproveUser = new JButton("Approve new user");
+		btnApproveUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				remove(currentPanel);
@@ -47,8 +47,8 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnNewButton.setBounds(21, 11, 150, 23);
-		menuPanel.add(btnNewButton);
+		btnApproveUser.setBounds(21, 11, 150, 23);
+		menuPanel.add(btnApproveUser);
 		
 		JButton btnNewButton_1 = new JButton("Setup new account");
 		btnNewButton_1.addActionListener(new ActionListener() {
