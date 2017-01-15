@@ -24,7 +24,7 @@ import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
-public class CostumerController {
+public class CustomerController {
 	
 	private static Calendar cal = Calendar.getInstance();
 	private static Date date = cal.getTime();
@@ -62,12 +62,11 @@ public class CostumerController {
 					else if(((Customer)user).get_accountType() == Define.ACCOUNT_YEARLY)
 						price = price*(float)(1-0.5);
 				
-				//////////////////////////////////////
+				//TODO continue
 				
 				
 			}
 		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

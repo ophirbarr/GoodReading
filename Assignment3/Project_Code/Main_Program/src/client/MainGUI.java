@@ -99,8 +99,8 @@ public class MainGUI extends JPanel {
 		});
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
-		JButton btnNewButton_3 = new JButton("Inspect Review");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton btnInspectReview = new JButton("Inspect Review");
+		btnInspectReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				remove(currentPanel);
@@ -113,8 +113,26 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnNewButton_3, "cell 0 4,alignx center,aligny top");
 		
+		JButton MyBooks = new JButton("My Books");
+		MyBooks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				/*TODO create GUI class
+				remove(currentPanel);
+				currentPanel = new MyBooksGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+				*/
+			}
+		});
+		menu.add(MyBooks, "cell 0 3,alignx center,aligny center");
+		menu.add(btnSearchBook, "cell 0 4,alignx center,aligny top");
+		
+		//TODO erase button
 		JButton btnNewButton_1 = new JButton("Test View Book");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

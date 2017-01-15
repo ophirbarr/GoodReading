@@ -6,8 +6,8 @@ import java.io.*;
 import org.orm.PersistentException;
 import common.Message;
 import controllers.BookController;
-import controllers.CostumerController;
-//avihai  import controllers.CostumerController;
+import controllers.CustomerController;
+//avihai  import controllers.CustomerController;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.SystemUser;
@@ -115,26 +115,26 @@ public class EchoServer extends AbstractServer
 		  /**
 		   * Book Review Controller
 		   */
-	  case "BookInspectReview":
+	  case "InspectReviewController":
 		  switch(action)
 		  {
-		  case "getInspectReview":  //Sends to client a list of all awaiting approval reviews
+		  case "InspectReviews":  //Sends to client a list of all awaiting approval reviews
 			  try {
-				client.sendToClient(controllers.BookInspectReview.getInspectReview());
+				client.sendToClient(controllers.InspectReviewController.InspectReviews());
 				} catch (IOException e) {e.printStackTrace();} 
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
 		  case "RejectReview": //Getting the id review and delete it from database
 				  try {
-					  client.sendToClient(controllers.BookInspectReview.RejectReview((int)message.getParameters().get(0)));
+					  client.sendToClient(controllers.InspectReviewController.RejectReview((int)message.getParameters().get(0)));
 						} catch (IOException e) {
 				// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 				  break;
-		  case "Publish":  //Getting the id review and text review and publishes it
+		  case "PublishReview":  //Getting the id review and text review and publishes it
 			  try {
-				client.sendToClient(controllers.BookInspectReview.Publish((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
+				client.sendToClient(controllers.InspectReviewController.PublishReview((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -159,15 +159,15 @@ public class EchoServer extends AbstractServer
 		  break;
 		  
 		  
-	  case "CostumerController":
+	  case "CustomerController":
 		  switch(action)
 		  {
 		  case "SubmitReview":
-			  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+			  CustomerController.SubmitReview((BookReview)message.getParameters().get(0));
 			  break;
 			  
 		  case "MyBooks":
-			  CostumerController.MyBooks((SystemUser)message.getParameters().get(0));
+			  CustomerController.MyBooks((SystemUser)message.getParameters().get(0));
 			  break;
 		  }
 		  break;

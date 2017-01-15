@@ -13,7 +13,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import common.Message;
-import controllers.CostumerController;
+import controllers.CustomerController;
 
 import javax.swing.JLabel;
 import javax.swing.DefaultListModel;

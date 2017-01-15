@@ -11,9 +11,9 @@ import good_reading.BookReview;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
-public class BookInspectReview {
+public class InspectReviewController {
 	
-	public static Message getInspectReview() throws PersistentException{
+	public static Message InspectReviews() throws PersistentException{
 		
 		BookReview[] br = null;
 		String[] name_books;
@@ -45,13 +45,12 @@ public class BookInspectReview {
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
 		return 1;
 	}
-	public static int Publish(int rid,String textReview){
+	public static int PublishReview(int rid,String textReview){
 		BookReview br = null;
 		PersistentSession session = null;
 		
@@ -65,7 +64,6 @@ public class BookInspectReview {
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 1;
