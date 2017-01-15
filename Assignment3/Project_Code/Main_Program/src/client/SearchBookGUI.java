@@ -98,9 +98,10 @@ public class SearchBookGUI extends JPanel
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
+		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel(String.format("%-10s%-32s%-16s%-15s%s", "ID", "Title", "Language", "Price", "Summary"));
+		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -290,7 +291,7 @@ public class SearchBookGUI extends JPanel
 				result = (Object[]) clientInterface.getMsgFromServer();
 				listModel.clear();
 				for (Object book : result)
-					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+					listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 			}
 		});
@@ -314,9 +315,8 @@ public class SearchBookGUI extends JPanel
 				result = (Book[])clientInterface.getMsgFromServer();
 				listModel.clear();
 				for (Object book : result)
-				{
-					listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-				}
+					listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				
 			}
 		});
@@ -328,7 +328,7 @@ public class SearchBookGUI extends JPanel
 		btnDisplayBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if (!list.getSelectedValue().equals("There are no matching results to your query."))
+				if (!list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
 				{
 					int i = list.getSelectedIndex();
 					

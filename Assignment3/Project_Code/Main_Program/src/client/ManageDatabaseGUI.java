@@ -16,6 +16,8 @@ import javax.swing.event.ChangeListener;
 
 import common.Message;
 import good_reading.Book;
+import good_reading.Domain;
+import good_reading.Subject;
 
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
@@ -53,9 +55,10 @@ public class ManageDatabaseGUI extends JPanel
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
+		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel("ID        Title                           Language        Price          Summary");
+		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -249,8 +252,10 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setEnabled(true);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(true);
 					btnAdd.setText("ADD NEW BOOK");
-					lblResultTitle.setText("ID        Title                           Language        Price          Summary");
+					lblResultTitle.setText("ID            Title                                                       Language            Price           Summary");
+					listModel.clear();
 				}
+				else rdbtnBooks.setSelected(true);
 			}
 		});
 		rdbtnSubjects.addActionListener(new ActionListener() {
@@ -269,8 +274,10 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(false);
 					btnAdd.setText("ADD NEW SUBJECT");
-					lblResultTitle.setText("SID          Name                         DID");
+					lblResultTitle.setText("SID          Name                                  DID");
+					listModel.clear();
 				}
+				else rdbtnSubjects.setSelected(true);
 			}
 		});
 		rdbtnDomains.addActionListener(new ActionListener() {
@@ -289,8 +296,10 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(true);
 					btnDisplayBook.setEnabled(false);
 					btnAdd.setText("ADD NEW DOMAIN");
-					lblResultTitle.setText("DID          Name");
+					lblResultTitle.setText("DID         Name");
+					listModel.clear();
 				}
+				else rdbtnDomains.setSelected(true);
 			}
 		});
 		
@@ -346,13 +355,46 @@ public class ManageDatabaseGUI extends JPanel
 					result = (Object[]) clientInterface.getMsgFromServer();
 					listModel.clear();
 					for (Object book : result)
-						listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				
-				else if (rdbtnSubjects.isSelected())
+				else if (rdbtnSubjects.isSelected() && !searchSubject.getText().equals(""))
 				{
+					Message msg = new Message("GetSubjects", "DatabaseManagementController");
+					msg.add(searchSubject.getText());
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
 					
+					result = (Object[]) clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object subject : result)
+						listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+				}
+				
+				else if (rdbtnDomains.isSelected() && !searchDomain.getText().equals(""))
+				{
+					Message msg = new Message("GetDomains", "DatabaseManagementController");
+					msg.add(searchSubject.getText());
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					result = (Object[]) clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object domain : result)
+						listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 			}
 		});
@@ -380,8 +422,44 @@ public class ManageDatabaseGUI extends JPanel
 					listModel.clear();
 					for (Object book : result)
 					{
-						listModel.addElement(String.format("%-10d%-25s%-20s%-13.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 					}
+				}
+				
+				else if (rdbtnSubjects.isSelected())
+				{
+					Message msg = new Message("GetAllSubjects", "DatabaseManagementController");
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					result = (Subject[])clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object subject : result)
+						listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+				}
+				
+				else if (rdbtnDomains.isSelected())
+				{
+					Message msg = new Message("GetAllDomains", "DatabaseManagementController");
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					result = (Domain[])clientInterface.getMsgFromServer();
+					listModel.clear();
+					for (Object domain : result)
+						listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 			}
 		});
