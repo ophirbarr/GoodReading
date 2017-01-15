@@ -24,7 +24,7 @@ public class ClientConsole implements ChatIF
   
 	protected Object msgFromServer;
 	protected boolean msgAvailable = false;
-	protected SystemUser user;
+	public SystemUser user;
 	
   /**
    * The default port to connect on.

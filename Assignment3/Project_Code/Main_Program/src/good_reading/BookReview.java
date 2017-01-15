@@ -23,14 +23,6 @@ public class BookReview implements Serializable {
 	public BookReview() {
 	}
 	
-	public BookReview(int _bid, String _review, String _costumerName, boolean _approved) {
-		super();
-		this._bid = _bid;
-		this._review = _review;
-		this._costumerName = _costumerName;
-		this._approved = _approved;
-	}
-	
 	public static BookReview loadBookReviewByORMID(int _rid) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();

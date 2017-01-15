@@ -81,7 +81,12 @@ public class SubmitReviewGUI extends JPanel {
 		JButton btnSubmitReview = new JButton("Submit Review");
 		btnSubmitReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BookReview review = new BookReview(book.get_bid(),textArea.getText(),clientInterface.user.get_userName(),false);
+				BookReview review = new BookReview();
+				review.set_bid(book.get_bid());
+				review.set_review(textArea.getText());
+				review.set_costumerName(clientInterface.user.get_userName());
+				review.set_approved(false);
+	
 				Message msg = new Message("SubmitReview", "CustomerController");
 				msg.add(review);
 				try {

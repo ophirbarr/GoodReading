@@ -10,6 +10,7 @@ import controllers.CostumerController;
 //avihai  import controllers.CostumerController;
 import good_reading.Book;
 import good_reading.BookReview;
+import good_reading.SystemUser;
 import ocsf.server.*;
 
 /**
@@ -155,7 +156,12 @@ public class EchoServer extends AbstractServer
 		  switch(action)
 		  {
 		  case "SubmitReview":
-		  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+			  CostumerController.SubmitReview((BookReview)message.getParameters().get(0));
+			  break;
+			  
+		  case "MyBooks":
+			  CostumerController.MyBooks((SystemUser)message.getParameters().get(0));
+			  break;
 		  }
 		  break;
 	  }
