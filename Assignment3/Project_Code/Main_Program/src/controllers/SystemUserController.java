@@ -30,9 +30,9 @@ public class SystemUserController {
 		PersistentSession session = null;
 		SystemUser user;
 		try {
-			//session = GoodReadingPersistentManager.instance().getSession();
+			session = GoodReadingPersistentManager.instance().getSession();
 			user = SystemUser.loadSystemUserByQuery("_password = '" + password + "' AND _userName = '" + userName +"'", null);
-			//session.close();
+			session.close();
 			
 		} catch (PersistentException e) {
 			e.printStackTrace();
