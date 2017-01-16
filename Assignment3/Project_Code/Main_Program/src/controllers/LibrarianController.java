@@ -4,13 +4,37 @@ import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
+import common.Message;
+import good_reading.Book;
+import good_reading.BookReview;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
 public class LibrarianController {
 	
+public static Message ViewUsersWithCondition(int status) throws PersistentException{
+	
+	
+		SystemUser[] users = null;
+		Message msg = new Message("","");
 		
-public static void AddNewUser(SystemUser user){
+		if(status==1)
+		{
+				try {
+					users=SystemUser.listSystemUserByQuery("_userStatus= '2'", null);
+					msg.add(users);	
+				} catch (PersistentException e) {
+					e.printStackTrace();	
+				}
+		}
+		return msg;
+			
+	}
+	
+	
+
+		
+/*public static void AddNewUser(SystemUser user){
 	
 	PersistentSession session = null;
 	int i;
@@ -39,7 +63,7 @@ public static void AddNewUser(SystemUser user){
 	
 	
 	
-}
+}*/
 	
 public static void FromUserToCostumer(){}
 

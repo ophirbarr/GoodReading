@@ -207,7 +207,22 @@ public class EchoServer extends AbstractServer
 			  break;
 		  }
 		  break;
+		  
+	  case "LibrarianController":
+		  switch(action)
+		  {
+		  case "ViewUsersWithCondition":
+			  try {
+					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition(1));
+					} catch (IOException e) {e.printStackTrace();} 
+				  catch (PersistentException e) {
+					  e.printStackTrace();}  
+			  break;
+		  }
+		  break;
+  
 	  }
+	  
   }
 
     
