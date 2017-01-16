@@ -86,10 +86,17 @@ public class SystemUserController {
 	 */
 	public static Book[] SearchBooks(boolean[] chckbx, String[] searchString, boolean catalog)
 	{
+		PersistentSession session = null;
 		Collection<Book> collection = new ArrayList<Book>();
 		boolean isSetEmpty = true;
 		Book[] result0 = null, result3 = null, result4 = null, result5 = null, result6 = null;
 		String condition = "";
+		
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+		} catch (PersistentException e1) {
+			e1.printStackTrace();
+		}
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
 		{
@@ -148,7 +155,7 @@ public class SystemUserController {
 		if (chckbx[5] == true) // search by Subject
 		{
 			try {
-				Subject subject = Subject.loadSubjectByQuery("_name = '" + searchString[5] + "'", null);
+				Subject subject = Subject.loadSubjectByQuery("_name like '%%" + searchString[5] + "%%'", null);
 				if (subject != null)
 				{
 					int sid = subject.get_sid();
@@ -173,7 +180,7 @@ public class SystemUserController {
 		if (chckbx[6] == true) // search by Domain
 		{
 			try {
-				Domain domain = Domain.loadDomainByQuery("_name = '" + searchString[6] + "'", null);
+				Domain domain = Domain.loadDomainByQuery("_name like '%%" + searchString[6] + "%%'", null);
 				Subject[] subject;
 				Book_Subject[] book_subject;
 				if (domain != null)
@@ -204,6 +211,12 @@ public class SystemUserController {
 			} catch (PersistentException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		try {
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
 		}
 		
 		if (chckbx[0] || chckbx[1] || chckbx[2])
@@ -237,7 +250,6 @@ public class SystemUserController {
 		else if (chckbx[6]) collection.retainAll(Arrays.asList(result6));
 		
 		Book[] result = collection.toArray(new Book[] {});
-		
 		return result;
 	}
 	
@@ -247,13 +259,18 @@ public class SystemUserController {
 	 */
 	public static Book[] GetAllBooks(boolean catalog)
 	{
+		PersistentSession session = null;
+		Book[] result = null;
 		try {
-			if (catalog) return Book.listBookByQuery("_viewStatus = '1'", "_Title");
-			else return Book.listBookByQuery(null, "_Title");
+			session = GoodReadingPersistentManager.instance().getSession();
+			if (catalog) result = Book.listBookByQuery("_viewStatus = '1'", "_Title");
+			else result = Book.listBookByQuery(null, "_Title");
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
+			result = null;
 		}
-		return null;
+		return result;
 	}
 	
 	
@@ -267,7 +284,9 @@ public class SystemUserController {
 		String username = (String)peremeters.get(0);
 		int ssn = (Integer)peremeters.get(4);
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			user = SystemUser.loadSystemUserByQuery("_username = '" + username + "' OR _SSN = '" + ssn + "'", null);
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
@@ -346,7 +365,9 @@ public class SystemUserController {
 	{
 		BookReview[] result = null;
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			result = BookReview.listBookReviewByQuery("_bid = '" + bid + "'", null);
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}

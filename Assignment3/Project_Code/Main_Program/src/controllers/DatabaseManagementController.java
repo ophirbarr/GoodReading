@@ -1,7 +1,10 @@
 package controllers;
 
 import org.orm.PersistentException;
+import org.orm.PersistentSession;
+
 import good_reading.Domain;
+import good_reading.GoodReadingPersistentManager;
 import good_reading.Subject;
 
 public class DatabaseManagementController 
@@ -16,7 +19,9 @@ public class DatabaseManagementController
 	{
 		Subject[] subjects = null;
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			subjects = Subject.listSubjectByQuery("_name LIKE '%%" + name + "%%'", "_name");
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
@@ -31,7 +36,9 @@ public class DatabaseManagementController
 	{
 		Subject[] subjects = null;
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			subjects = Subject.listSubjectByQuery(null, null);
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +54,9 @@ public class DatabaseManagementController
 	{
 		Domain[] domains = null;
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			domains = Domain.listDomainByQuery("_name LIKE '%%" + name + "%%'", "_name");
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +71,9 @@ public class DatabaseManagementController
 	{
 		Domain[] domains = null;
 		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 			domains = Domain.listDomainByQuery(null, null);
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
