@@ -88,7 +88,7 @@ public class ViewBookGUI extends JPanel {
 		lblTableOfContents.setBounds(42, 245, 184, 20);
 		imagePanel.add(lblTableOfContents);
 		
-		JTextArea textArea_1 = new JTextArea(book.get_TableOfContents());
+		JTextArea textArea_1 = new JTextArea((String)book.get_TableOfContents());
 		textArea_1.setFont(new Font("Courier New", Font.PLAIN, 14));
 		textArea_1.setEditable(false);
 		textArea_1.setBounds(42, 276, 346, 38);

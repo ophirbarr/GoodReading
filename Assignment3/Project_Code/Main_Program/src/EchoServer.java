@@ -7,7 +7,6 @@ import org.orm.PersistentException;
 import common.Message;
 import controllers.BookController;
 import controllers.CustomerController;
-//avihai  import controllers.CustomerController;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.SystemUser;

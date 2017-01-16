@@ -15,6 +15,7 @@ import org.orm.PersistentTransaction;
 import common.Define;
 import client.ClientInterface;
 import client.MainGUI;
+import client.PopUpMessageGUI;
 import client.SubmitReviewGUI;
 import client.ViewBookGUI;
 import good_reading.Book;
@@ -120,7 +121,9 @@ public class CustomerController {
 				if(((Customer)user).get_endDate().before(date))
 				{
 					((Customer)user).set_accountType(Define.ACCOUNT_PER_BOOK);
+					
 					// TODO Send message to client that the date has expired
+					new PopUpMessageGUI("The subsciption date has been expired");
 				}
 			}
 				

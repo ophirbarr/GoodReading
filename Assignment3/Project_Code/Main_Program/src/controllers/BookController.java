@@ -38,6 +38,14 @@ public class BookController {
 	
 	public static void AddToSearchLog(Book book)
 	{
+		int _bid = book.get_bid();
+		
+		try {
+			book = Book.loadBookByORMID(_bid);
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		
 		String searchLog = book.get_searchLog();
 		
 		if(searchLog != null)
@@ -61,6 +69,14 @@ public class BookController {
 	
 	public static void AddToPurchaseLog(Book book)
 	{
+		int _bid = book.get_bid();
+		
+		try {
+			book = Book.loadBookByORMID(_bid);
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		
 		String purchaseLog = book.get_purchaseLog();
 		if(purchaseLog != null)
 			purchaseLog = purchaseLog + " " +sdf.format(date);

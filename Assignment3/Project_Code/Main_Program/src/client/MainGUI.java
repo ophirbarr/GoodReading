@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 
 import common.Message;
 import controllers.BookController;
+import controllers.CustomerController;
 import good_reading.Book;
 
 import java.awt.Font;
@@ -69,6 +70,8 @@ public class MainGUI extends JPanel {
 			{
 				clientInterface.logOut();
 					
+				new PopUpMessageGUI("Thank you for using Good Reading!").setVisible(true);
+				
 				clientInterface.frame.remove(clientInterface.mainPanel);
 				clientInterface.frame.getContentPane().add(clientInterface.loginPanel);
 				clientInterface.frame.revalidate(); // For Java 1.7 or above.

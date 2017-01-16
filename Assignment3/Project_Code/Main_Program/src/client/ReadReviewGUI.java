@@ -94,7 +94,7 @@ public class ReadReviewGUI extends JPanel {
 		JList<String> list = new JList<String>(listModel);
 		scrollPane.setViewportView(list);
 		
-		Message msg = new Message("SystemUserController","ReadReviews");
+		Message msg = new Message("ReadReviews", "SystemUserController");
 		msg.add(book);
 		
 		try {
