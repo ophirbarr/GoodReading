@@ -383,7 +383,11 @@ public class SystemUserController {
 		return result;
 	}
 	
-	
+	/**
+	 * A new SystemUser instance is returned. Used when a change is expected and user needs to be updated.
+	 * @param id ID of current user
+	 * @return up to date instance of current user
+	 */
 	public static SystemUser RefreshUser(int id)
 	{
 		SystemUser user = null;
