@@ -3,25 +3,15 @@ package client;
 import javax.swing.JPanel;
 import good_reading.Book;
 import good_reading.Worker;
-
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.io.IOException;
-
-import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
-
 import common.Message;
-
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.AbstractListModel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
