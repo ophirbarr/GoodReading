@@ -50,12 +50,12 @@ public class LibrarianGUI extends JPanel
 		btnApproveUser.setBounds(21, 11, 150, 23);
 		menuPanel.add(btnApproveUser);
 		
-		JButton btnNewButton_1 = new JButton("Setup new account");
+		JButton btnNewButton_1 = new JButton("New customer approval");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				remove(currentPanel);
-				currentPanel = new JPanel();  // TODO replace with your class
+				currentPanel = new FromUserToCostumerGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
