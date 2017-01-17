@@ -40,7 +40,7 @@ public class MessageToClientGUI extends JPanel {
 		String temp;    //the message appears on the screen
 		
 		setLayout(null);
-		if(typeMessage == "Publish") temp = "The Review was Published!";
+		if(typeMessage == "PublishReview") temp = "The Review was Published!";
 		else temp = "The Review was Rejected!";
 		
 		Publish_Reject_Review();
@@ -79,9 +79,9 @@ public class MessageToClientGUI extends JPanel {
 	 */
 	public void Publish_Reject_Review(){
 		
-		Message msg = new Message(typeMessage, "BookInspectReview");
+		Message msg = new Message(typeMessage, "InspectReviewController");
 		msg.add(rid);
-		if(typeMessage == "Publish") msg.add(textReview);
+		if(typeMessage == "PublishReview") msg.add(textReview);
 		
 		clientInterface.msgFromServer = null;
 		try {
