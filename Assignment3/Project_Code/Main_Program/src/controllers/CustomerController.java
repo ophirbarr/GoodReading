@@ -1,6 +1,7 @@
 package controllers;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +14,7 @@ import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
 import common.Define;
+import common.Message;
 import client.ClientInterface;
 import client.MainGUI;
 import client.PopUpMessageGUI;
@@ -29,7 +31,7 @@ public class CustomerController {
 	
 	private static Calendar cal = Calendar.getInstance();
 	private static Date date = cal.getTime();
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+	
 	
 	public static void SubmitReview(BookReview review)
 	{
@@ -51,34 +53,94 @@ public class CustomerController {
 		
 	}
 	
-	public static void BuyBook(SystemUser user, Book book)
+	public static boolean BuyBook(ClientInterface clientInterface, Customer customer, Book book)
 	{
+		boolean isPurchase = false, hasBook = false;
 		float price = book.get_price();
-		try {
-			if(Customer.getCustomerByORMID(user.get_uid()) != null)
-			{
-				if(ValidateAccount(user))
-					if(((Customer)user).get_accountType() == Define.ACCOUNT_MONTHLY)
-						price = price*(float)(1-0.25);
-					else if(((Customer)user).get_accountType() == Define.ACCOUNT_YEARLY)
-						price = price*(float)(1-0.5);
-				
-				//TODO continue
-				
-				
+		
+		if(ValidateAccount(clientInterface, customer))
+		{
+			//get all customer's books and check that he didn't buy that book
+			Message msg = new Message ("MyBooks", "CustomerController");
+			msg.add(customer);
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			clientInterface.waitForServer();
+			Book books[] = (Book[])clientInterface.getMsgFromServer();
+			
+			if(books != null)
+			{
+				for(Book ibook : books)
+				{
+					if(ibook.get_bid() == book.get_bid())
+					{
+						new PopUpMessageGUI(clientInterface.frame, "You already have this book. Look up MyBooks", Define.Notice);
+						hasBook = true;
+					}
+				}
+			}
+			
+			if(!hasBook)
+			{
+				if(customer.get_accountType() != Define.ACCOUNT_PER_BOOK)
+				{
+					if(customer.get_accountType() == Define.ACCOUNT_MONTHLY)
+						price = price*(float)(1-0.25);
+					else if(customer.get_accountType() == Define.ACCOUNT_YEARLY)
+						price = price*(float)(1-0.5);
+					
+					new PopUpMessageGUI(clientInterface.frame, "You've got a discount. Only " + price + "$", Define.Like);
+				}
+				
+				msg = new Message ("AddBookToCustomer", "CustomerController");
+				msg.add(book.get_bid());
+				msg.add(customer.get_uid());
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				isPurchase = true;
+			}
+		}
+
+		return isPurchase;
+	}
+	
+	public static void AddBookToCustomer(int bid, int uid)
+	{
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+	
+			Customer_Book customer_book = new Customer_Book();
+			customer_book.set_bid(bid);
+			customer_book.set_uid(uid);
+			
+			//----add customer_book to database
+			PersistentTransaction t = session.beginTransaction();
+			session.save(customer_book);
+			t.commit();
+		
+			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static Book[] MyBooks(SystemUser user) // need to check
+	
+	public static Book[] MyBooks(Customer customer)
 	{
 		Book books[] = null;
 		Customer_Book customerBook[];
 		
 		try {
-			customerBook = Customer_Book.listCustomer_BookByQuery("_uid = '" + user.get_uid(), "_bid");
+			customerBook = Customer_Book.listCustomer_BookByQuery("_uid = '" + customer.get_uid(), "_bid");
 				
 		if (customerBook.length > 0)
 		{
@@ -96,39 +158,97 @@ public class CustomerController {
 		return books;
 	}
 	
-	public static void UpdateAccountType(SystemUser user)
-	{
-		if(ValidateAccount(user))
-		{
-			if(((Customer)user).get_accountType() != Define.ACCOUNT_PER_BOOK)
-				;//TODO Send message to client that he already has an active subscription
-			else
-				;//TODO Get a new type from user, update the _waitingForChangeType to the correct value.
-		}
-		else
-			;//TODO Send message to client that the account is blocked
-		
-	}
 	
-	public static boolean ValidateAccount(SystemUser user)
+	public static void UpdateAccountType(ClientInterface clientInterface, Customer customer, int Type)
 	{
-		boolean isValid = false;
-		
-		if(((Customer)user).get_accountStatus() == Define.ACCOUNT_FULL_PERMISSION)
+		if(ValidateAccount(clientInterface, customer))
 		{
-			if(((Customer)user).get_accountType() != Define.ACCOUNT_PER_BOOK)
+			if((customer).get_accountType() != Define.ACCOUNT_PER_BOOK)
+				new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription", Define.Notice);
+			else
 			{
-				if(((Customer)user).get_endDate().before(date))
-				{
-					((Customer)user).set_accountType(Define.ACCOUNT_PER_BOOK);
-					
-					// TODO Send message to client that the date has expired
-					new PopUpMessageGUI("The subsciption date has been expired");
+				customer.set_accountType(Type);
+				Message msg = new Message ("UpdateCustomer", "CustomerController");
+				msg.add(customer);
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
-				
-			isValid = true;
 		}
-		return isValid;
+	}
+	
+	
+	public static boolean ValidateAccount(ClientInterface clientInterface, Customer customer)
+	{
+		int isValid = 0;
+		
+		if(customer.get_waitingForChangeType() != Define.FROM_USER_TO_CUSTOMER)
+		{
+			if(customer.get_accountStatus() == Define.ACCOUNT_FULL_PERMISSION)
+			{
+				if(customer.get_accountType() != Define.ACCOUNT_PER_BOOK)
+				{
+					if(customer.get_endDate().before(date))
+					{
+						customer.set_accountType(Define.ACCOUNT_PER_BOOK);
+						Message msg = new Message ("UpdateCustomer", "CustomerController");
+						msg.add(customer);
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					else
+						isValid = 3;
+				}
+			}
+			else
+				isValid = 2;
+		}
+		else
+			isValid = 1;
+		
+		if(isValid != 0)
+			ValidateAccountMessage(clientInterface, isValid);
+		
+		return (isValid == 0);
+	}
+	
+	
+	public static void ValidateAccountMessage(ClientInterface clientInterface, int isValid)
+	{
+		switch(isValid)
+		{
+		case 1:
+			new PopUpMessageGUI(clientInterface.frame, "Your request to open an account is still being processed.", Define.Build);
+			break;
+		case 2:
+			new PopUpMessageGUI(clientInterface.frame, "The account is blocked. Please contact the manager.", Define.Error);
+			break;
+		case 3:
+			new PopUpMessageGUI(clientInterface.frame, "The subsciption date has been expired", Define.Notice);
+			break;
+		}
+	}
+	
+	
+	public static void UpdateCustomer(Customer customer)
+	{
+		PersistentSession session;
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			//----update book in database
+			PersistentTransaction t = session.beginTransaction();
+			session.save(customer);
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
 	}
 }

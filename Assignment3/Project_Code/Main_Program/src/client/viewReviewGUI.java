@@ -6,6 +6,7 @@ import common.Message;
 import good_reading.BookReview;
 import javax.swing.JLabel;
 import java.awt.SystemColor;
+import java.awt.Color;
 import java.awt.Font;
 /**
  * 
@@ -23,7 +24,7 @@ public class viewReviewGUI extends JPanel{
 	 */
 	public viewReviewGUI(ClientInterface clientInterface, BookReview br){
 		super();
-		setBackground(SystemColor.info);
+		setBackground(new Color(250, 243, 232));
 		this.clientInterface = clientInterface;
 		setLayout(null);
 		

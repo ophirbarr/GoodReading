@@ -9,6 +9,9 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+
+import common.Define;
+
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import java.awt.Rectangle;
@@ -26,11 +29,13 @@ public class PopUpMessageGUI extends JFrame {
 	 * @param clientInterface User Object
 	 * @param Messagetext String of the message to be displayed
 	 */
-	public PopUpMessageGUI(String messageText){
+	public PopUpMessageGUI(JFrame frame, String messageText, int Type){
 		super();
-		setBounds(new Rectangle(500, 300, 431, 188));
 		setAlwaysOnTop(true);
 		setResizable(false);
+		setVisible(true);
+		setBounds(new Rectangle(100, 50, 431, 188));
+		setLocationRelativeTo(frame);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PopUpMessageGUI.class.getResource("/design/g10628.png")));
 		this.Messagetext = messageText;
 		
@@ -57,9 +62,28 @@ public class PopUpMessageGUI extends JFrame {
 		button.setFont(new Font("Dialog", Font.BOLD, 15));
 		getContentPane().add(button);
 		
+		String path = "";
+		switch(Type)
+		{
+		case Define.Error:
+			path = "/design/g6643.png";
+			break;
+		case Define.Notice:
+			path = "/design/g5067.png";
+			break;
+		case Define.Edit:
+			path = "/design/g5022.png";
+			break;
+		case Define.Like:
+			path = "/design/g5091.png";
+			break;
+		case Define.Build:
+			path = "/design/g5046.png";
+			break;
+		}
 		JLabel label = new JLabel("");
 		label.setBounds(339, 51, 63, 63);
-		label.setIcon(new ImageIcon("C:\\Users\\yair\\Downloads\\g5091.png"));
+		label.setIcon(new ImageIcon(path));
 		getContentPane().add(label);
 		
 		

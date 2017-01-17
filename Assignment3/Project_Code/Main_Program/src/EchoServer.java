@@ -9,6 +9,7 @@ import controllers.BookController;
 import controllers.CustomerController;
 import good_reading.Book;
 import good_reading.BookReview;
+import good_reading.Customer;
 import good_reading.SystemUser;
 import ocsf.server.*;
 
@@ -165,11 +166,24 @@ public class EchoServer extends AbstractServer
 			  CustomerController.SubmitReview((BookReview)message.getParameters().get(0));
 			  break;
 			  
+		  case "AddBookToCustomer":
+			  CustomerController.AddBookToCustomer((int)message.getParameters().get(0), (int)message.getParameters().get(1));
+			  break;
+		  
 		  case "MyBooks":
-			  CustomerController.MyBooks((SystemUser)message.getParameters().get(0));
+			  try {
+				client.sendToClient(CustomerController.MyBooks((Customer)message.getParameters().get(0)));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			  break;
+			  	  
+		  case "UpdateCustomer":
+			  CustomerController.UpdateCustomer((Customer)message.getParameters().get(0));
 			  break;
 		  }
 		  break;
+		  		  
 		  
 	  case "DatabaseManagementController":
 		  switch(action)

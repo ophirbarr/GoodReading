@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 
+import common.Define;
 import common.Message;
 import controllers.BookController;
 import controllers.CustomerController;
@@ -70,7 +71,7 @@ public class MainGUI extends JPanel {
 			{
 				clientInterface.logOut();
 					
-				new PopUpMessageGUI("Thank you for using Good Reading!").setVisible(true);
+				new PopUpMessageGUI(clientInterface.frame, "Thank you for using Good Reading!", Define.Like);
 				
 				clientInterface.frame.remove(clientInterface.mainPanel);
 				clientInterface.frame.getContentPane().add(clientInterface.loginPanel);

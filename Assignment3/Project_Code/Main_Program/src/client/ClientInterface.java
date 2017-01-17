@@ -44,7 +44,7 @@ public class ClientInterface extends ClientConsole
 	
 	
 	// GUI fields
-	protected JFrame frame;
+	public JFrame frame;
 	public JPanel loginPanel;
 	public MainGUI mainPanel;
 	public SignUpGUI signUpPanel;

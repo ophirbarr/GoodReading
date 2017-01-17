@@ -23,6 +23,14 @@ public class Define {
 	public static final int DO_NOT_CHANGE = 0;
 	public static final int CHANGE_TO_MONTHLY = 1;
 	public static final int CHANGE_TO_YEARLY = 2;
+	
 	public static final int FROM_USER_TO_CUSTOMER = 3;
+	
+	//PopUpMessageType
+	public static final int Error = 0;
+	public static final int Notice = 1;
+	public static final int Edit = 2;
+	public static final int Like = 3;
+	public static final int Build = 4;
 	
 }

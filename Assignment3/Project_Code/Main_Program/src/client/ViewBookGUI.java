@@ -5,13 +5,22 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import good_reading.Book;
+import good_reading.Customer;
+import good_reading.SystemUser;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import common.Define;
+import common.Message;
+import controllers.CustomerController;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,7 +38,7 @@ public class ViewBookGUI extends JPanel {
 	public ViewBookGUI(ClientInterface clientInterface, Book book) {
 		super();
 		setBounds(new Rectangle(10, -11, 727, 588));
-		setBackground(Color.WHITE);
+		setBackground(new Color(250, 243, 232));
 		this.clientInterface = clientInterface;
 		setLayout(null);
 		
@@ -68,6 +77,16 @@ public class ViewBookGUI extends JPanel {
 		imagePanel.add(lblPrice);
 		
 		JButton btnBuyNow = new JButton("Buy Now");
+		btnBuyNow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				if(clientInterface.user instanceof Customer)
+					if(CustomerController.BuyBook(clientInterface, (Customer)(clientInterface.user), book))
+						new PopUpMessageGUI(clientInterface.frame, "Thank you for choosing GoodReading.\nThe book had been added to 'MyBooks'.", Define.Like);
+				else
+					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to purchase a book.", Define.Notice);
+			}
+		});
 		btnBuyNow.setFont(new Font("Tahoma", Font.BOLD, 16));
 		btnBuyNow.setBounds(54, 403, 112, 29);
 		imagePanel.add(btnBuyNow);
