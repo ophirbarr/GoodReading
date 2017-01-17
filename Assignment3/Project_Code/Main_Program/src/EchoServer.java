@@ -244,10 +244,12 @@ public class EchoServer extends AbstractServer
 		  case "ViewUsersWithCondition":
 			  try {
 					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition(1));
-					} catch (IOException e) {e.printStackTrace();} 
-				  catch (PersistentException e) {
-					  e.printStackTrace();}  
+					} catch (IOException e) {e.printStackTrace();}    
 			  break;
+			  
+		  case "AddNewUser":
+				controllers.LibrarianController.AddNewUser((int)message.getParameters().get(0));
+				  break;
 		  }
 	  case "ManagerController":
 		  switch(action){
