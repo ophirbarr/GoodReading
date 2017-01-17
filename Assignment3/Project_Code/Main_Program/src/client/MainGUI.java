@@ -164,6 +164,21 @@ public class MainGUI extends JPanel {
 		});
 		menu.add(btnManageCatalog, "cell 0 7,alignx center,aligny center");
 		
+		JButton btnRequestReport = new JButton("Request Report");
+		btnRequestReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remove(currentPanel);
+				currentPanel = new RequestReportGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+			}
+		});
+		menu.add(btnRequestReport, "cell 0 8,alignx center,aligny center");
+		
 		JLabel lblOnlyShowsFor = new JLabel("temp -- will only show for librarian");
 		menu.add(lblOnlyShowsFor, "cell 0 10");
 		

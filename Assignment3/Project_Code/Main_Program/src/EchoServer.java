@@ -258,6 +258,14 @@ public class EchoServer extends AbstractServer
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			  break;
+		  case "CustomerOrders":
+			  try {
+				client.sendToClient(controllers.ManagerController.CustomerOrders());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		  break;
 		  }
 		  break;
