@@ -12,7 +12,11 @@ import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
 public class InspectReviewController {
-	
+	/**
+	 * The function find out a list BookReview for all awaiting approval review (_approved == 0)
+	 * @return  returns Message that containing the list
+	 * @throws PersistentException
+	 */
 	public static Message InspectReviews() throws PersistentException{
 		
 		BookReview[] br = null;
@@ -31,7 +35,11 @@ public class InspectReviewController {
 		
 		return msg;
 	}
-	
+	/**
+	 * The function erases the review form database
+	 * @param rid Review id
+	 * @return 1 everything is OK
+	 */
 	public static int RejectReview(int rid){
 		
 		BookReview br = null;
@@ -50,6 +58,12 @@ public class InspectReviewController {
 		}
 		return 1;
 	}
+	/**
+	 * The function publishes the review
+	 * @param rid Review id
+	 * @param textReview String of Review
+	 * @return 1 everything is OK
+	 */
 	public static int PublishReview(int rid,String textReview){
 		BookReview br = null;
 		PersistentSession session = null;

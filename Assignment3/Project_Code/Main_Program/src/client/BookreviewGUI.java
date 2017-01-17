@@ -76,7 +76,7 @@ public class BookreviewGUI extends JPanel {
 			 * Publish Listener button - publish the review
 			 */
 			public void actionPerformed(ActionEvent e) {
-				typeMessage = "Publish";
+				typeMessage = "PublishReview";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
 				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),typeMessage,theReview.getText());
 				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
