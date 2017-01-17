@@ -109,6 +109,22 @@ public class EchoServer extends AbstractServer
 				e1.printStackTrace();
 			}
 			  break;
+			  
+		  case "OpenAccount":
+			  try {
+				client.sendToClient(controllers.SystemUserController.OpenAccount((SystemUser)message.getParameters().get(0)));
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			  break;
+			  
+		  case "RefreshUser":
+			  try {
+					client.sendToClient(controllers.SystemUserController.RefreshUser((int)message.getParameters().get(0)));
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+			  break;
 		  }
 		  
 		  break;
@@ -228,10 +244,12 @@ public class EchoServer extends AbstractServer
 		  case "ViewUsersWithCondition":
 			  try {
 					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition(1));
-					} catch (IOException e) {e.printStackTrace();} 
-				  catch (PersistentException e) {
-					  e.printStackTrace();}  
+					} catch (IOException e) {e.printStackTrace();}    
 			  break;
+			  
+		  case "AddNewUser":
+				controllers.LibrarianController.AddNewUser((int)message.getParameters().get(0));
+				  break;
 		  }
 	  case "ManagerController":
 		  switch(action){

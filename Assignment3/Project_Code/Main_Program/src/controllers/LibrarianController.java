@@ -12,58 +12,51 @@ import good_reading.SystemUser;
 
 public class LibrarianController {
 	
-public static Message ViewUsersWithCondition(int status) throws PersistentException{
+public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
-	
+		PersistentSession session = null;
 		SystemUser[] users = null;
-		Message msg = new Message("","");
 		
-		if(status==1)
+		if(viewStatus==1)
 		{
-				try {
-					users=SystemUser.listSystemUserByQuery("_userStatus= '2'", null);
-					msg.add(users);	
-				} catch (PersistentException e) {
-					e.printStackTrace();	
-				}
+			try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				users = SystemUser.listSystemUserByQuery("_userStatus = '2'", null);
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+				users = null;
+			}
 		}
-		return msg;
-			
+		
+			return users;
+				
 	}
 	
 	
 
 		
-/*public static void AddNewUser(SystemUser user){
+public static void AddNewUser(int user_id){
 	
 	PersistentSession session = null;
-	int i;
-	SystemUser[] users; 
+	SystemUser user; 
 	
 	try {
 		session = GoodReadingPersistentManager.instance().getSession();
 		PersistentTransaction t = session.beginTransaction();
 
-		users=SystemUser.listSystemUserByQuery("FROM systemuser WHERE _userStatus= '2'", null);
-
-		for(i=0;i<users.length;i++)
-		{
-			if(users[i].equals(user))
-				users[i].set_userStatus(0);	
-				user.set_userStatus(0);
+		user=SystemUser.loadSystemUserByQuery("_uid = '" + user_id +"'", null);
+		
+				user.set_userStatus(common.Define.USER_DISCONNECTED);
+				session.update(user);
 				t.commit();
 				session.close();
+		
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-	} catch (PersistentException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-	
-	
-}*/
+}
 	
 public static void FromUserToCostumer(){}
 

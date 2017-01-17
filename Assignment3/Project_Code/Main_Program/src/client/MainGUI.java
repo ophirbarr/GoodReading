@@ -54,7 +54,7 @@ public class MainGUI extends JPanel {
 		menu.setForeground(Color.BLACK);
 		menu.setBackground(new Color(171, 201, 194));
 		add(menu, BorderLayout.WEST);
-		menu.setLayout(new MigLayout("", "[150px]", "[30px][23px][23px][23px][23px][23px][23px][][][][][][][][][]"));
+		menu.setLayout(new MigLayout("", "[150px]", "[30px][23px][23px][23px][23px][][23px][23px][][][][][][][][][]"));
 		
 		
 		JButton btnExit = new JButton("EXIT");
@@ -129,7 +129,23 @@ public class MainGUI extends JPanel {
 				BookController.ViewBook(clientInterface, new Book(325, "Harry Potter", "English", "Once upon a time...", "chapter 1 \t\t\t page 4\nchapter 2 \t\t\t page 32",true, 29, "", "", 0, ""));
 			}
 		});
-		menu.add(btnNewButton_1, "cell 0 5,alignx center,aligny top");
+		
+		JButton btnMyAccount = new JButton("My Account");
+		btnMyAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				remove(currentPanel);
+				currentPanel = new AccountGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+			}
+		});
+		menu.add(btnMyAccount, "cell 0 5,alignx center,aligny center");
+		menu.add(btnNewButton_1, "cell 0 6,alignx center,aligny top");
 		
 		JButton btnInspectReview = new JButton("Inspect Review");
 		btnInspectReview.addActionListener(new ActionListener() {
@@ -145,7 +161,7 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnInspectReview, "cell 0 6,alignx center");
+		menu.add(btnInspectReview, "cell 0 7,alignx center");
 		
 		JButton btnManageCatalog = new JButton("Manage Catalog");
 		btnManageCatalog.addActionListener(new ActionListener() {
@@ -162,10 +178,10 @@ public class MainGUI extends JPanel {
 				
 			}
 		});
-		menu.add(btnManageCatalog, "cell 0 7,alignx center,aligny center");
+		menu.add(btnManageCatalog, "cell 0 8,alignx center,aligny center");
 		
 		JLabel lblOnlyShowsFor = new JLabel("temp -- will only show for librarian");
-		menu.add(lblOnlyShowsFor, "cell 0 10");
+		menu.add(lblOnlyShowsFor, "cell 0 11");
 		
 		JButton btnNewButton = new JButton("Librarian Actions");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -181,7 +197,7 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnNewButton, "cell 0 11,alignx center,aligny center");
+		menu.add(btnNewButton, "cell 0 12,alignx center,aligny center");
 		
 		JButton btnNewButton_2 = new JButton("Manage Database");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -197,9 +213,9 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnNewButton_2, "cell 0 12,alignx center,aligny top");
-		menu.add(btnLogout, "cell 0 14,alignx center,aligny top");
-		menu.add(btnExit, "cell 0 15,alignx center,aligny top");
+		menu.add(btnNewButton_2, "cell 0 13,alignx center,aligny top");
+		menu.add(btnLogout, "cell 0 15,alignx center,aligny top");
+		menu.add(btnExit, "cell 0 16,alignx center,aligny top");
 		
 		currentPanel = new JPanel();  // WELCOME SCREEN
 		currentPanel.setBounds(176, 1, 724, 504);

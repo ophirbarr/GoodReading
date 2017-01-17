@@ -345,6 +345,15 @@ public class SystemUserController {
 			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
 			session.delete(user);
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
 			session.save(customer);
 			t.commit();
 			session.close();
@@ -372,5 +381,19 @@ public class SystemUserController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	
+	public static SystemUser RefreshUser(int id)
+	{
+		SystemUser user = null;
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			user = SystemUser.getSystemUserByORMID(id);
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 }
