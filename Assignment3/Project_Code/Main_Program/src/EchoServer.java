@@ -113,7 +113,7 @@ public class EchoServer extends AbstractServer
 		  
 		  break;
 		  /**
-		   * Book Review Controller
+		   * Inspect Review Controller
 		   */
 	  case "InspectReviewController":
 		  switch(action)
@@ -232,6 +232,33 @@ public class EchoServer extends AbstractServer
 				  catch (PersistentException e) {
 					  e.printStackTrace();}  
 			  break;
+		  }
+	  case "ManagerController":
+		  switch(action){
+		  case "ManageCatalog": 
+			  try {
+				client.sendToClient(controllers.ManagerController.ManageCatalog());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  break;
+		  case "AddToCatalog":
+			  try {
+				client.sendToClient(controllers.ManagerController.AddToCatalog((int) message.getParameters().get(0)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  break;
+		  case "RemoveFromCatalog":
+			  try {
+				client.sendToClient(controllers.ManagerController.RemoveFromCatalog((int) message.getParameters().get(0)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  break;
 		  }
 		  break;
   
