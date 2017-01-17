@@ -54,10 +54,15 @@ public class ViewBookGUI extends JPanel {
 		textField.setBounds(42, 41, 226, 51);
 		imagePanel.add(textField);
 		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ViewBookGUI.class.getResource("/design/g7642.png")));
+		lblNewLabel.setBounds(411, 276, 269, 123);
+		imagePanel.add(lblNewLabel);
+		
 		JLabel lblBookpicture = new JLabel("book_picture");
 		//TODO get book picture from data base
 		lblBookpicture.setIcon(new ImageIcon(ViewBookGUI.class.getResource("/design/harry_potter2.png")));
-		lblBookpicture.setBounds(445, 101, 184, 270);
+		lblBookpicture.setBounds(448, 103, 184, 270);
 		imagePanel.add(lblBookpicture);
 		
 		JLabel lblIdLabel = new JLabel("ID: "+book.get_bid());

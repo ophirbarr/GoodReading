@@ -1,8 +1,5 @@
 package client;
 
-import javax.swing.JPanel;
-
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,36 +8,32 @@ import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.border.EtchedBorder;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import common.Define;
 import common.Message;
-import good_reading.Book;
-import good_reading.BookReview;
+import good_reading.Customer;
 import good_reading.SystemUser;
 
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-
-public class AddNewUserGUI extends JPanel {
+public class FromUserToCostumerGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
-	private SystemUser[] users ;   //a list of all awaiting approval users        
+	private Customer[] customers ;   //a list of all awaiting approval users        
 	private int size;  
 	private DefaultListModel model;	
 	private final JScrollPane scrollPane = new JScrollPane();
-
 	
 	/**
 	 * constructor
 	 * @param clientInterface
 	 */
 	
-	public AddNewUserGUI(ClientInterface clientInterface) {
+	
+	public FromUserToCostumerGUI(ClientInterface clientInterface) {
 		
 		super();
 		this.clientInterface = clientInterface;
@@ -67,27 +60,30 @@ public class AddNewUserGUI extends JPanel {
 		}
 		
 		clientInterface.waitForServer();  // Waiting for approval from the server
+		System.out.println("aaa");
+		
 
+		customers = (Customer[])clientInterface.getMsgFromServer();
 		
-		users = (SystemUser[])clientInterface.getMsgFromServer();
+	
+		size=customers.length;
+		System.out.println(size);
 		
-		size=users.length;
-		
-		if(size==0) listModel.addElement("There is no users that waiting for approval!" );
+		if(size==0) listModel.addElement("There is no new customers that waiting for approval!" );
 		else
 		{
 			for(int i=0;i<size;i++)  
 			{
-			listModel.addElement(users[i].get_firstName());
+			listModel.addElement(customers[i].get_firstName());
 			}
 		}
-		JLabel lblTheReviewsThat = new JLabel("Users that waiting for approve:");
-		lblTheReviewsThat.setBounds(41, 95, 281, 29);
+		JLabel lblTheReviewsThat = new JLabel("New customers that waiting for approval:");
+		lblTheReviewsThat.setBounds(41, 95, 274, 28);
 		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		add(lblTheReviewsThat);
 		
-		JButton btnAddUser = new JButton("Add");
-		btnAddUser.setBounds(156, 137, 83, 44);
+		JButton btnAddUser = new JButton("Change Account Status");
+		btnAddUser.setBounds(141, 135, 155, 55);
 		add(btnAddUser);
 		
 		
@@ -102,8 +98,8 @@ public class AddNewUserGUI extends JPanel {
 					public void actionPerformed(ActionEvent arg0) {
 						
 						try {
-							Message msg = new Message("AddNewUser", "LibrarianController");
-							msg.add(users[index].get_uid());
+							Message msg = new Message("FromUserToCostumer", "LibrarianController");
+							msg.add(customers[index].get_uid());
 							clientInterface.client.openConnection();
 							clientInterface.client.sendToServer(msg);
 						} catch (IOException e) {
@@ -111,22 +107,15 @@ public class AddNewUserGUI extends JPanel {
 						}
 						
 						//clientInterface.waitForServer();
-						JOptionPane.showMessageDialog(null, "The User Status Changed To DISCONNECTED");
+						JOptionPane.showMessageDialog(null, "The User Account Status Changed");
 					}
 					
 				});
 				
 				
-			} 	
-			
+			} 				
 		});
-			
 	}
-}		
-					
-		
 	
-
-
-
 	
+}

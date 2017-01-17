@@ -207,11 +207,6 @@ public class ManageDatabaseGUI extends JPanel
 		btnAdd.setBounds(240, 437, 156, 23);
 		add(btnAdd);
 		
-		JButton btnEdit = new JButton("EDIT");
-		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnEdit.setBounds(22, 437, 100, 23);
-		add(btnEdit);
-		
 		JButton btnDelete = new JButton("DELETE");
 		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDelete.setBounds(137, 437, 93, 23);
@@ -302,6 +297,37 @@ public class ManageDatabaseGUI extends JPanel
 				else rdbtnDomains.setSelected(true);
 			}
 		});
+		
+		JButton btnEdit = new JButton("EDIT");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (rdbtnBooks.isSelected() && list.getSelectedIndex() != -1)
+				{
+					int i = list.getSelectedIndex();
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new EditBookGUI(clientInterface, (Book)result[i]);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+					
+				}
+				else if (rdbtnSubjects.isSelected())
+				{
+					
+				}
+				else if (rdbtnDomains.isSelected())
+				{
+					
+				}
+			}
+		});
+		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEdit.setBounds(22, 437, 100, 23);
+		add(btnEdit);
 		
 		JButton btnSearch = new JButton("SEARCH");
 		btnSearch.addActionListener(new ActionListener() {

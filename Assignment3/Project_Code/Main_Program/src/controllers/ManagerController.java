@@ -37,7 +37,7 @@ public class ManagerController {
 	}
 	
 	
-	public static int AddToCatalog(int bid){
+	public static void AddToCatalog(int bid){
 		
 		Book book;
 		PersistentSession session = null;
@@ -53,10 +53,9 @@ public class ManagerController {
 			e.printStackTrace();
 			
 		}
-		return 1;
 	}
 	
-public static int RemoveFromCatalog(int bid){
+public static void RemoveFromCatalog(int bid){
 		
 		Book book;
 		PersistentSession session = null;
@@ -72,7 +71,6 @@ public static int RemoveFromCatalog(int bid){
 			e.printStackTrace();
 			
 		}
-		return 1;
 	}
 
 /**

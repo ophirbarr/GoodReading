@@ -63,7 +63,7 @@ public class SignUpGUI extends JPanel
 				Message msg = new Message("SignUp", "SystemUserController");
 				String pass1 = new String(fieldPassword1.getPassword());
 				String pass2 = new String(fieldPassword2.getPassword());
-				if (fieldUsername.getText().equals("") || pass1.equals("") || !pass1.equals(pass2) || fieldFirstName.getText().equals("") || fieldLastName.getText().equals("") || fieldSSN.getText().equals("") || !fieldSSN.getText().matches("[0-9]+"))
+				if (fieldUsername.getText().equals("") || pass1.equals("") || !pass1.equals(pass2) || fieldFirstName.getText().equals("") || fieldLastName.getText().equals("") || fieldSSN.getText().equals("") || !fieldSSN.getText().matches("[0-9]+") || fieldSSN.getText().length() > 9)
 				{
 					JOptionPane.showMessageDialog(clientInterface.frame, "One or more fields are invalid.");  
 					return;
@@ -156,6 +156,10 @@ public class SignUpGUI extends JPanel
 		fieldPassword1 = new JPasswordField();
 		fieldPassword1.setBounds(275, 128, 158, 19);
 		panel.add(fieldPassword1);
+		
+		JLabel lblTo = new JLabel("(1 to 9 digits)");
+		lblTo.setBounds(445, 230, 82, 14);
+		panel.add(lblTo);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(SignUpGUI.class.getResource("/design/bitmap.png")));

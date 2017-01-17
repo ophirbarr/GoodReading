@@ -7,65 +7,95 @@ import org.orm.PersistentTransaction;
 import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
+import good_reading.Customer;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 
 public class LibrarianController {
 	
-public static Message ViewUsersWithCondition(int status) throws PersistentException{
+public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
-	
+		PersistentSession session = null;
 		SystemUser[] users = null;
-		Message msg = new Message("","");
+		Customer[] customers=null;
 		
-		if(status==1)
+		if(viewStatus==1)
 		{
-				try {
-					users=SystemUser.listSystemUserByQuery("_userStatus= '2'", null);
-					msg.add(users);	
-				} catch (PersistentException e) {
-					e.printStackTrace();	
-				}
+			try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				users = SystemUser.listSystemUserByQuery("_userStatus = '2'", null);
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+				users = null;
+			}
+			return users;
 		}
-		return msg;
-			
+		
+		if(viewStatus==2)
+		{
+			try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				customers = Customer.listCustomerByQuery("_waitingForChangeType = '3'", null);
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+				customers = null;
+			}
+			users=(SystemUser[])customers;
+			return users;
+		}
+		
+		return users;
+					
 	}
 	
 	
 
 		
-/*public static void AddNewUser(SystemUser user){
+public static void AddNewUser(int user_id){
 	
 	PersistentSession session = null;
-	int i;
-	SystemUser[] users; 
+	SystemUser user; 
 	
 	try {
 		session = GoodReadingPersistentManager.instance().getSession();
 		PersistentTransaction t = session.beginTransaction();
 
-		users=SystemUser.listSystemUserByQuery("FROM systemuser WHERE _userStatus= '2'", null);
-
-		for(i=0;i<users.length;i++)
-		{
-			if(users[i].equals(user))
-				users[i].set_userStatus(0);	
-				user.set_userStatus(0);
+		user=SystemUser.loadSystemUserByQuery("_uid = '" + user_id +"'", null);
+		
+				user.set_userStatus(common.Define.USER_DISCONNECTED);
+				session.update(user);
 				t.commit();
 				session.close();
+		
+		} catch (PersistentException e) {
+			e.printStackTrace();
 		}
+}
+	
+public static void FromUserToCostumer(int user_id){
+	
+	PersistentSession session = null;
+	Customer user; 
+	
+	try {
+		session = GoodReadingPersistentManager.instance().getSession();
+		PersistentTransaction t = session.beginTransaction();
+
+		user=Customer.loadCustomerByQuery("_uid = '" + user_id +"'", null);
 		
+				user.set_accountStatus(common.Define.ACCOUNT_FULL_PERMISSION);
+				user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+				session.update(user);
+				t.commit();
+				session.close();
 		
-	} catch (PersistentException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
 	
-	
-	
-}*/
-	
-public static void FromUserToCostumer(){}
+}
 
 public static void EditCostumerAccount(){}
 
