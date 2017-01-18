@@ -120,7 +120,11 @@ public class DatabaseManagementController
 		return msg;
 	}
 	
-	
+	/**
+	 * Edit the contents of a book
+	 * @param book book target to be edited
+	 * @return success or failure
+	 */
 	public static boolean EditBook(Book book)
 	{
 		try {
@@ -132,7 +136,45 @@ public class DatabaseManagementController
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
-		
+		return true;
+	}
+	
+	/**
+	 * Remove a book association such as book-author(0), book-subject(1), book-keyword(2).
+	 * @param msg message containing indication parameter and the relevant association
+	 * @return success or failure
+	 */
+	public static boolean RemoveBookAssociation(Message msg)
+	{
+		PersistentSession session;
+		int parameter = (int) msg.getParameters().get(0);
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+
+			if (parameter == 0)
+			{
+				Book_Author book_author = (Book_Author) msg.getParameters().get(1);
+				session.delete(book_author);
+			}
+			else if (parameter == 1)
+			{
+				Subject subject = (Subject) msg.getParameters().get(1);
+				int bid = (int) msg.getParameters().get(2);
+				Book_Subject book_subject = Book_Subject.loadBook_SubjectByQuery("_bid = '" + bid + "' AND _sid = '" + subject.get_sid() + "'", null);
+				session.delete(book_subject);
+			}
+			else if (parameter == 2)
+			{
+				Book_Keywords book_keyword = (Book_Keywords) msg.getParameters().get(1);
+				session.delete(book_keyword);
+			}
+			
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
 		return true;
 	}
 

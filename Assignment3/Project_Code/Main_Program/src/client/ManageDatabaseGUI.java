@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.event.ChangeListener;
 
 import common.Message;
+import controllers.BookController;
 import good_reading.Book;
 import good_reading.Domain;
 import good_reading.Subject;
@@ -199,6 +200,16 @@ public class ManageDatabaseGUI extends JPanel
 	
 		
 		JButton btnDisplayBook = new JButton("DISPLAY BOOK");
+		btnDisplayBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				if (!list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				{
+					int i = list.getSelectedIndex();
+					BookController.ViewBook(clientInterface, (Book)result[i]);
+				}
+			}
+		});
 		btnDisplayBook.setBounds(417, 437, 125, 23);
 		add(btnDisplayBook);
 		

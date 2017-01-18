@@ -36,6 +36,9 @@ public class EditBookGUI extends JPanel
 	private JTextField textToC;
 	private JTextField textPrice;
 	private JTextField textDownloadPath;
+	private JTabbedPane tabbedPane;
+	private JButton btnAdd;
+	private JButton btnRemove;
 	
 	public EditBookGUI(ClientInterface clientInterface, Book book)
 	{
@@ -139,28 +142,12 @@ public class EditBookGUI extends JPanel
 		chckbxCataloged.setBounds(10, 183, 97, 23);
 		panel.add(chckbxCataloged);
 		
-		JButton btnAdd = new JButton("Add Author");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAdd.setBounds(9, 405, 138, 23);
-		panel.add(btnAdd);
-		
-		JButton btnRemove = new JButton("Remove Author");
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnRemove.setBounds(198, 405, 144, 23);
-		panel.add(btnRemove);
-		
 		JLabel lblBookProperties = new JLabel("BOOK PROPERTIES");
 		lblBookProperties.setBounds(10, 11, 119, 14);
 		add(lblBookProperties);
 		lblBookProperties.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) 
 			{
@@ -200,6 +187,56 @@ public class EditBookGUI extends JPanel
 		JLabel label = new JLabel("___________________________________________________________________________________");
 		label.setBounds(-25, 202, 507, 14);
 		panel.add(label);
+		
+		btnAdd = new JButton("Add Author");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setBounds(9, 405, 138, 23);
+		panel.add(btnAdd);
+		
+		btnRemove = new JButton("Remove Author");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Message msg = new Message("RemoveBookAssociation", "DatabaseManagementController");
+				int listIndex = tabbedPane.getSelectedIndex();
+				if (listIndex == 0 && listAuthors.getSelectedIndex() != -1) // remove author
+				{
+					msg.add(0);
+					msg.add(((Book_Author[])bookDetails.getParameters().get(0))[listIndex]);
+				}
+				else if (listIndex == 1 && listSubjects.getSelectedIndex() != -1) // remove subject
+				{
+					msg.add(1);
+					msg.add(((Subject[])bookDetails.getParameters().get(0))[listIndex]);
+					msg.add(book.get_bid());
+				}
+				else if (listIndex == 2 && listKeywords.getSelectedIndex() != -1) // remove keyword
+				{
+					msg.add(2);
+					msg.add(((Book_Keywords[])bookDetails.getParameters().get(0))[listIndex]);
+				}
+				else msg = null;
+
+				if (msg != null)
+				{
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					revalidate();
+					repaint();
+				}
+				
+				
+			}
+		});
+		btnRemove.setBounds(198, 405, 144, 23);
+		panel.add(btnRemove);
 		
 		JButton btnExit = new JButton("EXIT");
 		btnExit.addActionListener(new ActionListener() {
