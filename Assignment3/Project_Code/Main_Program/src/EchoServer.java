@@ -102,7 +102,7 @@ public class EchoServer extends AbstractServer
 			}
 			  break;
 			  
-		  case "ReadReview":
+		  case "ReadReviews":
 			  try {
 				client.sendToClient(controllers.SystemUserController.ReadReviews((int)message.getParameters().get(0)));
 			} catch (IOException e1) {
