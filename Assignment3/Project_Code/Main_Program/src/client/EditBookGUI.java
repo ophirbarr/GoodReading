@@ -18,12 +18,14 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
 
 public class EditBookGUI extends JPanel
 {
 	private ClientInterface clientInterface;
 	private Book book;
-	private JTextField textId;
+	private Message bookDetails;
+	private JTextField textBid;
 	private JTextField textTitle;
 	private JTextField textLanguage;
 	private JTextField textSummary;
@@ -41,13 +43,13 @@ public class EditBookGUI extends JPanel
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 29, 496, 434);
+		panel.setBounds(10, 29, 361, 438);
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(10, 11, 61, 14);
-		panel.add(lblId);
+		JLabel lblBid = new JLabel("BID:");
+		lblBid.setBounds(10, 11, 61, 14);
+		panel.add(lblBid);
 		
 		JLabel lblTitle = new JLabel("Title:");
 		lblTitle.setBounds(10, 36, 61, 14);
@@ -73,11 +75,11 @@ public class EditBookGUI extends JPanel
 		lblDownloadPath.setBounds(10, 161, 91, 14);
 		panel.add(lblDownloadPath);
 		
-		textId = new JTextField();
-		textId.setEditable(false);
-		textId.setBounds(117, 8, 225, 20);
-		panel.add(textId);
-		textId.setColumns(10);
+		textBid = new JTextField();
+		textBid.setEditable(false);
+		textBid.setBounds(117, 8, 225, 20);
+		panel.add(textBid);
+		textBid.setColumns(10);
 		
 		textTitle = new JTextField();
 		textTitle.setBounds(117, 33, 225, 20);
@@ -110,6 +112,8 @@ public class EditBookGUI extends JPanel
 		textDownloadPath.setColumns(10);
 		
 		JCheckBox chckbxCataloged = new JCheckBox("Cataloged");
+		if (!((Worker)clientInterface.user).get_role().equals("Manager")) chckbxCataloged.setEnabled(false);
+		chckbxCataloged.setSelected(book.get_viewStatus());
 		chckbxCataloged.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) 
 			{
@@ -128,13 +132,53 @@ public class EditBookGUI extends JPanel
 				}
 			}
 		});
-		if (((Worker)clientInterface.user).get_role() != "Manager") chckbxCataloged.setEnabled(false);
-		chckbxCataloged.setBounds(117, 185, 97, 23);
+		chckbxCataloged.setBounds(10, 183, 97, 23);
 		panel.add(chckbxCataloged);
 		
+		JButton btnAdd = new JButton("Add Author");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdd.setBounds(9, 405, 138, 23);
+		panel.add(btnAdd);
+		
+		JButton btnRemove = new JButton("Remove Author");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRemove.setBounds(198, 405, 144, 23);
+		panel.add(btnRemove);
+		
+		JLabel lblBookProperties = new JLabel("BOOK PROPERTIES");
+		lblBookProperties.setBounds(10, 11, 119, 14);
+		add(lblBookProperties);
+		lblBookProperties.setFont(new Font("Tahoma", Font.BOLD, 11));
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) 
+			{
+				if (tabbedPane.getSelectedIndex() == 0)
+				{
+					btnAdd.setText("Add Author");
+					btnRemove.setText("Remove Author");
+				}
+				else if (tabbedPane.getSelectedIndex() == 1)
+				{
+					btnAdd.setText("Add Subject");
+					btnRemove.setText("Remove Subject");
+				}
+				else if (tabbedPane.getSelectedIndex() == 2)
+				{
+					btnAdd.setText("Add Keyword");
+					btnRemove.setText("Remove Keyword");
+				}
+			}
+		});
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tabbedPane.setBounds(10, 219, 332, 202);
+		tabbedPane.setBounds(9, 227, 332, 173);
 		panel.add(tabbedPane);
 		
 		JList listAuthors = new JList();
@@ -146,30 +190,64 @@ public class EditBookGUI extends JPanel
 		JList listKeywords = new JList();
 		tabbedPane.addTab("Keywords", null, listKeywords, null);
 		
+		Message msg = new Message("GetBookDetails", "DatabaseManagementController");
+		msg.add(book.get_bid());
+		try {
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		clientInterface.waitForServer();
+		bookDetails = (Message) clientInterface.getMsgFromServer();
+		
+		textBid.setText("" + book.get_bid());
+		textTitle.setText(book.get_title());
+		textLanguage.setText(book.get_language());
+		textSummary.setText(book.get_summary());
+		textToC.setText(book.get_TableOfContents());
+		textPrice.setText("" + book.get_price());
+		textDownloadPath.setText(book.get_bookFormat());
+		
+		JLabel label = new JLabel("___________________________________________________________________________________");
+		label.setBounds(-25, 202, 507, 14);
+		panel.add(label);
+		
+		JButton btnExit = new JButton("EXIT");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new ManageDatabaseGUI(clientInterface);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
+			}
+		});
+		btnExit.setBounds(251, 182, 91, 24);
+		panel.add(btnExit);
+		
 		JButton btnApply = new JButton("APPLY");
-		btnApply.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnApply.setBounds(352, 7, 104, 73);
+		btnApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Message msg = new Message("EditBook", "DatabaseManagementController");
+				book.set_title(textTitle.getText());
+				book.set_language(textLanguage.getText());
+				book.set_summary(textSummary.getText());
+				book.set_TableOfContents(textToC.getText());
+				book.set_price(Float.parseFloat(textPrice.getText()));
+				book.set_bookFormat(textDownloadPath.getText());
+				msg.add(book);
+			}
+		});
+		btnApply.setBounds(158, 182, 85, 24);
 		panel.add(btnApply);
+		btnApply.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		JButton btnAdd = new JButton("Add Author");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAdd.setBounds(352, 364, 121, 23);
-		panel.add(btnAdd);
 		
-		JButton btnRemove = new JButton("Remove Author");
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnRemove.setBounds(352, 398, 121, 23);
-		panel.add(btnRemove);
-		
-		JLabel lblBookProperties = new JLabel("BOOK PROPERTIES");
-		lblBookProperties.setBounds(10, 11, 119, 14);
-		add(lblBookProperties);
-		lblBookProperties.setFont(new Font("Tahoma", Font.BOLD, 11));
 	}
 }
