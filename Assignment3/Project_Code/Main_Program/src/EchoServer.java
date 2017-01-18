@@ -109,6 +109,22 @@ public class EchoServer extends AbstractServer
 				e1.printStackTrace();
 			}
 			  break;
+			  
+		  case "OpenAccount":
+			  try {
+				client.sendToClient(controllers.SystemUserController.OpenAccount((SystemUser)message.getParameters().get(0)));
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			  break;
+			  
+		  case "RefreshUser":
+			  try {
+					client.sendToClient(controllers.SystemUserController.RefreshUser((int)message.getParameters().get(0)));
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				}
+			  break;
 		  }
 		  
 		  break;
