@@ -72,7 +72,7 @@ public class MainGUI extends JPanel {
 			{
 				clientInterface.logOut();
 					
-				//new PopUpMessageGUI(clientInterface.frame, "Thank you for using Good Reading!", Define.Like);
+				new PopUpMessageGUI(clientInterface.frame, "Thank you for using Good Reading!", Define.Like);
 				
 				clientInterface.frame.remove(clientInterface.mainPanel);
 				clientInterface.frame.getContentPane().add(clientInterface.loginPanel);
