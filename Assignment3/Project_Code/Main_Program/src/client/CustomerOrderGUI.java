@@ -36,14 +36,14 @@ public class CustomerOrderGUI extends JPanel{
 		DefaultListModel model = new DefaultListModel();
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 86, 430, 203);
+		scrollPane.setBounds(10, 86, 691, 300);
 		add(scrollPane);
 		
 		JList list = new JList();
 		list.setFont(new Font("Monospaced", Font.ITALIC, 14));
 		scrollPane.setViewportView(list);
 		
-		JLabel lblCustomerNameId = new JLabel("Customer Name:                                 ID:                                      Books ordered:");
+		JLabel lblCustomerNameId = new JLabel("Customer Name:                                 ID:                                               Books ordered:");
 		scrollPane.setColumnHeaderView(lblCustomerNameId);
 		String temp="";
 		if(Customers_name.size()==0) model.addElement("Empty Database!" ); 

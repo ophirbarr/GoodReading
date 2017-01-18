@@ -87,7 +87,7 @@ public static Message CustomerOrders(){
 	Message msg = new Message("","");
 	
 	try {
-		customerBook = Customer_Book.listCustomer_BookByQuery("_uid != 0","_uid");  //list order by customer id
+		customerBook = Customer_Book.listCustomer_BookByQuery(null,"_uid");  //list order by customer id
 		int tempID = -1;
 		int j = -1;
 		String temp,firstName,lastName,fullName = "";

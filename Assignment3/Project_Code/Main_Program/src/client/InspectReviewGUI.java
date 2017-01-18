@@ -59,9 +59,10 @@ public class InspectReviewGUI extends JPanel  {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 63, 430, 212);
+		scrollPane.setBounds(10, 63, 577, 264);
 		add(scrollPane);
 		JList list = new JList();
+		list.setValueIsAdjusting(true);
 		list.setFont(new Font("Monospaced", Font.ITALIC, 12));
 		
 		//size = 0 : There is no awaiting approval reviews
@@ -93,7 +94,7 @@ public class InspectReviewGUI extends JPanel  {
 		
 		scrollPane.setViewportView(list);
 		
-		JLabel lblWrittenForBook = new JLabel("Written for Book:                                                              The Review:");
+		JLabel lblWrittenForBook = new JLabel("Written for Book:                                                                     The Review:");
 		scrollPane.setColumnHeaderView(lblWrittenForBook);
 		
 		JLabel lblTheReviewsThat = new JLabel("The Reviews that waiting for approve:");
