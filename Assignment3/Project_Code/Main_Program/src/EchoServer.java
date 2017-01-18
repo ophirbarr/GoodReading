@@ -235,8 +235,7 @@ public class EchoServer extends AbstractServer
 			  try {
 					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition(1));
 					} catch (IOException e) {e.printStackTrace();} 
-				  catch (PersistentException e) {
-					  e.printStackTrace();}  
+				  
 			  break;
 			  
 		  case "AddNewUser": 
