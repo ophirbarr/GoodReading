@@ -21,32 +21,31 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 		
 		if(viewStatus==1)
 		{
-			try {
-				session = GoodReadingPersistentManager.instance().getSession();
-				users = SystemUser.listSystemUserByQuery("_userStatus = '2'", null);
-				session.close();
-			} catch (PersistentException e) {
-				e.printStackTrace();
-				users = null;
-			}
-			return users;
-		}
-		
+				try {
+					session = GoodReadingPersistentManager.instance().getSession();
+					users = SystemUser.listSystemUserByQuery("_userStatus = '2'", null);
+					session.close();
+				} catch (PersistentException e) {
+					e.printStackTrace();
+					users = null;
+				}
+				return users;
+		}	
+			
 		if(viewStatus==2)
 		{
-			try {
-				session = GoodReadingPersistentManager.instance().getSession();
-				customers = Customer.listCustomerByQuery("_waitingForChangeType = '3'", null);
-				session.close();
-			} catch (PersistentException e) {
-				e.printStackTrace();
-				customers = null;
-			}
-			users=(SystemUser[])customers;
-			return users;
+				try {
+					session = GoodReadingPersistentManager.instance().getSession();
+					customers = Customer.listCustomerByQuery("_waitingForChangeType = '3'", null);
+					session.close();
+				} catch (PersistentException e) {
+					e.printStackTrace();
+					customers = null;
+				}
+				return customers;
 		}
 		
-		return users;
+		return null;
 					
 	}
 	
