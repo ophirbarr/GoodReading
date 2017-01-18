@@ -86,7 +86,7 @@ public static Message CustomerOrders(){
 	Message msg = new Message("","");
 	
 	try {
-		customerBook = Customer_Book.listCustomer_BookByQuery(null, "_uid");  //list order by customer id
+		customerBook = Customer_Book.listCustomer_BookByQuery("_uid != 0","_uid");  //list order by customer id
 		int tempID = -1;
 		int j = -1;
 		String temp = "";
@@ -96,12 +96,12 @@ public static Message CustomerOrders(){
 			{
 				id.add(customerBook[i].get_uid());
 				customers_name.add(Customer.getCustomerByORMID(customerBook[i].get_uid()).get_firstName()+" "+Customer.getCustomerByORMID(customerBook[i].get_uid()).get_lastName());
-				books_name.add(Book.getBookByORMID(customerBook[i].get_bid()).get_title()+"\n");
+				books_name.add(Book.getBookByORMID(customerBook[i].get_bid()).get_title()+" , ");
 				j++;
 				tempID = customerBook[i].get_uid();
 			}
 			else{   //Already existing customer list so we add the new book title
-				temp = books_name.get(j) + Book.getBookByORMID(customerBook[i].get_bid()).get_title()+"\n" ;
+				temp = books_name.get(j) + Book.getBookByORMID(customerBook[i].get_bid()).get_title()+" , " ;
 				books_name.set(j, temp);
 			}
 			
