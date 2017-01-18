@@ -59,7 +59,7 @@ public class InspectReviewGUI extends JPanel  {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(106, 63, 277, 212);
+		scrollPane.setBounds(10, 63, 430, 212);
 		add(scrollPane);
 		JList list = new JList();
 		list.setFont(new Font("Monospaced", Font.ITALIC, 12));
@@ -67,7 +67,7 @@ public class InspectReviewGUI extends JPanel  {
 		//size = 0 : There is no awaiting approval reviews
 		if(size==0) model.addElement("There is no reviews that waiting for approval!" ); 
 		else for(int i=0;i<size;i++)  //additional the reviews to Jlist
-				model.addElement(String.format("%-25s%-8s", name_book[i],br[i].get_review()));
+				model.addElement(String.format("%-40s%-20s", name_book[i],br[i].get_review()));
 		
 		list.setModel(model);
 		
@@ -93,7 +93,7 @@ public class InspectReviewGUI extends JPanel  {
 		
 		scrollPane.setViewportView(list);
 		
-		JLabel lblWrittenForBook = new JLabel("Written for Book:                                  The Review:");
+		JLabel lblWrittenForBook = new JLabel("Written for Book:                                                              The Review:");
 		scrollPane.setColumnHeaderView(lblWrittenForBook);
 		
 		JLabel lblTheReviewsThat = new JLabel("The Reviews that waiting for approve:");

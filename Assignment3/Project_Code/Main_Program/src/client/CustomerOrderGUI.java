@@ -36,7 +36,6 @@ public class CustomerOrderGUI extends JPanel{
 		DefaultListModel model = new DefaultListModel();
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 86, 430, 203);
 		add(scrollPane);
 		
