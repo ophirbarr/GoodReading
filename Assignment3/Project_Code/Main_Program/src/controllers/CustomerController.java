@@ -102,7 +102,7 @@ public class CustomerController {
 				isPurchase = true;
 			}
 			else
-				new PopUpMessageGUI(clientInterface.frame, "You already have this book. Look up MyBooks", Define.Notice);
+				new PopUpMessageGUI(clientInterface.frame, "You already have this book.<br>Look up MyBooks", Define.Notice);
 		}
 
 		return isPurchase;
@@ -159,7 +159,7 @@ public class CustomerController {
 		if(ValidateAccount(clientInterface, customer))
 		{
 			if((customer).get_accountType() != Define.ACCOUNT_PER_BOOK)
-				new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription", Define.Notice);
+				new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription.", Define.Notice);
 			else
 			{
 				customer.set_accountType(Type);
@@ -222,7 +222,7 @@ public class CustomerController {
 			new PopUpMessageGUI(clientInterface.frame, "Your request to open an account is still being processed.", Define.Build);
 			break;
 		case 2:
-			new PopUpMessageGUI(clientInterface.frame, "The account is blocked. Please contact the manager.", Define.Error);
+			new PopUpMessageGUI(clientInterface.frame, "The account is blocked.<br>Please contact the manager.", Define.Error);
 			break;
 		case 3:
 			new PopUpMessageGUI(clientInterface.frame, "The subsciption date has been expired", Define.Notice);

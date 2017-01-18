@@ -48,12 +48,13 @@ public class PopUpMessageGUI extends JDialog {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		JLabel lblMessageText = new JLabel("<html>"+messageText+"</html>");
+		JLabel lblMessageText = new JLabel("<html><div style='text-align: center;'>"+messageText+"</div></html>");
 		lblMessageText.setBounds(46, 21, 334, 47);
 		lblMessageText.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageText.setForeground(Color.DARK_GRAY);
 		lblMessageText.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblMessageText.setLayout(new BorderLayout());
+		//lblMessageText.setLayout(new BorderLayout());
+		lblMessageText.setHorizontalTextPosition(SwingConstants.CENTER);
 		getContentPane().add(lblMessageText);
 		
 		Button button = new Button("OK");
