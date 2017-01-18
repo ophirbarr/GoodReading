@@ -58,6 +58,7 @@ public class AddNewUserGUI extends JPanel {
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		
 		Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+		msg.add(1);
 		
 		try {
 			clientInterface.client.openConnection();

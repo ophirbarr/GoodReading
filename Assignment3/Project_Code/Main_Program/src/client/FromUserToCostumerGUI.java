@@ -22,7 +22,7 @@ import good_reading.SystemUser;
 public class FromUserToCostumerGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
-	private Customer[] customers ;   //a list of all awaiting approval users        
+	private Customer[] customers ;   //a list of all awaiting approval customers        
 	private int size;  
 	private DefaultListModel model;	
 	private final JScrollPane scrollPane = new JScrollPane();
@@ -51,6 +51,8 @@ public class FromUserToCostumerGUI extends JPanel {
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		
 		Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+		msg.add(2);
+
 		
 		try {
 			clientInterface.client.openConnection();
@@ -60,31 +62,28 @@ public class FromUserToCostumerGUI extends JPanel {
 		}
 		
 		clientInterface.waitForServer();  // Waiting for approval from the server
-		System.out.println("aaa");
 		
 
 		customers = (Customer[])clientInterface.getMsgFromServer();
-		
-	
-		size=customers.length;
-		System.out.println(size);
-		
-		if(size==0) listModel.addElement("There is no new customers that waiting for approval!" );
+
+			
+		if(customers.length==0) listModel.addElement("There is no new customers that waiting for approval!" );
 		else
 		{
-			for(int i=0;i<size;i++)  
+			for(int i=0;i<customers.length;i++)  
 			{
 			listModel.addElement(customers[i].get_firstName());
 			}
 		}
+		
 		JLabel lblTheReviewsThat = new JLabel("New customers that waiting for approval:");
 		lblTheReviewsThat.setBounds(41, 95, 274, 28);
 		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		add(lblTheReviewsThat);
 		
-		JButton btnAddUser = new JButton("Change Account Status");
-		btnAddUser.setBounds(141, 135, 155, 55);
-		add(btnAddUser);
+		JButton btnChangeAccount = new JButton("Change Account Status");
+		btnChangeAccount.setBounds(141, 135, 155, 55);
+		add(btnChangeAccount);
 		
 		
 		list.addListSelectionListener(new ListSelectionListener() {
@@ -93,7 +92,7 @@ public class FromUserToCostumerGUI extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = list.getSelectedIndex();
 				
-				btnAddUser.addActionListener(new ActionListener() {
+				btnChangeAccount.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent arg0) {
 						

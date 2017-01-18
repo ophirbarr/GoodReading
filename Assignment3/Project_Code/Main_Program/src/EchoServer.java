@@ -245,7 +245,7 @@ public class EchoServer extends AbstractServer
 		  {
 		  case "ViewUsersWithCondition":
 			  try {
-					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition(1));
+					client.sendToClient(controllers.LibrarianController.ViewUsersWithCondition((int)message.getParameters().get(0)));
 					} catch (IOException e) {e.printStackTrace();} 
 				  
 			  break;
