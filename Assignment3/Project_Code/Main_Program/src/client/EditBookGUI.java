@@ -10,6 +10,8 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -39,6 +41,12 @@ public class EditBookGUI extends JPanel
 	private JTabbedPane tabbedPane;
 	private JButton btnAdd;
 	private JButton btnRemove;
+	private JList<String> listAuthors;
+	private JList<String> listSubjects;
+	private JList<String> listKeywords;
+	DefaultListModel<String> listAuthorsModel;
+	DefaultListModel<String> listSubjectsModel;
+	DefaultListModel<String> listKeywordsModel;
 	
 	public EditBookGUI(ClientInterface clientInterface, Book book)
 	{
@@ -172,18 +180,6 @@ public class EditBookGUI extends JPanel
 		tabbedPane.setBounds(9, 227, 332, 173);
 		panel.add(tabbedPane);
 		
-		DefaultListModel<String> listAuthorsModel = new DefaultListModel<String>();
-		JList<String> listAuthors = new JList<String>( listAuthorsModel );
-		tabbedPane.addTab("Authors", null, listAuthors, null);
-		
-		DefaultListModel<String> listSubjectsModel = new DefaultListModel<String>();
-		JList<String> listSubjects = new JList<String>( listSubjectsModel );
-		tabbedPane.addTab("Subjects", null, listSubjects, null);
-		
-		DefaultListModel<String> listKeywordsModel = new DefaultListModel<String>();
-		JList<String> listKeywords = new JList<String>( listKeywordsModel );
-		tabbedPane.addTab("Keywords", null, listKeywords, null);
-		
 		JLabel label = new JLabel("___________________________________________________________________________________");
 		label.setBounds(-25, 202, 507, 14);
 		panel.add(label);
@@ -205,31 +201,56 @@ public class EditBookGUI extends JPanel
 				if (listIndex == 0 && listAuthors.getSelectedIndex() != -1) // remove author
 				{
 					msg.add(0);
-					msg.add(((Book_Author[])bookDetails.getParameters().get(0))[listIndex]);
+					msg.add(((Book_Author[])bookDetails.getParameters().get(0))[listAuthors.getSelectedIndex()]);
 				}
 				else if (listIndex == 1 && listSubjects.getSelectedIndex() != -1) // remove subject
 				{
 					msg.add(1);
-					msg.add(((Subject[])bookDetails.getParameters().get(0))[listIndex]);
+					msg.add(((Subject[])bookDetails.getParameters().get(1))[listSubjects.getSelectedIndex()]);
 					msg.add(book.get_bid());
 				}
 				else if (listIndex == 2 && listKeywords.getSelectedIndex() != -1) // remove keyword
 				{
 					msg.add(2);
-					msg.add(((Book_Keywords[])bookDetails.getParameters().get(0))[listIndex]);
+					msg.add(((Book_Keywords[])bookDetails.getParameters().get(2))[listKeywords.getSelectedIndex()]);
 				}
 				else msg = null;
 
-				if (msg != null)
+				if (msg != null)  // send message and update bookDetails and list
 				{
 					try {
 						clientInterface.client.openConnection();
 						clientInterface.client.sendToServer(msg);
-					} catch (IOException e1) {
+						TimeUnit.MILLISECONDS.sleep(100);
+						Message msg1 = new Message("GetBookDetails", "DatabaseManagementController");
+						msg1.add(book.get_bid());
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg1);
+					} catch (IOException | InterruptedException e1) {
 						e1.printStackTrace();
 					}
-					revalidate();
-					repaint();
+					clientInterface.waitForServer();
+					bookDetails = (Message) clientInterface.getMsgFromServer();
+					
+					if (listIndex == 0)
+					{
+						listAuthorsModel.clear();
+						for (Book_Author book_author : (Book_Author[])bookDetails.getParameters().get(0))
+							listAuthorsModel.addElement(book_author.get_author());
+					}
+					else if (listIndex == 1)
+					{
+						listSubjectsModel.clear();
+						for (Subject subject : (Subject[])bookDetails.getParameters().get(1))
+							listSubjectsModel.addElement(subject.get_name());
+					}
+					else if (listIndex == 2)
+					{
+						listKeywordsModel.clear();
+						for (Book_Keywords book_keyword : (Book_Keywords[])bookDetails.getParameters().get(2))
+							listKeywordsModel.addElement(book_keyword.get_keyword());
+					}
+					
 				}
 				
 				
@@ -237,6 +258,18 @@ public class EditBookGUI extends JPanel
 		});
 		btnRemove.setBounds(198, 405, 144, 23);
 		panel.add(btnRemove);
+		
+		listAuthorsModel = new DefaultListModel<String>();
+		listAuthors = new JList<String>( listAuthorsModel );
+		tabbedPane.addTab("Authors", null, listAuthors, null);
+		
+		listSubjectsModel = new DefaultListModel<String>();
+		listSubjects = new JList<String>( listSubjectsModel );
+		tabbedPane.addTab("Subjects", null, listSubjects, null);
+		
+		listKeywordsModel = new DefaultListModel<String>();
+		listKeywords = new JList<String>( listKeywordsModel );
+		tabbedPane.addTab("Keywords", null, listKeywords, null);
 		
 		JButton btnExit = new JButton("EXIT");
 		btnExit.addActionListener(new ActionListener() {

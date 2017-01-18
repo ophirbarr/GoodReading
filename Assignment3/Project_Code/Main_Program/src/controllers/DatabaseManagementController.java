@@ -144,7 +144,7 @@ public class DatabaseManagementController
 	 * @param msg message containing indication parameter and the relevant association
 	 * @return success or failure
 	 */
-	public static boolean RemoveBookAssociation(Message msg)
+	public static void RemoveBookAssociation(Message msg)
 	{
 		PersistentSession session;
 		int parameter = (int) msg.getParameters().get(0);
@@ -175,7 +175,6 @@ public class DatabaseManagementController
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
-		return true;
 	}
 
 }

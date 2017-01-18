@@ -233,6 +233,10 @@ public class EchoServer extends AbstractServer
 				e1.printStackTrace();
 			}
 			  break;
+			  
+		  case "RemoveBookAssociation":
+			  controllers.DatabaseManagementController.RemoveBookAssociation(message);
+			  break;
 		  }
 		  break;
 		  
