@@ -13,6 +13,7 @@ import good_reading.Book_Author;
 import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
+import good_reading.SystemUser;
 
 public class ManagerController {
 	/**
@@ -89,26 +90,30 @@ public static Message CustomerOrders(){
 		customerBook = Customer_Book.listCustomer_BookByQuery("_uid != 0","_uid");  //list order by customer id
 		int tempID = -1;
 		int j = -1;
-		String temp = "";
+		String temp,firstName,lastName,fullName = "";
 		for(int i=0;i<customerBook.length;i++)  
 		{
 			if(tempID != customerBook[i].get_uid())  //If this client that have not we inserted
 			{
 				id.add(customerBook[i].get_uid());
-				customers_name.add(Customer.getCustomerByORMID(customerBook[i].get_uid()).get_firstName()+" "+Customer.getCustomerByORMID(customerBook[i].get_uid()).get_lastName());
-				books_name.add(Book.getBookByORMID(customerBook[i].get_bid()).get_title()+" , ");
+				SystemUser[] su = SystemUser.listSystemUserByQuery("_ssn = '"+customerBook[i].get_uid()+"'", null);
+				firstName = su[0].get_firstName();
+				lastName = su[0].get_lastName();
+				fullName = firstName+" "+lastName;
+				customers_name.add(fullName);
+				books_name.add(Book.getBookByORMID(customerBook[i].get_bid()).get_title());
 				j++;
 				tempID = customerBook[i].get_uid();
 			}
 			else{   //Already existing customer list so we add the new book title
-				temp = books_name.get(j) + Book.getBookByORMID(customerBook[i].get_bid()).get_title()+" , " ;
+				temp = books_name.get(j) +" , "+ Book.getBookByORMID(customerBook[i].get_bid()).get_title() ;
 				books_name.set(j, temp);
 			}
 			
-			msg.add(customers_name);
-			msg.add(id);
-			msg.add(books_name);
 		}
+		msg.add(customers_name);
+		msg.add(id);
+		msg.add(books_name);
 		
 	} catch (PersistentException e) {
 		// TODO Auto-generated catch block

@@ -29,8 +29,8 @@ public class CustomerOrderGUI extends JPanel{
 		customer_order();
 		Message message = (Message) clientInterface.getMsgFromServer();
 		this.Customers_name = (ArrayList<String>) message.getParameters().get(0);
-		this.books_name = (ArrayList<String>) message.getParameters().get(1);
-		this.id = (ArrayList<Integer>) message.getParameters().get(2);
+		this.id = (ArrayList<Integer>) message.getParameters().get(1);
+		this.books_name = (ArrayList<String>) message.getParameters().get(2);
 		
 		
 		DefaultListModel model = new DefaultListModel();
@@ -46,11 +46,13 @@ public class CustomerOrderGUI extends JPanel{
 		
 		JLabel lblCustomerNameId = new JLabel("Customer Name:                                 ID:                                      Books ordered:");
 		scrollPane.setColumnHeaderView(lblCustomerNameId);
-		
+		String temp="";
 		if(Customers_name.size()==0) model.addElement("Empty Database!" ); 
 		else for(int i=0;i<Customers_name.size();i++)  //additional the reviews to Jlist
-				model.addElement(String.format("%-25s%-20d%-40s",Customers_name.get(i),id.get(i),books_name.get(i) ));
-		
+				{temp = ""+id.get(i);
+					model.addElement(String.format("%-20s%-20s%-15s",Customers_name.get(i),temp,books_name.get(i) ));
+				}
+				list.setModel(model);
 		
 	}
 	public void customer_order(){
