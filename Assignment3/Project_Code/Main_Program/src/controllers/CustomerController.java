@@ -73,16 +73,9 @@ public class CustomerController {
 			Book books[] = (Book[])clientInterface.getMsgFromServer();
 			
 			if(books != null)
-			{
 				for(Book ibook : books)
-				{
 					if(ibook.get_bid() == book.get_bid())
-					{
-						new PopUpMessageGUI(clientInterface.frame, "You already have this book. Look up MyBooks", Define.Notice);
 						hasBook = true;
-					}
-				}
-			}
 			
 			if(!hasBook)
 			{
@@ -108,6 +101,8 @@ public class CustomerController {
 				
 				isPurchase = true;
 			}
+			else
+				new PopUpMessageGUI(clientInterface.frame, "You already have this book. Look up MyBooks", Define.Notice);
 		}
 
 		return isPurchase;
@@ -140,14 +135,14 @@ public class CustomerController {
 		Customer_Book customerBook[];
 		
 		try {
-			customerBook = Customer_Book.listCustomer_BookByQuery("_uid = '" + customer.get_uid(), "_bid");
+			customerBook = Customer_Book.listCustomer_BookByQuery("_uid = '" + customer.get_uid() + "'", "_bid");
 				
 		if (customerBook.length > 0)
 		{
 			books = new Book[customerBook.length];
 			for (int i = 0; i < customerBook.length; i++)
 			{
-				books[i]= Book.loadBookByQuery("_bid = '" + customerBook[i].get_bid(), null);
+				books[i]= Book.loadBookByQuery("_bid = '" + customerBook[i].get_bid() + "'", null);
 			}
 		}
 		
@@ -202,9 +197,8 @@ public class CustomerController {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-					}
-					else
 						isValid = 3;
+					}						
 				}
 			}
 			else

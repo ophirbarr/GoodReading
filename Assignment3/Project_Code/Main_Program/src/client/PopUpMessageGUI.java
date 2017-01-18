@@ -5,22 +5,27 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
+import com.sun.org.apache.bcel.internal.util.ClassPath;
+
 import common.Define;
 
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+
 import java.awt.Rectangle;
 /**
  * 
  * @author yair
  *class GUI which displays message that the review published/rejected
  */
-public class PopUpMessageGUI extends JFrame {
+public class PopUpMessageGUI extends JDialog {
 	
 	private String Messagetext;
 	
@@ -36,17 +41,19 @@ public class PopUpMessageGUI extends JFrame {
 		setVisible(true);
 		setBounds(new Rectangle(100, 50, 431, 188));
 		setLocationRelativeTo(frame);
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PopUpMessageGUI.class.getResource("/design/g10628.png")));
 		this.Messagetext = messageText;
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		JLabel lblMessageText = new JLabel(messageText);
+		JLabel lblMessageText = new JLabel("<html>"+messageText+"</html>");
 		lblMessageText.setBounds(46, 21, 334, 47);
 		lblMessageText.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMessageText.setForeground(Color.DARK_GRAY);
 		lblMessageText.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblMessageText.setLayout(new BorderLayout());
 		getContentPane().add(lblMessageText);
 		
 		Button button = new Button("OK");
@@ -81,11 +88,10 @@ public class PopUpMessageGUI extends JFrame {
 			path = "/design/g5046.png";
 			break;
 		}
+				
 		JLabel label = new JLabel("");
-		label.setBounds(339, 51, 63, 63);
-		label.setIcon(new ImageIcon(path));
+		label.setBounds(340, 71, 63, 63);
+		label.setIcon(new ImageIcon(PopUpMessageGUI.class.getResource(path)));
 		getContentPane().add(label);
-		
-		
 	}
 }
