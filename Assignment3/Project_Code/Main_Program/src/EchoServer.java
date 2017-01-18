@@ -217,6 +217,14 @@ public class EchoServer extends AbstractServer
 				e.printStackTrace();
 			}
 			  break;
+			  
+		  case "GetBookDetails":
+			  try {
+				  client.sendToClient(controllers.DatabaseManagementController.GetBookDetails((int) message.getParameters().get(0)));
+			  } catch (IOException e) {
+				  e.printStackTrace();
+			  }
+			  break;
 		  }
 		  break;
 		  
@@ -250,21 +258,13 @@ public class EchoServer extends AbstractServer
 			}
 		  break;
 		  case "AddToCatalog":
-			  try {
-				client.sendToClient(controllers.ManagerController.AddToCatalog((int) message.getParameters().get(0)));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			  controllers.ManagerController.AddToCatalog((int) message.getParameters().get(0));
 		  break;
+		  
 		  case "RemoveFromCatalog":
-			  try {
-				client.sendToClient(controllers.ManagerController.RemoveFromCatalog((int) message.getParameters().get(0)));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			  controllers.ManagerController.RemoveFromCatalog((int) message.getParameters().get(0));
 			  break;
+			  
 		  case "CustomerOrders":
 			  try {
 				client.sendToClient(controllers.ManagerController.CustomerOrders());
