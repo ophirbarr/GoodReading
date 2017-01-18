@@ -2,8 +2,10 @@ package controllers;
 
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
+import org.orm.PersistentTransaction;
 
 import common.Message;
+import good_reading.Book;
 import good_reading.Book_Author;
 import good_reading.Book_Keywords;
 import good_reading.Book_Subject;
@@ -98,9 +100,9 @@ public class DatabaseManagementController
 		Subject[] subjects = null;
 		try {
 			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
-			book_author = Book_Author.listBook_AuthorByQuery("_bid = '" + bid + '"', "_author");
-			book_keyword = Book_Keywords.listBook_KeywordsByQuery("_bid = '" + bid + '"', "_keyword");
-			book_subject = Book_Subject.listBook_SubjectByQuery("_bid = '" + bid + '"', "_sid");
+			book_author = Book_Author.listBook_AuthorByQuery("_bid = '" + bid + "'", "_author");
+			book_keyword = Book_Keywords.listBook_KeywordsByQuery("_bid = '" + bid + "'", "_keyword");
+			book_subject = Book_Subject.listBook_SubjectByQuery("_bid = '" + bid + "'", "_sid");
 			String condition = "";
 			for (Book_Subject bs : book_subject)
 				condition = condition + "_sid = '" + bs.get_sid() + "' OR ";
@@ -116,6 +118,22 @@ public class DatabaseManagementController
 		msg.add(book_keyword);
 		
 		return msg;
+	}
+	
+	
+	public static boolean EditBook(Book book)
+	{
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+			session.update(book);
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 
 }

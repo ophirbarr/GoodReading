@@ -2,6 +2,9 @@ package client;
 
 import javax.swing.JPanel;
 import good_reading.Book;
+import good_reading.Book_Author;
+import good_reading.Book_Keywords;
+import good_reading.Subject;
 import good_reading.Worker;
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -12,13 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import common.Message;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
 
 public class EditBookGUI extends JPanel
 {
@@ -181,33 +185,17 @@ public class EditBookGUI extends JPanel
 		tabbedPane.setBounds(9, 227, 332, 173);
 		panel.add(tabbedPane);
 		
-		JList listAuthors = new JList();
+		DefaultListModel<String> listAuthorsModel = new DefaultListModel<String>();
+		JList<String> listAuthors = new JList<String>( listAuthorsModel );
 		tabbedPane.addTab("Authors", null, listAuthors, null);
 		
-		JList listSubjects = new JList();
+		DefaultListModel<String> listSubjectsModel = new DefaultListModel<String>();
+		JList<String> listSubjects = new JList<String>( listSubjectsModel );
 		tabbedPane.addTab("Subjects", null, listSubjects, null);
 		
-		JList listKeywords = new JList();
+		DefaultListModel<String> listKeywordsModel = new DefaultListModel<String>();
+		JList<String> listKeywords = new JList<String>( listKeywordsModel );
 		tabbedPane.addTab("Keywords", null, listKeywords, null);
-		
-		Message msg = new Message("GetBookDetails", "DatabaseManagementController");
-		msg.add(book.get_bid());
-		try {
-			clientInterface.client.openConnection();
-			clientInterface.client.sendToServer(msg);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		clientInterface.waitForServer();
-		bookDetails = (Message) clientInterface.getMsgFromServer();
-		
-		textBid.setText("" + book.get_bid());
-		textTitle.setText(book.get_title());
-		textLanguage.setText(book.get_language());
-		textSummary.setText(book.get_summary());
-		textToC.setText(book.get_TableOfContents());
-		textPrice.setText("" + book.get_price());
-		textDownloadPath.setText(book.get_bookFormat());
 		
 		JLabel label = new JLabel("___________________________________________________________________________________");
 		label.setBounds(-25, 202, 507, 14);
@@ -242,12 +230,47 @@ public class EditBookGUI extends JPanel
 				book.set_price(Float.parseFloat(textPrice.getText()));
 				book.set_bookFormat(textDownloadPath.getText());
 				msg.add(book);
+				
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				clientInterface.waitForServer();
+				if ((boolean)clientInterface.getMsgFromServer())
+					JOptionPane.showMessageDialog(clientInterface.frame, "Done.");
+				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong!");
 			}
 		});
 		btnApply.setBounds(158, 182, 85, 24);
 		panel.add(btnApply);
 		btnApply.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
+		Message msg = new Message("GetBookDetails", "DatabaseManagementController");
+		msg.add(book.get_bid());
+		try {
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		clientInterface.waitForServer();
+		bookDetails = (Message) clientInterface.getMsgFromServer();
 		
+		textBid.setText("" + book.get_bid());
+		textTitle.setText(book.get_title());
+		textLanguage.setText(book.get_language());
+		textSummary.setText(book.get_summary());
+		textToC.setText(book.get_TableOfContents());
+		textPrice.setText("" + book.get_price());
+		textDownloadPath.setText(book.get_bookFormat());
+		
+		for (Book_Author book_author : (Book_Author[])bookDetails.getParameters().get(0))
+			listAuthorsModel.addElement(book_author.get_author());
+		for (Subject subject : (Subject[])bookDetails.getParameters().get(1))
+			listSubjectsModel.addElement(subject.get_name());
+		for (Book_Keywords book_keyword : (Book_Keywords[])bookDetails.getParameters().get(2))
+			listKeywordsModel.addElement(book_keyword.get_keyword());
 	}
 }

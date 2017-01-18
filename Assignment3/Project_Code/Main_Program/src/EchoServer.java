@@ -225,6 +225,14 @@ public class EchoServer extends AbstractServer
 				  e.printStackTrace();
 			  }
 			  break;
+			  
+		  case "EditBook":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.EditBook((Book) message.getParameters().get(0)));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			  break;
 		  }
 		  break;
 		  
