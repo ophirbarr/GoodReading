@@ -8,7 +8,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -17,6 +19,9 @@ import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Customer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class MyBooksGUI extends JPanel {
@@ -61,6 +66,33 @@ public class MyBooksGUI extends JPanel {
 		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
 		label.setBounds(583, 355, 61, 100);
 		imagePanel.add(label);
+		
+		JButton lblDownloadBook = new JButton("Download Book");
+		lblDownloadBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		lblDownloadBook.setBounds(583, 255, 118, 30);
+		imagePanel.add(lblDownloadBook);
+		
+		JPanel typePanel = new JPanel();
+		typePanel.setBounds(601, 139, 100, 90);
+		imagePanel.add(typePanel);
+		typePanel.setLayout(null);
+		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JRadioButton rdbtnBooks = new JRadioButton("books");
+		rdbtnBooks.setSelected(true);
+		rdbtnBooks.setBounds(6, 7, 88, 23);
+		typePanel.add(rdbtnBooks);
+		
+		JRadioButton rdbtnSubjects = new JRadioButton("subjects");
+		rdbtnSubjects.setBounds(6, 33, 88, 23);
+		typePanel.add(rdbtnSubjects);
+		
+		JRadioButton rdbtnDomains = new JRadioButton("domains");
+		rdbtnDomains.setBounds(6, 60, 88, 23);
+		typePanel.add(rdbtnDomains);
 		
 		Message msg = new Message("MyBooks", "CustomerController");
 		msg.add(customer);

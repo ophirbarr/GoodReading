@@ -1,6 +1,8 @@
 package controllers;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,9 +53,10 @@ public class CustomerController {
 		}
 	}
 	
-	public static void DownloadBook()
+	public static File DownloadBook(String filePath)
 	{
-		
+		File BookContent = new File(filePath);
+		return BookContent;
 	}
 	
 	/**
