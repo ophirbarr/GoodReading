@@ -17,6 +17,8 @@ import common.Message;
 import good_reading.Book;
 
 import javax.swing.JList;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 
 public class RequestReportGUI extends JPanel{
@@ -34,6 +36,7 @@ public class RequestReportGUI extends JPanel{
 		private JLabel lblPleaseSelectBook;
 		private DefaultListModel model;
 		private JList list;
+		private Book[] book; 
 		
 		public RequestReportGUI(ClientInterface clientInterface){
 			super();
@@ -63,20 +66,6 @@ public class RequestReportGUI extends JPanel{
 			btnListAllCustomer.setBounds(10, 45, 256, 37);
 			add(btnListAllCustomer);
 			
-			btnStatisticalInformationAbout = new JButton("Statistical information about book");
-			btnStatisticalInformationAbout.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					btnListAllCustomer.setEnabled(false);
-					btnStatisticalInformationAbout.setEnabled(false);
-					btnPopularityOfBook.setEnabled(false);
-					lblWhichReportsYou.setEnabled(false);
-					
-				}
-			});
-			btnStatisticalInformationAbout.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			btnStatisticalInformationAbout.setBounds(10, 93, 256, 43);
-			add(btnStatisticalInformationAbout);
 			
 			
 			
@@ -114,6 +103,19 @@ public class RequestReportGUI extends JPanel{
 			scrollPane.setVisible(false);
 			
 			list = new JList();
+			list.addListSelectionListener(new ListSelectionListener() {
+				public void valueChanged(ListSelectionEvent e) {
+					int index = list.getSelectedIndex();
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new HistogramGUI(clientInterface);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+				}
+			});
 			list.setFont(new Font("Monospaced", Font.BOLD, 14));
 			scrollPane.setViewportView(list);
 			
@@ -134,13 +136,33 @@ public class RequestReportGUI extends JPanel{
 					btnStatisticalInformationAbout.setEnabled(false);
 					btnPopularityOfBook.setEnabled(false);
 					lblWhichReportsYou.setEnabled(false);
+					lblPleaseChooseThe.setVisible(true);
+					btnAbsoluteRating.setVisible(true);
+					btnRatingRelations.setVisible(true);
+					
+					
+				}
+			});
+			btnPopularityOfBook.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			btnPopularityOfBook.setBounds(10, 147, 256, 37);
+			add(btnPopularityOfBook);
+			
+			btnStatisticalInformationAbout = new JButton("Statistical information about book");
+			btnStatisticalInformationAbout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					
+					btnListAllCustomer.setEnabled(false);
+					btnStatisticalInformationAbout.setEnabled(false);
+					btnPopularityOfBook.setEnabled(false);
+					lblWhichReportsYou.setEnabled(false);
 					lblPleaseChooseThe.setVisible(false);
 					btnAbsoluteRating.setVisible(false);
 					btnRatingRelations.setVisible(false);
 					scrollPane.setVisible(true);
 					lblPleaseSelectBook.setVisible(true);
 					GetAllBooks();
-					Book[] book =(Book[]) clientInterface.getMsgFromServer();
+					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)
 						model.addElement(String.format("%-9s%s",book[i].get_bid(),book[i].get_title()));
 					
@@ -148,9 +170,9 @@ public class RequestReportGUI extends JPanel{
 					
 				}
 			});
-			btnPopularityOfBook.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			btnPopularityOfBook.setBounds(10, 147, 256, 37);
-			add(btnPopularityOfBook);
+			btnStatisticalInformationAbout.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			btnStatisticalInformationAbout.setBounds(10, 93, 256, 43);
+			add(btnStatisticalInformationAbout);
 			
 		}
 		public void GetAllBooks(){
