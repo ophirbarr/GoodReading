@@ -148,9 +148,10 @@ public class CustomerController {
 	}
 	
 	/**
-	 * 
-	 * @param customer
-	 * @return
+	 * Returns all the customers books using the Customer_Book table. 
+	 * This function is used by the server.
+	 * @param customer The customer whom books are to be return
+	 * @return A list of books purchased by the customer.
 	 */
 	public static Book[] MyBooks(Customer customer)
 	{
@@ -176,7 +177,12 @@ public class CustomerController {
 		return books;
 	}
 	
-	
+	/**
+	 * Updates the account type of a customer to a new type. 
+	 * @param clientInterface The main frame of the program.
+	 * @param customer The customer whose account type is to be updated.
+	 * @param Type The new account type requested by the customer.
+	 */
 	public static void UpdateAccountType(ClientInterface clientInterface, Customer customer, int Type)
 	{
 		if(ValidateAccount(clientInterface, customer))
@@ -198,7 +204,14 @@ public class CustomerController {
 		}
 	}
 	
-	
+	/**
+	 * Checks if the customer's account is valid. 
+	 * Updates account type if the subscription date had been expired, and sends message to server to update the date in the data base.
+	 * Uses ValidateAccountMessage() to notify the customer. 
+	 * @param clientInterface The main frame of the program.
+	 * @param customer The customer whose account is validated.
+	 * @return Returns true/false according to the validation of the account.
+	 */
 	public static boolean ValidateAccount(ClientInterface clientInterface, Customer customer)
 	{
 		int isValid = 0;
@@ -236,24 +249,34 @@ public class CustomerController {
 		return (isValid == 0);
 	}
 	
-	
+	/**
+	 * Notifies the customer about the validation of the account.
+	 * @param clientInterface The main frame of the program.
+	 * @param isValid A flag to indicate the account validation status (WAIT, BLOCKED, EXPIRED).
+	 */
 	public static void ValidateAccountMessage(ClientInterface clientInterface, int isValid)
 	{
+		final int WAIT = 1, BLOCKED = 2, EXPIRED = 3;
+		
 		switch(isValid)
 		{
-		case 1:
+		case WAIT:
 			new PopUpMessageGUI(clientInterface.frame, "Your request to open an account is still being processed.", Define.Build);
 			break;
-		case 2:
+		case BLOCKED:
 			new PopUpMessageGUI(clientInterface.frame, "The account is blocked.<br>Please contact the manager.", Define.Error);
 			break;
-		case 3:
+		case EXPIRED:
 			new PopUpMessageGUI(clientInterface.frame, "The subsciption date has been expired", Define.Notice);
 			break;
 		}
 	}
 	
-	
+	/**
+	 * Updates a customer in the data base.
+	 * This function is used by the server.
+	 * @param customer The customer to be updated.
+	 */
 	public static void UpdateCustomer(Customer customer)
 	{
 		PersistentSession session;
