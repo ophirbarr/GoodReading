@@ -145,7 +145,6 @@ public class DatabaseManagementController
 	/**
 	 * Remove a book association such as book-author(0), book-subject(1), book-keyword(2).
 	 * @param msg message containing indication parameter and the relevant association
-	 * @return success or failure
 	 */
 	public static void RemoveBookAssociation(Message msg)
 	{
@@ -155,24 +154,68 @@ public class DatabaseManagementController
 			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
 
-			if (parameter == 0)
+			if (parameter == 0)  // remove author
 			{
 				Book_Author book_author = (Book_Author) msg.getParameters().get(1);
 				session.delete(book_author);
 			}
-			else if (parameter == 1)
+			else if (parameter == 1) // remove subject
 			{
 				Subject subject = (Subject) msg.getParameters().get(1);
 				int bid = (int) msg.getParameters().get(2);
 				Book_Subject book_subject = Book_Subject.loadBook_SubjectByQuery("_bid = '" + bid + "' AND _sid = '" + subject.get_sid() + "'", null);
 				session.delete(book_subject);
 			}
-			else if (parameter == 2)
+			else if (parameter == 2) // remove keyword
 			{
 				Book_Keywords book_keyword = (Book_Keywords) msg.getParameters().get(1);
 				session.delete(book_keyword);
 			}
 			
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Add a book association such as book-author(0), book-subject(1), book-keyword(2).
+	 * @param msg message containing indication parameter and the relevant association
+	 */
+	public static void AddBookAssociation(Message msg)
+	{
+		PersistentSession session;
+		int parameter = (int) msg.getParameters().get(0);
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+
+			if (parameter == 0)  // add author
+			{
+				Book_Author book_author = Book_Author.createBook_Author();
+				book_author.set_bid((int) msg.getParameters().get(2));
+				book_author.set_author((String) msg.getParameters().get(1));
+				session.save(book_author);
+			}
+			else if (parameter == 1) // add subject
+			{
+				Subject subject = Subject.loadSubjectByQuery("_name = '" + msg.getParameters().get(1) + "'", null);
+				if (subject != null)
+				{
+					Book_Subject book_subject = Book_Subject.createBook_Subject();
+					book_subject.set_sid(subject.get_sid());
+					book_subject.set_bid((int) msg.getParameters().get(2));
+					session.save(book_subject);
+				}
+			}
+			else if (parameter == 2) // add keyword
+			{
+				Book_Keywords book_keyword = Book_Keywords.createBook_Keywords();
+				book_keyword.set_bid((int) msg.getParameters().get(2));
+				book_keyword.set_keyword((String) msg.getParameters().get(1));
+				session.save(book_keyword);
+			}			
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
