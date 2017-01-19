@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -47,6 +46,7 @@ public class EditBookGUI extends JPanel
 	DefaultListModel<String> listAuthorsModel;
 	DefaultListModel<String> listSubjectsModel;
 	DefaultListModel<String> listKeywordsModel;
+	private JTextField textPhotoPath;
 	
 	public EditBookGUI(ClientInterface clientInterface, Book book)
 	{
@@ -58,7 +58,7 @@ public class EditBookGUI extends JPanel
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 29, 361, 438);
+		panel.setBounds(10, 29, 353, 438);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -147,7 +147,7 @@ public class EditBookGUI extends JPanel
 				}
 			}
 		});
-		chckbxCataloged.setBounds(10, 183, 97, 23);
+		chckbxCataloged.setBounds(10, 207, 97, 23);
 		panel.add(chckbxCataloged);
 		
 		JLabel lblBookProperties = new JLabel("BOOK PROPERTIES");
@@ -177,16 +177,75 @@ public class EditBookGUI extends JPanel
 			}
 		});
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tabbedPane.setBounds(9, 227, 332, 173);
+		tabbedPane.setBounds(9, 251, 332, 149);
 		panel.add(tabbedPane);
 		
 		JLabel label = new JLabel("___________________________________________________________________________________");
-		label.setBounds(-25, 202, 507, 14);
+		label.setBounds(-25, 226, 507, 14);
 		panel.add(label);
 		
 		btnAdd = new JButton("Add Author");
 		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Message msg = new Message("AddBookAssociation", "DatabaseManagementController");
+				int listIndex = tabbedPane.getSelectedIndex();
+				if (listIndex == 0) // add author
+				{
+					msg.add(0);
+					msg.add(JOptionPane.showInputDialog("Enter author name:"));
+					msg.add(book.get_bid());
+				}
+				else if (listIndex == 1) // add subject
+				{
+					msg.add(1);
+					msg.add(JOptionPane.showInputDialog("Enter subject name (MUST be an exsiting subject):"));
+					msg.add(book.get_bid());
+				}
+				else if (listIndex == 2) // remove keyword
+				{
+					msg.add(2);
+					msg.add(JOptionPane.showInputDialog("Enter keyword:"));
+					msg.add(book.get_bid());
+				}
+				else msg = null;
+
+				if (msg != null && !msg.getParameters().get(1).equals(""))  // send message and update bookDetails and list
+				{
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+						TimeUnit.MILLISECONDS.sleep(100);
+						Message msg1 = new Message("GetBookDetails", "DatabaseManagementController");
+						msg1.add(book.get_bid());
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg1);
+					} catch (IOException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					bookDetails = (Message) clientInterface.getMsgFromServer();
+					
+					if (listIndex == 0)
+					{
+						listAuthorsModel.clear();
+						for (Book_Author book_author : (Book_Author[])bookDetails.getParameters().get(0))
+							listAuthorsModel.addElement(book_author.get_author());
+					}
+					else if (listIndex == 1)
+					{
+						listSubjectsModel.clear();
+						for (Subject subject : (Subject[])bookDetails.getParameters().get(1))
+							listSubjectsModel.addElement(subject.get_name());
+					}
+					else if (listIndex == 2)
+					{
+						listKeywordsModel.clear();
+						for (Book_Keywords book_keyword : (Book_Keywords[])bookDetails.getParameters().get(2))
+							listKeywordsModel.addElement(book_keyword.get_keyword());
+					}
+				}
+
 			}
 		});
 		btnAdd.setBounds(9, 405, 138, 23);
@@ -285,7 +344,7 @@ public class EditBookGUI extends JPanel
 				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
-		btnExit.setBounds(251, 182, 91, 24);
+		btnExit.setBounds(251, 206, 91, 24);
 		panel.add(btnExit);
 		
 		JButton btnApply = new JButton("APPLY");
@@ -313,7 +372,7 @@ public class EditBookGUI extends JPanel
 				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong!");
 			}
 		});
-		btnApply.setBounds(158, 182, 85, 24);
+		btnApply.setBounds(158, 206, 85, 24);
 		panel.add(btnApply);
 		btnApply.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
@@ -335,6 +394,17 @@ public class EditBookGUI extends JPanel
 		textToC.setText(book.get_TableOfContents());
 		textPrice.setText("" + book.get_price());
 		textDownloadPath.setText(book.get_bookFormat());
+		
+		JLabel lblPhotoPath = new JLabel("Photo Path:");
+		lblPhotoPath.setBounds(10, 186, 91, 14);
+		panel.add(lblPhotoPath);
+		
+		textPhotoPath = new JTextField();
+		textPhotoPath.setText("TEMP");
+		textPhotoPath.setEnabled(false);
+		textPhotoPath.setBounds(117, 183, 225, 20);
+		panel.add(textPhotoPath);
+		textPhotoPath.setColumns(10);
 		
 		for (Book_Author book_author : (Book_Author[])bookDetails.getParameters().get(0))
 			listAuthorsModel.addElement(book_author.get_author());

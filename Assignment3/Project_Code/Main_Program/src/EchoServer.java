@@ -253,6 +253,10 @@ public class EchoServer extends AbstractServer
 		  case "RemoveBookAssociation":
 			  controllers.DatabaseManagementController.RemoveBookAssociation(message);
 			  break;
+			  
+		  case "AddBookAssociation":
+			  controllers.DatabaseManagementController.AddBookAssociation(message);
+			  break;
 		  }
 		  break;
 		  
