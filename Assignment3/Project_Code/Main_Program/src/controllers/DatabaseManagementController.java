@@ -103,11 +103,14 @@ public class DatabaseManagementController
 			book_author = Book_Author.listBook_AuthorByQuery("_bid = '" + bid + "'", "_author");
 			book_keyword = Book_Keywords.listBook_KeywordsByQuery("_bid = '" + bid + "'", "_keyword");
 			book_subject = Book_Subject.listBook_SubjectByQuery("_bid = '" + bid + "'", "_sid");
-			String condition = "";
-			for (Book_Subject bs : book_subject)
-				condition = condition + "_sid = '" + bs.get_sid() + "' OR ";
-			condition = condition.substring(0, condition.length() - 4);
-			subjects = Subject.listSubjectByQuery(condition, "_name");
+			if (book_subject.length > 0)
+			{
+				String condition = "";
+				for (Book_Subject bs : book_subject)
+					condition = condition + "_sid = '" + bs.get_sid() + "' OR ";
+				condition = condition.substring(0, condition.length() - 4);
+				subjects = Subject.listSubjectByQuery(condition, "_name");
+			} else subjects = new Subject[0];
 			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
