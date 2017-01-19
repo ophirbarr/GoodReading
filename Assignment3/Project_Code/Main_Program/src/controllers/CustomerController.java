@@ -32,7 +32,10 @@ public class CustomerController {
 	private static Calendar cal = Calendar.getInstance();
 	private static Date date = cal.getTime();
 	
-	
+	/**
+	 * Adds a new book review to the data base. This function is used by the server.
+	 * @param review The review to be added.
+	 */
 	public static void SubmitReview(BookReview review)
 	{
 		PersistentSession session;
@@ -53,6 +56,16 @@ public class CustomerController {
 		
 	}
 	
+	/**
+	 * Checks the possibility  to sell the book to the customer.
+	 * The function checks the validation of the customers account and if the customer already has this book.
+	 * If all above are o.k then the correct price is being calculated according to the account type.
+	 * The book is added to the customer's book list by Customer_Book and added to the data base. 
+	 * @param clientInterface The main frame of the program.
+	 * @param customer The customer requesting to buy a book.
+	 * @param book The book that is to be purchased.
+	 * @return Returns true/false, according to whether the purchase had been completed or not.
+	 */
 	public static boolean BuyBook(ClientInterface clientInterface, Customer customer, Book book)
 	{
 		boolean isPurchase = false, hasBook = false;
@@ -108,6 +121,11 @@ public class CustomerController {
 		return isPurchase;
 	}
 	
+	/**
+	 * 
+	 * @param bid
+	 * @param uid
+	 */
 	public static void AddBookToCustomer(int bid, int uid)
 	{
 		try {

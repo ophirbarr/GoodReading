@@ -24,6 +24,11 @@ public class BookController {
 	private static Date date = cal.getTime();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 	
+	/**
+	 * Changes the current panel on the main frame to the ViewBookGUI panel.
+	 * @param clientInterface The main frame of the program.
+	 * @param book A book to display on the ViewBookGUI panel.
+	 */
 	public static void ViewBook(ClientInterface clientInterface, Book book)
 	{
 		clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
@@ -36,6 +41,11 @@ public class BookController {
 		clientInterface.mainPanel.currentPanel.repaint();
 	}
 	
+	/**
+	 * Adds the current date to a book's search log and updates the book in the data base.
+	 * This function is used by the server.
+	 * @param book The book that it's search log needs to be updated.
+	 */
 	public static void AddToSearchLog(Book book)
 	{
 		int _bid = book.get_bid();
@@ -67,6 +77,11 @@ public class BookController {
 		}
 	}
 	
+	/**
+	 * Adds the current date to a book's purchase log and updates the book in the data base.
+	 * This function is used by the server.
+	 * @param book The book that it's purchase log needs to be updated.
+	 */
 	public static void AddToPurchaseLog(Book book)
 	{
 		int _bid = book.get_bid();
@@ -78,6 +93,7 @@ public class BookController {
 		}
 		
 		String purchaseLog = book.get_purchaseLog();
+		
 		if(purchaseLog != null)
 			purchaseLog = purchaseLog + " " +sdf.format(date);
 		else
