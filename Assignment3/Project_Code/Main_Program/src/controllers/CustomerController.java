@@ -60,7 +60,7 @@ public class CustomerController {
 	 * Checks the possibility  to sell the book to the customer.
 	 * The function checks the validation of the customers account and if the customer already has this book.
 	 * If all above are o.k then the correct price is being calculated according to the account type.
-	 * The book is added to the customer's book list by Customer_Book and added to the data base. 
+	 * A message is sent to the server to add the book to the customer's book list in the data base. 
 	 * @param clientInterface The main frame of the program.
 	 * @param customer The customer requesting to buy a book.
 	 * @param book The book that is to be purchased.
@@ -122,9 +122,10 @@ public class CustomerController {
 	}
 	
 	/**
-	 * 
-	 * @param bid
-	 * @param uid
+	 * Adds a book to a customer's book list using Customer_Book to the data base.
+	 * This function is used by the server.
+	 * @param bid The ID of the book to be added.
+	 * @param uid The user ID.
 	 */
 	public static void AddBookToCustomer(int bid, int uid)
 	{
@@ -146,7 +147,11 @@ public class CustomerController {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
 	public static Book[] MyBooks(Customer customer)
 	{
 		Book books[] = null;
