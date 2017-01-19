@@ -20,6 +20,7 @@ import common.Message;
 import controllers.BookController;
 import controllers.CustomerController;
 import good_reading.Book;
+import good_reading.Customer;
 
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
@@ -122,19 +123,20 @@ public class MainGUI extends JPanel {
 		JButton MyBooks = new JButton("My Books");
 		MyBooks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				/*TODO create GUI class
 				remove(currentPanel);
-				currentPanel = new MyBooksGUI(clientInterface);
+				currentPanel = new MyBooksGUI(clientInterface, (Customer)clientInterface.user);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
 				currentPanel.setLayout(null);
 				currentPanel.revalidate();
 				currentPanel.repaint();
-				*/
 			}
 		});
-		menu.add(MyBooks, "cell 0 3,alignx center,aligny center");
+		
+		if(clientInterface.user instanceof Customer)
+				menu.add(MyBooks, "cell 0 3,alignx center,aligny center");
+		
 		menu.add(btnSearchBook, "cell 0 4,alignx center,aligny top");
 		
 		//TODO erase button

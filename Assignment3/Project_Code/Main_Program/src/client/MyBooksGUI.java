@@ -16,6 +16,7 @@ import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Customer;
+import javax.swing.ImageIcon;
 
 
 public class MyBooksGUI extends JPanel {
@@ -32,13 +33,13 @@ public class MyBooksGUI extends JPanel {
 		setLayout(null);
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(0, 0, 727, 588);
+		imagePanel.setBounds(0, 0, 727, 579);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		imagePanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 101, 346, 354);
+		scrollPane.setBounds(23, 101, 520, 354);
 		imagePanel.add(scrollPane);
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
@@ -50,6 +51,16 @@ public class MyBooksGUI extends JPanel {
 		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
+		
+		JLabel lblMyBooks = new JLabel("My Books");
+		lblMyBooks.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblMyBooks.setBounds(167, 40, 90, 30);
+		imagePanel.add(lblMyBooks);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
+		label.setBounds(583, 355, 61, 100);
+		imagePanel.add(label);
 		
 		Message msg = new Message("MyBooks", "CustomerController");
 		msg.add(customer);
@@ -91,5 +102,4 @@ public class MyBooksGUI extends JPanel {
 			}
 		});
 	}
-
 }
