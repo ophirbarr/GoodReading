@@ -277,6 +277,10 @@ public class EchoServer extends AbstractServer
 		  case "FromUserToCostumer": 
 			  controllers.LibrarianController.FromUserToCostumer((int)message.getParameters().get(0));
 			  break;
+		  case "EditCostumerAccount": 
+			  controllers.LibrarianController.EditCostumerAccount((int)message.getParameters().get(0));
+			  break;
+			  
 		  }
 	  case "ManagerController":
 		  switch(action){
