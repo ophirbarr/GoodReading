@@ -11,6 +11,9 @@ import java.awt.Rectangle;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import common.Message;
 import controllers.CustomerController;
@@ -21,6 +24,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -84,15 +89,18 @@ public class ReadReviewGUI extends JPanel {
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(104, 155, 23, 20);
+		scrollPane.setBounds(32, 101, 346, 354);
 		imagePanel.add(scrollPane);
 		
-		//TODO
-		////////////////////////////////////////////
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
 		JList<String> list = new JList<String>(listModel);
+		
 		scrollPane.setViewportView(list);
+		
+		JLabel lblResultTitle = new JLabel("Writen by            Review");
+		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
+		scrollPane.setColumnHeaderView(lblResultTitle);
 		
 		Message msg = new Message("ReadReviews", "SystemUserController");
 		msg.add(book);
@@ -105,16 +113,34 @@ public class ReadReviewGUI extends JPanel {
 		}
 		clientInterface.waitForServer();
 		
-		Object[] result = (Object[])clientInterface.getMsgFromServer();
+		BookReview[] bookReview = (BookReview[])clientInterface.getMsgFromServer();
 		listModel.clear();
 		
-		if (result.length == 0) 
+		if (bookReview.length == 0) 
 			listModel.addElement("There are no matching results to your query.");
 		else
-			for (Object review : result)
+			for(int i=0; i< bookReview.length;i++)
 			{
-				listModel.addElement(String.format("%-30s%-15s", (((BookReview)review)).get_review(), ((BookReview)review).get_costumerName()));
+				listModel.addElement(String.format("%-25s%-30s", bookReview[i].get_costumerName(), bookReview[i].get_review()));
 			}
-		////////////////////////////////////////////////////
+
+		list.addListSelectionListener(new ListSelectionListener() { 
+			/**
+			 * Listener selected review - displays the review in detail
+			 */
+			public void valueChanged(ListSelectionEvent e) {
+				int index = list.getSelectedIndex();   //index in the list of the selected review
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, bookReview[index]);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate();
+				clientInterface.mainPanel.currentPanel.repaint();
+				
+			}
+		});
+		
+		
 	}
 }
