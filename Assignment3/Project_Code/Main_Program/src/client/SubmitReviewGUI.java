@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import common.Define;
 import common.Message;
 import controllers.SystemUserController;
 
@@ -95,6 +96,17 @@ public class SubmitReviewGUI extends JPanel {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				new PopUpMessageGUI(clientInterface.frame, "Your review has been submited. Thank you!", Define.Edit);
+			    
+				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, book);
+				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+				clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
+				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+				clientInterface.mainPanel.currentPanel.setLayout(null);
+				clientInterface.mainPanel.currentPanel.revalidate(); // For Java 1.7 or above.
+				// frame.getContentPane().validate(); // For Java 1.6 or below.
+				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));
