@@ -14,23 +14,61 @@ import org.jfree.chart.ChartPanel;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
+
+
 public class HistogramGUI extends JPanel{
-	ClientInterface clientInterface;
 	
-	public HistogramGUI(ClientInterface clientInterface){
+	private Book book;
+	
+	public HistogramGUI(Book book){
 		
 		super();
-		this.clientInterface = clientInterface;
-		
-		
+		this.book = book;
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.setValue(1, "Purchase", "1/1/17");
-		dataset.setValue(5, "Purchase", "2/1/17");
-		dataset.setValue(3, "Purchase", "3/1/17");
 		
-		dataset.setValue(10, "Search", "1/1/17");
-		dataset.setValue(11, "Search", "2/1/17");
-		dataset.setValue(7, "Search", "3/1/17");
+		String[] purchaseDate = book.get_purchaseLog().split(" ");
+		String[] searchesDate = book.get_searchLog().split(" ");
+		int countPurchase = 0;
+		int countSearches = 0;
+		
+		for(int i=0;i<searchesDate.length;i++ )
+		{
+			if(i==searchesDate.length-1){   //last element
+				countSearches++;
+				dataset.setValue(countSearches, "Search", searchesDate[i]);
+			}
+			
+			else {
+				if(searchesDate[i].equals(searchesDate[i+1]))   //same date
+					countSearches++;
+				else{ 
+					countSearches++;
+					dataset.setValue(countSearches, "Search", searchesDate[i]);
+					countSearches = 0;
+					}
+			}
+		}
+			
+		
+		for(int i=0;i<purchaseDate.length;i++ )
+		{
+			if(i==purchaseDate.length-1){   //last element
+				countPurchase++;
+				dataset.setValue(countPurchase, "Purchase", purchaseDate[i]);
+			}
+			
+			else {
+				if(purchaseDate[i].equals(purchaseDate[i+1]))   //same date
+					countPurchase++;
+				else{ 
+					countPurchase++;
+					dataset.setValue(countPurchase, "Purchase", purchaseDate[i]);
+					countPurchase = 0;
+					}
+			}
+		}
+		
+		
 		
 		
 		JFreeChart chart = ChartFactory.createBarChart3D("Statistical Information", "Dates", "Amount", dataset);
@@ -39,13 +77,6 @@ public class HistogramGUI extends JPanel{
 		ChartFrame frame = new ChartFrame("Statistical Information",chart);
 		frame.setVisible(true);
 		frame.setSize(550, 450);
-		
-		//ChartPanel cp = new ChartPanel(chart);
-		//removeAll();
-		///clientInterface.mainPanel.add(cp);
-		//validate();
-		
-		
 		
 	}
 }

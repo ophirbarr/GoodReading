@@ -106,14 +106,8 @@ public class RequestReportGUI extends JPanel{
 			list.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
 					int index = list.getSelectedIndex();
-					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-					clientInterface.mainPanel.currentPanel = new HistogramGUI(clientInterface);
-					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-					clientInterface.mainPanel.currentPanel.setLayout(null);
-					clientInterface.mainPanel.currentPanel.revalidate();
-					clientInterface.mainPanel.currentPanel.repaint();
+					
+					new HistogramGUI(book[index]);	
 				}
 			});
 			list.setFont(new Font("Monospaced", Font.BOLD, 14));
