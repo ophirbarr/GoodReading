@@ -109,6 +109,7 @@ public class AccountGUI extends JPanel
 				{
 					clientInterface.user = (SystemUser) result;
         			JOptionPane.showMessageDialog(clientInterface.frame, "A librarian has been notified and will review your request shortly.");   
+        			btnOpenAccount.setEnabled(false);
 				}
 				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong! Please contact tech support.");
 			}

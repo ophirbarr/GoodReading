@@ -6,9 +6,11 @@ import org.orm.PersistentTransaction;
 
 import common.Message;
 import good_reading.Book;
+import good_reading.BookReview;
 import good_reading.Book_Author;
 import good_reading.Book_Keywords;
 import good_reading.Book_Subject;
+import good_reading.Customer_Book;
 import good_reading.Domain;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.Subject;
@@ -267,6 +269,60 @@ public class DatabaseManagementController
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * Delete either a book(0), subject(1) or domain(2) and all associations from DB, if possible 
+	 * @param msg message containing parameters
+	 * @return success of failure
+	 */
+	public static boolean DeleteItem(Message msg)
+	{
+		int id = (int) msg.getParameters().get(1);
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+			if ((int)msg.getParameters().get(0) == 0) // DELETE BOOK
+			{
+				Book book = Book.loadBookByQuery("_bid = '" + id + "'", null);
+				Book_Author[] book_author = Book_Author.listBook_AuthorByQuery("_bid = '" + id + "'", null);
+				Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_bid = '" + id + "'", null);
+				Book_Keywords[] book_keywords = Book_Keywords.listBook_KeywordsByQuery("_bid = '" + id + "'", null);
+				BookReview[] book_review = BookReview.listBookReviewByQuery("_bid = '" + id + "'", null);
+				Customer_Book[] customer_book = Customer_Book.listCustomer_BookByQuery("_bid = '" + id + "'", null);
+				session.delete(book);
+				for (Book_Author del_obj : book_author) session.delete(del_obj);
+				for (Book_Subject del_obj : book_subject) session.delete(del_obj);
+				for (Book_Keywords del_obj : book_keywords) session.delete(del_obj);
+				for (BookReview del_obj : book_review) session.delete(del_obj);
+				for (Customer_Book del_obj : customer_book) session.delete(del_obj);
+			}
+			if ((int)msg.getParameters().get(0) == 1) // DELETE SUBJECT
+			{
+				Book_Subject[] book_subject = Book_Subject.listBook_SubjectByQuery("_sid = '" + id + "'", null);
+				if (book_subject != null && book_subject.length > 0) return false;
+				else
+				{
+					Subject subject = Subject.loadSubjectByQuery("_sid = '" + id + "'", null);
+					session.delete(subject);
+				}
+			}
+			if ((int)msg.getParameters().get(0) == 2) // DELETE DOMAIN
+			{
+				Subject[] subject = Subject.listSubjectByQuery("_did = '" + id + "'", null);
+				if (subject != null && subject.length > 0) return false;
+				else
+				{
+					Domain domain = Domain.loadDomainByQuery("_did = '" + id + "'", null);
+					session.delete(domain);
+				}
+			}
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	

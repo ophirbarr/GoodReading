@@ -267,7 +267,14 @@ public class EchoServer extends AbstractServer
 			  
 		  case "EditSubjectDomain":
 			  controllers.DatabaseManagementController.EditSubjectDomain(message);
-
+			  break;
+			  
+		  case "DeleteItem":
+			  try {
+				client.sendToClient(controllers.DatabaseManagementController.DeleteItem(message));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			  break;
 		  }
 		  break;

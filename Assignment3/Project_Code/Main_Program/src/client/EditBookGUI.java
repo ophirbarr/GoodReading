@@ -209,9 +209,8 @@ public class EditBookGUI extends JPanel
 					msg.add(JOptionPane.showInputDialog("Enter keyword:"));
 					msg.add(book.get_bid());
 				}
-				else msg = null;
 
-				if (msg != null && !msg.getParameters().get(1).equals(""))  // send message and update bookDetails and list
+				if (msg.getParameters().get(1) != null && !msg.getParameters().get(1).equals(""))  // send message and update bookDetails and list
 				{
 					try {
 						clientInterface.client.openConnection();

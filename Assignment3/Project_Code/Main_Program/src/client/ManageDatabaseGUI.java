@@ -231,11 +231,6 @@ public class ManageDatabaseGUI extends JPanel
 		btnAdd.setBounds(240, 437, 156, 23);
 		add(btnAdd);
 		
-		JButton btnDelete = new JButton("DELETE");
-		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnDelete.setBounds(137, 437, 93, 23);
-		add(btnDelete);
-		
 		JPanel typePanel = new JPanel();
 		typePanel.setLayout(null);
 		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -328,6 +323,61 @@ public class ManageDatabaseGUI extends JPanel
 			}
 		});
 		
+		JButton btnDelete = new JButton("DELETE");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int listIndex = list.getSelectedIndex();
+				Message msg = new Message("DeleteItem", "DatabaseManagementController");
+				if (rdbtnBooks.isSelected() && listIndex != -1)  // DEELTE BOOK
+				{
+					msg.add(0);
+					msg.add(((Book) result.get(listIndex)).get_bid());
+				}
+				else if (rdbtnSubjects.isSelected() && listIndex != -1)  // DELETE SUBJECT
+				{
+					msg.add(1);
+					msg.add(((Subject) result.get(listIndex)).get_sid());
+				}
+				else if (rdbtnDomains.isSelected() && listIndex != -1)  // DELETE DOMAIN
+				{
+					msg.add(2);
+					msg.add(((Domain) result.get(listIndex)).get_did());
+				}
+				else msg = null;
+				
+				if (msg != null)
+				{
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					if ((boolean) clientInterface.getMsgFromServer())
+					{
+						result.remove(listIndex);
+						listModel.remove(listIndex);
+					}
+					else
+					{
+						if (rdbtnBooks.isSelected())
+							JOptionPane.showMessageDialog(null, "Something went wrong!");
+						else if (rdbtnDomains.isSelected())
+							JOptionPane.showMessageDialog(null, "ERROR: Subject contains books and cannot be removed");
+						else if (rdbtnSubjects.isSelected())
+							JOptionPane.showMessageDialog(null, "ERROR: Domain contains subjects and cannot be removed");
+					}
+				}
+				
+			}
+		});
+		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDelete.setBounds(137, 437, 93, 23);
+		add(btnDelete);
+		
 		JButton btnEdit = new JButton("EDIT");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -408,7 +458,7 @@ public class ManageDatabaseGUI extends JPanel
 			    	msg.add(((Domain) result.get(listIndex)).get_did());
 			    	msg.add(name);
 			    	
-			    	if (!msg.getParameters().get(1).equals(""))
+			    	if (name != null && !name.equals(""))
 			    	{
 			    		try {
 				    		clientInterface.client.openConnection();
@@ -416,10 +466,10 @@ public class ManageDatabaseGUI extends JPanel
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
+				    	// update result and list
+				    	((Domain) result.get(listIndex)).set_name(name);
+				    	listModel.set(listIndex, String.format("%-6d%-17s", ((Domain) result.get(listIndex)).get_did(), ((Domain) result.get(listIndex)).get_name()));
 			    	}
-			    	// update result and list
-			    	((Domain) result.get(listIndex)).set_name(name);
-			    	listModel.set(listIndex, String.format("%-6d%-17s", ((Domain) result.get(listIndex)).get_did(), ((Domain) result.get(listIndex)).get_name()));
 
 					
 				}
