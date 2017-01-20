@@ -6,12 +6,16 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeListener;
 
 import common.Message;
@@ -23,12 +27,14 @@ import good_reading.Subject;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
 public class ManageDatabaseGUI extends JPanel
 {
 	private ClientInterface clientInterface;
-	private Object[] result;
+	private ArrayList<Object> result;
 	private JTextField searchTitle;
 	private JTextField searchAuthor;
 	private JTextField searchLanguage;
@@ -75,6 +81,7 @@ public class ManageDatabaseGUI extends JPanel
 		add(categoryPanel);
 		
 		JCheckBox chckbxTitle = new JCheckBox("Title");
+		chckbxTitle.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxTitle.setSelected(true);
 		chckbxTitle.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) 
@@ -87,6 +94,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxTitle);
 		
 		JCheckBox chckbxAuthor = new JCheckBox("Author");
+		chckbxAuthor.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxAuthor.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -98,6 +106,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxAuthor);
 		
 		JCheckBox chckbxLanguage = new JCheckBox("Language");
+		chckbxLanguage.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxLanguage.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -109,6 +118,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxLanguage);
 		
 		JCheckBox chckbxPrice = new JCheckBox("Price");
+		chckbxPrice.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxPrice.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -120,6 +130,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxPrice);
 		
 		JCheckBox chckbxKeyword = new JCheckBox("Keyword");
+		chckbxKeyword.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxKeyword.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -131,6 +142,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxKeyword);
 		
 		JCheckBox chckbxSubject = new JCheckBox("Subject");
+		chckbxSubject.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxSubject.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
@@ -142,6 +154,7 @@ public class ManageDatabaseGUI extends JPanel
 		categoryPanel.add(chckbxSubject);
 		
 		JCheckBox chckbxDomain = new JCheckBox("Domain");
+		chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		chckbxDomain.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) 
 			{
@@ -206,7 +219,7 @@ public class ManageDatabaseGUI extends JPanel
 				if (!list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
 				{
 					int i = list.getSelectedIndex();
-					BookController.ViewBook(clientInterface, (Book)result[i]);
+					BookController.ViewBook(clientInterface, (Book)result.get(i));
 				}
 			}
 		});
@@ -257,6 +270,8 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxSubject.setEnabled(true);		chckbxSubject.setSelected(false);
 					chckbxDomain.setEnabled(true);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(true);
+					chckbxSubject.setFont(new Font("Tahoma", Font.PLAIN, 11));
+					chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					btnAdd.setText("ADD NEW BOOK");
 					lblResultTitle.setText("ID            Title                                                       Language            Price           Summary");
 					listModel.clear();
@@ -279,6 +294,8 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxSubject.setEnabled(false);	chckbxSubject.setSelected(true);
 					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(false);
 					btnDisplayBook.setEnabled(false);
+					chckbxSubject.setFont(new Font("Tahoma", Font.BOLD, 12));
+					chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					btnAdd.setText("ADD NEW SUBJECT");
 					lblResultTitle.setText("SID          Name                                  DID");
 					listModel.clear();
@@ -301,6 +318,8 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxSubject.setEnabled(false);	chckbxSubject.setSelected(false);
 					chckbxDomain.setEnabled(false);		chckbxDomain.setSelected(true);
 					btnDisplayBook.setEnabled(false);
+					chckbxSubject.setFont(new Font("Tahoma", Font.PLAIN, 11));
+					chckbxDomain.setFont(new Font("Tahoma", Font.BOLD, 12));
 					btnAdd.setText("ADD NEW DOMAIN");
 					lblResultTitle.setText("DID         Name");
 					listModel.clear();
@@ -313,25 +332,95 @@ public class ManageDatabaseGUI extends JPanel
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if (rdbtnBooks.isSelected() && list.getSelectedIndex() != -1)
+				if (rdbtnBooks.isSelected() && list.getSelectedIndex() != -1)  // EDIT BOOK
 				{
 					int i = list.getSelectedIndex();
 					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-					clientInterface.mainPanel.currentPanel = new EditBookGUI(clientInterface, (Book)result[i]);
+					clientInterface.mainPanel.currentPanel = new EditBookGUI(clientInterface, (Book)result.get(i));
 					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
 					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
 					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
 					clientInterface.mainPanel.currentPanel.setLayout(null);
 					clientInterface.mainPanel.currentPanel.revalidate();
 					clientInterface.mainPanel.currentPanel.repaint();
-					
 				}
-				else if (rdbtnSubjects.isSelected())
+				else if (rdbtnSubjects.isSelected() && list.getSelectedIndex() != -1)  // EDIT SUBJECT
 				{
-					
+					int listIndex = list.getSelectedIndex();
+					Message msg = new Message("GetAllDomains", "DatabaseManagementController");
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					Domain[] domains = (Domain[]) clientInterface.getMsgFromServer();
+					String[] domain_names;
+					if (domains != null)
+					{
+						domain_names = new String[domains.length + 1];
+						for (int i = 0; i < domains.length; i++)
+							domain_names[i + 1] = domains[i].get_name();
+					}
+					else 
+						domain_names = new String[1];
+					domain_names[0] = "[NONE]";
+						
+				    JComboBox combo = new JComboBox(domain_names);
+				    JTextField fieldEditName = new JTextField(((Subject) result.get(listIndex)).get_name());
+				    JPanel panel = new JPanel(new GridLayout(0, 1));
+				    panel.add(new JLabel("Edit subject name:"));
+				    panel.add(fieldEditName);
+				    panel.add(new JLabel("Choose domain for subject:"));
+				    panel.add(combo);
+				    if (JOptionPane.showConfirmDialog(null, panel, "Database Management", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == 0)
+				    {
+				    	int index = combo.getSelectedIndex();
+				    	int did;
+				    	if (index == 0 || domains == null) did = -1;
+				    	else did = domains[index - 1].get_did();
+				    	String name = fieldEditName.getText();
+				    	
+				    	msg = new Message("EditSubjectDomain", "DatabaseManagementController");
+				    	msg.add(0);
+				    	msg.add(((Subject) result.get(listIndex)).get_sid());
+				    	msg.add(did);
+				    	msg.add(name);
+				    	try {
+				    		clientInterface.client.openConnection();
+				    		clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+				    	// update result and list
+				    	((Subject) result.get(listIndex)).set_did(did);
+				    	((Subject) result.get(listIndex)).set_name(name);
+				    	listModel.set(listIndex, String.format("%-6d%-17s%d", ((Subject) result.get(listIndex)).get_sid(), ((Subject) result.get(listIndex)).get_name(), ((Subject) result.get(listIndex)).get_did()));
+				    }
 				}
-				else if (rdbtnDomains.isSelected())
+				else if (rdbtnDomains.isSelected() && list.getSelectedIndex() != -1)  // EDIT DOMAIN
 				{
+					int listIndex = list.getSelectedIndex();
+					Message msg = new Message("EditSubjectDomain", "DatabaseManagementController");
+					String name = (String)JOptionPane.showInputDialog(null, "Edit domain name:", "Database Management", JOptionPane.QUESTION_MESSAGE, null, null, ((Domain) result.get(listIndex)).get_name());
+			    	msg.add(1);
+			    	msg.add(((Domain) result.get(listIndex)).get_did());
+			    	msg.add(name);
+			    	
+			    	if (!msg.getParameters().get(1).equals(""))
+			    	{
+			    		try {
+				    		clientInterface.client.openConnection();
+				    		clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+			    	}
+			    	// update result and list
+			    	((Domain) result.get(listIndex)).set_name(name);
+			    	listModel.set(listIndex, String.format("%-6d%-17s", ((Domain) result.get(listIndex)).get_did(), ((Domain) result.get(listIndex)).get_name()));
+
 					
 				}
 			}
@@ -388,12 +477,12 @@ public class ManageDatabaseGUI extends JPanel
 						e1.printStackTrace();
 					}
 					clientInterface.waitForServer();
-					
-					result = (Object[]) clientInterface.getMsgFromServer();
+					//result = (Object[]) clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object book : result)
 						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				
 				else if (rdbtnSubjects.isSelected() && !searchSubject.getText().equals(""))
@@ -408,11 +497,13 @@ public class ManageDatabaseGUI extends JPanel
 					}
 					clientInterface.waitForServer();
 					
-					result = (Object[]) clientInterface.getMsgFromServer();
+					//result = (Object[]) clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
+
 					listModel.clear();
 					for (Object subject : result)
 						listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 				
 				else if (rdbtnDomains.isSelected() && !searchDomain.getText().equals(""))
@@ -427,11 +518,12 @@ public class ManageDatabaseGUI extends JPanel
 					}
 					clientInterface.waitForServer();
 					
-					result = (Object[]) clientInterface.getMsgFromServer();
+					//result = (Object[]) clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object domain : result)
 						listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 			}
 		});
@@ -455,12 +547,11 @@ public class ManageDatabaseGUI extends JPanel
 					}
 					clientInterface.waitForServer();
 					
-					result = (Book[])clientInterface.getMsgFromServer();
+					//result = (Book[])clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object book : result)
-					{
 						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-					}
 				}
 				
 				else if (rdbtnSubjects.isSelected())
@@ -474,11 +565,12 @@ public class ManageDatabaseGUI extends JPanel
 					}
 					clientInterface.waitForServer();
 					
-					result = (Subject[])clientInterface.getMsgFromServer();
+					//result = (Subject[])clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object subject : result)
 						listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 				
 				else if (rdbtnDomains.isSelected())
@@ -492,11 +584,12 @@ public class ManageDatabaseGUI extends JPanel
 					}
 					clientInterface.waitForServer();
 					
-					result = (Domain[])clientInterface.getMsgFromServer();
+					//result = (Domain[])clientInterface.getMsgFromServer();
+					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object domain : result)
 						listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");	
+					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
 				}
 			}
 		});

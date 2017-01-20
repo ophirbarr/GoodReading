@@ -127,7 +127,8 @@ public class EditBookGUI extends JPanel
 		textDownloadPath.setColumns(10);
 		
 		JCheckBox chckbxCataloged = new JCheckBox("Cataloged");
-		if (!((Worker)clientInterface.user).get_role().equals("Manager")) chckbxCataloged.setEnabled(false);
+		chckbxCataloged.setEnabled(false);
+		if ((clientInterface.user instanceof Worker) && ((Worker)clientInterface.user).get_role().equals("Manager")) chckbxCataloged.setEnabled(true);
 		chckbxCataloged.setSelected(book.get_viewStatus());
 		chckbxCataloged.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) 

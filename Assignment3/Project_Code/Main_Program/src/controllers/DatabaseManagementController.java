@@ -223,4 +223,51 @@ public class DatabaseManagementController
 		}
 	}
 
+	/**
+	 * Edit subject(0) or domain(1) fields
+	 * @param msg message including parameters
+	 */
+	public static void EditSubjectDomain(Message msg)
+	{
+		if ((int)msg.getParameters().get(0) == 0)  // EDIT SUBJECT
+		{
+			int sid = (int) msg.getParameters().get(1);
+			int did = (int) msg.getParameters().get(2);
+			String name = (String) msg.getParameters().get(3);
+			
+			try {
+				PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+				Subject subject = Subject.loadSubjectByQuery("_sid = '" + sid + "'", null);
+				subject.set_name(name);
+				subject.set_did(did);
+				PersistentTransaction t = session.beginTransaction();
+				session.update(subject);
+				t.commit();
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+
+		}
+		
+		else if ((int)msg.getParameters().get(0) == 1)  // EDIT DOMAIN
+		{
+			int did = (int) msg.getParameters().get(1);
+			String name = (String) msg.getParameters().get(2);
+			
+			try {
+				PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+				Domain domain = Domain.loadDomainByQuery("_did = '" + did + "'", null);
+				domain.set_name(name);
+				PersistentTransaction t = session.beginTransaction();
+				session.update(domain);
+				t.commit();
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
