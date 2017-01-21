@@ -97,7 +97,7 @@ public class LibrarianGUI extends JPanel
 			public void actionPerformed(ActionEvent e) 
 			{
 				remove(currentPanel);
-				currentPanel = new JPanel();  // TODO replace with your class
+				currentPanel = new EraseUserGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);

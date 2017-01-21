@@ -17,6 +17,9 @@ import good_reading.SystemUser;
 
 public class LibrarianController {
 	
+	private static Calendar cal = Calendar.getInstance();
+	private static Date date = cal.getTime();
+	
 public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
 		PersistentSession session = null;
@@ -62,6 +65,19 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 				}
 				return customers;
 		}
+		
+		if(viewStatus==4)
+		{
+			try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				users = SystemUser.listSystemUserByQuery(null, "_uid");
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+				users = null;
+			}
+			return users;
+		}	
 		
 		return null;
 					
@@ -122,10 +138,8 @@ public static void EditCostumerAccount(int user_id){
 	CustomerController cc = null;
 	boolean result;
 	int ChangeType;
-	//Calendar cal = Calendar.getInstance();
-	//Date date = cal.getTime();
-
 	
+
 	try {
 		session = GoodReadingPersistentManager.instance().getSession();
 		PersistentTransaction t = session.beginTransaction();
@@ -133,14 +147,17 @@ public static void EditCostumerAccount(int user_id){
 		user=Customer.loadCustomerByQuery("_uid = '" + user_id +"'", null);
 		result=cc.ValidateAccount(clientInterface, user);
 		
+		
 				if(result==true)
 				{
 					ChangeType=user.get_waitingForChangeType();
 					user.set_accountType(ChangeType);
 					user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+					user.set_endDate(date);
 					session.update(user);
 					t.commit();
 					session.close();
+
 				}
 				
 		} catch (PersistentException e) {
@@ -149,9 +166,29 @@ public static void EditCostumerAccount(int user_id){
 		
 }
 
-public static void EraseUser(){}
+public static void EraseUser(int user_id){
+	
+	PersistentSession session = null;
+	SystemUser user; 
+	
+		try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				PersistentTransaction t = session.beginTransaction();
+		
+				user=SystemUser.loadSystemUserByQuery("_uid = '" + user_id +"'", null);
+				user.delete();
+				
+				session.update(user);
+				t.commit();
+				session.close();
+		
+		} catch (PersistentException e) {
+			e.printStackTrace();
+	
+	
+}
 
-
+}
 }
 
 

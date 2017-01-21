@@ -50,7 +50,7 @@ public class AddNewUserGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name       LastName       ID");
+		JLabel ResultTitle = new JLabel("Name         LastName         ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -79,7 +79,7 @@ public class AddNewUserGUI extends JPanel {
 		{
 			for(int i=0;i<size;i++)  
 			{
-			listModel.addElement(users[i].get_firstName());
+			listModel.addElement(String.format("%-9s%-9s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
 			}
 		}
 		JLabel lblTheReviewsThat = new JLabel("Users that waiting for approve:");
