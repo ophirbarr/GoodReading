@@ -8,11 +8,14 @@ import java.awt.Font;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
+import common.Define;
 import common.Message;
 import good_reading.Book;
 
@@ -36,7 +39,8 @@ public class RequestReportGUI extends JPanel{
 		private JLabel lblPleaseSelectBook;
 		private DefaultListModel model;
 		private JList list;
-		private Book[] book; 
+		private Book[] book;
+		private String action;
 		
 		public RequestReportGUI(ClientInterface clientInterface){
 			super();
@@ -79,17 +83,36 @@ public class RequestReportGUI extends JPanel{
 			btnAbsoluteRating.setVisible(false);
 			btnAbsoluteRating.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					action="Absolute Rating";
+					MessgaeToServer("GetAllBooks",0,"SystemUserController");
+					book =(Book[]) clientInterface.getMsgFromServer();
+					for(int i=0; i<book.length;i++)
+						model.addElement(String.format("%-9s%s",book[i].get_bid(),book[i].get_title()));
+					
+					list.setModel(model);
+					scrollPane.setVisible(true);
 				}
 			});
 			btnAbsoluteRating.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			btnAbsoluteRating.setBounds(504, 133, 152, 29);
 			add(btnAbsoluteRating);
-			btnAbsoluteRating.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
-			});
+			
 		
 			JButton btnRatingRelations = new JButton("Rating Relations");
+			btnRatingRelations.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					action="Rating Relations";
+					MessgaeToServer("GetAllBooks",0,"SystemUserController");
+					book =(Book[]) clientInterface.getMsgFromServer();
+					for(int i=0; i<book.length;i++)
+						model.addElement(String.format("%-9s%s",book[i].get_bid(),book[i].get_title()));
+					
+					list.setModel(model);
+					scrollPane.setVisible(true);
+				}
+			});
 			btnRatingRelations.setVisible(false);
 			btnRatingRelations.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			btnRatingRelations.setBounds(504, 175, 152, 29);
@@ -106,8 +129,20 @@ public class RequestReportGUI extends JPanel{
 			list.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
 					int index = list.getSelectedIndex();
+					int counter;
 					
-					new HistogramGUI(book[index]);	
+					if(action.equals("Statistical information about book" ))new HistogramGUI(book[index]);
+					else if(action.equals("Absolute Rating")){
+						MessgaeToServer("GetCounterBooksPurchased",0,"ManagerController");
+						counter = (int) clientInterface.getMsgFromServer();
+						
+						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",(book[index].get_purchaseCount()/(double)counter)*100)+"%",Define.Notice);
+					}
+					else {    //action == Rating Relations
+						MessgaeToServer("GetCounterBooksBySubject",book[index].get_bid(),"ManagerController");
+						counter = (int) clientInterface.getMsgFromServer();
+						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all the books at his subject is: "+String.format("%.1f",(book[index].get_purchaseCount()/(double)counter)*100)+"%",Define.Notice);
+					}
 				}
 			});
 			list.setFont(new Font("Monospaced", Font.BOLD, 14));
@@ -135,6 +170,7 @@ public class RequestReportGUI extends JPanel{
 					btnRatingRelations.setVisible(true);
 					
 					
+					
 				}
 			});
 			btnPopularityOfBook.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -145,7 +181,7 @@ public class RequestReportGUI extends JPanel{
 			btnStatisticalInformationAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					
+					action ="Statistical information about book";
 					btnListAllCustomer.setEnabled(false);
 					btnStatisticalInformationAbout.setEnabled(false);
 					btnPopularityOfBook.setEnabled(false);
@@ -155,7 +191,7 @@ public class RequestReportGUI extends JPanel{
 					btnRatingRelations.setVisible(false);
 					scrollPane.setVisible(true);
 					lblPleaseSelectBook.setVisible(true);
-					GetAllBooks();
+					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)
 						model.addElement(String.format("%-9s%s",book[i].get_bid(),book[i].get_title()));
@@ -169,9 +205,10 @@ public class RequestReportGUI extends JPanel{
 			add(btnStatisticalInformationAbout);
 			
 		}
-		public void GetAllBooks(){
-			Message msg = new Message("GetAllBooks", "SystemUserController");
-			msg.add(false); // get all books
+		public void MessgaeToServer(String action,int bid,String controller){
+			Message msg = new Message(action, controller);
+			if(action.equals("GetAllBooks"))msg.add(false); // get all books
+			else if(action.equals("GetCounterBooksBySubject"))msg.add(bid);
 			try {
 				clientInterface.client.openConnection();
 				clientInterface.client.sendToServer(msg);
@@ -181,4 +218,6 @@ public class RequestReportGUI extends JPanel{
 			clientInterface.waitForServer();
 			
 		}
+	
+		
 }

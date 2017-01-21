@@ -327,6 +327,22 @@ public class EchoServer extends AbstractServer
 				e.printStackTrace();
 			}
 		  break;
+		  case "GetCounterBooksPurchased":
+			  try {
+				client.sendToClient(controllers.ManagerController.GetCounterBooksPurchased());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  break;
+		  case "GetCounterBooksBySubject":
+			  try {
+				client.sendToClient(controllers.ManagerController.GetCounterBooksBySubject((Integer)message.getParameters().get(0)));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  break;
 		  }
 		  break;
   

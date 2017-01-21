@@ -10,9 +10,11 @@ import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Book_Author;
+import good_reading.Book_Subject;
 import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
+import good_reading.Subject;
 import good_reading.SystemUser;
 
 public class ManagerController {
@@ -122,5 +124,37 @@ public static Message CustomerOrders(){
 	return msg;
 	
 }
+public static int GetCounterBooksPurchased(){
+	Book[] books;
+	int counter=0;
+
+		try {
+			books = Book.listBookByQuery(null, null);
+			for(int i = 0; i<books.length;i++)
+				counter+=books[i].get_purchaseCount();
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	return counter;
+}
+public static int GetCounterBooksBySubject(int bid){
+	Book_Subject[] books;
+	int counter=0;
+		try {
+			Book_Subject[] bs = Book_Subject.listBook_SubjectByQuery("_bid = '"+bid+"'", null);
+			books = Book_Subject.listBook_SubjectByQuery("_sid = '"+bs[0].get_sid()+"'", null);
+			for(int i = 0; i<books.length;i++)	
+				counter+=Book.getBookByORMID(books[i].get_bid()).get_purchaseCount();
+			
+		} catch (PersistentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	return counter;
+}
+
 
 }
