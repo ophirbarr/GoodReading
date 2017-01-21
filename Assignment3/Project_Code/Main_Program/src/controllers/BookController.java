@@ -17,7 +17,10 @@ import client.SearchBookGUI;
 import client.ViewBookGUI;
 import good_reading.Book;
 import good_reading.GoodReadingPersistentManager;
-
+/**
+ * @author yair
+ * Controller class. Contains all function regarding a book.
+ */
 public class BookController {
 
 	private static Calendar cal = Calendar.getInstance();
@@ -26,7 +29,7 @@ public class BookController {
 	
 	/**
 	 * Changes the current panel on the main frame to the ViewBookGUI panel.
-	 * @param clientInterface The main frame of the program.
+	 * @param clientInterface The main class of the program.
 	 * @param book A book to display on the ViewBookGUI panel.
 	 */
 	public static void ViewBook(ClientInterface clientInterface, Book book)

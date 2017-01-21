@@ -24,14 +24,19 @@ import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
-
+/**
+ * @author Yair
+ * GUI class. Extends JPanel. Displays a window to submit a new book review. 
+ */
 public class SubmitReviewGUI extends JPanel {
 
 	private ClientInterface clientInterface;
 	private JLabel textField;
 	
 	/**
-	 * Create the panel.
+	 * Constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
+	 * @param book The book to submit a new review for.
 	 */
 	public SubmitReviewGUI(ClientInterface clientInterface, Book book) {
 		super();

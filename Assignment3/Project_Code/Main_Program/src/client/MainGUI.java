@@ -29,20 +29,24 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
+/**
+ * @author Yair
+ * The main GUI class of the program after signing up. Extends JPanel.
+ */
 public class MainGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
 	public JPanel currentPanel;
 
 	/**
-	 * Create the panel.
+	 * Constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
 	 */
 	public MainGUI(ClientInterface clientInterface) 
 	{
 		super();
 		this.clientInterface = clientInterface;
-		
+
 		setLayout(null);
 		
 		JLabel label = new JLabel("");

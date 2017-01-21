@@ -32,13 +32,19 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+/**
+ * @author yair
+ * GUI class. Extends JPanel. Displays all the approved reviews of a book.
+ */
 public class ReadReviewGUI extends JPanel {
 
 	private ClientInterface clientInterface;
 	private JLabel textField;
 	
 	/**
-	 * Create the panel.
+	 * Constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
+	 * @param book The book which reviews are to be displayed.
 	 */
 	public ReadReviewGUI(ClientInterface clientInterface, Book book) {
 		super();
