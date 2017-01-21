@@ -130,13 +130,17 @@ public class ReadReviewGUI extends JPanel {
 			 */
 			public void valueChanged(ListSelectionEvent e) {
 				int index = list.getSelectedIndex();   //index in the list of the selected review
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, bookReview[index]);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate();
-				clientInterface.mainPanel.currentPanel.repaint();
+				if (index != -1)
+				{
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, bookReview[index]);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+				}
 				
 			}
 		});

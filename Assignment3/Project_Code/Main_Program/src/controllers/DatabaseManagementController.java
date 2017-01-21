@@ -348,6 +348,10 @@ public class DatabaseManagementController
 		return book;
 	}
 	
+	/**
+	 * Add a new subject(0) or domain(1) to the DB
+	 * @param msg message containing parameters
+	 */
 	public static void AddSubjectDomain(Message msg)
 	{
 		try {
