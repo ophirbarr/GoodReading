@@ -10,6 +10,8 @@ import javax.swing.event.ChangeListener;
 import common.Message;
 import controllers.BookController;
 import good_reading.Book;
+import good_reading.BookReview;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -19,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class SearchBookGUI extends JPanel
@@ -29,6 +32,7 @@ public class SearchBookGUI extends JPanel
 	JRadioButton rdbtnReview;
 	private final JScrollPane scrollPane = new JScrollPane();
 	private Object[] result;
+	private ArrayList<BookReview[]> reviewsArr;
 	private JTextField searchTitle;
 	private JTextField searchAuthor;
 	private JTextField searchLanguage;
@@ -36,6 +40,9 @@ public class SearchBookGUI extends JPanel
 	private JTextField searchKeyword;
 	private JTextField searchSubject;
 	private JTextField searchDomain;
+	private JLabel lblResultTitle;
+	private JButton btnDisplay;
+	private DefaultListModel<String> listModel;
 
 	
 	public SearchBookGUI(ClientInterface clientInterface)
@@ -60,6 +67,9 @@ public class SearchBookGUI extends JPanel
 				if (rdbtnBook.isSelected() && rdbtnReview.isSelected())
 				{
 					rdbtnReview.setSelected(false);
+					lblResultTitle.setText("ID            Title                                                       Language            Price           Summary");
+					btnDisplay.setText("DISPLAY BOOK");
+					listModel.clear();
 				}
 				else if (!rdbtnBook.isSelected() && !rdbtnReview.isSelected())
 				{
@@ -71,13 +81,15 @@ public class SearchBookGUI extends JPanel
 		radioPanel.add(rdbtnBook);
 		
 		rdbtnReview = new JRadioButton("reviews");
-		rdbtnReview.setEnabled(false);
 		rdbtnReview.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
 				if (rdbtnBook.isSelected() && rdbtnReview.isSelected())
 				{
 					rdbtnBook.setSelected(false);
+					lblResultTitle.setText("ID            Title                                                       Reviewer's Name");
+					btnDisplay.setText("DISPLAY REVIEW");
+					listModel.clear();
 				}
 				else if (!rdbtnBook.isSelected() && !rdbtnReview.isSelected())
 				{
@@ -96,12 +108,12 @@ public class SearchBookGUI extends JPanel
 		scrollPane.setBounds(23, 275, 520, 152);
 		add(scrollPane);
 
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
+		lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -245,8 +257,7 @@ public class SearchBookGUI extends JPanel
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				String action = rdbtnBook.isSelected() ? new String("SearchBooks") : new String("SearchReviews");
-				Message msg = new Message(action, "SystemUserController");
+				Message msg = new Message("SearchBooks", "SystemUserController");
 				boolean[] chkbx = new boolean[7]; 
 				String[] searchString = new String[7];
 				if (chckbxTitle.isSelected() && !searchTitle.getText().equals("")){
@@ -287,12 +298,40 @@ public class SearchBookGUI extends JPanel
 					e.printStackTrace();
 				}
 				clientInterface.waitForServer();
-				
 				result = (Object[]) clientInterface.getMsgFromServer();
-				listModel.clear();
-				for (Object book : result)
-					listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+				
+				if (rdbtnBook.isSelected())
+				{
+					listModel.clear();
+					for (Object book : result)
+						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+				}
+				else if (rdbtnReview.isSelected())
+				{
+					reviewsArr = new ArrayList<BookReview[]>();
+					for (int i = 0; i < result.length ; i++)
+					{
+						msg = new Message("ReadReviews", "SystemUserController");
+						msg.add(result[i]);
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						clientInterface.waitForServer();
+						reviewsArr.add((BookReview[]) clientInterface.getMsgFromServer());
+					}
+					listModel.clear();
+					for (int i = 0; i < result.length ; i++)
+					{
+						for (BookReview review : reviewsArr.get(i))
+							listModel.addElement(String.format("%-6d%-24s%-11s", review.get_rid(), ((Book) result[i]).get_title(), review.get_costumerName()));
+					}
+					if (result.length == 0 || listModel.size() == 0) listModel.addElement("There are no matching results to your query.");
+
+				}
 			}
 		});
 		btnSearch.setBounds(331, 124, 100, 57);
@@ -302,6 +341,7 @@ public class SearchBookGUI extends JPanel
 		btnShowAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+
 				Message msg = new Message("GetAllBooks", "SystemUserController");
 				msg.add(true); // search in catalog
 				try {
@@ -311,12 +351,39 @@ public class SearchBookGUI extends JPanel
 					e1.printStackTrace();
 				}
 				clientInterface.waitForServer();
-				
 				result = (Book[])clientInterface.getMsgFromServer();
 				listModel.clear();
-				for (Object book : result)
-					listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-				if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+				
+				if (rdbtnBook.isSelected())
+				{
+					for (Object book : result)
+						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+				}
+				else if (rdbtnReview.isSelected())
+				{
+					reviewsArr = new ArrayList<BookReview[]>();
+					for (int i = 0; i < result.length ; i++)
+					{
+						msg = new Message("ReadReviews", "SystemUserController");
+						msg.add(result[i]);
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+						clientInterface.waitForServer();
+						reviewsArr.add((BookReview[]) clientInterface.getMsgFromServer());
+					}
+					listModel.clear();
+					for (int i = 0; i < result.length ; i++)
+					{
+						for (BookReview review : reviewsArr.get(i))
+							listModel.addElement(String.format("%-6d%-24s%-11s", review.get_rid(), ((Book) result[i]).get_title(), review.get_costumerName()));
+					}
+					if (result.length == 0 || listModel.size() == 0) listModel.addElement("There are no matching results to your query.");
+				}
 				
 			}
 		});
@@ -324,14 +391,14 @@ public class SearchBookGUI extends JPanel
 		btnShowAll.setBounds(331, 192, 100, 27);
 		add(btnShowAll);
 		
-		JButton btnDisplayBook = new JButton("DISPLAY BOOK");
-		btnDisplayBook.addActionListener(new ActionListener() {
+		btnDisplay = new JButton("DISPLAY BOOK");
+		btnDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if (!list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				if (rdbtnBook.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
 				{
 					int i = list.getSelectedIndex();
-					
+						
 					// -- ADD TO SEARCH LOG --
 					Message msg = new Message("AddToSearchLog", "BookController");
 					msg.add(result[i]);
@@ -342,13 +409,42 @@ public class SearchBookGUI extends JPanel
 						e.printStackTrace();
 					}
 					// -- ADD TO SEARCH LOG --
-					
+						
 					BookController.ViewBook(clientInterface, (Book)result[i]);
+
+				}
+				else if (rdbtnReview.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				{
+					BookReview review = null;
+					int i = list.getSelectedIndex();
+					int rid = Integer.parseInt(list.getSelectedValue().split("\\s+")[0]);
+					boolean flag = false;
+					for (BookReview[] reviews : reviewsArr)
+					{
+						for (BookReview r : reviews)
+							if (r.get_rid() == rid)
+							{
+								review = r;
+								flag = true;
+								break;
+							}
+						if (flag) break;
+					}
+					
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, review);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+
 				}
 			}
 		});
-		btnDisplayBook.setBounds(403, 438, 140, 23);
-		add(btnDisplayBook);
+		btnDisplay.setBounds(403, 438, 140, 23);
+		add(btnDisplay);
 		
 		
 		JPanel imagePanel = new JPanel();

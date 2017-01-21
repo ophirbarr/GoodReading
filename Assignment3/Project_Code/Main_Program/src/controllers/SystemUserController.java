@@ -368,14 +368,14 @@ public class SystemUserController {
 	/**
 	 * Return approved reviews for a requested book.
 	 * @param bid Book ID
-	 * @return An array of book reviews of BID
+	 * @return An array of book reviews in BID
 	 */
 	public static BookReview[] ReadReviews(int bid)
 	{
 		BookReview[] result = null;
 		try {
 			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
-			result = BookReview.listBookReviewByQuery("_bid = '" + bid + "' AND _viewStatus = '1'", null);
+			result = BookReview.listBookReviewByQuery("_bid = '" + bid + "' AND _approved = '1'", null);
 			session.close();
 		} catch (PersistentException e) {
 			e.printStackTrace();
