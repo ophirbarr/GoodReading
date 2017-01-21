@@ -2,7 +2,15 @@ package client;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -62,43 +70,6 @@ public class MyBooksGUI extends JPanel {
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
-		JLabel lblMyBooks = new JLabel("My Books");
-		lblMyBooks.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblMyBooks.setBounds(167, 40, 90, 30);
-		imagePanel.add(lblMyBooks);
-		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
-		label.setBounds(583, 355, 61, 100);
-		imagePanel.add(label);
-		
-		JButton lblDownloadBook = new JButton("Download Book");
-		lblDownloadBook.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		lblDownloadBook.setBounds(583, 255, 118, 30);
-		imagePanel.add(lblDownloadBook);
-		
-		JPanel typePanel = new JPanel();
-		typePanel.setBounds(601, 139, 100, 90);
-		imagePanel.add(typePanel);
-		typePanel.setLayout(null);
-		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
-		JRadioButton rdbtnBooks = new JRadioButton("books");
-		rdbtnBooks.setSelected(true);
-		rdbtnBooks.setBounds(6, 7, 88, 23);
-		typePanel.add(rdbtnBooks);
-		
-		JRadioButton rdbtnSubjects = new JRadioButton("subjects");
-		rdbtnSubjects.setBounds(6, 33, 88, 23);
-		typePanel.add(rdbtnSubjects);
-		
-		JRadioButton rdbtnDomains = new JRadioButton("domains");
-		rdbtnDomains.setBounds(6, 60, 88, 23);
-		typePanel.add(rdbtnDomains);
-		
 		Message msg = new Message("MyBooks", "CustomerController");
 		msg.add(customer);
 		
@@ -126,17 +97,155 @@ public class MyBooksGUI extends JPanel {
 			 * Listener selected review - displays the review in detail
 			 */
 			public void valueChanged(ListSelectionEvent e) {
-				int index = list.getSelectedIndex();   //index in the list of the selected review
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, myBooks[index]);
-				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate();
-				clientInterface.mainPanel.currentPanel.repaint();
-				
+				list.setSelectionBackground(Color.gray);
 			}
 		});
+		
+		JButton btnViewBook = new JButton("View Book");
+		btnViewBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = list.getSelectedIndex();
+				if(index != -1)
+				{
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, myBooks[index]);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+				}
+			}
+		});
+		btnViewBook.setBounds(245, 466, 118, 30);
+		imagePanel.add(btnViewBook);
+		
+		JLabel lblMyBooks = new JLabel("My Books");
+		lblMyBooks.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblMyBooks.setBounds(167, 40, 90, 30);
+		imagePanel.add(lblMyBooks);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
+		label.setBounds(583, 355, 61, 100);
+		imagePanel.add(label);
+		
+		JPanel typePanel = new JPanel();
+		typePanel.setBounds(593, 154, 100, 90);
+		imagePanel.add(typePanel);
+		typePanel.setLayout(null);
+		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		JRadioButton rdbtnPDF = new JRadioButton("PDF");
+		rdbtnPDF.setSelected(true);
+		rdbtnPDF.setBounds(6, 7, 88, 23);
+		typePanel.add(rdbtnPDF);
+		
+		JRadioButton rdbtnDOC = new JRadioButton("DOC");
+		rdbtnDOC.setBounds(6, 33, 88, 23);
+		typePanel.add(rdbtnDOC);
+		
+		JRadioButton rdbtnFB2 = new JRadioButton("FB2");
+		rdbtnFB2.setBounds(6, 60, 88, 23);
+		typePanel.add(rdbtnFB2);
+		
+		rdbtnPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (rdbtnPDF.isSelected())
+				{
+					rdbtnDOC.setSelected(false);
+					rdbtnFB2.setSelected(false);
+				}
+			}
+		});
+		
+		rdbtnDOC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnDOC.isSelected())
+				{
+					rdbtnPDF.setSelected(false);
+					rdbtnFB2.setSelected(false);
+				}
+			}
+		});
+		
+		rdbtnFB2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (rdbtnFB2.isSelected())
+				{
+					rdbtnPDF.setSelected(false);
+					rdbtnDOC.setSelected(false);
+				}
+			}
+		});
+		
+		
+		JButton lblDownloadBook = new JButton("Download Book");
+		lblDownloadBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String format = null;
+				int index = list.getSelectedIndex();
+				
+				if(index != -1)
+				{
+					if(rdbtnPDF.isSelected())
+					{
+						format = "PDF";
+					}
+					
+					else if(rdbtnDOC.isSelected())
+					{
+						format = "DOC";
+					}
+					
+					else if(rdbtnFB2.isSelected())
+					{
+						format = "FB2";
+					}
+				
+				
+					Message msg = new Message("DownloadBook", "CustomerController");
+					msg.add(format);
+					msg.add(myBooks[index].get_bookFormat());
+
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					
+					
+					int filesize=1022386; 
+					int bytesRead; 
+					int currentTot = 0;
+					byte [] bytearray  = new byte [filesize];
+					InputStream is = (InputStream)clientInterface.getMsgFromServer();
+					FileOutputStream fos;
+					try {
+						fos = new FileOutputStream("outputFile.doc");
+						BufferedOutputStream bos = new BufferedOutputStream(fos); 
+						bytesRead = is.read(bytearray,0,bytearray.length);
+						currentTot = bytesRead; 
+						do { 
+							bytesRead = is.read(bytearray, currentTot, (bytearray.length-currentTot)); 
+							if(bytesRead >= 0) currentTot += bytesRead; 
+							} while(bytesRead > -1); 
+						bos.write(bytearray, 0 , currentTot); 
+						bos.flush(); 
+						bos.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					} 
+				}
+			}
+		});
+		lblDownloadBook.setBounds(583, 255, 118, 30);
+		imagePanel.add(lblDownloadBook);
+		
 	}
 }

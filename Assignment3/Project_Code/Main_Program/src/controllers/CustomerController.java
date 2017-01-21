@@ -1,10 +1,12 @@
 package controllers;
 
 import java.awt.Color;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,17 +59,31 @@ public class CustomerController {
 		}
 	}
 	
-	public static FileInputStream DownloadBook(String filePath)
+	public static BufferedInputStream DownloadBook(String format, String paths)
 	{
-		File BookContent;
-		FileInputStream fin = null;
+		String AllPaths[] = paths.split(" ");
+		String path = null;
+		
+		if(format.equals("PDF"))
+			path = AllPaths[0];
+		else if(format == "DOC")
+			path = AllPaths[1];
+		else if(format == "FB2")
+			path = AllPaths[2];
+
+		BufferedInputStream bin = null;
+		
 		try {
-			BookContent = new File(filePath);
-			fin = new FileInputStream(BookContent);
-		} catch (FileNotFoundException e) {
+			File transferFile = new File (path);
+			byte [] bytearray = new byte [(int)transferFile.length()];
+			FileInputStream fin = new FileInputStream(transferFile);
+			bin = new BufferedInputStream(fin);
+			bin.read(bytearray,0,bytearray.length);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return fin;
+
+		return bin;
 	}
 	
 	/**

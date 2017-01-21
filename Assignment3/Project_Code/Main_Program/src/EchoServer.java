@@ -194,10 +194,11 @@ public class EchoServer extends AbstractServer
 			  	  
 		  case "DownloadBook":
 			  try {
-					client.sendToClient(CustomerController.DownloadBook((String)message.getParameters().get(0)));
+					client.sendToClient(CustomerController.DownloadBook((String)message.getParameters().get(0), (String)message.getParameters().get(1)));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			  break;
 			  
 		  case "UpdateCustomer":
 			  CustomerController.UpdateCustomer((Customer)message.getParameters().get(0));
