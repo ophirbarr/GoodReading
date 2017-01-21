@@ -26,14 +26,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-
+/**
+ * @author yair
+ * GUI class. Extends JPanel. Displays a book, all its details and different actions to do with it.
+ */
 public class ViewBookGUI extends JPanel {
 
 	private ClientInterface clientInterface;
 	private JLabel textField;
 	
 	/**
-	 * Create the panel.
+	 * Constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
+	 * @param book The book which details are to be displayed.
 	 */
 	public ViewBookGUI(ClientInterface clientInterface, Book book) {
 		super();

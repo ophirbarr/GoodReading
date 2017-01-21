@@ -28,7 +28,10 @@ import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
-
+/**
+ * @author yair
+ * Controller class. Contains all the function that can be activated by a customer.
+ */
 public class CustomerController {
 	
 	private static Calendar cal = Calendar.getInstance();
@@ -64,7 +67,7 @@ public class CustomerController {
 	 * The function checks the validation of the customers account and if the customer already has this book.
 	 * If all above are o.k then the correct price is being calculated according to the account type.
 	 * A message is sent to the server to add the book to the customer's book list in the data base. 
-	 * @param clientInterface The main frame of the program.
+	 * @param clientInterface The main class of the program.
 	 * @param customer The customer requesting to buy a book.
 	 * @param book The book that is to be purchased.
 	 * @return Returns true/false, according to whether the purchase had been completed or not.
@@ -182,7 +185,7 @@ public class CustomerController {
 	
 	/**
 	 * Updates the account type of a customer to a new type. 
-	 * @param clientInterface The main frame of the program.
+	 * @param clientInterface The main class of the program.
 	 * @param customer The customer whose account type is to be updated.
 	 * @param Type The new account type requested by the customer.
 	 */
@@ -211,7 +214,7 @@ public class CustomerController {
 	 * Checks if the customer's account is valid. 
 	 * Updates account type if the subscription date had been expired, and sends message to server to update the date in the data base.
 	 * Uses ValidateAccountMessage() to notify the customer. 
-	 * @param clientInterface The main frame of the program.
+	 * @param clientInterface The main class of the program.
 	 * @param customer The customer whose account is validated.
 	 * @return Returns true/false according to the validation of the account.
 	 */
@@ -254,7 +257,7 @@ public class CustomerController {
 	
 	/**
 	 * Notifies the customer about the validation of the account.
-	 * @param clientInterface The main frame of the program.
+	 * @param clientInterface The main class of the program.
 	 * @param isValid A flag to indicate the account validation status (WAIT, BLOCKED, EXPIRED).
 	 */
 	public static void ValidateAccountMessage(ClientInterface clientInterface, int isValid)

@@ -21,18 +21,19 @@ import javax.swing.JDialog;
 
 import java.awt.Rectangle;
 /**
- * 
- * @author yair
- *class GUI which displays message that the review published/rejected
+ * @author Yair
+ * GUI class represents a pop up message. Extends JDialog.
  */
 public class PopUpMessageGUI extends JDialog {
 	
 	private String Messagetext;
 	
 	/**
-	 * constructor
-	 * @param clientInterface User Object
-	 * @param Messagetext String of the message to be displayed
+	 * Constructor that creates the frame.
+	 * @param frame The main frame of the program.
+	 * @param messageText String of the message to be displayed.
+	 * @param Type The type of the message. May be: Error(0), Notice(1), Edit(2), Like(3), Build(4).
+
 	 */
 	public PopUpMessageGUI(JFrame frame, String messageText, int Type){
 		super();

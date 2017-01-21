@@ -102,7 +102,6 @@ public class AccountGUI extends JPanel
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
 				clientInterface.waitForServer();
 				Object result = clientInterface.getMsgFromServer();
 				if (result != null)

@@ -23,13 +23,18 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/**
+ * GUI class. Extends JPanel. Displays all the customer's purchased books.
+ * @author yair
+ */
 public class MyBooksGUI extends JPanel {
 
 	private ClientInterface clientInterface;
 	
 	/**
-	 * Create the panel.
+	 * Constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
+	 * @param customer The customer using the program.
 	 */
 	public MyBooksGUI(ClientInterface clientInterface, Customer customer) {
 		super();

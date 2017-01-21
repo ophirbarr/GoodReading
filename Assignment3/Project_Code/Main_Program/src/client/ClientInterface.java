@@ -34,7 +34,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Rectangle;
-
+/**
+ * The main program class. Contains the main function and creates the first log-in frame. Extends ClientConsole.
+ */
 public class ClientInterface extends ClientConsole 
 {
 

@@ -276,6 +276,19 @@ public class EchoServer extends AbstractServer
 				e1.printStackTrace();
 			}
 			  break;
+			  
+		  case "AddBook":
+			  try {
+					client.sendToClient(controllers.DatabaseManagementController.AddBook());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			  break;
+			  
+		  case "AddSubjectDomain":
+			  controllers.DatabaseManagementController.AddSubjectDomain(message);
+			  break;
+			  
 		  }
 		  break;
 		  

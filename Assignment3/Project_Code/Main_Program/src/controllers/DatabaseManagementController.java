@@ -325,5 +325,56 @@ public class DatabaseManagementController
 		return true;
 	}
 	
+	/**
+	 * Create and add a new empty book to database.
+	 * @return instance of new book
+	 */
+	public static Book AddBook()
+	{
+		PersistentSession session;
+		Book book = null;
+		try {
+			session = GoodReadingPersistentManager.instance().getSession();
+			book = Book.createBook();
+			book.set_price(0);
+			book.set_viewStatus(true);
+			book.set_purchaseCount(0);
+			PersistentTransaction t = session.beginTransaction();
+			session.save(book);
+			t.commit();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}
+		return book;
+	}
+	
+	/**
+	 * Add a new subject(0) or domain(1) to the DB
+	 * @param msg message containing parameters
+	 */
+	public static void AddSubjectDomain(Message msg)
+	{
+		try {
+			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
+			PersistentTransaction t = session.beginTransaction();
+			if ((int)msg.getParameters().get(0) == 0) // ADD SUBJECT
+			{
+				Subject subject = Subject.createSubject();
+				subject.set_did((int) msg.getParameters().get(1));
+				subject.set_name((String) msg.getParameters().get(2));
+				session.save(subject);
+			}
+			else if ((int)msg.getParameters().get(0) == 1) // ADD DOMAIN
+			{
+				Domain domain = Domain.createDomain();
+				domain.set_name((String) msg.getParameters().get(1));
+				session.save(domain);
+			}
+			t.commit();
+			session.close();
+		} catch (PersistentException e) {
+			e.printStackTrace();
+		}	
+	}
 	
 }

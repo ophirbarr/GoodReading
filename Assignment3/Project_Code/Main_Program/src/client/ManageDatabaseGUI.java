@@ -42,6 +42,9 @@ public class ManageDatabaseGUI extends JPanel
 	private JTextField searchKeyword;
 	private JTextField searchSubject;
 	private JTextField searchDomain;
+	private JButton btnAdd;
+	private JButton btnEdit;
+	private JButton btnDelete;
 	
 	public ManageDatabaseGUI(ClientInterface clientInterface)
 	{
@@ -226,11 +229,6 @@ public class ManageDatabaseGUI extends JPanel
 		btnDisplayBook.setBounds(417, 437, 125, 23);
 		add(btnDisplayBook);
 		
-		JButton btnAdd = new JButton("ADD NEW BOOK");
-		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnAdd.setBounds(240, 437, 156, 23);
-		add(btnAdd);
-		
 		JPanel typePanel = new JPanel();
 		typePanel.setLayout(null);
 		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -323,7 +321,104 @@ public class ManageDatabaseGUI extends JPanel
 			}
 		});
 		
-		JButton btnDelete = new JButton("DELETE");
+		btnAdd = new JButton("ADD NEW BOOK");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				int listIndex = list.getSelectedIndex();
+				if (rdbtnBooks.isSelected())  // ADD BOOK
+				{
+					Message msg = new Message("AddBook", "DatabaseManagementController");
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					Book book = (Book)clientInterface.getMsgFromServer();
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new EditBookGUI(clientInterface, book);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+				}
+				else if (rdbtnSubjects.isSelected())  // ADD SUBJECT
+				{
+					Message msg = new Message("GetAllDomains", "DatabaseManagementController");
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					clientInterface.waitForServer();
+					Domain[] domains = (Domain[]) clientInterface.getMsgFromServer();
+					String[] domain_names;
+					if (domains != null)
+					{
+						domain_names = new String[domains.length + 1];
+						for (int i = 0; i < domains.length; i++)
+							domain_names[i + 1] = domains[i].get_name();
+					}
+					else 
+						domain_names = new String[1];
+					domain_names[0] = "[NONE]";
+						
+				    JComboBox combo = new JComboBox(domain_names);
+				    JTextField fieldEditName = new JTextField("New Subject");
+				    JPanel panel = new JPanel(new GridLayout(0, 1));
+				    panel.add(new JLabel("Subject name:"));
+				    panel.add(fieldEditName);
+				    panel.add(new JLabel("Choose domain for subject:"));
+				    panel.add(combo);
+				    if (JOptionPane.showConfirmDialog(null, panel, "Database Management", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) == 0)
+				    {
+				    	int index = combo.getSelectedIndex();
+				    	int did;
+				    	if (index == 0 || domains == null) did = -1;
+				    	else did = domains[index - 1].get_did();
+				    	String name = fieldEditName.getText();
+				    	
+				    	msg = new Message("AddSubjectDomain", "DatabaseManagementController");
+				    	msg.add(0);
+				    	msg.add(did);
+				    	msg.add(name);
+				    	try {
+				    		clientInterface.client.openConnection();
+				    		clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+				    }
+					
+				}
+				else if (rdbtnDomains.isSelected())  // ADD DOMAIN
+				{
+					Message msg = new Message("AddSubjectDomain", "DatabaseManagementController");
+					msg.add(1);
+					String name = (String)JOptionPane.showInputDialog(null, "Domain name:", "Database Management", JOptionPane.QUESTION_MESSAGE, null, null, "New Domain");
+			    	msg.add(name);
+			    	if (name != null && !name.equals(""))
+			    	{
+			    		try {
+				    		clientInterface.client.openConnection();
+				    		clientInterface.client.sendToServer(msg);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+			    	}		
+				}
+			}
+		});
+		btnAdd.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAdd.setBounds(240, 437, 156, 23);
+		add(btnAdd);
+		
+		btnDelete = new JButton("DELETE");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -378,7 +473,7 @@ public class ManageDatabaseGUI extends JPanel
 		btnDelete.setBounds(137, 437, 93, 23);
 		add(btnDelete);
 		
-		JButton btnEdit = new JButton("EDIT");
+		btnEdit = new JButton("EDIT");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -407,17 +502,23 @@ public class ManageDatabaseGUI extends JPanel
 					clientInterface.waitForServer();
 					Domain[] domains = (Domain[]) clientInterface.getMsgFromServer();
 					String[] domain_names;
+					int defaultCombo = 0;
 					if (domains != null)
 					{
 						domain_names = new String[domains.length + 1];
 						for (int i = 0; i < domains.length; i++)
+						{
 							domain_names[i + 1] = domains[i].get_name();
+							if (domains[i].get_did() == ((Subject) result.get(listIndex)).get_did())
+								defaultCombo = i + 1;
+						}
 					}
 					else 
 						domain_names = new String[1];
 					domain_names[0] = "[NONE]";
 						
 				    JComboBox combo = new JComboBox(domain_names);
+				    combo.setSelectedIndex(defaultCombo);
 				    JTextField fieldEditName = new JTextField(((Subject) result.get(listIndex)).get_name());
 				    JPanel panel = new JPanel(new GridLayout(0, 1));
 				    panel.add(new JLabel("Edit subject name:"));
@@ -469,9 +570,7 @@ public class ManageDatabaseGUI extends JPanel
 				    	// update result and list
 				    	((Domain) result.get(listIndex)).set_name(name);
 				    	listModel.set(listIndex, String.format("%-6d%-17s", ((Domain) result.get(listIndex)).get_did(), ((Domain) result.get(listIndex)).get_name()));
-			    	}
-
-					
+			    	}	
 				}
 			}
 		});
