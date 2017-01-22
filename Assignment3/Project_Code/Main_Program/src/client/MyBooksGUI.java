@@ -3,15 +3,9 @@ package client;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -24,7 +18,6 @@ import javax.swing.event.ListSelectionListener;
 
 import common.Message;
 import good_reading.Book;
-import good_reading.BookReview;
 import good_reading.Customer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -35,8 +28,10 @@ import java.awt.event.ActionEvent;
  * GUI class. Extends JPanel. Displays all the customer's purchased books.
  * @author yair
  */
+@SuppressWarnings("serial")
 public class MyBooksGUI extends JPanel {
 
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	
 	/**
@@ -118,21 +113,21 @@ public class MyBooksGUI extends JPanel {
 				}
 			}
 		});
-		btnViewBook.setBounds(245, 466, 118, 30);
+		btnViewBook.setBounds(568, 294, 118, 30);
 		imagePanel.add(btnViewBook);
 		
 		JLabel lblMyBooks = new JLabel("My Books");
 		lblMyBooks.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblMyBooks.setBounds(167, 40, 90, 30);
+		lblMyBooks.setBounds(245, 42, 90, 30);
 		imagePanel.add(lblMyBooks);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
-		label.setBounds(583, 355, 61, 100);
+		label.setBounds(600, 355, 61, 100);
 		imagePanel.add(label);
 		
 		JPanel typePanel = new JPanel();
-		typePanel.setBounds(593, 154, 100, 90);
+		typePanel.setBounds(578, 152, 100, 90);
 		imagePanel.add(typePanel);
 		typePanel.setLayout(null);
 		typePanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -244,7 +239,7 @@ public class MyBooksGUI extends JPanel {
 				}
 			}
 		});
-		lblDownloadBook.setBounds(583, 255, 118, 30);
+		lblDownloadBook.setBounds(568, 253, 118, 30);
 		imagePanel.add(lblDownloadBook);
 		
 	}

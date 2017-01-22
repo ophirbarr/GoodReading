@@ -8,19 +8,15 @@ import good_reading.Book;
 import good_reading.BookReview;
 
 import java.awt.Rectangle;
-import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import common.Define;
 import common.Message;
-import controllers.SystemUserController;
-
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -28,8 +24,10 @@ import java.awt.event.ActionEvent;
  * @author Yair
  * GUI class. Extends JPanel. Displays a window to submit a new book review. 
  */
+@SuppressWarnings("serial")
 public class SubmitReviewGUI extends JPanel {
 
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	private JLabel textField;
 	

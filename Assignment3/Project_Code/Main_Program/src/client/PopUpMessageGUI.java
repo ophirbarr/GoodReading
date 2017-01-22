@@ -5,13 +5,11 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-
-import com.sun.org.apache.bcel.internal.util.ClassPath;
+import javax.swing.WindowConstants;
 
 import common.Define;
 
@@ -24,8 +22,10 @@ import java.awt.Rectangle;
  * @author Yair
  * GUI class represents a pop up message. Extends JDialog.
  */
+@SuppressWarnings("serial")
 public class PopUpMessageGUI extends JDialog {
 	
+	@SuppressWarnings("unused")
 	private String Messagetext;
 	
 	/**
@@ -46,7 +46,7 @@ public class PopUpMessageGUI extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(PopUpMessageGUI.class.getResource("/design/g10628.png")));
 		this.Messagetext = messageText;
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
 		JLabel lblMessageText = new JLabel("<html><div style='text-align: center;'>"+messageText+"</div></html>");

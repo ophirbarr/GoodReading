@@ -6,32 +6,27 @@ import javax.swing.JPanel;
 
 import good_reading.Book;
 import good_reading.Customer;
-import good_reading.SystemUser;
-
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
 import common.Define;
-import common.Message;
 import controllers.CustomerController;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.JTextPane;
 /**
  * @author yair
  * GUI class. Extends JPanel. Displays a book, all its details and different actions to do with it.
  */
+@SuppressWarnings("serial")
 public class ViewBookGUI extends JPanel {
 
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	private JLabel textField;
 	
@@ -146,15 +141,20 @@ public class ViewBookGUI extends JPanel {
 		JButton btnSubmitReview = new JButton("Submit Review");
 		btnSubmitReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new SubmitReviewGUI(clientInterface, book);
-				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate(); // For Java 1.7 or above.
-				// frame.getContentPane().validate(); // For Java 1.6 or below.
-				clientInterface.mainPanel.currentPanel.repaint();
+				
+				if(clientInterface.user instanceof Customer)
+				{
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new SubmitReviewGUI(clientInterface, book);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate(); // For Java 1.7 or above.
+					clientInterface.mainPanel.currentPanel.repaint();
+				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to submit a review.", Define.Notice);
 			}
 		});
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));

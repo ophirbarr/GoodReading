@@ -2,10 +2,8 @@ package client;
 
 import javax.swing.JPanel;
 
-import common.Message;
 import good_reading.BookReview;
 import javax.swing.JLabel;
-import java.awt.SystemColor;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -14,8 +12,10 @@ import javax.swing.SwingConstants;
  * @author avihai
  *class GUI which displays selected review in detail
  */
+@SuppressWarnings("serial")
 public class viewReviewGUI extends JPanel{
 	//Class variable
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	
 	/**

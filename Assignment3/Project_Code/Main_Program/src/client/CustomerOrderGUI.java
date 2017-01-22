@@ -2,12 +2,8 @@ package client;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import common.Message;
 
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -15,6 +11,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class CustomerOrderGUI extends JPanel{
 	//Class variables
 	private ClientInterface clientInterface;
@@ -22,6 +19,7 @@ public class CustomerOrderGUI extends JPanel{
 	private ArrayList<String> books_name;
 	private ArrayList<Integer> id;
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CustomerOrderGUI(ClientInterface clientInterface){
 		super();
 		this.clientInterface = clientInterface;

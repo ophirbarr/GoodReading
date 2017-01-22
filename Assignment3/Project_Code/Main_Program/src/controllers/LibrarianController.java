@@ -1,16 +1,10 @@
 package controllers;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
 import client.ClientInterface;
-import common.Message;
-import good_reading.Book;
-import good_reading.BookReview;
 import good_reading.Customer;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
@@ -119,11 +113,8 @@ public static void EditCostumerAccount(int user_id){
 	PersistentSession session = null;
 	Customer user; 
 	ClientInterface clientInterface = null;
-	CustomerController cc = null;
 	boolean result;
 	int ChangeType;
-	//Calendar cal = Calendar.getInstance();
-	//Date date = cal.getTime();
 
 	
 	try {
@@ -131,7 +122,7 @@ public static void EditCostumerAccount(int user_id){
 		PersistentTransaction t = session.beginTransaction();
 
 		user=Customer.loadCustomerByQuery("_uid = '" + user_id +"'", null);
-		result=cc.ValidateAccount(clientInterface, user);
+		result=CustomerController.ValidateAccount(clientInterface, user);
 		
 				if(result==true)
 				{

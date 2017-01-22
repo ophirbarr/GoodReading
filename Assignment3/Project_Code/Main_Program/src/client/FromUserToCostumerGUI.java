@@ -17,7 +17,6 @@ import javax.swing.event.ListSelectionListener;
 
 import common.Message;
 import good_reading.Customer;
-import good_reading.SystemUser;
 
 public class FromUserToCostumerGUI extends JPanel {
 	

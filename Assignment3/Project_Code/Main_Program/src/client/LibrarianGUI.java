@@ -3,10 +3,7 @@ package client;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.JMenuBar;
 import javax.swing.JButton;
-import javax.swing.JToolBar;
-
 import good_reading.Worker;
 
 import java.awt.Font;

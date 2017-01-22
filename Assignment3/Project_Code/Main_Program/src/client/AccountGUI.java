@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.border.TitledBorder;
 import common.Define;
 import common.Message;
 import good_reading.Customer;
@@ -18,10 +17,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
 import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
 
+@SuppressWarnings("serial")
 public class AccountGUI extends JPanel
 {
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	
 	public AccountGUI(ClientInterface clientInterface)

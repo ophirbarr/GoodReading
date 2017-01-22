@@ -2,22 +2,15 @@ package client;
 
 import javax.swing.JPanel;
 
-import javax.swing.border.EtchedBorder;
-
-import common.Message;
 import good_reading.BookReview;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.SwingConstants;
 
 /**
  * 
@@ -26,9 +19,12 @@ import javax.swing.SwingConstants;
  */
 
 
+@SuppressWarnings("serial")
 public class BookreviewGUI extends JPanel {
 	//Class variables
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
+	@SuppressWarnings("unused")
 	private String nameBook;
 	private String typeMessage;   //type action: publish || reject depending on the button pressed
 	private JTextArea theReview;  //String of review

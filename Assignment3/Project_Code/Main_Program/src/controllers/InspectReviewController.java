@@ -1,6 +1,5 @@
 package controllers;
 
-import org.dom4j.Branch;
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
@@ -9,7 +8,6 @@ import common.Message;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.GoodReadingPersistentManager;
-import good_reading.SystemUser;
 
 public class InspectReviewController {
 	/**

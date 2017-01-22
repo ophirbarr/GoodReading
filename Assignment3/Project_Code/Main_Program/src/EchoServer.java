@@ -321,7 +321,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.ManageCatalog());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  break;
@@ -337,7 +336,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.CustomerOrders());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  break;
@@ -345,7 +343,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetCounterBooksPurchased());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;
@@ -353,7 +350,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetCounterBooksBySubject((Integer)message.getParameters().get(0)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;

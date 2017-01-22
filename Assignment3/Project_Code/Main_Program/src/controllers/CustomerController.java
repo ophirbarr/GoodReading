@@ -1,19 +1,11 @@
 package controllers;
 
-import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-
-import javax.swing.JPanel;
-
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
@@ -21,16 +13,12 @@ import org.orm.PersistentTransaction;
 import common.Define;
 import common.Message;
 import client.ClientInterface;
-import client.MainGUI;
 import client.PopUpMessageGUI;
-import client.SubmitReviewGUI;
-import client.ViewBookGUI;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
-import good_reading.SystemUser;
 /**
  * @author yair
  * Controller class. Contains all the function that can be activated by a customer.

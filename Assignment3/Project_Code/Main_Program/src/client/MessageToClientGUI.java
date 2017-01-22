@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
  * @author avihai
  *class GUI which displays message that the review published/rejected
  */
+@SuppressWarnings("serial")
 public class MessageToClientGUI extends JPanel {
 	
 	private ClientInterface clientInterface;

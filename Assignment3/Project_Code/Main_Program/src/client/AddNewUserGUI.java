@@ -2,7 +2,6 @@ package client;
 
 import javax.swing.JPanel;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,27 +10,23 @@ import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import common.Define;
 import common.Message;
-import good_reading.Book;
-import good_reading.BookReview;
 import good_reading.SystemUser;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class AddNewUserGUI extends JPanel {
 	
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	private SystemUser[] users ;   //a list of all awaiting approval users        
 	private int size;  
-	private DefaultListModel model;	
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	
