@@ -18,6 +18,11 @@ import javax.swing.event.ListSelectionListener;
 import common.Message;
 import good_reading.Customer;
 
+/**
+ * 
+ * @author Inna
+ *Class GUI which displays all the customers for the librarian that pending approval
+ */
 public class FromUserToCostumerGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
@@ -27,8 +32,8 @@ public class FromUserToCostumerGUI extends JPanel {
 	private final JScrollPane scrollPane = new JScrollPane();
 	
 	/**
-	 * constructor
-	 * @param clientInterface
+	 * constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
 	 */
 	
 	
@@ -75,15 +80,18 @@ public class FromUserToCostumerGUI extends JPanel {
 			}
 		}
 		
-		JLabel lblTheReviewsThat = new JLabel("New customers that waiting for approval:");
-		lblTheReviewsThat.setBounds(41, 95, 274, 28);
-		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
-		add(lblTheReviewsThat);
+		JLabel lblcustomers = new JLabel("New customers that waiting for approval:");
+		lblcustomers.setBounds(41, 95, 274, 28);
+		lblcustomers.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		add(lblcustomers);
 		
 		JButton btnChangeAccount = new JButton("Change Account Status");
 		btnChangeAccount.setBounds(141, 135, 155, 55);
 		add(btnChangeAccount);
 		
+		/**
+		 * ListSelectionListener to know which customer is selected
+		 */
 		
 		list.addListSelectionListener(new ListSelectionListener() {
 			
@@ -92,6 +100,9 @@ public class FromUserToCostumerGUI extends JPanel {
 				int index = list.getSelectedIndex();
 				
 				btnChangeAccount.addActionListener(new ActionListener() {
+					/**
+					 * ChangeAccount button Listener - change the user to customer
+					 */
 
 					public void actionPerformed(ActionEvent arg0) {
 						

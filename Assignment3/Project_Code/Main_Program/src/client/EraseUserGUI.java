@@ -17,7 +17,11 @@ import javax.swing.event.ListSelectionListener;
 
 import common.Message;
 import good_reading.SystemUser;
-
+/**
+ * 
+ * @author Inna
+ *Class GUI which displays all the users for the librarian
+ */
 public class EraseUserGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
@@ -27,8 +31,8 @@ public class EraseUserGUI extends JPanel {
 
 	
 	/**
-	 * constructor
-	 * @param clientInterface
+	 * constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
 	 */
 
 	public EraseUserGUI(ClientInterface clientInterface) {
@@ -71,16 +75,18 @@ public class EraseUserGUI extends JPanel {
 			}
 		}
 		
-		JLabel lblTheReviewsThat = new JLabel("All Users Of GoodReading");
-		lblTheReviewsThat.setBounds(41, 95, 281, 29);
-		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
-		add(lblTheReviewsThat);
+		JLabel lblallUsers = new JLabel("All Users Of GoodReading");
+		lblallUsers.setBounds(41, 95, 281, 29);
+		lblallUsers.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		add(lblallUsers);
 		
 		JButton btnEraseUser = new JButton("EraseUser");
 		btnEraseUser.setBounds(156, 137, 116, 45);
 		add(btnEraseUser);
 		
-		
+		/**
+		 * ListSelectionListener to know which user is selected
+		 */
 		list.addListSelectionListener(new ListSelectionListener() {
 			
 		
@@ -88,6 +94,10 @@ public class EraseUserGUI extends JPanel {
 				int index = list.getSelectedIndex();
 				
 				btnEraseUser.addActionListener(new ActionListener() {
+					
+					/**
+					 * btnEraseUser button Listener - erase the user to from the system
+					 */
 
 					public void actionPerformed(ActionEvent arg0) {
 						

@@ -20,6 +20,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Inna
+ *Class GUI which displays all the users for the librarian that pending approval
+ */
+
 @SuppressWarnings("serial")
 public class AddNewUserGUI extends JPanel {
 	
@@ -31,8 +37,8 @@ public class AddNewUserGUI extends JPanel {
 
 	
 	/**
-	 * constructor
-	 * @param clientInterface
+	 * constructor that creates the panel.
+	 * @param clientInterface The main class of the program.
 	 */
 	
 	public AddNewUserGUI(ClientInterface clientInterface) {
@@ -77,15 +83,18 @@ public class AddNewUserGUI extends JPanel {
 			listModel.addElement(String.format("%-9s%-9s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
 			}
 		}
-		JLabel lblTheReviewsThat = new JLabel("Users that waiting for approve:");
-		lblTheReviewsThat.setBounds(41, 95, 281, 29);
-		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
-		add(lblTheReviewsThat);
+		JLabel lblusers = new JLabel("Users that waiting for approve:");
+		lblusers.setBounds(41, 95, 281, 29);
+		lblusers.setFont(new Font("Tahoma", Font.ITALIC, 15));
+		add(lblusers);
 		
 		JButton btnAddUser = new JButton("Add");
 		btnAddUser.setBounds(156, 137, 83, 44);
 		add(btnAddUser);
 		
+		/**
+		 * ListSelectionListener to know which user is selected
+		 */
 		
 		list.addListSelectionListener(new ListSelectionListener() {
 			
@@ -94,6 +103,9 @@ public class AddNewUserGUI extends JPanel {
 				int index = list.getSelectedIndex();
 				
 				btnAddUser.addActionListener(new ActionListener() {
+					/**
+					 * AddUser button Listener - adds the user to the system
+					 */
 
 					public void actionPerformed(ActionEvent arg0) {
 						

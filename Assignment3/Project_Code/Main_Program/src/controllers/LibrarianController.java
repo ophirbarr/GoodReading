@@ -13,18 +13,30 @@ import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
 import good_reading.Worker;
 
+/**
+ * 
+ * @author Inna
+ *Controller class, containing all the functions regarding a librarian
+ */
+
 public class LibrarianController {
 	
+	
+	/**
+	 * Return a list of users or customers by viewStatus
+	 * @param viewStatus viewStatus to know which list to return 
+	 * @return list of users or customers by viewStatus
+	 */
 	
 public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
 		PersistentSession session = null;
 		SystemUser[] users = null;
 		Customer[] customers=null;
+		SystemUser[] usersOnly =null;
+		int j=0;
 	
 
-		
-		
 		if(viewStatus==1)
 		{
 				try {
@@ -69,20 +81,34 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 			try {
 				session = GoodReadingPersistentManager.instance().getSession();
 				users = SystemUser.listSystemUserByQuery(null, "_uid");
+				usersOnly=new SystemUser[users.length];
+				
+				for(int i=0; i<users.length;i++)
+				{
+					if(!((users[i])instanceof Worker))
+					{
+						usersOnly[j]=users[i];
+						j++;		
+					}	
+				}
 				session.close();
 				
 			} catch (PersistentException e) {
 				e.printStackTrace();
 				users = null;
 			}
-			return users;
+			return usersOnly;
 		}	
 		
 		return null;
 					
 	}
 	
-	
+	/**
+	 * Function that gives the user permission,
+	 * the librarian adds the user to the GoodReading by changing his _userstatus to disconnected
+	 * @param user_id to know which user is selected
+	 */
 
 		
 public static void AddNewUser(int user_id){
@@ -106,6 +132,12 @@ public static void AddNewUser(int user_id){
 		}
 }
 	
+/**
+ * Function that confirms the user to become a customer,
+ * The librarian gives confirmation to the customer by changing its _accountStatus to ACCOUNT_FULL_PERMISSION
+ * @param user_id to know which user is selected
+ */
+
 public static void FromUserToCostumer(int user_id){
 	
 	PersistentSession session = null;
@@ -128,6 +160,13 @@ public static void FromUserToCostumer(int user_id){
 		}
 	
 }
+
+/**
+ *Function that update user account
+ *The function checks the validation account of the customer,
+ *If the account is valid, then the function changes hid _accountType according to what requested(monthly or yearly) and update the _endDate. 
+ * @param user_id to know which user is selected
+ */
 
 public static void EditCostumerAccount(int user_id){
 	
@@ -189,6 +228,11 @@ public static void EditCostumerAccount(int user_id){
 		}
 		
 }
+
+/**
+ * Function deletes the user from the system
+ * @param user_id to know which user is selected
+ */
 
 public static void EraseUser(int user_id){
 	
