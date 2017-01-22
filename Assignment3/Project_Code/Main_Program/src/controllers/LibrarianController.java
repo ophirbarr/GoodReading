@@ -14,8 +14,10 @@ import good_reading.SystemUser;
 
 public class LibrarianController {
 	
-	private static Calendar cal = Calendar.getInstance();
-	private static Date date = cal.getTime();
+	//private static Calendar cal = Calendar.getInstance();
+	//private static Date date = cal.getTime();
+	//private static Date newdate;
+
 	
 public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
@@ -134,6 +136,11 @@ public static void EditCostumerAccount(int user_id){
 	ClientInterface clientInterface = null;
 	boolean result;
 	int ChangeType;
+	Calendar cal = Calendar.getInstance();
+	Date date = cal.getTime();
+	cal.setTime(date);
+	cal.add(Calendar.YEAR, 1);
+	date=cal.getTime();
 	
 
 	try {
@@ -154,11 +161,7 @@ public static void EditCostumerAccount(int user_id){
 					t.commit();
 					session.close();
 					
-					/*if(ChangeType==1)
-					{
-						user.loadCustomerByQuery("SELECT DATE_ADD(date, INTERVAL 1 MONTH)", null);
-						
-					}*/
+										
 
 				}
 				
