@@ -313,6 +313,9 @@ public class EchoServer extends AbstractServer
 		  case "EditCostumerAccount": 
 			  controllers.LibrarianController.EditCostumerAccount((int)message.getParameters().get(0));
 			  break;
+		  case "EraseUser": 
+			  controllers.LibrarianController.EraseUser((int)message.getParameters().get(0));
+			  break;
 			  
 		  }
 	  case "ManagerController":
