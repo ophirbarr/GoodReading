@@ -17,6 +17,7 @@ import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
 
 public class PermissionManagementGUI extends JPanel{
 	
@@ -32,32 +33,16 @@ public class PermissionManagementGUI extends JPanel{
 		private JTextField firstName;
 		private JTextField lastName;
 		private JTextField userName;
-		private JTextField password;
 		private JTextField userStatus;
-		private JTextField accountType;
-		private JTextField endDate;
-		private JTextField accountStatus;
-		private JTextField wfcat;
-		private JTextField role;
-		private JTextField email;
-		private JTextField department;
-		private JTextField discriminator;
 		private JLabel lblFollowingAreUser;
 		private JLabel lblUid_1;
 		private JLabel lblSsn;
 		private JLabel lblFirstName;
 		private JLabel lblLastName;
 		private JLabel lblUserName;
-		private JLabel lblPassword;
 		private JLabel lblUserStatus;
-		private JLabel lblRole;
-		private JLabel lblEmail;
-		private JLabel lblAccountType;
-		private JLabel lblEndDateAccunt;
-		private JLabel lblAccountStatus;
-		private JLabel lblWaitingForChange;
-		private JLabel lblDepartment;
-		private JLabel lblDisctiminator;
+		private JLabel lblWhichStatusYou;
+		private JComboBox comboBox;
 		
 		
 		public PermissionManagementGUI(ClientInterface clientInterface){
@@ -66,14 +51,11 @@ public class PermissionManagementGUI extends JPanel{
 			setLayout(null);
 			model = new DefaultListModel();
 			
-			GetAllUsers();
-			systemUsers = (SystemUser[]) clientInterface.getMsgFromServer();
-			for(int i=0;i<systemUsers.length;i++)  //additional the users to Jlist
-				model.addElement(String.format("%-15s%-14s%-14s", systemUsers[i].get_ssn(),systemUsers[i].get_firstName(),systemUsers[i].get_lastName()));
+			
 			
 			
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(185, 16, 337, 211);
+			scrollPane.setBounds(202, 73, 337, 154);
 			add(scrollPane);
 			
 			
@@ -84,8 +66,9 @@ public class PermissionManagementGUI extends JPanel{
 			
 			lblSelectAUser = new JLabel("Select a user to edit:");
 			lblSelectAUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblSelectAUser.setBounds(10, 11, 337, 23);
+			lblSelectAUser.setBounds(10, 68, 171, 23);
 			add(lblSelectAUser);
+			lblSelectAUser.setVisible(false);
 			
 			
 			lblFollowingAreUser = new JLabel("Following are User Details:");
@@ -120,69 +103,15 @@ public class PermissionManagementGUI extends JPanel{
 			
 			lblUserName = new JLabel("User Name:");
 			lblUserName.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblUserName.setBounds(11, 440, 89, 23);
+			lblUserName.setBounds(236, 285, 89, 23);
 			add(lblUserName);
 			lblUserName.setVisible(false);
 			
-			lblPassword = new JLabel("Password:");
-			lblPassword.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblPassword.setBounds(211, 444, 97, 14);
-			add(lblPassword);
-			lblPassword.setVisible(false);
-			
 			lblUserStatus = new JLabel("User Status:");
 			lblUserStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblUserStatus.setBounds(211, 285, 107, 14);
+			lblUserStatus.setBounds(235, 320, 107, 14);
 			add(lblUserStatus);
 			lblUserStatus.setVisible(false);
-			
-			lblRole = new JLabel("Role:");
-			lblRole.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblRole.setBounds(472, 395, 46, 14);
-			add(lblRole);
-			lblRole.setVisible(false);
-			
-			lblEmail = new JLabel("Email:");
-			lblEmail.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblEmail.setBounds(472, 287, 67, 14);
-			add(lblEmail);
-			lblEmail.setVisible(false);
-			
-			lblAccountType = new JLabel("Account Type:");
-			lblAccountType.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblAccountType.setBounds(212, 313, 128, 25);
-			add(lblAccountType);
-			lblAccountType.setVisible(false);
-			
-			lblEndDateAccunt = new JLabel("End Date Accunt:");
-			lblEndDateAccunt.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblEndDateAccunt.setBounds(211, 360, 151, 14);
-			add(lblEndDateAccunt);
-			lblEndDateAccunt.setVisible(false);
-			
-			lblAccountStatus = new JLabel("Account Status:");
-			lblAccountStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblAccountStatus.setBounds(211, 409, 128, 14);
-			add(lblAccountStatus);
-			lblAccountStatus.setVisible(false);
-			
-			lblWaitingForChange = new JLabel("Waiting For Change Account Type:");
-			lblWaitingForChange.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblWaitingForChange.setBounds(420, 437, 268, 25);
-			add(lblWaitingForChange);
-			lblWaitingForChange.setVisible(false);
-			
-			lblDepartment = new JLabel("Department:");
-			lblDepartment.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblDepartment.setBounds(472, 320, 120, 23);
-			add(lblDepartment);
-			lblDepartment.setVisible(false);
-			
-			lblDisctiminator = new JLabel("Discriminator:");
-			lblDisctiminator.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblDisctiminator.setBounds(472, 359, 120, 14);
-			add(lblDisctiminator);
-			lblDisctiminator.setVisible(false);
 			
 			uid = new JTextField();
 			uid.setEditable(false);
@@ -213,108 +142,38 @@ public class PermissionManagementGUI extends JPanel{
 			lastName.setVisible(false);
 			
 			userName = new JTextField();
-			userName.setBounds(107, 443, 95, 20);
+			userName.setEditable(false);
+			userName.setBounds(332, 288, 95, 20);
 			add(userName);
 			userName.setColumns(10);
 			userName.setVisible(false);
 			
-			password = new JTextField();
-			password.setBounds(303, 443, 107, 20);
-			add(password);
-			password.setColumns(10);
-			password.setVisible(false);
-			
 			userStatus = new JTextField();
-			userStatus.setBounds(313, 285, 107, 23);
+			userStatus.setEditable(false);
+			userStatus.setBounds(337, 320, 107, 23);
 			add(userStatus);
 			userStatus.setColumns(10);
 			userStatus.setVisible(false);
-			
-			accountType = new JTextField();
-			accountType.setBounds(323, 316, 115, 23);
-			add(accountType);
-			accountType.setColumns(10);
-			accountType.setVisible(false);
-			
-			endDate = new JTextField();
-			endDate.setBounds(349, 356, 92, 26);
-			add(endDate);
-			endDate.setColumns(10);
-			endDate.setVisible(false);
-			
-			accountStatus = new JTextField();
-			accountStatus.setBounds(343, 406, 97, 23);
-			add(accountStatus);
-			accountStatus.setColumns(10);
-			accountStatus.setVisible(false);
-			
-			wfcat = new JTextField();
-			wfcat.setBounds(676, 442, 46, 23);
-			add(wfcat);
-			wfcat.setColumns(10);
-			wfcat.setVisible(false);
-			
-			role = new JTextField();
-			role.setBounds(528, 393, 128, 23);
-			add(role);
-			role.setColumns(10);
-			role.setVisible(false);
-			
-			email = new JTextField();
-			email.setBounds(534, 285, 128, 23);
-			add(email);
-			email.setColumns(10);
-			email.setVisible(false);
-			
-			department = new JTextField();
-			department.setBounds(577, 318, 107, 26);
-			add(department);
-			department.setColumns(10);
-			department.setVisible(false);
-			
-			discriminator = new JTextField();
-			discriminator.setBounds(595, 359, 115, 23);
-			add(discriminator);
-			discriminator.setColumns(10);
-			discriminator.setVisible(false);
 			
 			list = new JList();
 			list.addListSelectionListener(new ListSelectionListener() {
 				public void valueChanged(ListSelectionEvent e) {
 					int index = list.getSelectedIndex();
+					comboBox.setVisible(true);
+					lblWhichStatusYou.setVisible(true);
 					lblFollowingAreUser.setVisible(true);
 					lblUid_1.setVisible(true);
 					lblSsn.setVisible(true);
 					lblFirstName.setVisible(true);
 					lblLastName.setVisible(true);
 					lblUserName.setVisible(true);
-					lblPassword.setVisible(true);
 					lblUserStatus.setVisible(true);
-					lblRole.setVisible(true);
-					lblEmail.setVisible(true);
-					lblAccountType.setVisible(true);
-					lblEndDateAccunt.setVisible(true);
-					lblAccountStatus.setVisible(true);
-					lblWaitingForChange.setVisible(true);
-					lblDepartment.setVisible(true);
-					lblDisctiminator.setVisible(true);
 					uid.setVisible(true);
 					ssn.setVisible(true);
 					firstName.setVisible(true);
 					lastName.setVisible(true);
-					userName.setVisible(true);
-					password.setVisible(true);
+					userName.setVisible(true);	
 					userStatus.setVisible(true);
-					accountType.setVisible(true);
-					endDate.setVisible(true);
-					accountStatus.setVisible(true);
-					wfcat.setVisible(true);
-					role.setVisible(true);
-					email.setVisible(true);
-					department.setVisible(true);
-					discriminator.setVisible(true);
-					
-					
 					String temp =""+systemUsers[index].get_uid();
 					uid.setText(temp);
 					temp=""+systemUsers[index].get_ssn();
@@ -322,17 +181,56 @@ public class PermissionManagementGUI extends JPanel{
 					firstName.setText(systemUsers[index].get_firstName());
 					lastName.setText(systemUsers[index].get_lastName());
 					userName.setText(systemUsers[index].get_userName());
-					temp=""+systemUsers[index].get_password();
-					password.setText(temp);
 					temp=""+systemUsers[index].get_userStatus();
 					userStatus.setText(temp);
-				//	accountType.setText(systemUsers[index].get);
+					if(systemUsers[index].get_userStatus()==0||systemUsers[index].get_userStatus()==1)
+						comboBox.setSelectedItem("Blocked");
+					else if(systemUsers[index].get_userStatus()==3)comboBox.setSelectedItem("Disconnected");
 					
 				}
 			});
 			list.setFont(new Font("Monospaced", Font.BOLD | Font.ITALIC, 13));
 			scrollPane.setViewportView(list);
-			list.setModel(model);
+			scrollPane.setVisible(false);
+			
+			
+			JLabel lblWhatWouldYou = new JLabel("What would you like to edit?");
+			lblWhatWouldYou.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			lblWhatWouldYou.setBounds(10, 23, 195, 31);
+			add(lblWhatWouldYou);
+			
+			JButton btnAccount = new JButton("Account");
+			btnAccount.setBounds(323, 29, 89, 23);
+			add(btnAccount);
+			
+			JButton btnUsers = new JButton("Users");
+			btnUsers.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				
+					lblSelectAUser.setVisible(true);
+					scrollPane.setVisible(true);
+					GetAllUsers();
+					systemUsers = (SystemUser[]) clientInterface.getMsgFromServer();
+					for(int i=0;i<systemUsers.length;i++)  //additional the users to Jlist
+						model.addElement(String.format("%-15s%-14s%-14s", systemUsers[i].get_ssn(),systemUsers[i].get_firstName(),systemUsers[i].get_lastName()));
+					list.setModel(model);
+					
+				}
+			});
+			btnUsers.setBounds(211, 29, 89, 23);
+			add(btnUsers);
+			
+			lblWhichStatusYou = new JLabel("Which status you want to modify?");
+			lblWhichStatusYou.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			lblWhichStatusYou.setBounds(236, 370, 247, 31);
+			add(lblWhichStatusYou);
+			lblWhichStatusYou.setVisible(false);
+			
+			comboBox = new JComboBox();
+			comboBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			comboBox.setBounds(457, 369, 140, 36);
+			add(comboBox);
+			comboBox.setVisible(false);
 			
 		}
 		
