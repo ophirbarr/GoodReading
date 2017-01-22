@@ -11,19 +11,18 @@ import client.ClientInterface;
 import good_reading.Customer;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
+import good_reading.Worker;
 
 public class LibrarianController {
 	
-	private static Calendar cal = Calendar.getInstance();
-	private static Date date = null;
-	//private static Date newdate;
-
 	
 public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 	
 		PersistentSession session = null;
 		SystemUser[] users = null;
 		Customer[] customers=null;
+	
+
 		
 		
 		if(viewStatus==1)
@@ -71,6 +70,7 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 				session = GoodReadingPersistentManager.instance().getSession();
 				users = SystemUser.listSystemUserByQuery(null, "_uid");
 				session.close();
+				
 			} catch (PersistentException e) {
 				e.printStackTrace();
 				users = null;
@@ -136,6 +136,9 @@ public static void EditCostumerAccount(int user_id){
 	ClientInterface clientInterface = null;
 	boolean result;
 	int ChangeType;
+	Calendar cal = null;
+	Date dateM = null;
+	Date dateY = null;
 	
 	try {
 		session = GoodReadingPersistentManager.instance().getSession();
@@ -149,34 +152,36 @@ public static void EditCostumerAccount(int user_id){
 				{
 					ChangeType=user.get_waitingForChangeType();
 					
-					if(ChangeType==common.Define.ACCOUNT_MONTHLY)
-					{
-						date = cal.getTime();
-						cal.setTime(date);
-						cal.add(Calendar.MONTH, 1);
-						date=cal.getTime();	
-						user.set_accountType(ChangeType);
-						user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
-						user.set_endDate(date);
-						session.update(user);
-						t.commit();
-						session.close();
-					}
+						if(ChangeType==common.Define.ACCOUNT_MONTHLY)
+						{
+							cal = Calendar.getInstance();
+							dateM = cal.getTime();
+							cal.setTime(dateM);
+							cal.add(Calendar.MONTH, 1);
+							dateM=cal.getTime();
+							user.set_accountType(ChangeType);
+							user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+							user.set_endDate(dateM);
+							
+						}
+						
+						if(ChangeType==common.Define.ACCOUNT_YEARLY)
+						{
+							cal = Calendar.getInstance();
+							dateY = cal.getTime();
+							cal.setTime(dateY);
+							cal.add(Calendar.YEAR, 1);
+							dateY=cal.getTime();	
+							user.set_accountType(ChangeType);
+							user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+							user.set_endDate(dateY);
+							
+						}
 					
-					if(ChangeType==common.Define.ACCOUNT_YEARLY)
-					{
-						date = cal.getTime();
-						cal.setTime(date);
-						cal.add(Calendar.YEAR, 1);
-						date=cal.getTime();	
-						user.set_accountType(ChangeType);
-						user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
-						user.set_endDate(date);
 						session.update(user);
 						t.commit();
 						session.close();
-					}						
-
+			
 				}
 				
 		} catch (PersistentException e) {
