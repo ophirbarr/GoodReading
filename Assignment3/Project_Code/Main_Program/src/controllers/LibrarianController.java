@@ -14,8 +14,8 @@ import good_reading.SystemUser;
 
 public class LibrarianController {
 	
-	//private static Calendar cal = Calendar.getInstance();
-	//private static Date date = cal.getTime();
+	private static Calendar cal = Calendar.getInstance();
+	private static Date date = null;
 	//private static Date newdate;
 
 	
@@ -136,13 +136,7 @@ public static void EditCostumerAccount(int user_id){
 	ClientInterface clientInterface = null;
 	boolean result;
 	int ChangeType;
-	Calendar cal = Calendar.getInstance();
-	Date date = cal.getTime();
-	cal.setTime(date);
-	cal.add(Calendar.YEAR, 1);
-	date=cal.getTime();
 	
-
 	try {
 		session = GoodReadingPersistentManager.instance().getSession();
 		PersistentTransaction t = session.beginTransaction();
@@ -154,14 +148,34 @@ public static void EditCostumerAccount(int user_id){
 				if(result==true)
 				{
 					ChangeType=user.get_waitingForChangeType();
-					user.set_accountType(ChangeType);
-					user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
-					user.set_endDate(date);
-					session.update(user);
-					t.commit();
-					session.close();
 					
-										
+					if(ChangeType==common.Define.ACCOUNT_MONTHLY)
+					{
+						date = cal.getTime();
+						cal.setTime(date);
+						cal.add(Calendar.MONTH, 1);
+						date=cal.getTime();	
+						user.set_accountType(ChangeType);
+						user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+						user.set_endDate(date);
+						session.update(user);
+						t.commit();
+						session.close();
+					}
+					
+					if(ChangeType==common.Define.ACCOUNT_YEARLY)
+					{
+						date = cal.getTime();
+						cal.setTime(date);
+						cal.add(Calendar.YEAR, 2);
+						date=cal.getTime();	
+						user.set_accountType(ChangeType);
+						user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
+						user.set_endDate(date);
+						session.update(user);
+						t.commit();
+						session.close();
+					}						
 
 				}
 				
