@@ -99,21 +99,6 @@ public class MainGUI extends JPanel {
 			}
 		});
 		
-<<<<<<< HEAD
-		JButton btnRequestReport = new JButton("Request Report");
-		btnRequestReport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				remove(currentPanel);
-				currentPanel = new RequestReportGUI(clientInterface);
-				currentPanel.setBounds(176, 1, 724, 475);
-				currentPanel.setBackground(new Color(250, 243, 232));
-				add(currentPanel);
-				currentPanel.setLayout(null);
-				currentPanel.revalidate();
-				currentPanel.repaint();
-			}
-		});
-		menu.add(btnRequestReport, "cell 0 1,alignx center,aligny center");
 		
 		JButton btnPermissionManagement = new JButton("Permission Management");
 		btnPermissionManagement.addActionListener(new ActionListener() {
@@ -129,9 +114,7 @@ public class MainGUI extends JPanel {
 				
 			}
 		});
-		menu.add(btnPermissionManagement, "cell 0 2,alignx center,aligny center");
-=======
->>>>>>> origin/master
+
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
 		JButton MyBooks = new JButton("My Books");
@@ -270,14 +253,15 @@ public class MainGUI extends JPanel {
 			menu.add(btnInspectReview, "cell 0 9,alignx center");
 			menu.add(btnManageDatabase, "cell 0 10,alignx center,aligny top");
 		
-			if(((Worker)clientInterface.user).get_role().equals("Librarian") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
+			if(((Worker)clientInterface.user).get_role().equals("Librarian"))
 			{
 				menu.add(btnLibrarianActions, "cell 0 11,alignx center,aligny center");
 			}
 			
-			if(((Worker)clientInterface.user).get_role().equals("Manager") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
+			if(((Worker)clientInterface.user).get_role().equals("Manager"))
 			{
 				menu.add(btnRequestReport, "cell 0 12,alignx center,aligny center");
+				menu.add(btnPermissionManagement, "cell 0 13,alignx center,aligny center");
 			}
 		}
 		
