@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
@@ -131,10 +134,6 @@ public static void EditCostumerAccount(int user_id){
 	ClientInterface clientInterface = null;
 	boolean result;
 	int ChangeType;
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 	
 
 	try {
