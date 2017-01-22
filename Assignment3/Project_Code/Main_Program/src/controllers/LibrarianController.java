@@ -153,6 +153,12 @@ public static void EditCostumerAccount(int user_id){
 					session.update(user);
 					t.commit();
 					session.close();
+					
+					/*if(ChangeType==1)
+					{
+						user.loadCustomerByQuery("SELECT DATE_ADD(date, INTERVAL 1 MONTH)", null);
+						
+					}*/
 
 				}
 				
