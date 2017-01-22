@@ -17,6 +17,7 @@ import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 /**
  * @author Yair
  * The main GUI class of the program after signing up. Extends JPanel.
@@ -184,7 +185,6 @@ public class MainGUI extends JPanel {
 		
 		JLabel StaffOnly = new JLabel("Staff Only:");
 		StaffOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
-		menu.add(StaffOnly, "cell 0 8");
 		
 		JButton btnLibrarianActions = new JButton("Librarian Actions");
 		btnLibrarianActions.addActionListener(new ActionListener() {
@@ -232,10 +232,20 @@ public class MainGUI extends JPanel {
 		
 		if(clientInterface.user instanceof Worker)
 		{
-			menu.add(btnInspectReview, "cell 0 11,alignx center");
-			menu.add(btnLibrarianActions, "cell 0 9,alignx center,aligny center");
+			menu.add(StaffOnly, "cell 0 8");
+	
+			menu.add(btnInspectReview, "cell 0 9,alignx center");
 			menu.add(btnManageDatabase, "cell 0 10,alignx center,aligny top");
-			menu.add(btnRequestReport, "cell 0 12,alignx center,aligny center");
+		
+			if(((Worker)clientInterface.user).get_role().equals("Librarian") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
+			{
+				menu.add(btnLibrarianActions, "cell 0 11,alignx center,aligny center");
+			}
+			
+			if(((Worker)clientInterface.user).get_role().equals("Manager") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
+			{
+				menu.add(btnRequestReport, "cell 0 12,alignx center,aligny center");
+			}
 		}
 		
 		menu.add(btnLogout, "cell 0 15,alignx center,aligny top");
