@@ -363,6 +363,10 @@ public class EchoServer extends AbstractServer
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			  break;
+		  case "UpDateStatusUser":
+			  controllers.ManagerController.UpDateStatusUser((int)message.getParameters().get(0), (int)message.getParameters().get(1));
+			  break;
 		  }
 		  break;
   

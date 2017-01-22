@@ -83,7 +83,7 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Absolute Rating";
-					list.removeAll();
+					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)
@@ -103,7 +103,7 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Rating Relations";
-					list.removeAll();
+					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)
@@ -131,24 +131,31 @@ public class RequestReportGUI extends JPanel{
 					int index = list.getSelectedIndex();
 					int counter;
 					
-					if(action.equals("Statistical information about book" ))new HistogramGUI(book[index]);
+					if(action.equals("Statistical information about book" ))
+						new HistogramGUI(book[index]);
 					else if(action.equals("Absolute Rating")){
 						MessgaeToServer("GetCounterBooksPurchased",0,"ManagerController");
+						double popularity;
 						counter = (int) clientInterface.getMsgFromServer();
+						if(counter == 0) popularity =0;
+						else	popularity = (book[index].get_purchaseCount()/(double)counter)*100;
 						
-						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",(book[index].get_purchaseCount()/(double)counter)*100)+"%",Define.Notice);
+						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",popularity)+"%",Define.Notice);
 					}
 					else {    //action == Rating Relations
 						MessgaeToServer("GetCounterBooksBySubject",book[index].get_bid(),"ManagerController");
+						double popularity;
 						counter = (int) clientInterface.getMsgFromServer();
-						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all the books at his subject is: "+String.format("%.1f",(book[index].get_purchaseCount()/(double)counter)*100)+"%",Define.Notice);
+						if(counter == 0)popularity = 0;
+						else popularity = (book[index].get_purchaseCount()/(double)counter)*100;
+						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all the books at his subject is: "+String.format("%.1f",popularity)+"%",Define.Notice);
 					}
 				}
 			});
 			list.setFont(new Font("Monospaced", Font.BOLD, 14));
 			scrollPane.setViewportView(list);
 			
-			JLabel lblTittleAuthor = new JLabel("ID:                          Tittle:  ");
+			JLabel lblTittleAuthor = new JLabel("ID:                   Tittle:  ");
 			scrollPane.setColumnHeaderView(lblTittleAuthor);
 			
 			lblPleaseSelectBook = new JLabel("Please Select book about him you want get statistical information:");

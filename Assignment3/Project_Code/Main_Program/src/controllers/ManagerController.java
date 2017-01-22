@@ -6,6 +6,7 @@ import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
+import common.Define;
 import common.Message;
 import good_reading.Book;
 import good_reading.Book_Subject;
@@ -163,4 +164,24 @@ public static SystemUser[] GetAllUsers(){
 	return systemUsers;
 }
 
+
+public static void UpDateStatusUser(int index,int uid){
+	
+	PersistentSession session = null;
+	
+	try {
+		session = GoodReadingPersistentManager.instance().getSession();
+		PersistentTransaction t = session.beginTransaction();
+		SystemUser systemUser = SystemUser.getSystemUserByORMID(uid);
+		if(index == 0)systemUser.set_userStatus(Define.USER_DISCONNECTED);
+		else if(index == 1)systemUser.set_userStatus(Define.USER_BLOCKED);
+		t.commit();
+		session.close();
+	} catch (PersistentException e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+}
 }

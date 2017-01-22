@@ -11,22 +11,33 @@ import org.jfree.chart.ChartFrame;
 
 
 
-public class HistogramGUI extends JPanel{
+public class HistogramGUI {
 	
 	private Book book;
+	private int purchaseDatesize;
+	private int searchesDatesize;
+	private String[] purchaseDate;
+	private String[] searchesDate;
 	
 	public HistogramGUI(Book book){
 		
-		super();
 		this.book = book;
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
-		String[] purchaseDate = book.get_purchaseLog().split(" ");
-		String[] searchesDate = book.get_searchLog().split(" ");
+		if(book.get_purchaseLog() == null) purchaseDatesize = 0;
+		else{ 
+			purchaseDate = book.get_purchaseLog().split(" "); 
+			purchaseDatesize = purchaseDate.length;}
+		
+		if(book.get_searchLog() == null) searchesDatesize = 0;
+		else {
+			searchesDate = book.get_searchLog().split(" ");
+			searchesDatesize = searchesDate.length;
+		}
 		int countPurchase = 0;
 		int countSearches = 0;
 		
-		for(int i=0;i<searchesDate.length;i++ )
+		for(int i=0;i<searchesDatesize;i++ )
 		{
 			if(i==searchesDate.length-1){   //last element
 				countSearches++;
@@ -45,7 +56,7 @@ public class HistogramGUI extends JPanel{
 		}
 			
 		
-		for(int i=0;i<purchaseDate.length;i++ )
+		for(int i=0;i<purchaseDatesize;i++ )
 		{
 			if(i==purchaseDate.length-1){   //last element
 				countPurchase++;

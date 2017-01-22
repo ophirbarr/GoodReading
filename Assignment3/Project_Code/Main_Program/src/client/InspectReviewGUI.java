@@ -82,7 +82,7 @@ public class InspectReviewGUI extends JPanel  {
 		
 		scrollPane.setViewportView(list);
 		
-		JLabel lblWrittenForBook = new JLabel("Written for Book:                                                                     The Review:");
+		JLabel lblWrittenForBook = new JLabel("Written for Book:                                                             The Review:");
 		scrollPane.setColumnHeaderView(lblWrittenForBook);
 		
 		JLabel lblTheReviewsThat = new JLabel("The Reviews that waiting for approve:");
