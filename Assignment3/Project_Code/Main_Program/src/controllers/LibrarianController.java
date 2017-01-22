@@ -167,7 +167,7 @@ public static void EditCostumerAccount(int user_id){
 					{
 						date = cal.getTime();
 						cal.setTime(date);
-						cal.add(Calendar.YEAR, 2);
+						cal.add(Calendar.YEAR, 1);
 						date=cal.getTime();	
 						user.set_accountType(ChangeType);
 						user.set_waitingForChangeType(common.Define.DO_NOT_CHANGE);
