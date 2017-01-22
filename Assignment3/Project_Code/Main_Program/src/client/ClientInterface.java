@@ -15,24 +15,17 @@ import javax.swing.UIManager;
 
 import common.Message;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.Rectangle;
 /**
  * The main program class. Contains the main function and creates the first log-in frame. Extends ClientConsole.
@@ -40,6 +33,7 @@ import java.awt.Rectangle;
 public class ClientInterface extends ClientConsole 
 {
 
+	@SuppressWarnings("unused")
 	private static int port;
 	private static String host = "";
 	protected static ClientInterface clientInterface;

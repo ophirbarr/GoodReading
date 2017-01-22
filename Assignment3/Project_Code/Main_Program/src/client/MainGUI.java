@@ -4,37 +4,28 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
-import javax.swing.UIManager;
-
 import common.Define;
 import common.Message;
-import controllers.BookController;
-import controllers.CustomerController;
-import good_reading.Book;
 import good_reading.Customer;
+import good_reading.Worker;
 
 import java.awt.Font;
 import net.miginfocom.swing.MigLayout;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 /**
  * @author Yair
  * The main GUI class of the program after signing up. Extends JPanel.
  */
+@SuppressWarnings("serial")
 public class MainGUI extends JPanel {
 	
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	public JPanel currentPanel;
 
@@ -108,6 +99,7 @@ public class MainGUI extends JPanel {
 			}
 		});
 		
+<<<<<<< HEAD
 		JButton btnRequestReport = new JButton("Request Report");
 		btnRequestReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,13 +130,37 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnPermissionManagement, "cell 0 2,alignx center,aligny center");
+=======
+>>>>>>> origin/master
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
 		JButton MyBooks = new JButton("My Books");
 		MyBooks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				if(clientInterface.user instanceof Customer)
+				{
+					remove(currentPanel);
+					currentPanel = new MyBooksGUI(clientInterface, (Customer)clientInterface.user);
+					currentPanel.setBounds(176, 1, 724, 475);
+					currentPanel.setBackground(new Color(250, 243, 232));
+					add(currentPanel);
+					currentPanel.setLayout(null);
+					currentPanel.revalidate();
+					currentPanel.repaint();
+				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "You may open an account to have your own book shelve.", Define.Like);
+			}
+		});
+		menu.add(MyBooks, "flowx,cell 0 3,alignx center,aligny center");
+		
+		JButton btnManageDatabase = new JButton("Manage Database");
+		btnManageDatabase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				remove(currentPanel);
-				currentPanel = new MyBooksGUI(clientInterface, (Customer)clientInterface.user);
+				currentPanel = new ManageDatabaseGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
@@ -154,16 +170,23 @@ public class MainGUI extends JPanel {
 			}
 		});
 		
-		if(clientInterface.user instanceof Customer)
-				menu.add(MyBooks, "cell 0 3,alignx center,aligny center");
-		
-		menu.add(btnSearchBook, "cell 0 4,alignx center,aligny top");
-		
-		//TODO erase button
-		JButton btnNewButton_1 = new JButton("Test View Book");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				BookController.ViewBook(clientInterface, new Book(325, "Harry Potter", "English", "Once upon a time...", "chapter 1 \t\t\t page 4\nchapter 2 \t\t\t page 32",true, 29, "", "", 0, ""));
+		JButton btnOpenAccount = new JButton("Open Account");
+		btnOpenAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!(clientInterface.user instanceof Customer))
+				{
+					Message msg = new Message("OpenAccount", "SystemUserController");
+					msg.add(clientInterface.user);
+					
+					try {
+						clientInterface.client.openConnection();
+						clientInterface.client.sendToServer(msg);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "You already have an account.", Define.Notice);
 			}
 		});
 		
@@ -171,8 +194,37 @@ public class MainGUI extends JPanel {
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				if(clientInterface.user instanceof Customer)
+				{
+					remove(currentPanel);
+					currentPanel = new AccountGUI(clientInterface);
+					currentPanel.setBounds(176, 1, 724, 475);
+					currentPanel.setBackground(new Color(250, 243, 232));
+					add(currentPanel);
+					currentPanel.setLayout(null);
+					currentPanel.revalidate();
+					currentPanel.repaint();
+				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "You are welcome to open an account. just click on 'Open Account'.", Define.Like);
+			}
+		});
+		
+		menu.add(btnMyAccount, "cell 0 4,alignx center,aligny center");
+		menu.add(btnOpenAccount, "cell 0 5,alignx center");
+		
+		
+
+		
+		JLabel StaffOnly = new JLabel("Staff Only:");
+		StaffOnly.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		JButton btnLibrarianActions = new JButton("Librarian Actions");
+		btnLibrarianActions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
 				remove(currentPanel);
-				currentPanel = new AccountGUI(clientInterface);
+				currentPanel = new LibrarianGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
@@ -181,8 +233,6 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnMyAccount, "cell 0 5,alignx center,aligny center");
-		menu.add(btnNewButton_1, "cell 0 6,alignx center,aligny top");
 		
 		JButton btnInspectReview = new JButton("Inspect Review");
 		btnInspectReview.addActionListener(new ActionListener() {
@@ -198,20 +248,12 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnInspectReview, "cell 0 7,alignx center");
-		
-		
 
-		
-		JLabel lblOnlyShowsFor = new JLabel("temp -- will only show for librarian");
-		menu.add(lblOnlyShowsFor, "cell 0 11");
-		
-		JButton btnNewButton = new JButton("Librarian Actions");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
+		JButton btnRequestReport = new JButton("Request Report");
+		btnRequestReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				remove(currentPanel);
-				currentPanel = new LibrarianGUI(clientInterface);
+				currentPanel = new RequestReportGUI(clientInterface);
 				currentPanel.setBounds(176, 1, 724, 475);
 				currentPanel.setBackground(new Color(250, 243, 232));
 				add(currentPanel);
@@ -220,23 +262,25 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		menu.add(btnNewButton, "cell 0 12,alignx center,aligny center");
 		
-		JButton btnNewButton_2 = new JButton("Manage Database");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
+		if(clientInterface.user instanceof Worker)
+		{
+			menu.add(StaffOnly, "cell 0 8");
+	
+			menu.add(btnInspectReview, "cell 0 9,alignx center");
+			menu.add(btnManageDatabase, "cell 0 10,alignx center,aligny top");
+		
+			if(((Worker)clientInterface.user).get_role().equals("Librarian") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
 			{
-				remove(currentPanel);
-				currentPanel = new ManageDatabaseGUI(clientInterface);
-				currentPanel.setBounds(176, 1, 724, 475);
-				currentPanel.setBackground(new Color(250, 243, 232));
-				add(currentPanel);
-				currentPanel.setLayout(null);
-				currentPanel.revalidate();
-				currentPanel.repaint();
+				menu.add(btnLibrarianActions, "cell 0 11,alignx center,aligny center");
 			}
-		});
-		menu.add(btnNewButton_2, "cell 0 13,alignx center,aligny top");
+			
+			if(((Worker)clientInterface.user).get_role().equals("Manager") || ((Worker)clientInterface.user).get_role().equals("Certified Editor"))
+			{
+				menu.add(btnRequestReport, "cell 0 12,alignx center,aligny center");
+			}
+		}
+		
 		menu.add(btnLogout, "cell 0 15,alignx center,aligny top");
 		menu.add(btnExit, "cell 0 16,alignx center,aligny top");
 		

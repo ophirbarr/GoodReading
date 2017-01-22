@@ -3,16 +3,11 @@ package client;
 import java.awt.Color;
 import javax.swing.JPanel;
 import good_reading.Book;
-import javax.swing.JTree;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
-import org.jfree.chart.ChartPanel;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 
 
 

@@ -2,7 +2,6 @@ package client;
 
 import javax.swing.JPanel;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,27 +10,23 @@ import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import common.Define;
 import common.Message;
-import good_reading.Book;
-import good_reading.BookReview;
 import good_reading.SystemUser;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class AddNewUserGUI extends JPanel {
 	
+	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	private SystemUser[] users ;   //a list of all awaiting approval users        
 	private int size;  
-	private DefaultListModel model;	
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	
@@ -50,7 +45,7 @@ public class AddNewUserGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name       LastName       ID");
+		JLabel ResultTitle = new JLabel("Name         LastName         ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -79,7 +74,7 @@ public class AddNewUserGUI extends JPanel {
 		{
 			for(int i=0;i<size;i++)  
 			{
-			listModel.addElement(users[i].get_firstName());
+			listModel.addElement(String.format("%-9s%-9s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
 			}
 		}
 		JLabel lblTheReviewsThat = new JLabel("Users that waiting for approve:");

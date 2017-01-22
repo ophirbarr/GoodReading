@@ -17,7 +17,6 @@ import javax.swing.event.ListSelectionListener;
 
 import common.Message;
 import good_reading.Customer;
-import good_reading.SystemUser;
 
 public class FromUserToCostumerGUI extends JPanel {
 	
@@ -43,7 +42,7 @@ public class FromUserToCostumerGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name       LastName       ID");
+		JLabel ResultTitle = new JLabel("Name          LastName         ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -72,7 +71,7 @@ public class FromUserToCostumerGUI extends JPanel {
 		{
 			for(int i=0;i<customers.length;i++)  
 			{
-			listModel.addElement(customers[i].get_firstName());
+			listModel.addElement(String.format("%-9s%-9s%s",customers[i].get_firstName(),customers[i].get_lastName(),customers[i].get_uid()));
 			}
 		}
 		

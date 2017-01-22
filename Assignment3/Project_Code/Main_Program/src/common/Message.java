@@ -16,6 +16,7 @@ import java.util.ArrayList;
  * @param parameters The parameters of the above action
  *
  */
+@SuppressWarnings("serial")
 public class Message implements Serializable
 {
 	private String action;

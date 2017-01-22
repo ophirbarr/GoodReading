@@ -194,10 +194,11 @@ public class EchoServer extends AbstractServer
 			  	  
 		  case "DownloadBook":
 			  try {
-					client.sendToClient(CustomerController.DownloadBook((String)message.getParameters().get(0)));
+					client.sendToClient(CustomerController.DownloadBook((String)message.getParameters().get(0), (String)message.getParameters().get(1)));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+			  break;
 			  
 		  case "UpdateCustomer":
 			  CustomerController.UpdateCustomer((Customer)message.getParameters().get(0));
@@ -312,6 +313,9 @@ public class EchoServer extends AbstractServer
 		  case "EditCostumerAccount": 
 			  controllers.LibrarianController.EditCostumerAccount((int)message.getParameters().get(0));
 			  break;
+		  case "EraseUser": 
+			  controllers.LibrarianController.EraseUser((int)message.getParameters().get(0));
+			  break;
 			  
 		  }
 	  case "ManagerController":
@@ -320,7 +324,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.ManageCatalog());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  break;
@@ -336,7 +339,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.CustomerOrders());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		  break;
@@ -344,7 +346,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetCounterBooksPurchased());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;
@@ -352,7 +353,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetCounterBooksBySubject((Integer)message.getParameters().get(0)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;

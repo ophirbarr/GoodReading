@@ -8,13 +8,9 @@ import org.orm.PersistentTransaction;
 
 import common.Message;
 import good_reading.Book;
-import good_reading.BookReview;
-import good_reading.Book_Author;
 import good_reading.Book_Subject;
-import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
-import good_reading.Subject;
 import good_reading.SystemUser;
 
 public class ManagerController {
@@ -22,6 +18,7 @@ public class ManagerController {
 	 * The function find out a list Book for all the books that appear in the catalog (_viewStatus == 1) and their author
 	 * @return returns Message that containing the Book list and author list
 	 */
+	@SuppressWarnings("unused")
 	public static Message ManageCatalog(){
 
 		Book[] books = null;
@@ -118,7 +115,6 @@ public static Message CustomerOrders(){
 		msg.add(books_name);
 		
 	} catch (PersistentException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return msg;
@@ -133,7 +129,6 @@ public static int GetCounterBooksPurchased(){
 			for(int i = 0; i<books.length;i++)
 				counter+=books[i].get_purchaseCount();
 		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -149,7 +144,6 @@ public static int GetCounterBooksBySubject(int bid){
 				counter+=Book.getBookByORMID(books[i].get_bid()).get_purchaseCount();
 			
 		} catch (PersistentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

@@ -1,17 +1,11 @@
 package controllers;
 
-import java.awt.Color;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-
-import javax.swing.JPanel;
-
 import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
@@ -19,16 +13,12 @@ import org.orm.PersistentTransaction;
 import common.Define;
 import common.Message;
 import client.ClientInterface;
-import client.MainGUI;
 import client.PopUpMessageGUI;
-import client.SubmitReviewGUI;
-import client.ViewBookGUI;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
-import good_reading.SystemUser;
 /**
  * @author yair
  * Controller class. Contains all the function that can be activated by a customer.
@@ -57,17 +47,31 @@ public class CustomerController {
 		}
 	}
 	
-	public static FileInputStream DownloadBook(String filePath)
+	public static BufferedInputStream DownloadBook(String format, String paths)
 	{
-		File BookContent;
-		FileInputStream fin = null;
+		String AllPaths[] = paths.split(" ");
+		String path = null;
+		
+		if(format.equals("PDF"))
+			path = AllPaths[0];
+		else if(format == "DOC")
+			path = AllPaths[1];
+		else if(format == "FB2")
+			path = AllPaths[2];
+
+		BufferedInputStream bin = null;
+		
 		try {
-			BookContent = new File(filePath);
-			fin = new FileInputStream(BookContent);
-		} catch (FileNotFoundException e) {
+			File transferFile = new File (path);
+			byte [] bytearray = new byte [(int)transferFile.length()];
+			FileInputStream fin = new FileInputStream(transferFile);
+			bin = new BufferedInputStream(fin);
+			bin.read(bytearray,0,bytearray.length);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return fin;
+
+		return bin;
 	}
 	
 	/**

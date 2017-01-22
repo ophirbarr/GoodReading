@@ -1,30 +1,18 @@
 package client;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import common.Message;
 import good_reading.BookReview;
 
-import javax.swing.JToolBar;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import java.awt.Button;
 import java.awt.Color;
-import java.awt.ScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
-import javax.swing.AbstractListModel;
 
 /**
  * 

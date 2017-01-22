@@ -16,23 +16,22 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import common.Message;
-import good_reading.Customer;
+import good_reading.SystemUser;
 
-public class EditCostumerAccountGUI extends JPanel {
+public class EraseUserGUI extends JPanel {
 	
 	private ClientInterface clientInterface;
-	private Customer[] customerAccount ;   //a list of all awaiting customers that want to edit their account       
-	private int size;  
+	private SystemUser[] Allusers ;   //a list of all users         
 	private DefaultListModel model;	
 	private final JScrollPane scrollPane = new JScrollPane();
 
+	
 	/**
 	 * constructor
 	 * @param clientInterface
 	 */
-	
-	public EditCostumerAccountGUI(ClientInterface clientInterface) {
-		
+
+	public EraseUserGUI(ClientInterface clientInterface) {
 		super();
 		this.clientInterface = clientInterface;
 		setLayout(null);
@@ -49,8 +48,7 @@ public class EditCostumerAccountGUI extends JPanel {
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		
 		Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
-		msg.add(3);
-
+		msg.add(4);
 		
 		try {
 			clientInterface.client.openConnection();
@@ -60,28 +58,27 @@ public class EditCostumerAccountGUI extends JPanel {
 		}
 		
 		clientInterface.waitForServer();  // Waiting for approval from the server
+
 		
-
-		customerAccount = (Customer[])clientInterface.getMsgFromServer();
-
-			
-		if(customerAccount.length==0) listModel.addElement("There is no customers that waiting for a update account!" );
+		Allusers = (SystemUser[])clientInterface.getMsgFromServer();
+		
+		if(Allusers.length==0) listModel.addElement("There is no users" );
 		else
 		{
-			for(int i=0;i<customerAccount.length;i++)  
+			for(int i=0;i<Allusers.length;i++)  
 			{
-			listModel.addElement(String.format("%-9s%-9s%s",customerAccount[i].get_firstName(),customerAccount[i].get_lastName(),customerAccount[i].get_uid()));
+			listModel.addElement(String.format("%-9s%-9s%s",Allusers[i].get_firstName(),Allusers[i].get_lastName(),Allusers[i].get_uid()));
 			}
 		}
 		
-		JLabel lblTheReviewsThat = new JLabel("Customers waiting for updating account:");
-		lblTheReviewsThat.setBounds(41, 95, 274, 28);
+		JLabel lblTheReviewsThat = new JLabel("All Users Of GoodReading");
+		lblTheReviewsThat.setBounds(41, 95, 281, 29);
 		lblTheReviewsThat.setFont(new Font("Tahoma", Font.ITALIC, 15));
 		add(lblTheReviewsThat);
 		
-		JButton btnChangeAccount = new JButton("Edit Account");
-		btnChangeAccount.setBounds(141, 135, 155, 55);
-		add(btnChangeAccount);
+		JButton btnEraseUser = new JButton("EraseUser");
+		btnEraseUser.setBounds(156, 137, 116, 45);
+		add(btnEraseUser);
 		
 		
 		list.addListSelectionListener(new ListSelectionListener() {
@@ -90,13 +87,13 @@ public class EditCostumerAccountGUI extends JPanel {
 			public void valueChanged(ListSelectionEvent e) {
 				int index = list.getSelectedIndex();
 				
-				btnChangeAccount.addActionListener(new ActionListener() {
+				btnEraseUser.addActionListener(new ActionListener() {
 
 					public void actionPerformed(ActionEvent arg0) {
 						
 						try {
-							Message msg = new Message("EditCostumerAccount", "LibrarianController");
-							msg.add(customerAccount[index].get_uid());
+							Message msg = new Message("EraseUser", "LibrarianController");
+							msg.add(Allusers[index].get_uid());
 							clientInterface.client.openConnection();
 							clientInterface.client.sendToServer(msg);
 						} catch (IOException e) {
@@ -104,17 +101,15 @@ public class EditCostumerAccountGUI extends JPanel {
 						}
 						
 						//clientInterface.waitForServer();
-						JOptionPane.showMessageDialog(null, "The User Account Status Changed");
+						JOptionPane.showMessageDialog(null, "The user is deleted from the system");
 					}
 					
 				});
 				
 				
-			} 				
+			} 	
+			
 		});
-		
-		
-		
 
 	}
 
