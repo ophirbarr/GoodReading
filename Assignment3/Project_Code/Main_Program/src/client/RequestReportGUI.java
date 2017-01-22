@@ -85,6 +85,7 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Absolute Rating";
+					list.removeAll();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)
@@ -104,6 +105,7 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Rating Relations";
+					list.removeAll();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
 					for(int i=0; i<book.length;i++)

@@ -356,6 +356,13 @@ public class EchoServer extends AbstractServer
 				e.printStackTrace();
 			}
 			  break;
+		  case "GetAllUsers":
+			  try {
+				client.sendToClient(controllers.ManagerController.GetAllUsers());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		  }
 		  break;
   

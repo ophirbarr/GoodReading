@@ -122,6 +122,22 @@ public class MainGUI extends JPanel {
 			}
 		});
 		menu.add(btnRequestReport, "cell 0 1,alignx center,aligny center");
+		
+		JButton btnPermissionManagement = new JButton("Permission Management");
+		btnPermissionManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remove(currentPanel);
+				currentPanel = new PermissionManagementGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
+				
+			}
+		});
+		menu.add(btnPermissionManagement, "cell 0 2,alignx center,aligny center");
 		menu.add(btnSearchBook, "cell 0 2,alignx center,aligny top");
 		
 		JButton MyBooks = new JButton("My Books");

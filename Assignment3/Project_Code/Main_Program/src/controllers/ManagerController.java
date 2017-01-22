@@ -155,6 +155,18 @@ public static int GetCounterBooksBySubject(int bid){
 
 	return counter;
 }
-
+public static SystemUser[] GetAllUsers(){
+	
+	SystemUser[] systemUsers = null;
+	
+	try {
+		systemUsers = SystemUser.listSystemUserByQuery(null, "_firstName");
+		
+	} catch (PersistentException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return systemUsers;
+}
 
 }
