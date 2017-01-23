@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import common.Define;
 import common.Message;
 import good_reading.SystemUser;
 
@@ -119,7 +120,10 @@ public class AddNewUserGUI extends JPanel {
 						}
 						
 						//clientInterface.waitForServer();
-						JOptionPane.showMessageDialog(null, "The User Status Changed To DISCONNECTED");
+	        			//JOptionPane.showMessageDialog(clientInterface.frame, "The User Status Changed To DISCONNECTED");   
+						new PopUpMessageGUI(clientInterface.frame, "The User Status Changed To DISCONNECTED", Define.Notice);
+
+						
 					}
 					
 				});

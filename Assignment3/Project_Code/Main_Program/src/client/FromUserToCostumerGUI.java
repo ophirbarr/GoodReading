@@ -86,7 +86,7 @@ public class FromUserToCostumerGUI extends JPanel {
 		add(lblcustomers);
 		
 		JButton btnChangeAccount = new JButton("Change Account Status");
-		btnChangeAccount.setBounds(141, 135, 155, 55);
+		btnChangeAccount.setBounds(141, 135, 187, 54);
 		add(btnChangeAccount);
 		
 		/**

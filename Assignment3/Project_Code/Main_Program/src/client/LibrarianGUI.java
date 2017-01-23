@@ -25,8 +25,8 @@ public class LibrarianGUI extends JPanel
 		setLayout(null);
 		
 		menuPanel = new JPanel();
-		menuPanel.setBackground(new Color(210, 180, 140));
-		menuPanel.setBounds(0, 0, 756, 76);
+		menuPanel.setBackground(new Color(32, 178, 170));
+		menuPanel.setBounds(0, 0, 756, 99);
 		add(menuPanel);
 		menuPanel.setLayout(null);
 		
@@ -78,7 +78,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnNewButton_2.setBounds(181, 42, 156, 23);
+		btnNewButton_2.setBounds(239, 42, 156, 23);
 		menuPanel.add(btnNewButton_2);
 		
 		if (clientInterface.user instanceof Worker)
@@ -103,7 +103,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnEraseExistingUser.setBounds(181, 11, 156, 23);
+		btnEraseExistingUser.setBounds(239, 11, 156, 23);
 		menuPanel.add(btnEraseExistingUser);
 		
 		currentPanel = new JPanel();
@@ -119,8 +119,9 @@ public class LibrarianGUI extends JPanel
 		currentPanel.add(lblChooseFromThe);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(LibrarianGUI.class.getResource("/design/g10629.png")));
-		label.setBounds(32, 69, 478, 329);
+		label.setBackground(new Color(255, 255, 240));
+		label.setIcon(new ImageIcon(LibrarianGUI.class.getResource("/design/booksPile.jpg")));
+		label.setBounds(66, 42, 520, 332);
 		currentPanel.add(label);
 	}
 }
