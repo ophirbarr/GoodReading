@@ -369,6 +369,28 @@ public class EchoServer extends AbstractServer
 			  break;
 		  }
 		  break;
+		  
+	  case "ServerMessage":
+		  switch(action)
+		  {
+		  case "NewUser":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "NewAccount":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "CustomerChangeType":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "NewReview":
+			  this.sendToAllClients(msg);
+			  break;
+		  
+		  }
+		  break;
   
 	  }
 	  

@@ -6,7 +6,11 @@ package client;
 
 import ocsf.client.*;
 import common.*;
+import good_reading.Worker;
+
 import java.io.*;
+
+import javax.swing.JOptionPane;
 
 /**
  * This class overrides some of the methods defined in the abstract
@@ -56,10 +60,36 @@ public class ChatClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-    //clientUI.display(msg.toString());
-	clientUI.setMsgFromServer(msg);
-	clientUI.setMsgAvailable(true);
-	System.out.println("DEBUG ---------- Message arrived from server");
+	  if (msg instanceof Message && ((Message)msg).getController().equals("ServerMessage"))  // ((ClientConsole)clientUI).user instanceof Worker
+	  {
+		  switch (((String)((Message)msg).getAction()))
+		  {
+		  case "NewUser":
+			  if (((ClientConsole)clientUI).user instanceof Worker && ((Worker)((ClientConsole)clientUI).user).get_role().equals("Librarian"))
+				  JOptionPane.showMessageDialog(null, "A new user registration is awaiting approval.");
+			  break;
+		  case "NewAccount":
+			  if (((ClientConsole)clientUI).user instanceof Worker && ((Worker)((ClientConsole)clientUI).user).get_role().equals("Librarian"))
+				  JOptionPane.showMessageDialog(null, "A new account request is awaiting approval.");
+			  break;
+		  case "CustomerChangeType":
+			  if (((ClientConsole)clientUI).user instanceof Worker && ((Worker)((ClientConsole)clientUI).user).get_role().equals("Librarian"))
+				  JOptionPane.showMessageDialog(null, "A new subscription request is awaiting approval.");
+			  break;
+		  case "NewReview":
+			  if (((ClientConsole)clientUI).user instanceof Worker && (((Worker)((ClientConsole)clientUI).user).get_role().equals("Librarian") || ((Worker)((ClientConsole)clientUI).user).get_role().equals("Certified Editor")))
+				  JOptionPane.showMessageDialog(null, "A new book review is awaiting approval.");
+			  break;
+			  
+		  }
+		  System.out.println("DEBUG ---------- POPUP for worker");
+	  }
+	  else
+	  {
+		clientUI.setMsgFromServer(msg);
+		clientUI.setMsgAvailable(true);
+		System.out.println("DEBUG ---------- Message arrived from server");
+	  }
   }
 
   /**

@@ -168,8 +168,8 @@ public class ClientInterface extends ClientConsole
         			frame.repaint();
         		}
         		else // login failed
-        		{
-        			JOptionPane.showMessageDialog(frame, "Login failed. Please contact technical support.");        		}
+        			JOptionPane.showMessageDialog(frame, "Login failed. Please contact technical support.");
+
         		
         	}
         });
