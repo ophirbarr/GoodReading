@@ -69,7 +69,7 @@ public class EraseUserGUI extends JPanel {
 		if(Allusers.length==0) listModel.addElement("There is no users" );
 		else
 		{
-			for(int i=0;i<Allusers.length;i++)  
+			for(int i=0;i<Allusers.length-1;i++)  
 			{
 			listModel.addElement(String.format("%-9s%-9s%s",Allusers[i].get_firstName(),Allusers[i].get_lastName(),Allusers[i].get_uid()));
 			}
