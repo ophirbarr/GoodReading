@@ -41,7 +41,7 @@ public class CustomerOrderGUI extends JPanel{
 		list.setFont(new Font("Monospaced", Font.ITALIC, 14));
 		scrollPane.setViewportView(list);
 		
-		JLabel lblCustomerNameId = new JLabel("Customer Name:                                 ID:                                               Books ordered:");
+		JLabel lblCustomerNameId = new JLabel("Customer Name:                      ID:                                                Books ordered:");
 		scrollPane.setColumnHeaderView(lblCustomerNameId);
 		String temp="";
 		if(Customers_name.size()==0) model.addElement("Empty Database!" ); 

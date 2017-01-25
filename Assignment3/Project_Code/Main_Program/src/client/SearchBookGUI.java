@@ -67,7 +67,7 @@ public class SearchBookGUI extends JPanel
 				if (rdbtnBook.isSelected() && rdbtnReview.isSelected())
 				{
 					rdbtnReview.setSelected(false);
-					lblResultTitle.setText("ID            Title                                                       Language            Price           Summary");
+					lblResultTitle.setText("ID            Title                                                                  Language            Price           Summary");
 					btnDisplay.setText("DISPLAY BOOK");
 					listModel.clear();
 				}
@@ -105,7 +105,7 @@ public class SearchBookGUI extends JPanel
 		lblIWantTo.setBounds(331, 20, 93, 23);
 		add(lblIWantTo);
 		
-		scrollPane.setBounds(23, 275, 520, 152);
+		scrollPane.setBounds(23, 275, 608, 152);
 		add(scrollPane);
 
 		listModel = new DefaultListModel<String>();
@@ -113,7 +113,7 @@ public class SearchBookGUI extends JPanel
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
 		
-		lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
+		lblResultTitle = new JLabel("ID            Title                                                                  Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -304,7 +304,7 @@ public class SearchBookGUI extends JPanel
 				{
 					listModel.clear();
 					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				else if (rdbtnReview.isSelected())
@@ -357,7 +357,7 @@ public class SearchBookGUI extends JPanel
 				if (rdbtnBook.isSelected())
 				{
 					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				else if (rdbtnReview.isSelected())
@@ -395,7 +395,7 @@ public class SearchBookGUI extends JPanel
 		btnDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				if (rdbtnBook.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				if (list.getSelectedIndex() != -1 && rdbtnBook.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query."))
 				{
 					int i = list.getSelectedIndex();
 						
@@ -413,7 +413,7 @@ public class SearchBookGUI extends JPanel
 					BookController.ViewBook(clientInterface, (Book)result[i]);
 
 				}
-				else if (rdbtnReview.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				else if (list.getSelectedIndex() != -1 && rdbtnReview.isSelected() && !list.getSelectedValue().equals("There are no matching results to your query."))
 				{
 					BookReview review = null;
 					int i = list.getSelectedIndex();
@@ -431,24 +431,27 @@ public class SearchBookGUI extends JPanel
 						if (flag) break;
 					}
 					
-					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-					clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, review);
-					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-					clientInterface.mainPanel.currentPanel.setLayout(null);
-					clientInterface.mainPanel.currentPanel.revalidate();
-					clientInterface.mainPanel.currentPanel.repaint();
+					if (list.getSelectedIndex() != -1)
+					{
+						clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel = new viewReviewGUI(clientInterface, review);
+						clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+						clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+						clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel.setLayout(null);
+						clientInterface.mainPanel.currentPanel.revalidate();
+						clientInterface.mainPanel.currentPanel.repaint();
+					}
 
 				}
 			}
 		});
-		btnDisplay.setBounds(403, 438, 140, 23);
+		btnDisplay.setBounds(23, 438, 140, 23);
 		add(btnDisplay);
 		
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(-33, -14, 731, 599);
+		imagePanel.setBounds(0, 0, 731, 599);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		

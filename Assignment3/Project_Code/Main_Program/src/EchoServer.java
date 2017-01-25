@@ -141,18 +141,10 @@ public class EchoServer extends AbstractServer
 			  catch (PersistentException e) {e.printStackTrace();}
 			  break;
 		  case "RejectReview": //Getting the id review and delete it from database
-				  try {
-					  client.sendToClient(controllers.InspectReviewController.RejectReview((int)message.getParameters().get(0)));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+			  controllers.InspectReviewController.RejectReview((int)message.getParameters().get(0));
 				  break;
 		  case "PublishReview":  //Getting the id review and text review and publishes it
-			  try {
-				client.sendToClient(controllers.InspectReviewController.PublishReview((int)message.getParameters().get(0),(String)message.getParameters().get(1)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			  controllers.InspectReviewController.PublishReview((int)message.getParameters().get(0),(String)message.getParameters().get(1));
 			  break;
 		 
 		  }
@@ -363,6 +355,43 @@ public class EchoServer extends AbstractServer
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			  break;
+		  case "GetAllCustomers":
+			  try {
+				client.sendToClient(controllers.ManagerController.GetAllCustomers());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  break;
+		  case "UpDateUserStatus":
+			  controllers.ManagerController.UpDateUserStatus((int)message.getParameters().get(0), (int)message.getParameters().get(1));
+			  break;
+		  case "UpDateAccountStatus":
+			  controllers.ManagerController.UpDateAccountStatus((int)message.getParameters().get(0), (int)message.getParameters().get(1));
+			  break;
+		  }
+		  break;
+		  
+	  case "ServerMessage":
+		  switch(action)
+		  {
+		  case "NewUser":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "NewAccount":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "CustomerChangeType":
+			  this.sendToAllClients(msg);
+			  break;
+			  
+		  case "NewReview":
+			  this.sendToAllClients(msg);
+			  break;
+		  
 		  }
 		  break;
   

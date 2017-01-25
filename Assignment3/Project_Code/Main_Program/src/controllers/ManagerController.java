@@ -6,9 +6,11 @@ import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
+import common.Define;
 import common.Message;
 import good_reading.Book;
 import good_reading.Book_Subject;
+import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
@@ -82,11 +84,11 @@ public static Message CustomerOrders(){
 	Customer_Book[] customerBook = null;
 	ArrayList<String> customers_name = new ArrayList<String>();
 	ArrayList<String> books_name = new ArrayList<String>();
-	ArrayList<Integer> id = new ArrayList<Integer>();
+	ArrayList<Integer> ssn = new ArrayList<Integer>();
 	Message msg = new Message("","");
 	
 	try {
-		customerBook = Customer_Book.listCustomer_BookByQuery(null,"_uid");  //list order by customer id
+		customerBook = Customer_Book.listCustomer_BookByQuery(null,"_uid");  //list order by customer user id
 		int tempID = -1;
 		int j = -1;
 		String temp,firstName,lastName,fullName = "";
@@ -94,8 +96,8 @@ public static Message CustomerOrders(){
 		{
 			if(tempID != customerBook[i].get_uid())  //If this client that have not we inserted
 			{
-				id.add(customerBook[i].get_uid());
-				SystemUser[] su = SystemUser.listSystemUserByQuery("_ssn = '"+customerBook[i].get_uid()+"'", null);
+				ssn.add(SystemUser.getSystemUserByORMID(customerBook[i].get_uid()).get_ssn());
+				SystemUser[] su = SystemUser.listSystemUserByQuery("_ssn = '"+SystemUser.getSystemUserByORMID(customerBook[i].get_uid()).get_ssn()+"'", null);
 				firstName = su[0].get_firstName();
 				lastName = su[0].get_lastName();
 				fullName = firstName+" "+lastName;
@@ -111,7 +113,7 @@ public static Message CustomerOrders(){
 			
 		}
 		msg.add(customers_name);
-		msg.add(id);
+		msg.add(ssn);
 		msg.add(books_name);
 		
 	} catch (PersistentException e) {
@@ -154,7 +156,7 @@ public static SystemUser[] GetAllUsers(){
 	SystemUser[] systemUsers = null;
 	
 	try {
-		systemUsers = SystemUser.listSystemUserByQuery(null, "_firstName");
+		systemUsers = SystemUser.listSystemUserByQuery("_userStatus != '2'", "_firstName");
 		
 	} catch (PersistentException e) {
 		// TODO Auto-generated catch block
@@ -162,5 +164,56 @@ public static SystemUser[] GetAllUsers(){
 	}
 	return systemUsers;
 }
+public static Customer[] GetAllCustomers(){
+	
+	Customer[] customers = null;
+	
+	try {
+		customers = Customer.listCustomerByQuery("_waitingForChangeType != '3'", "_firstName");
+		
+	} catch (PersistentException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return customers;
+}
 
+public static void UpDateUserStatus(int index,int uid){
+	
+	PersistentSession session = null;
+	
+	try {
+		session = GoodReadingPersistentManager.instance().getSession();
+		PersistentTransaction t = session.beginTransaction();
+		SystemUser systemUser = SystemUser.getSystemUserByORMID(uid);
+		if(index == 0)systemUser.set_userStatus(Define.USER_DISCONNECTED);
+		else if(index == 1)systemUser.set_userStatus(Define.USER_BLOCKED);
+		t.commit();
+		session.close();
+	} catch (PersistentException e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+}
+public static void UpDateAccountStatus(int index,int uid){
+	
+	PersistentSession session = null;
+	
+	try {
+		session = GoodReadingPersistentManager.instance().getSession();
+		PersistentTransaction t = session.beginTransaction();
+		Customer customer = Customer.getCustomerByORMID(uid);
+		if(index == 0)customer.set_accountStatus(Define.ACCOUNT_NO_PERMISSION);
+		else if(index == 1)customer.set_accountStatus(Define.ACCOUNT_FULL_PERMISSION);
+		t.commit();
+		session.close();
+	} catch (PersistentException e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+}
 }

@@ -60,7 +60,7 @@ public class ManageDatabaseGUI extends JPanel
 		add(lblSearchType);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(22, 274, 520, 152);
+		scrollPane.setBounds(22, 274, 630, 152);
 		add(scrollPane);
 		
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
@@ -68,7 +68,7 @@ public class ManageDatabaseGUI extends JPanel
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");
+		JLabel lblResultTitle = new JLabel("ID            Title                                                                  Language            Price           Summary");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -219,14 +219,14 @@ public class ManageDatabaseGUI extends JPanel
 		btnDisplayBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if (!list.getSelectedValue().equals("There are no matching results to your query.") && !list.getSelectedValue().equals(""))
+				if (list.getSelectedIndex() != -1 && !list.getSelectedValue().equals("There are no matching results to your query."))
 				{
 					int i = list.getSelectedIndex();
 					BookController.ViewBook(clientInterface, (Book)result.get(i));
 				}
 			}
 		});
-		btnDisplayBook.setBounds(417, 437, 125, 23);
+		btnDisplayBook.setBounds(527, 437, 125, 23);
 		add(btnDisplayBook);
 		
 		JPanel typePanel = new JPanel();
@@ -266,7 +266,7 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxSubject.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					btnAdd.setText("ADD NEW BOOK");
-					lblResultTitle.setText("ID            Title                                                       Language            Price           Summary");
+					lblResultTitle.setText("ID            Title                                                                  Language            Price           Summary");
 					listModel.clear();
 				}
 				else rdbtnBooks.setSelected(true);
@@ -630,7 +630,7 @@ public class ManageDatabaseGUI extends JPanel
 					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");
 				}
 				
@@ -700,7 +700,7 @@ public class ManageDatabaseGUI extends JPanel
 					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
 					listModel.clear();
 					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-24s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
 				}
 				
 				else if (rdbtnSubjects.isSelected())
@@ -748,7 +748,7 @@ public class ManageDatabaseGUI extends JPanel
 		
 		JPanel imagePanel = new JPanel();
 		imagePanel.setBackground(new Color(250, 243, 232));
-		imagePanel.setBounds(-12, -12, 907, 649);
+		imagePanel.setBounds(-79, -25, 907, 649);
 		add(imagePanel);
 		
 	}

@@ -53,9 +53,11 @@ public class ClientInterface extends ClientConsole
 	 */
 	public static void main(String[] args) 
 	{
-		host = "";
+		host = (String)JOptionPane.showInputDialog(null, "Enter host address:", "GOOD READING", JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
 	    port = 0;  //The port number
 
+	    if (host == null) System.exit(0);
+	    /*
 	    try
 	    {
 	      host = args[0];
@@ -64,6 +66,7 @@ public class ClientInterface extends ClientConsole
 	    {
 	      host = "localhost";
 	    }
+	    */
 	    	
 	    //ClientInterface clientInterface = new ClientInterface(host, DEFAULT_PORT);
 		EventQueue.invokeLater(new Runnable() {
@@ -165,8 +168,8 @@ public class ClientInterface extends ClientConsole
         			frame.repaint();
         		}
         		else // login failed
-        		{
-        			JOptionPane.showMessageDialog(frame, "Login failed. Please contact technical support.");        		}
+        			JOptionPane.showMessageDialog(frame, "Login failed. Please contact technical support.");
+
         		
         	}
         });

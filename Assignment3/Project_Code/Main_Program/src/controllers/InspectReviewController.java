@@ -36,9 +36,8 @@ public class InspectReviewController {
 	/**
 	 * The function erases the review form database
 	 * @param rid Review id
-	 * @return 1 everything is OK
 	 */
-	public static int RejectReview(int rid){
+	public static void RejectReview(int rid){
 		
 		BookReview br = null;
 		PersistentSession session = null;
@@ -54,15 +53,13 @@ public class InspectReviewController {
 			e.printStackTrace();
 			
 		}
-		return 1;
 	}
 	/**
 	 * The function publishes the review
 	 * @param rid Review id
 	 * @param textReview String of Review
-	 * @return 1 everything is OK
 	 */
-	public static int PublishReview(int rid,String textReview){
+	public static void PublishReview(int rid,String textReview){
 		BookReview br = null;
 		PersistentSession session = null;
 		
@@ -78,7 +75,7 @@ public class InspectReviewController {
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
-		return 1;
+		
 	}
 	
 	

@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -154,22 +156,18 @@ public class MainGUI extends JPanel {
 		});
 		
 		JButton btnMyAccount = new JButton("My Account");
+		if((clientInterface.user instanceof Worker))btnMyAccount.setEnabled(false);
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(clientInterface.user instanceof Customer)
-				{
-					remove(currentPanel);
-					currentPanel = new AccountGUI(clientInterface);
-					currentPanel.setBounds(176, 1, 724, 475);
-					currentPanel.setBackground(new Color(250, 243, 232));
-					add(currentPanel);
-					currentPanel.setLayout(null);
-					currentPanel.revalidate();
-					currentPanel.repaint();
-				}
-				else
-					new PopUpMessageGUI(clientInterface.frame, "You are welcome to open an account. just click on 'Open Account'.", Define.Like);
+				remove(currentPanel);
+				currentPanel = new AccountGUI(clientInterface);
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();
 			}
 		});
 		

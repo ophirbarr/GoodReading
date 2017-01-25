@@ -4,6 +4,9 @@ package client;
 // license found at www.lloseng.com 
 
 import java.io.*;
+
+import javax.swing.JOptionPane;
+
 import client.*;
 import common.*;
 import good_reading.SystemUser;
@@ -57,6 +60,7 @@ public class ClientConsole implements ChatIF
     {
       System.out.println("Error: Can't setup connection!"
                 + " Terminating client.");
+      JOptionPane.showMessageDialog(null, "Error: Can't setup connection! Terminating client.");
       System.exit(1);
     }
   }
