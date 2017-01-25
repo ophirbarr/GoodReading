@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,7 +34,8 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 		PersistentSession session = null;
 		SystemUser[] users = null;
 		Customer[] customers=null;
-		SystemUser[] usersOnly =null;
+		ArrayList<SystemUser> usersOnly = new ArrayList<SystemUser>();
+		SystemUser[]usersert=null;
 		int j=0;
 	
 
@@ -81,15 +83,19 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 			try {
 				session = GoodReadingPersistentManager.instance().getSession();
 				users = SystemUser.listSystemUserByQuery(null, "_uid");
-				usersOnly=new SystemUser[users.length];
 				
 				for(int i=0; i<users.length;i++)
 				{
 					if(!((users[i])instanceof Worker))
 					{
-						usersOnly[j]=users[i];
-						j++;		
+						usersOnly.add(users[i]);		
 					}	
+				}
+				usersert=new SystemUser[usersOnly.size()];
+				
+				for(int i=0; i<usersOnly.size();i++)
+				{
+					usersert[i]=usersOnly.get(i);
 				}
 				session.close();
 				
@@ -97,7 +103,7 @@ public static SystemUser[] ViewUsersWithCondition(int viewStatus) {
 				e.printStackTrace();
 				users = null;
 			}
-			return usersOnly;
+			return usersert;
 		}	
 		
 		return null;
