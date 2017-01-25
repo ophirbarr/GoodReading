@@ -1,13 +1,18 @@
 package client;
 
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JPanel;
 import good_reading.Book;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.ApplicationFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.plot.PlotOrientation;
+
 
 
 
@@ -18,9 +23,10 @@ public class HistogramGUI {
 	private int searchesDatesize;
 	private String[] purchaseDate;
 	private String[] searchesDate;
+	private ClientInterface clientInterface;
 	
-	public HistogramGUI(Book book){
-		
+	public HistogramGUI(ClientInterface clientInterface,Book book){
+		this.clientInterface = clientInterface;
 		this.book = book;
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		
@@ -80,9 +86,20 @@ public class HistogramGUI {
 		JFreeChart chart = ChartFactory.createBarChart3D("Statistical Information", "Dates", "Amount", dataset);
 		CategoryPlot p = chart.getCategoryPlot();
 		p.setRangeGridlinePaint(Color.BLACK);
-		ChartFrame frame = new ChartFrame("Statistical Information",chart);
-		frame.setVisible(true);
-		frame.setSize(550, 450);
+		//ChartFrame frame = new ChartFrame("Statistical Information",chart);
+		//frame.setVisible(true);
+		//frame.setSize(550, 450);
+		ChartPanel chartPanel = new ChartPanel(chart);
+		
+		//clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+		clientInterface.mainPanel.add(chartPanel);
+		clientInterface.mainPanel.updateUI();
+		//clientInterface.mainPanel.currentPanel.setLayout(null);
+		//clientInterface.mainPanel.currentPanel.revalidate();
+		//clientInterface.mainPanel.currentPanel.repaint();*/
+		
+		
+	      
 		
 	}
 }

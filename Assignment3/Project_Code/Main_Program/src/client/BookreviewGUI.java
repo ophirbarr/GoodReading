@@ -81,7 +81,6 @@ public class BookreviewGUI extends JPanel {
 			 * Publish Listener button - publish the review
 			 */
 			public void actionPerformed(ActionEvent e) {
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
 				int res = JOptionPane.showOptionDialog(clientInterface.frame,"Are you sure you want to publish this review?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 				if(res == JOptionPane.YES_OPTION){
 					Publish_Reject_Review(clientInterface,br.get_rid(),"PublishReview",theReview.getText());

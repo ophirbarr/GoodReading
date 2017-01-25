@@ -206,6 +206,7 @@ public class PermissionManagementGUI extends JPanel{
 						if(systemUsers[selectedIndex].get_userStatus() == 1) temp = "CONNECTED";
 						if(systemUsers[selectedIndex].get_userStatus() == 3) temp = "BLOCKED";
 						userStatus.setText(temp);
+						
 					}
 					else if(flag == 1){   //Account button selected
 						lblAccountStatus.setVisible(true);
@@ -313,6 +314,7 @@ public class PermissionManagementGUI extends JPanel{
 			});
 			comboBox.setBounds(493, 392, 125, 24);
 			add(comboBox);
+			
 			
 			lblAccountStatus = new JLabel("Account Status:");
 			lblAccountStatus.setFont(new Font("Tahoma", Font.BOLD, 15));

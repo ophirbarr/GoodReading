@@ -73,7 +73,7 @@ public class RequestReportGUI extends JPanel{
 			
 			
 			
-			JLabel lblPleaseChooseThe = new JLabel("Please choose the type rating:");
+			lblPleaseChooseThe = new JLabel("Please choose the type rating:");
 			lblPleaseChooseThe.setVisible(false);
 			lblPleaseChooseThe.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			lblPleaseChooseThe.setBounds(269, 151, 256, 29);
@@ -85,8 +85,10 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Absolute Rating";
-					btnRatingRelations.setVisible(false);
-					btnAbsoluteRating.setVisible(false);
+					lblPleaseChooseThe.setEnabled(false);
+					btnRatingRelations.setEnabled(false);
+					btnAbsoluteRating.setEnabled(false);
+					
 					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
@@ -107,8 +109,9 @@ public class RequestReportGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Rating Relations";
-					btnRatingRelations.setVisible(false);
-					btnAbsoluteRating.setVisible(false);
+					btnRatingRelations.setEnabled(false);
+					btnAbsoluteRating.setEnabled(false);
+					lblPleaseChooseThe.setEnabled(false);
 					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
@@ -137,7 +140,7 @@ public class RequestReportGUI extends JPanel{
 					int index = list.getSelectedIndex();
 					int counter;
 					if(action.equals("Statistical information about book" ))
-						new HistogramGUI(book[index]);
+						new HistogramGUI(clientInterface,book[index]);
 					else if(action.equals("Absolute Rating")){
 						MessgaeToServer("GetCounterBooksPurchased",0,"ManagerController");
 						double popularity;
