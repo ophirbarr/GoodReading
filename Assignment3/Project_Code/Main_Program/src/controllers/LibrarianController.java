@@ -243,16 +243,15 @@ public static void EditCostumerAccount(int user_id){
 public static void EraseUser(int user_id){
 	
 	PersistentSession session = null;
-	SystemUser user; 
+	SystemUser[] user; 
 	
 		try {
 				session = GoodReadingPersistentManager.instance().getSession();
 				PersistentTransaction t = session.beginTransaction();
-		
-				user=SystemUser.loadSystemUserByQuery("_uid = '" + user_id +"'", null);
-				user.delete();
+						user = SystemUser.listSystemUserByQuery("_uid = '" + user_id +"'", null);
+				session.delete(user[0]);
 				
-				session.update(user);
+				
 				t.commit();
 				session.close();
 		
