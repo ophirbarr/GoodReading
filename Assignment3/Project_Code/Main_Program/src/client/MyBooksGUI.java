@@ -79,7 +79,7 @@ public class MyBooksGUI extends JPanel {
 		Book[] myBooks = (Book[])clientInterface.getMsgFromServer();
 		listModel.clear();
 		
-		if (myBooks.length == 0) 
+		if (myBooks == null) 
 			listModel.addElement("There are no matching results to your query.");
 		else
 			for(int i=0; i< myBooks.length;i++)

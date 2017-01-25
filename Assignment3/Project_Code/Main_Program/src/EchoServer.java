@@ -159,7 +159,7 @@ public class EchoServer extends AbstractServer
 			  break;
 			  
 		  case "AddToPurchaseLog":
-			  BookController.AddToPurchaseLog((Book)message.getParameters().get(0));
+			  BookController.AddToPurchaseLog((int)message.getParameters().get(0));
 			  break;
 		  }
 		  break;

@@ -81,10 +81,9 @@ public class BookController {
 	 * This function is used by the server.
 	 * @param book The book that it's purchase log needs to be updated.
 	 */
-	public static void AddToPurchaseLog(Book book)
+	public static void AddToPurchaseLog(int _bid)
 	{
-		int _bid = book.get_bid();
-		
+		Book book = null;
 		try {
 			book = Book.loadBookByORMID(_bid);
 		} catch (PersistentException e) {

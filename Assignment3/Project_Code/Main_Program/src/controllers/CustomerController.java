@@ -154,8 +154,6 @@ public class CustomerController {
 			customer_book.set_bid(book.get_bid());
 			customer_book.set_uid(uid);
 			
-			BookController.AddToPurchaseLog(book);
-			
 			//----add customer_book to database
 			PersistentTransaction t = session.beginTransaction();
 			session.save(customer_book);
@@ -165,6 +163,8 @@ public class CustomerController {
 		} catch (PersistentException e) {
 			e.printStackTrace();
 		}
+		
+		BookController.AddToPurchaseLog(book.get_bid());
 	}
 	
 	/**
