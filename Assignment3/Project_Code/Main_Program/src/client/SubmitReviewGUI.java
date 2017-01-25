@@ -99,6 +99,15 @@ public class SubmitReviewGUI extends JPanel {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
+				msg = new Message("ServerMessage", "NewReview");
+				msg.add(review);
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				new PopUpMessageGUI(clientInterface.frame, "Your review has been submited. Thank you!", Define.Edit);
 			    
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
