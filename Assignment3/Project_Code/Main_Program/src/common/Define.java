@@ -1,5 +1,9 @@
 package common;
 
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
 public class Define {
 	
 //#SystemUser
@@ -33,4 +37,15 @@ public class Define {
 	public static final int Like = 3;
 	public static final int Build = 4;
 	
+	
+	//Function to resize an icon to fit the size of a label/button
+	public static ImageIcon ResizeIcon(String path, float ResizeFactor)
+	{
+		ImageIcon imageIcon = new ImageIcon(Define.class.getResource(path)); // load the image to a imageIcon
+		Image image = imageIcon.getImage(); // transform it 
+		image = image.getScaledInstance((int)(imageIcon.getIconWidth()*ResizeFactor), (int)(imageIcon.getIconHeight()*ResizeFactor),  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(image);  // transform it back
+
+		return imageIcon;
+	}
 }

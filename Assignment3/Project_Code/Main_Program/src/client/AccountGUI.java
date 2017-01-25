@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import common.Define;
 import common.Message;
+import controllers.CustomerController;
 import good_reading.Customer;
 import good_reading.SystemUser;
 import good_reading.Worker;
@@ -17,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
 public class AccountGUI extends JPanel
@@ -90,7 +92,7 @@ public class AccountGUI extends JPanel
 		lblTimeLeft.setBounds(176, 47, 83, 20);
 		panel.add(lblTimeLeft);
 		
-		JButton btnOpenAccount = new JButton("Open request for new account");
+		JButton btnOpenAccount = new JButton("Apply request to open  an account");
 		btnOpenAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -113,14 +115,33 @@ public class AccountGUI extends JPanel
 				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong! Please contact tech support.");
 			}
 		});
-		btnOpenAccount.setBounds(20, 154, 231, 41);
+		btnOpenAccount.setBounds(20, 154, 214, 41);
 		add(btnOpenAccount);
 		if (!(clientInterface.user instanceof Customer) && !(clientInterface.user instanceof Worker)) btnOpenAccount.setEnabled(true);
 		else btnOpenAccount.setEnabled(false);
 		
-		JLabel lblNote = new JLabel("(*) A librarian will review your request as soon as possible");
-		lblNote.setBounds(20, 206, 355, 14);
-		add(lblNote);
+		String [] comboBoxOp = {"No change","Monthly","Annualy"};
+		JComboBox comboBox = new JComboBox(comboBoxOp);
+		comboBox.setBounds(444, 103, 107, 25);
+		add(comboBox);
+		
+		JButton btnUpdateAccountType = new JButton("Purchase subsription");
+		btnUpdateAccountType.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(((Customer)clientInterface.user).get_accountType() != Define.ACCOUNT_PER_BOOK)
+					new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription.", Define.Notice);
+				else if(((Customer)clientInterface.user).get_waitingForChangeType() != Define.DO_NOT_CHANGE)
+					new PopUpMessageGUI(clientInterface.frame, "Your previous request to update subscription is being handled.", Define.Notice);
+				else
+					CustomerController.UpdateAccountType(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
+			}
+		});
+		btnUpdateAccountType.setBounds(430, 58, 135, 34);
+		btnUpdateAccountType.setEnabled(true);
+		add(btnUpdateAccountType);
+		
+		
+		
 		
 	}
 }

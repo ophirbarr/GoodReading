@@ -181,7 +181,7 @@ public class EchoServer extends AbstractServer
 			  break;
 			  
 		  case "AddBookToCustomer":
-			  CustomerController.AddBookToCustomer((int)message.getParameters().get(0), (int)message.getParameters().get(1));
+			  CustomerController.AddBookToCustomer((Book)message.getParameters().get(0), (int)message.getParameters().get(1));
 			  break;
 		  
 		  case "MyBooks":

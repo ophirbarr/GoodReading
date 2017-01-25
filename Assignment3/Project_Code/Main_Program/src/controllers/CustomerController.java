@@ -47,7 +47,7 @@ public class CustomerController {
 		}
 	}
 	
-	public static BufferedInputStream DownloadBook(String format, String paths)
+	public static byte[] DownloadBook(String format, String paths)
 	{
 		String AllPaths[] = paths.split(" ");
 		String path = null;
@@ -60,10 +60,10 @@ public class CustomerController {
 			path = AllPaths[2];
 
 		BufferedInputStream bin = null;
-		
+		byte [] bytearray = null;
 		try {
 			File transferFile = new File (path);
-			byte [] bytearray = new byte [(int)transferFile.length()];
+			bytearray = new byte [(int)transferFile.length()];
 			FileInputStream fin = new FileInputStream(transferFile);
 			bin = new BufferedInputStream(fin);
 			bin.read(bytearray,0,bytearray.length);
@@ -71,7 +71,7 @@ public class CustomerController {
 			e.printStackTrace();
 		}
 
-		return bin;
+		return bytearray;
 	}
 	
 	/**
@@ -121,7 +121,7 @@ public class CustomerController {
 				}
 				
 				msg = new Message ("AddBookToCustomer", "CustomerController");
-				msg.add(book.get_bid());
+				msg.add(book);
 				msg.add(customer.get_uid());
 				try {
 					clientInterface.client.openConnection();
@@ -145,14 +145,16 @@ public class CustomerController {
 	 * @param bid The ID of the book to be added.
 	 * @param uid The user ID.
 	 */
-	public static void AddBookToCustomer(int bid, int uid)
+	public static void AddBookToCustomer(Book book, int uid)
 	{
 		try {
 			PersistentSession session = GoodReadingPersistentManager.instance().getSession();
 	
 			Customer_Book customer_book = new Customer_Book();
-			customer_book.set_bid(bid);
+			customer_book.set_bid(book.get_bid());
 			customer_book.set_uid(uid);
+			
+			BookController.AddToPurchaseLog(book);
 			
 			//----add customer_book to database
 			PersistentTransaction t = session.beginTransaction();
@@ -205,11 +207,7 @@ public class CustomerController {
 	{
 		if(ValidateAccount(clientInterface, customer))
 		{
-			if((customer).get_accountType() != Define.ACCOUNT_PER_BOOK)
-				new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription.", Define.Notice);
-			else
-			{
-				customer.set_accountType(Type);
+				customer.set_waitingForChangeType(Type);
 				Message msg = new Message ("UpdateCustomer", "CustomerController");
 				msg.add(customer);
 				try {
@@ -218,7 +216,6 @@ public class CustomerController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-			}
 		}
 	}
 	
@@ -232,7 +229,8 @@ public class CustomerController {
 	 */
 	public static boolean ValidateAccount(ClientInterface clientInterface, Customer customer)
 	{
-		int isValid = 0;
+		int isValid = 0, print = 0;
+		final int WAIT = 1, BLOCKED = 2, EXPIRED = 3;
 		
 		if(customer.get_waitingForChangeType() != Define.FROM_USER_TO_CUSTOMER)
 		{
@@ -251,18 +249,24 @@ public class CustomerController {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						isValid = 3;
+						print = EXPIRED;
 					}						
 				}
 			}
 			else
-				isValid = 2;
+			{
+				print = BLOCKED;
+				isValid = -1;
+			}
 		}
 		else
-			isValid = 1;
+		{
+			print = WAIT;
+			isValid = -1;
+		}
 		
-		if(isValid != 0)
-			ValidateAccountMessage(clientInterface, isValid);
+		if(print != 0)
+			ValidateAccountMessage(clientInterface, print);
 		
 		return (isValid == 0);
 	}
@@ -272,11 +276,11 @@ public class CustomerController {
 	 * @param clientInterface The main class of the program.
 	 * @param isValid A flag to indicate the account validation status (WAIT, BLOCKED, EXPIRED).
 	 */
-	public static void ValidateAccountMessage(ClientInterface clientInterface, int isValid)
+	public static void ValidateAccountMessage(ClientInterface clientInterface, int print)
 	{
 		final int WAIT = 1, BLOCKED = 2, EXPIRED = 3;
 		
-		switch(isValid)
+		switch(print)
 		{
 		case WAIT:
 			new PopUpMessageGUI(clientInterface.frame, "Your request to open an account is still being processed.", Define.Build);

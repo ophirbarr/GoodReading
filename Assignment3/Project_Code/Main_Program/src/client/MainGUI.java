@@ -69,7 +69,7 @@ public class MainGUI extends JPanel {
 				clientInterface.logOut();
 					
 				new PopUpMessageGUI(clientInterface.frame, "Thank you for using Good Reading!", Define.Like);
-				
+
 				clientInterface.frame.remove(clientInterface.mainPanel);
 				clientInterface.frame.getContentPane().add(clientInterface.loginPanel);
 				clientInterface.frame.revalidate(); // For Java 1.7 or above.
@@ -153,26 +153,6 @@ public class MainGUI extends JPanel {
 			}
 		});
 		
-		JButton btnOpenAccount = new JButton("Open Account");
-		btnOpenAccount.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!(clientInterface.user instanceof Customer))
-				{
-					Message msg = new Message("OpenAccount", "SystemUserController");
-					msg.add(clientInterface.user);
-					
-					try {
-						clientInterface.client.openConnection();
-						clientInterface.client.sendToServer(msg);
-					} catch (IOException ex) {
-						ex.printStackTrace();
-					}
-				}
-				else
-					new PopUpMessageGUI(clientInterface.frame, "You already have an account.", Define.Notice);
-			}
-		});
-		
 		JButton btnMyAccount = new JButton("My Account");
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
@@ -194,10 +174,7 @@ public class MainGUI extends JPanel {
 		});
 		
 		menu.add(btnMyAccount, "cell 0 4,alignx center,aligny center");
-		menu.add(btnOpenAccount, "cell 0 5,alignx center");
 		
-		
-
 		
 		JLabel StaffOnly = new JLabel("Staff Only:");
 		StaffOnly.setFont(new Font("Tahoma", Font.BOLD, 12));

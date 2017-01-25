@@ -183,22 +183,26 @@ public class MyBooksGUI extends JPanel {
 				
 				String format = null;
 				int index = list.getSelectedIndex();
+				String path = System.getProperty("user.home") + "'\'" + myBooks[index].get_title();
 				
 				if(index != -1)
 				{
 					if(rdbtnPDF.isSelected())
 					{
 						format = "PDF";
+						path = path + ".pdf";
 					}
 					
 					else if(rdbtnDOC.isSelected())
 					{
 						format = "DOC";
+						path = path + ".docx";
 					}
 					
 					else if(rdbtnFB2.isSelected())
 					{
 						format = "FB2";
+						path = path + ".fb2";
 					}
 				
 				
@@ -214,23 +218,12 @@ public class MyBooksGUI extends JPanel {
 					}
 					clientInterface.waitForServer();
 					
-					
-					int filesize=1022386; 
-					int bytesRead; 
-					int currentTot = 0;
-					byte [] bytearray  = new byte [filesize];
-					InputStream is = (InputStream)clientInterface.getMsgFromServer();
+					byte [] bytearray = (byte[])clientInterface.getMsgFromServer();
 					FileOutputStream fos;
 					try {
-						fos = new FileOutputStream("outputFile.doc");
+						fos = new FileOutputStream(path);
 						BufferedOutputStream bos = new BufferedOutputStream(fos); 
-						bytesRead = is.read(bytearray,0,bytearray.length);
-						currentTot = bytesRead; 
-						do { 
-							bytesRead = is.read(bytearray, currentTot, (bytearray.length-currentTot)); 
-							if(bytesRead >= 0) currentTot += bytesRead; 
-							} while(bytesRead > -1); 
-						bos.write(bytearray, 0 , currentTot); 
+						bos.write(bytearray, 0 , bytearray.length); 
 						bos.flush(); 
 						bos.close();
 					} catch (IOException e1) {
