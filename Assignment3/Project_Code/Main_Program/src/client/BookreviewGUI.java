@@ -6,9 +6,14 @@ import good_reading.BookReview;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
+import common.Message;
+
 import java.awt.Font;
 import java.awt.Color;
 
@@ -26,7 +31,6 @@ public class BookreviewGUI extends JPanel {
 	private ClientInterface clientInterface;
 	@SuppressWarnings("unused")
 	private String nameBook;
-	private String typeMessage;   //type action: publish || reject depending on the button pressed
 	private JTextArea theReview;  //String of review
 	private JButton btnEdit;
 	
@@ -51,16 +55,21 @@ public class BookreviewGUI extends JPanel {
 			/**
 			 *Reject Listener button -  permanently erases the Review
 			 */
-			public void actionPerformed(ActionEvent e) {
-				typeMessage= "RejectReview";
-				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),typeMessage,theReview.getText());
-				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate();
-				clientInterface.mainPanel.currentPanel.repaint();
+			public void actionPerformed(ActionEvent e) {				
+				int res = JOptionPane.showOptionDialog(clientInterface.frame,"Are you sure you want to reject this review?" , "Message", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if(res == JOptionPane.YES_OPTION){
+					Publish_Reject_Review(clientInterface,br.get_rid(),"RejectReview",theReview.getText());
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new InspectReviewGUI(clientInterface);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+			
+				}
+			
 			}
 		});
 		btnReject.setBounds(332, 75, 135, 23);
@@ -72,15 +81,20 @@ public class BookreviewGUI extends JPanel {
 			 * Publish Listener button - publish the review
 			 */
 			public void actionPerformed(ActionEvent e) {
-				typeMessage = "PublishReview";
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel = new MessageToClientGUI(clientInterface,br.get_rid(),typeMessage,theReview.getText());
-				clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
-				clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
-				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
-				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate();
-				clientInterface.mainPanel.currentPanel.repaint();
+				int res = JOptionPane.showOptionDialog(clientInterface.frame,"Are you sure you want to publish this review?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if(res == JOptionPane.YES_OPTION){
+					Publish_Reject_Review(clientInterface,br.get_rid(),"PublishReview",theReview.getText());
+					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel = new InspectReviewGUI(clientInterface);
+					clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+					clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+					clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+					clientInterface.mainPanel.currentPanel.setLayout(null);
+					clientInterface.mainPanel.currentPanel.revalidate();
+					clientInterface.mainPanel.currentPanel.repaint();
+			
+				}
 			}
 		});
 		btnPublish.setBounds(332, 11, 135, 23);
@@ -133,5 +147,21 @@ public class BookreviewGUI extends JPanel {
 		theReview.setBounds(87, 109, 335, 239);
 		add(theReview);
 	
+	}
+public void Publish_Reject_Review(ClientInterface clientInterface,int rid,String typeMessage,String theReview){
+		
+		Message msg = new Message(typeMessage, "InspectReviewController");
+		msg.add(rid);
+		if(typeMessage == "PublishReview") msg.add(theReview);
+		
+		clientInterface.msgFromServer = null;
+		try {
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	
+			
 	}
 }

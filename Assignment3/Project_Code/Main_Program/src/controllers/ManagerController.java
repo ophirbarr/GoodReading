@@ -10,6 +10,7 @@ import common.Define;
 import common.Message;
 import good_reading.Book;
 import good_reading.Book_Subject;
+import good_reading.Customer;
 import good_reading.Customer_Book;
 import good_reading.GoodReadingPersistentManager;
 import good_reading.SystemUser;
@@ -163,9 +164,21 @@ public static SystemUser[] GetAllUsers(){
 	}
 	return systemUsers;
 }
+public static Customer[] GetAllCustomers(){
+	
+	Customer[] customers = null;
+	
+	try {
+		customers = Customer.listCustomerByQuery("_waitingForChangeType != '3'", "_firstName");
+		
+	} catch (PersistentException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return customers;
+}
 
-
-public static void UpDateStatusUser(int index,int uid){
+public static void UpDateUserStatus(int index,int uid){
 	
 	PersistentSession session = null;
 	
@@ -175,6 +188,25 @@ public static void UpDateStatusUser(int index,int uid){
 		SystemUser systemUser = SystemUser.getSystemUserByORMID(uid);
 		if(index == 0)systemUser.set_userStatus(Define.USER_DISCONNECTED);
 		else if(index == 1)systemUser.set_userStatus(Define.USER_BLOCKED);
+		t.commit();
+		session.close();
+	} catch (PersistentException e) {
+		e.printStackTrace();
+		
+	}
+	
+	
+}
+public static void UpDateAccountStatus(int index,int uid){
+	
+	PersistentSession session = null;
+	
+	try {
+		session = GoodReadingPersistentManager.instance().getSession();
+		PersistentTransaction t = session.beginTransaction();
+		Customer customer = Customer.getCustomerByORMID(uid);
+		if(index == 0)customer.set_accountStatus(Define.ACCOUNT_NO_PERMISSION);
+		else if(index == 1)customer.set_accountStatus(Define.ACCOUNT_FULL_PERMISSION);
 		t.commit();
 		session.close();
 	} catch (PersistentException e) {

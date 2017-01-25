@@ -18,6 +18,7 @@ import common.Message;
 import good_reading.Book;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
@@ -39,6 +40,7 @@ public class RequestReportGUI extends JPanel{
 		private JList list;
 		private Book[] book;
 		private String action;
+		
 		
 		public RequestReportGUI(ClientInterface clientInterface){
 			super();
@@ -77,12 +79,14 @@ public class RequestReportGUI extends JPanel{
 			lblPleaseChooseThe.setBounds(269, 151, 256, 29);
 			add(lblPleaseChooseThe);
 			
-			JButton btnAbsoluteRating = new JButton("Absolute Rating");
+			btnAbsoluteRating = new JButton("Absolute Rating");
 			btnAbsoluteRating.setVisible(false);
 			btnAbsoluteRating.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Absolute Rating";
+					btnRatingRelations.setVisible(false);
+					btnAbsoluteRating.setVisible(false);
 					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
@@ -98,11 +102,13 @@ public class RequestReportGUI extends JPanel{
 			add(btnAbsoluteRating);
 			
 		
-			JButton btnRatingRelations = new JButton("Rating Relations");
+			btnRatingRelations = new JButton("Rating Relations");
 			btnRatingRelations.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
 					action="Rating Relations";
+					btnRatingRelations.setVisible(false);
+					btnAbsoluteRating.setVisible(false);
 					model.clear();
 					MessgaeToServer("GetAllBooks",0,"SystemUserController");
 					book =(Book[]) clientInterface.getMsgFromServer();
@@ -130,7 +136,6 @@ public class RequestReportGUI extends JPanel{
 				public void valueChanged(ListSelectionEvent e) {
 					int index = list.getSelectedIndex();
 					int counter;
-					
 					if(action.equals("Statistical information about book" ))
 						new HistogramGUI(book[index]);
 					else if(action.equals("Absolute Rating")){
@@ -138,9 +143,9 @@ public class RequestReportGUI extends JPanel{
 						double popularity;
 						counter = (int) clientInterface.getMsgFromServer();
 						if(counter == 0) popularity =0;
-						else	popularity = (book[index].get_purchaseCount()/(double)counter)*100;
+						else	popularity = (book[index].get_purchaseCount()/(double)counter)*100;	
+						JOptionPane.showMessageDialog(clientInterface.frame,  "The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",popularity)+"%",  "Statistical Information", JOptionPane.INFORMATION_MESSAGE);
 						
-						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",popularity)+"%",Define.Notice);
 					}
 					else {    //action == Rating Relations
 						MessgaeToServer("GetCounterBooksBySubject",book[index].get_bid(),"ManagerController");
@@ -148,7 +153,8 @@ public class RequestReportGUI extends JPanel{
 						counter = (int) clientInterface.getMsgFromServer();
 						if(counter == 0)popularity = 0;
 						else popularity = (book[index].get_purchaseCount()/(double)counter)*100;
-						new PopUpMessageGUI(clientInterface.frame,"The popularity of "+book[index].get_title() +" relative to all the books at his subject is: "+String.format("%.1f",popularity)+"%",Define.Notice);
+						JOptionPane.showMessageDialog(clientInterface.frame,  "The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",popularity)+"%",  "Statistical Information", JOptionPane.INFORMATION_MESSAGE);
+						
 					}
 				}
 			});

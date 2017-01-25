@@ -8,12 +8,16 @@ import javax.swing.JScrollPane;
 
 import common.Define;
 import common.Message;
+import good_reading.Customer;
 import good_reading.SystemUser;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -31,6 +35,7 @@ public class PermissionManagementGUI extends JPanel{
 		private JScrollPane scrollPane;
 		private JLabel lblSelectAUser;
 		private SystemUser[] systemUsers;
+		private Customer[] customers;
 		private JTextField uid;
 		private JTextField ssn;
 		private JTextField firstName;
@@ -47,6 +52,15 @@ public class PermissionManagementGUI extends JPanel{
 		private JLabel lblWhichStatusYou;
 		private JComboBox comboBox;
 		private int selectedIndex;
+		private JButton btnAccount;
+		private JButton btnUsers;
+		private JLabel lblWhatWouldYou;
+		private int flag;     //if User button selected: flag =0 else Account button selected: flag = 1
+		private JTextField accountStatus;
+		private JLabel lblAccountStatus;
+		private JLabel lblWhichAccountTatus;
+		private JComboBox comboBox_1;
+		
 		
 		
 		public PermissionManagementGUI(ClientInterface clientInterface){
@@ -54,6 +68,7 @@ public class PermissionManagementGUI extends JPanel{
 			this.clientInterface = clientInterface;
 			setLayout(null);
 			model = new DefaultListModel();
+			flag = -1;
 			
 			
 			
@@ -147,14 +162,14 @@ public class PermissionManagementGUI extends JPanel{
 			
 			userName = new JTextField();
 			userName.setEditable(false);
-			userName.setBounds(335, 286, 107, 20);
+			userName.setBounds(357, 283, 126, 20);
 			add(userName);
 			userName.setColumns(10);
 			userName.setVisible(false);
 			
 			userStatus = new JTextField();
 			userStatus.setEditable(false);
-			userStatus.setBounds(335, 316, 107, 23);
+			userStatus.setBounds(357, 313, 126, 23);
 			add(userStatus);
 			userStatus.setColumns(10);
 			userStatus.setVisible(false);
@@ -178,23 +193,43 @@ public class PermissionManagementGUI extends JPanel{
 					lastName.setVisible(true);
 					userName.setVisible(true);	
 					userStatus.setVisible(true);
-					String temp =""+systemUsers[selectedIndex].get_uid();
-					uid.setText(temp);
-					temp=""+systemUsers[selectedIndex].get_ssn();
-					ssn.setText(temp);
-					firstName.setText(systemUsers[selectedIndex].get_firstName());
-					lastName.setText(systemUsers[selectedIndex].get_lastName());
-					userName.setText(systemUsers[selectedIndex].get_userName());
+					if(flag == 0){    //User button selected   
+						String temp =""+systemUsers[selectedIndex].get_uid();
+						uid.setText(temp);
+						temp=""+systemUsers[selectedIndex].get_ssn();
+						ssn.setText(temp);
+						firstName.setText(systemUsers[selectedIndex].get_firstName());
+						lastName.setText(systemUsers[selectedIndex].get_lastName());
+						userName.setText(systemUsers[selectedIndex].get_userName());
 					
-					if(systemUsers[selectedIndex].get_userStatus() == 0) temp = "DISCONNECTED";
-					if(systemUsers[selectedIndex].get_userStatus() == 1) temp = "CONNECTED";
-					if(systemUsers[selectedIndex].get_userStatus() == 3) temp = "BLOCKED";
-					userStatus.setText(temp);
+						if(systemUsers[selectedIndex].get_userStatus() == 0) temp = "DISCONNECTED";
+						if(systemUsers[selectedIndex].get_userStatus() == 1) temp = "CONNECTED";
+						if(systemUsers[selectedIndex].get_userStatus() == 3) temp = "BLOCKED";
+						userStatus.setText(temp);
+					}
+					else if(flag == 1){   //Account button selected
+						lblAccountStatus.setVisible(true);
+						accountStatus.setVisible(true);
+						comboBox_1.setVisible(true);
+						lblWhichAccountTatus.setVisible(true);
+						String temp =""+customers[selectedIndex].get_uid();
+						uid.setText(temp);
+						temp=""+customers[selectedIndex].get_ssn();
+						ssn.setText(temp);
+						temp = ""+customers[selectedIndex].get_accountStatus();
+						if(temp.equals("false"))accountStatus.setText("NO PERMISSION");
+						else accountStatus.setText("FULL PERMISSIOM");
+						firstName.setText(customers[selectedIndex].get_firstName());
+						lastName.setText(customers[selectedIndex].get_lastName());
+						userName.setText(customers[selectedIndex].get_userName());
 					
-					if(systemUsers[selectedIndex].get_userStatus()==0||systemUsers[selectedIndex].get_userStatus()==1)
-						comboBox.removeItemAt(1);
-					else if(systemUsers[selectedIndex].get_userStatus()==3)
-							comboBox.removeItemAt(0);
+						if(customers[selectedIndex].get_userStatus() == Define.USER_DISCONNECTED) temp = "DISCONNECTED";
+						if(customers[selectedIndex].get_userStatus() == Define.USER_CONNECTED) temp = "CONNECTED";
+						if(customers[selectedIndex].get_userStatus() == Define.USER_BLOCKED) temp = "BLOCKED";
+						userStatus.setText(temp);
+						
+					}
+					
 				
 				}
 			});
@@ -208,14 +243,34 @@ public class PermissionManagementGUI extends JPanel{
 			lblWhatWouldYou.setBounds(10, 23, 195, 31);
 			add(lblWhatWouldYou);
 			
-			JButton btnAccount = new JButton("Account");
+			btnAccount = new JButton("Account");
+			btnAccount.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					flag = 1;
+					btnAccount.setEnabled(false);
+					btnUsers.setEnabled(false);
+					lblWhatWouldYou.setEnabled(false);
+					model.clear();
+					lblSelectAUser.setVisible(true);
+					scrollPane.setVisible(true);
+					GetAllCustomers();
+					customers = (Customer[]) clientInterface.getMsgFromServer();
+					for(int i=0;i<customers.length;i++)  //additional the users to Jlist
+						model.addElement(String.format("%-15s%-14s%-14s", customers[i].get_ssn(),customers[i].get_firstName(),customers[i].get_lastName()));
+					list.setModel(model);
+				}
+			});
 			btnAccount.setBounds(323, 29, 89, 23);
 			add(btnAccount);
 			
-			JButton btnUsers = new JButton("Users");
+			btnUsers = new JButton("Users");
 			btnUsers.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				
+					flag = 0;
+					btnAccount.setEnabled(false);
+					btnUsers.setEnabled(false);
+					lblWhatWouldYou.setEnabled(false);
+					model.clear();
 					lblSelectAUser.setVisible(true);
 					scrollPane.setVisible(true);
 					GetAllUsers();
@@ -229,9 +284,9 @@ public class PermissionManagementGUI extends JPanel{
 			btnUsers.setBounds(211, 29, 89, 23);
 			add(btnUsers);
 			
-			lblWhichStatusYou = new JLabel("Which status you want to modify?");
+			lblWhichStatusYou = new JLabel("Which User status you want to modify?");
 			lblWhichStatusYou.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblWhichStatusYou.setBounds(236, 370, 247, 31);
+			lblWhichStatusYou.setBounds(236, 385, 247, 31);
 			add(lblWhichStatusYou);
 			
 			String[] forCombo = {"Disconnected","Blocked"}; 
@@ -240,14 +295,73 @@ public class PermissionManagementGUI extends JPanel{
 				public void actionPerformed(ActionEvent e) {
 					
 					int index = comboBox.getSelectedIndex();
-					UpDate(index,systemUsers[selectedIndex].get_uid());
+					int res = JOptionPane.showOptionDialog(clientInterface.frame, "Are you sure you want to modify?", "Message", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+					if(res == JOptionPane.OK_OPTION){
+						UpDateUserStatus(index,systemUsers[selectedIndex].get_uid());
+						clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel = new PermissionManagementGUI(clientInterface);
+						clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+						clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+						clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel.setLayout(null);
+						clientInterface.mainPanel.currentPanel.revalidate();
+						clientInterface.mainPanel.currentPanel.repaint();
+				
+					}
 					
 				}
 			});
-			comboBox.setBounds(493, 377, 125, 24);
+			comboBox.setBounds(493, 392, 125, 24);
 			add(comboBox);
-			comboBox.setVisible(false);
 			
+			lblAccountStatus = new JLabel("Account Status:");
+			lblAccountStatus.setFont(new Font("Tahoma", Font.BOLD, 15));
+			lblAccountStatus.setBounds(236, 351, 125, 23);
+			add(lblAccountStatus);
+			lblAccountStatus.setVisible(false);
+			
+			accountStatus = new JTextField();
+			accountStatus.setEditable(false);
+			accountStatus.setBounds(357, 354, 126, 23);
+			add(accountStatus);
+			accountStatus.setColumns(10);
+			
+			lblWhichAccountTatus = new JLabel("Which Account status you want to modify?");
+			lblWhichAccountTatus.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			lblWhichAccountTatus.setBounds(236, 439, 247, 31);
+			add(lblWhichAccountTatus);
+			lblWhichAccountTatus.setVisible(false);
+			
+			
+			String[] forCombo1 = {"NO PERMISSION","FULL PERMISSION"};
+			comboBox_1 = new JComboBox(forCombo1);
+			comboBox_1.setBounds(493, 446, 125, 23);
+			add(comboBox_1);
+			comboBox_1.setVisible(false);
+			comboBox_1.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					
+					int index = comboBox_1.getSelectedIndex();
+					int res = JOptionPane.showOptionDialog(clientInterface.frame, "Are you sure you want to modify?", "Message", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+					if(res == JOptionPane.OK_OPTION){
+						UpDateAccountStatus(index,customers[selectedIndex].get_uid());
+						clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel = new PermissionManagementGUI(clientInterface);
+						clientInterface.mainPanel.currentPanel.setBounds(176, 1, 724, 475);
+						clientInterface.mainPanel.currentPanel.setBackground(new Color(250, 243, 232));
+						clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
+						clientInterface.mainPanel.currentPanel.setLayout(null);
+						clientInterface.mainPanel.currentPanel.revalidate();
+						clientInterface.mainPanel.currentPanel.repaint();
+				
+					}
+				}	
+				});
+			
+			
+			
+			accountStatus.setVisible(false);
+			comboBox.setVisible(false);
 			
 			
 			
@@ -255,6 +369,18 @@ public class PermissionManagementGUI extends JPanel{
 			
 			
 			
+		}
+		
+		public void GetAllCustomers(){
+			Message msg = new Message("GetAllCustomers", "ManagerController");
+			clientInterface.msgFromServer = null;
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			clientInterface.waitForServer();  // Waiting for approval from the server
 		}
 		
 		
@@ -270,8 +396,21 @@ public class PermissionManagementGUI extends JPanel{
 			clientInterface.waitForServer();  // Waiting for approval from the server
 		}
 		
-		public void UpDate(int index,int uid){
-			Message msg = new Message("UpDateStatusUser", "ManagerController");
+		public void UpDateUserStatus(int index,int uid){
+			Message msg = new Message("UpDateUserStatus", "ManagerController");
+			clientInterface.msgFromServer = null;
+			msg.add(index);
+			msg.add(uid);
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		}
+		public void UpDateAccountStatus(int index, int uid){
+			Message msg = new Message("UpDateAccountStatus", "ManagerController");
 			clientInterface.msgFromServer = null;
 			msg.add(index);
 			msg.add(uid);
