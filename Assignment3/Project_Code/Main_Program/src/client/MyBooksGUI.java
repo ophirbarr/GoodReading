@@ -183,7 +183,7 @@ public class MyBooksGUI extends JPanel {
 				
 				String format = null;
 				int index = list.getSelectedIndex();
-				String path = System.getProperty("user.home") + "'\'" + myBooks[index].get_title();
+				String path = System.getProperty("user.home") + "\\" + myBooks[index].get_title();
 				
 				if(index != -1)
 				{
