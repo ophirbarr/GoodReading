@@ -86,19 +86,9 @@ public class HistogramGUI {
 		JFreeChart chart = ChartFactory.createBarChart3D("Statistical Information", "Dates", "Amount", dataset);
 		CategoryPlot p = chart.getCategoryPlot();
 		p.setRangeGridlinePaint(Color.BLACK);
-		//ChartFrame frame = new ChartFrame("Statistical Information",chart);
-		//frame.setVisible(true);
-		//frame.setSize(550, 450);
-		ChartPanel chartPanel = new ChartPanel(chart);
-		
-		//clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
-		clientInterface.mainPanel.add(chartPanel);
-		clientInterface.mainPanel.updateUI();
-		//clientInterface.mainPanel.currentPanel.setLayout(null);
-		//clientInterface.mainPanel.currentPanel.revalidate();
-		//clientInterface.mainPanel.currentPanel.repaint();*/
-		
-		
+		ChartFrame frame = new ChartFrame("Statistical Information",chart);
+		frame.setVisible(true);
+		frame.setSize(550, 450);
 	      
 		
 	}

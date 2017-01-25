@@ -21,6 +21,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class RequestReportGUI extends JPanel{
@@ -135,8 +137,9 @@ public class RequestReportGUI extends JPanel{
 			scrollPane.setVisible(false);
 			
 			list = new JList();
-			list.addListSelectionListener(new ListSelectionListener() {
-				public void valueChanged(ListSelectionEvent e) {
+			list.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
 					int index = list.getSelectedIndex();
 					int counter;
 					if(action.equals("Statistical information about book" ))
@@ -159,8 +162,10 @@ public class RequestReportGUI extends JPanel{
 						JOptionPane.showMessageDialog(clientInterface.frame,  "The popularity of "+book[index].get_title() +" relative to all library books is: "+String.format("%.1f",popularity)+"%",  "Statistical Information", JOptionPane.INFORMATION_MESSAGE);
 						
 					}
+				
 				}
 			});
+		
 			list.setFont(new Font("Monospaced", Font.BOLD, 14));
 			scrollPane.setViewportView(list);
 			
