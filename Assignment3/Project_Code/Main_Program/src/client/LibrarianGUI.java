@@ -107,7 +107,7 @@ public class LibrarianGUI extends JPanel
 		menuPanel.add(btnEraseExistingUser);
 		
 		currentPanel = new JPanel();
-		currentPanel.setBackground(new Color(250, 243, 232));
+		currentPanel.setBackground(new Color(255, 245, 238));
 		currentPanel.setBounds(0, 76, 799, 513);
 		add(currentPanel);
 		currentPanel.setLayout(null);
@@ -119,8 +119,8 @@ public class LibrarianGUI extends JPanel
 		currentPanel.add(lblChooseFromThe);
 		
 		JLabel label = new JLabel("");
-		label.setBackground(new Color(255, 255, 240));
-		label.setIcon(new ImageIcon(LibrarianGUI.class.getResource("/design/booksPile.jpg")));
+		label.setBackground(new Color(255, 255, 224));
+		label.setIcon(new ImageIcon(LibrarianGUI.class.getResource("/design/bookspile.png")));
 		label.setBounds(66, 42, 520, 332);
 		currentPanel.add(label);
 	}

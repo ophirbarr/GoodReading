@@ -3,6 +3,8 @@ package client;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
@@ -93,10 +95,10 @@ public class FromUserToCostumerGUI extends JPanel {
 		 * ListSelectionListener to know which customer is selected
 		 */
 		
-		list.addListSelectionListener(new ListSelectionListener() {
+		list.addMouseListener(new MouseAdapter() {
 			
 		
-			public void valueChanged(ListSelectionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				int index = list.getSelectedIndex();
 				
 				btnChangeAccount.addActionListener(new ActionListener() {

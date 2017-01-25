@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
@@ -97,10 +99,11 @@ public class AddNewUserGUI extends JPanel {
 		 * ListSelectionListener to know which user is selected
 		 */
 		
-		list.addListSelectionListener(new ListSelectionListener() {
-			
+		list.addMouseListener(new MouseAdapter() {
+
 		
-			public void valueChanged(ListSelectionEvent e) {
+			public void mouseClicked(MouseEvent e) {
+
 				int index = list.getSelectedIndex();
 				
 				btnAddUser.addActionListener(new ActionListener() {
@@ -120,8 +123,7 @@ public class AddNewUserGUI extends JPanel {
 						}
 						
 						//clientInterface.waitForServer();
-	        			//JOptionPane.showMessageDialog(clientInterface.frame, "The User Status Changed To DISCONNECTED");   
-						new PopUpMessageGUI(clientInterface.frame, "The User Status Changed To DISCONNECTED", Define.Notice);
+	        			JOptionPane.showMessageDialog(clientInterface.frame, "The User Status Changed To DISCONNECTED");   
 
 						
 					}

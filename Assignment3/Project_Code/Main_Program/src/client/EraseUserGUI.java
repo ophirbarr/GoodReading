@@ -3,6 +3,8 @@ package client;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
@@ -87,10 +89,11 @@ public class EraseUserGUI extends JPanel {
 		/**
 		 * ListSelectionListener to know which user is selected
 		 */
-		list.addListSelectionListener(new ListSelectionListener() {
 			
-		
-			public void valueChanged(ListSelectionEvent e) {
+		list.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+
 				int index = list.getSelectedIndex();
 				
 				btnEraseUser.addActionListener(new ActionListener() {
@@ -112,6 +115,8 @@ public class EraseUserGUI extends JPanel {
 						
 						//clientInterface.waitForServer();
 						JOptionPane.showMessageDialog(null, "The user is deleted from the system");
+
+						
 					}
 					
 				});
