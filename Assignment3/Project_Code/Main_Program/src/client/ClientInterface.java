@@ -188,8 +188,7 @@ public class ClientInterface extends ClientConsole
         		signUpPanel = new SignUpGUI(clientInterface);
     			frame.remove(loginPanel);
     			frame.getContentPane().add(signUpPanel);
-    			frame.revalidate(); // For Java 1.7 or above.
-    			// frame.getContentPane().validate(); // For Java 1.6 or below.
+    			frame.revalidate();
     			frame.repaint();
         	}
         	@Override
