@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import common.Define;
 import common.Message;
 import good_reading.Book;
 import good_reading.Customer;
@@ -183,10 +184,11 @@ public class MyBooksGUI extends JPanel {
 				
 				String format = null;
 				int index = list.getSelectedIndex();
-				String path = System.getProperty("user.home") + "\\" + myBooks[index].get_title();
 				
-				if(index != -1)
+				if(index != -1 || list.getSelectedValue() == "There are no matching results to your query.")
 				{
+					String path = System.getProperty("user.home") + "\\" + myBooks[index].get_title();
+					
 					if(rdbtnPDF.isSelected())
 					{
 						format = "PDF";
@@ -196,7 +198,7 @@ public class MyBooksGUI extends JPanel {
 					else if(rdbtnDOC.isSelected())
 					{
 						format = "DOC";
-						path = path + ".docx";
+						path = path + ".doc";
 					}
 					
 					else if(rdbtnFB2.isSelected())
@@ -230,6 +232,8 @@ public class MyBooksGUI extends JPanel {
 						e1.printStackTrace();
 					} 
 				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "You need to choose a book first.", Define.Error);
 			}
 		});
 		lblDownloadBook.setBounds(568, 253, 118, 30);
