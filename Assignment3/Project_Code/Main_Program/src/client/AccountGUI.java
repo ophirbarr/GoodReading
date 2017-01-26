@@ -141,7 +141,7 @@ public class AccountGUI extends JPanel
 				else if(((Customer)clientInterface.user).get_waitingForChangeType() != Define.DO_NOT_CHANGE)
 					new PopUpMessageGUI(clientInterface.frame, "Your previous request to update subscription is being handled.", Define.Notice);
 				else
-					CustomerController.AddAccountTypeToWaitList(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
+					CustomerController.WaitForAccountTypeChange(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
 			}
 		});
 		btnUpdateAccountType.setBounds(420, 58, 153, 34);

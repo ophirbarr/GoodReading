@@ -198,18 +198,26 @@ public class CustomerController {
 	}
 	
 	/**
-	 * Updates the account type of a customer to a new type. 
+	 * Updates the account _waitingForChangeType status of a customer to a new type. 
 	 * @param clientInterface The main class of the program.
 	 * @param customer The customer whose account type is to be updated.
 	 * @param Type The new account type requested by the customer.
 	 */
-	public static void AddAccountTypeToWaitList(ClientInterface clientInterface, Customer customer, int Type)
+	public static void WaitForAccountTypeChange(ClientInterface clientInterface, Customer customer, int Type)
 	{
 		if(ValidateAccount(clientInterface, customer))
 		{
 				customer.set_waitingForChangeType(Type);
 				Message msg = new Message ("UpdateCustomer", "CustomerController");
 				msg.add(customer);
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				msg = new Message ("CustomerChangeType", "ServerMessage");
 				try {
 					clientInterface.client.openConnection();
 					clientInterface.client.sendToServer(msg);
