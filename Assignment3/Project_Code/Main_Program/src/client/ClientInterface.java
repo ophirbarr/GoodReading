@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 
+import common.Define;
 import common.Message;
 
 import javax.swing.ImageIcon;
@@ -115,8 +116,8 @@ public class ClientInterface extends ClientConsole
 
         frame.getContentPane().add(loginPanel);
         loginPanel.setLayout(null);
-        		
-        fieldUsername = new JTextField();
+        
+    	fieldUsername = new JTextField();
         fieldUsername.setBounds(284, 349, 251, 36);
         loginPanel.add(fieldUsername);
         fieldUsername.setColumns(10);
