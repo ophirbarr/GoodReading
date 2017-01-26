@@ -30,6 +30,7 @@ public class BookCriteria extends AbstractORMCriteria {
 	public final StringExpression _purchaseLog;
 	public final IntegerExpression _purchaseCount;
 	public final StringExpression _bookFormat;
+	public final StringExpression _picPath;
 	
 	public BookCriteria(Criteria criteria) {
 		super(criteria);
@@ -44,6 +45,7 @@ public class BookCriteria extends AbstractORMCriteria {
 		_purchaseLog = new StringExpression("_purchaseLog", this);
 		_purchaseCount = new IntegerExpression("_purchaseCount", this);
 		_bookFormat = new StringExpression("_bookFormat", this);
+		_picPath = new StringExpression("_picPath", this);
 	}
 	
 	public BookCriteria(PersistentSession session) {

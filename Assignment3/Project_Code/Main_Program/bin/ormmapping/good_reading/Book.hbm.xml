@@ -20,5 +20,6 @@ License Type: Academic
 		<property name="_purchaseLog" column="_purchaseLog" type="string" length="255" not-null="false" lazy="false"/>
 		<property name="_purchaseCount" column="_purchaseCount" type="integer" length="10" not-null="true" lazy="false"/>
 		<property name="_bookFormat" column="_bookFormat" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_picPath" column="_picPath" type="string" length="255" not-null="false" lazy="false"/>
 	</class>
 </hibernate-mapping>

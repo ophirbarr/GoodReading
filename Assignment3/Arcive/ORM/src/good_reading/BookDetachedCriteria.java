@@ -30,6 +30,7 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 	public final StringExpression _purchaseLog;
 	public final IntegerExpression _purchaseCount;
 	public final StringExpression _bookFormat;
+	public final StringExpression _picPath;
 	
 	public BookDetachedCriteria() {
 		super(good_reading.Book.class, good_reading.BookCriteria.class);
@@ -44,6 +45,7 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 		_purchaseLog = new StringExpression("_purchaseLog", this.getDetachedCriteria());
 		_purchaseCount = new IntegerExpression("_purchaseCount", this.getDetachedCriteria());
 		_bookFormat = new StringExpression("_bookFormat", this.getDetachedCriteria());
+		_picPath = new StringExpression("_picPath", this.getDetachedCriteria());
 	}
 	
 	public BookDetachedCriteria(DetachedCriteria aDetachedCriteria) {
@@ -59,6 +61,7 @@ public class BookDetachedCriteria extends AbstractORMDetachedCriteria {
 		_purchaseLog = new StringExpression("_purchaseLog", this.getDetachedCriteria());
 		_purchaseCount = new IntegerExpression("_purchaseCount", this.getDetachedCriteria());
 		_bookFormat = new StringExpression("_bookFormat", this.getDetachedCriteria());
+		_picPath = new StringExpression("_picPath", this.getDetachedCriteria());
 	}
 	
 	public Book uniqueBook(PersistentSession session) {

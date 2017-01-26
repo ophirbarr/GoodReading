@@ -20,27 +20,9 @@ import java.util.List;
 
 import java.io.Serializable;
 public class Book implements Serializable {
-	
 	public Book() {
 	}
 	
-	public Book(int _bid, String _title, String _language, String _summary, String _TableOfContents,
-			Boolean _viewStatus, float _price, String _searchLog, String _purchaseLog, int _purchaseCount,
-			String _bookFormat) {
-		super();
-		this._bid = _bid;
-		this._title = _title;
-		this._language = _language;
-		this._summary = _summary;
-		this._TableOfContents = _TableOfContents;
-		this._viewStatus = _viewStatus;
-		this._price = _price;
-		this._searchLog = _searchLog;
-		this._purchaseLog = _purchaseLog;
-		this._purchaseCount = _purchaseCount;
-		this._bookFormat = _bookFormat;
-	}
-
 	public static Book loadBookByORMID(int _bid) throws PersistentException {
 		try {
 			PersistentSession session = good_reading.GoodReadingPersistentManager.instance().getSession();
@@ -399,6 +381,8 @@ public class Book implements Serializable {
 	
 	private String _bookFormat;
 	
+	private String _picPath;
+	
 	public void set_bid(int value) {
 		this._bid = value;
 	}
@@ -493,6 +477,14 @@ public class Book implements Serializable {
 	
 	public String get_bookFormat() {
 		return _bookFormat;
+	}
+	
+	public void set_picPath(String value) {
+		this._picPath = value;
+	}
+	
+	public String get_picPath() {
+		return _picPath;
 	}
 	
 	public String toString() {

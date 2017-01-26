@@ -381,6 +381,8 @@ public class Book implements Serializable {
 	
 	private String _bookFormat;
 	
+	private String _picPath;
+	
 	public void set_bid(int value) {
 		this._bid = value;
 	}
@@ -475,6 +477,14 @@ public class Book implements Serializable {
 	
 	public String get_bookFormat() {
 		return _bookFormat;
+	}
+	
+	public void set_picPath(String value) {
+		this._picPath = value;
+	}
+	
+	public String get_picPath() {
+		return _picPath;
 	}
 	
 	public String toString() {
