@@ -54,9 +54,9 @@ public class CustomerController {
 		
 		if(format.equals("PDF"))
 			path = AllPaths[0];
-		else if(format == "DOC")
+		else if(format.equals("DOC"))
 			path = AllPaths[1];
-		else if(format == "FB2")
+		else if(format.equals("FB2"))
 			path = AllPaths[2];
 
 		BufferedInputStream bin = null;
