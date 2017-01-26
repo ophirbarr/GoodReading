@@ -60,10 +60,8 @@ public class ViewBookGUI extends JPanel {
 		imagePanel.add(lblNewLabel);
 		
 		JLabel lblBookpicture = new JLabel("book_picture");
-		//TODO get book picture from data base
 		lblBookpicture.setBounds(448, 103, 184, 270);
-		lblBookpicture.setIcon(Define.ResizeIcon("/design/harry_potter.jpg", lblBookpicture.getWidth(), lblBookpicture.getHeight()));
-		
+		lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
 		imagePanel.add(lblBookpicture);
 		
 		JLabel lblIdLabel = new JLabel("ID: "+book.get_bid());
