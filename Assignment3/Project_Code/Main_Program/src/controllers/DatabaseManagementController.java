@@ -95,7 +95,7 @@ public class DatabaseManagementController
 	 */
 	public static Message GetBookDetails(int bid)
 	{
-		Message msg = new Message(null, null);
+		Message msg = new Message("", "");
 		Book_Author[] book_author = null;
 		Book_Subject[] book_subject = null; // no need
 		Book_Keywords[] book_keyword = null;

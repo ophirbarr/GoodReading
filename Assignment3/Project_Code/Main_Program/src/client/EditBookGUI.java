@@ -46,7 +46,7 @@ public class EditBookGUI extends JPanel
 	DefaultListModel<String> listAuthorsModel;
 	DefaultListModel<String> listSubjectsModel;
 	DefaultListModel<String> listKeywordsModel;
-	private JTextField textPhotoPath;
+	private JTextField textPicPath;
 	
 	public EditBookGUI(ClientInterface clientInterface, Book book)
 	{
@@ -358,6 +358,7 @@ public class EditBookGUI extends JPanel
 				book.set_TableOfContents(textToC.getText());
 				book.set_price(Float.parseFloat(textPrice.getText()));
 				book.set_bookFormat(textDownloadPath.getText());
+				book.set_picPath(textPicPath.getText());
 				msg.add(book);
 				
 				try {
@@ -375,6 +376,11 @@ public class EditBookGUI extends JPanel
 		btnApply.setBounds(158, 206, 85, 24);
 		panel.add(btnApply);
 		btnApply.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
+		textPicPath = new JTextField();
+		textPicPath.setBounds(117, 183, 225, 20);
+		panel.add(textPicPath);
+		textPicPath.setColumns(10);
 		
 		Message msg = new Message("GetBookDetails", "DatabaseManagementController");
 		msg.add(book.get_bid());
@@ -394,17 +400,12 @@ public class EditBookGUI extends JPanel
 		textToC.setText(book.get_TableOfContents());
 		textPrice.setText("" + book.get_price());
 		textDownloadPath.setText(book.get_bookFormat());
+		//textPicPath.setText(book.get_picPath());
+		textPicPath.setText(book.get_picPath());
 		
-		JLabel lblPhotoPath = new JLabel("Photo Path:");
-		lblPhotoPath.setBounds(10, 186, 91, 14);
-		panel.add(lblPhotoPath);
-		
-		textPhotoPath = new JTextField();
-		textPhotoPath.setText("TEMP");
-		textPhotoPath.setEnabled(false);
-		textPhotoPath.setBounds(117, 183, 225, 20);
-		panel.add(textPhotoPath);
-		textPhotoPath.setColumns(10);
+		JLabel lblPicPath = new JLabel("Pic Path:");
+		lblPicPath.setBounds(10, 186, 91, 14);
+		panel.add(lblPicPath);
 		
 		for (Book_Author book_author : (Book_Author[])bookDetails.getParameters().get(0))
 			listAuthorsModel.addElement(book_author.get_author());
