@@ -138,6 +138,8 @@ public class MainGUI extends JPanel {
 					new PopUpMessageGUI(clientInterface.frame, "You may open an account to have your own book shelve.", Define.Like);
 			}
 		});
+		if((clientInterface.user instanceof Worker))
+			MyBooks.setEnabled(false);
 		menu.add(MyBooks, "flowx,cell 0 3,alignx center,aligny center");
 		
 		JButton btnManageDatabase = new JButton("Manage Database");
@@ -156,7 +158,6 @@ public class MainGUI extends JPanel {
 		});
 		
 		JButton btnMyAccount = new JButton("My Account");
-		if((clientInterface.user instanceof Worker))btnMyAccount.setEnabled(false);
 		btnMyAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -170,7 +171,8 @@ public class MainGUI extends JPanel {
 				currentPanel.repaint();
 			}
 		});
-		
+		if((clientInterface.user instanceof Worker))
+			btnMyAccount.setEnabled(false);
 		menu.add(btnMyAccount, "cell 0 4,alignx center,aligny center");
 		
 		

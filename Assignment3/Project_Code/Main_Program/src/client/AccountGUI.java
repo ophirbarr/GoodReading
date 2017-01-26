@@ -121,7 +121,7 @@ public class AccountGUI extends JPanel
 				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong! Please contact tech support.");
 			}
 		});
-		btnOpenAccount.setBounds(20, 154, 214, 41);
+		btnOpenAccount.setBounds(20, 154, 230, 41);
 		add(btnOpenAccount);
 		if (!(clientInterface.user instanceof Customer) && !(clientInterface.user instanceof Worker)) btnOpenAccount.setEnabled(true);
 		else btnOpenAccount.setEnabled(false);
@@ -130,6 +130,8 @@ public class AccountGUI extends JPanel
 		JComboBox comboBox = new JComboBox(comboBoxOp);
 		comboBox.setBounds(444, 103, 107, 25);
 		add(comboBox);
+		if(!(clientInterface.user instanceof Customer))
+			comboBox.setEnabled(false);
 		
 		JButton btnUpdateAccountType = new JButton("Purchase subsription");
 		btnUpdateAccountType.addActionListener(new ActionListener() {
@@ -142,8 +144,9 @@ public class AccountGUI extends JPanel
 					CustomerController.UpdateAccountType(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
 			}
 		});
-		btnUpdateAccountType.setBounds(430, 58, 135, 34);
-		btnUpdateAccountType.setEnabled(true);
+		btnUpdateAccountType.setBounds(420, 58, 153, 34);
+		if(!(clientInterface.user instanceof Customer))
+			btnUpdateAccountType.setEnabled(false);
 		add(btnUpdateAccountType);
 		
 		

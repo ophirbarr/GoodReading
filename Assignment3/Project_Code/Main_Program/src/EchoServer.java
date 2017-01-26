@@ -3,6 +3,9 @@
 // license found at www.lloseng.com 
 
 import java.io.*;
+
+import javax.swing.JFrame;
+
 import org.orm.PersistentException;
 import common.Message;
 import controllers.BookController;
@@ -12,6 +15,17 @@ import good_reading.BookReview;
 import good_reading.Customer;
 import good_reading.SystemUser;
 import ocsf.server.*;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * This class overrides some of the methods in the abstract 
@@ -23,7 +37,7 @@ import ocsf.server.*;
  * @author Paul Holden
  * @version July 2000
  */
-public class EchoServer extends AbstractServer 
+public class EchoServer extends AbstractServer
 {
   //Class variables *************************************************
   
@@ -31,6 +45,10 @@ public class EchoServer extends AbstractServer
    * The default port to listen on.
    */
   final public static int DEFAULT_PORT = 5555;
+  private JFrame frame;
+  private static JTextField adminField;
+  private static JPasswordField passwordField;
+  private static int port;
   
   //Constructors ****************************************************
   
@@ -431,27 +449,112 @@ public class EchoServer extends AbstractServer
    */
   public static void main(String[] args) 
   {
-    int port = 0; //Port to listen on
-
-    try
-    {
-      port = Integer.parseInt(args[0]); //Get port from command line
-    }
-    catch(Throwable t)
-    {
-      port = DEFAULT_PORT; //Set port to 5555
-    }
-	
-    EchoServer sv = new EchoServer(port);
+    port = 0; //Port to listen on
+    JFrame frame = new JFrame();
+    frame.getContentPane().setBackground(new Color(250, 240, 230));
+    frame.getContentPane().setLayout(null);
     
-    try 
-    {
-      sv.listen(); //Start listening for connections
-    } 
-    catch (Exception ex) 
-    {
-      System.out.println("ERROR - Could not listen for clients!");
-    }
+    JPanel login = new JPanel();
+    login.setBackground(new Color(250, 240, 230));
+    login.setBounds(0, 0, 467, 261);
+    frame.getContentPane().add(login);
+    login.setLayout(null);
+    
+    JLabel lblGoodReadingServer = new JLabel("GOOD READING server startup");
+    lblGoodReadingServer.setBounds(46, 35, 335, 42);
+    login.add(lblGoodReadingServer);
+    lblGoodReadingServer.setFont(new Font("Tahoma", Font.BOLD, 20));
+    
+    JLabel lblAdmin = new JLabel("admin:");
+    lblAdmin.setBounds(81, 107, 65, 14);
+    login.add(lblAdmin);
+    
+    JLabel lblPassword = new JLabel("password:");
+    lblPassword.setBounds(81, 132, 65, 14);
+    login.add(lblPassword);
+    
+    adminField = new JTextField();
+    adminField.setBounds(150, 104, 186, 20);
+    login.add(adminField);
+    adminField.setColumns(10);
+    
+    passwordField = new JPasswordField();
+    passwordField.setBounds(150, 129, 186, 20);
+    login.add(passwordField);
+    
+    JPanel server = new JPanel();
+    server.setBackground(new Color(250, 240, 230));
+    server.setBounds(0, 0, 434, 261);
+    //frame.getContentPane().add(server);
+    server.setLayout(null);
+    
+    JButton btnStart = new JButton("START");
+    btnStart.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) 
+    	{
+    		String admin = adminField.getText();
+    		String password = new String(passwordField.getPassword());
+    		SystemUser adminUser = null;
+    		
+    		try {
+				adminUser = SystemUser.loadSystemUserByQuery("_userName = '" + admin + "' AND _password = '" + password + "' AND _role = 'Admin'", null);
+			} catch (PersistentException e) {
+    			JOptionPane.showMessageDialog(frame, "Login failed. (database error)");
+				e.printStackTrace();
+			}
+    		if (adminUser != null)
+    		{
+    			frame.remove(login);
+    			frame.getContentPane().add(server);
+    			frame.revalidate();
+    			frame.repaint();
+    			
+    			try
+    		    {
+    		      port = Integer.parseInt(args[0]); //Get port from command line
+    		    }
+    		    catch(Throwable t)
+    		    {
+    		      port = DEFAULT_PORT; //Set port to 5555
+    		    }
+    			
+    		    EchoServer sv = new EchoServer(port);
+    		    
+    		    try 
+    		    {
+    		      sv.listen(); //Start listening for connections
+    		    } 
+    		    catch (Exception ex) 
+    		    {
+    		      System.out.println("ERROR - Could not listen for clients!");
+    		    }
+    		}
+    		else
+    			JOptionPane.showMessageDialog(frame, "Login failed. (wrong input");
+
+    	}
+    });
+    btnStart.setBounds(247, 173, 89, 23);
+    login.add(btnStart);
+    
+    
+    JButton btnShutDown = new JButton("SHUT DOWN");
+    btnShutDown.setBounds(227, 172, 119, 23);
+    btnShutDown.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) 
+    	{
+    		System.exit(0);
+    	}});
+    server.add(btnShutDown);
+    
+    JLabel lblGoodReadingServer_1 = new JLabel("GOOD READING server is running...");
+    lblGoodReadingServer_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+    lblGoodReadingServer_1.setBounds(46, 35, 378, 42);
+    server.add(lblGoodReadingServer_1);
+    
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(483,298);
+    frame.setVisible(true);
   }
 }
 //End of EchoServer class

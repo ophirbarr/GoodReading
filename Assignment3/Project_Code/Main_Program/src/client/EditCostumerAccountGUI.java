@@ -106,7 +106,7 @@ public class EditCostumerAccountGUI extends JPanel {
 						}
 						
 						//clientInterface.waitForServer();
-						JOptionPane.showMessageDialog(null, "The User Account Status Changed");
+						JOptionPane.showMessageDialog(null, "The User Account Type Changed");
 					}
 					
 				});
