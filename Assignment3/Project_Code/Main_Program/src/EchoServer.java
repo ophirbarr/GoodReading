@@ -370,7 +370,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetAllUsers());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;
@@ -378,7 +377,6 @@ public class EchoServer extends AbstractServer
 			  try {
 				client.sendToClient(controllers.ManagerController.GetAllCustomers());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  break;

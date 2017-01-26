@@ -159,7 +159,6 @@ public static SystemUser[] GetAllUsers(){
 		systemUsers = SystemUser.listSystemUserByQuery("_userStatus != '2'", "_firstName");
 		
 	} catch (PersistentException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return systemUsers;
@@ -172,7 +171,6 @@ public static Customer[] GetAllCustomers(){
 		customers = Customer.listCustomerByQuery("_waitingForChangeType != '3'", "_firstName");
 		
 	} catch (PersistentException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return customers;
