@@ -203,7 +203,7 @@ public class CustomerController {
 	 * @param customer The customer whose account type is to be updated.
 	 * @param Type The new account type requested by the customer.
 	 */
-	public static void UpdateAccountType(ClientInterface clientInterface, Customer customer, int Type)
+	public static void AddAccountTypeToWaitList(ClientInterface clientInterface, Customer customer, int Type)
 	{
 		if(ValidateAccount(clientInterface, customer))
 		{

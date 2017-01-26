@@ -101,7 +101,7 @@ public class MyBooksGUI extends JPanel {
 		btnViewBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int index = list.getSelectedIndex();
-				if(index != -1)
+				if(index != -1 && !(list.getSelectedValue().equals("There are no matching results to your query.")))
 				{
 					clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
 					clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, myBooks[index]);
@@ -185,7 +185,7 @@ public class MyBooksGUI extends JPanel {
 				String format = null;
 				int index = list.getSelectedIndex();
 				
-				if(index != -1 || list.getSelectedValue() == "There are no matching results to your query.")
+				if(index != -1 && !(list.getSelectedValue().equals("There are no matching results to your query.")))
 				{
 					String path = System.getProperty("user.home") + "\\" + myBooks[index].get_title();
 					
