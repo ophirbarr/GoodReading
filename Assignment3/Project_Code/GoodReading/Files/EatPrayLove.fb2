@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <description>
+        <title-info>
+            <genre>antique</genre>
+                <author><first-name>Inna</first-name><last-name>Ilyaev</last-name></author>
+            <book-title>EatPrayLove</book-title>
+            
+            <lang>en</lang>
+            
+            
+        </title-info>
+        <document-info>
+            <author><first-name>Inna</first-name><last-name>Ilyaev</last-name></author>
+            <program-used>calibre 2.76.0</program-used>
+            <date>27.1.2017</date>
+            <id>186bb675-bad7-466f-87d6-a094ac11dfbd</id>
+            <version>1.0</version>
+        </document-info>
+        <publish-info>
+            
+            
+            
+        </publish-info>
+    </description>
+<body>
+<section>
+<p>It's 3 a.m. and Elizabeth Gilbert is sobbing on the bathroom floor. She's in her 30s, she has a</p>
+
+<p>husband, a house, they're trying for a baby - and she doesn't want any of it.</p>
+
+<p>A bitter divorce and a turbulent love affair later, she emerges battered and bewildered and realises it</p>
+
+<p>is time to pursue her own journey in search of three things she has been missing: pleasure, devotion</p>
+
+<p>and balance.</p>
+
+<p>So she travels to Rome, where she learns Italian from handsome, brown-eyed identical twins and</p>
+
+<p>gains 25pounds, an ashram in India, where she finds that enlightenment entails getting up in the</p>
+
+<p>middle of the night to scrub the temple floor, and Bali where a toothless medicine man of</p>
+
+<p>indeterminate age offers her a new path to peace: simply sit still and smile. And slowly happiness</p>
+
+<p>begins to creep up on her.</p><empty-line />
+</section>
+
+</body>
+</FictionBook>
