@@ -54,20 +54,10 @@ public class ViewBookGUI extends JPanel {
 		textField.setBounds(42, 41, 226, 51);
 		imagePanel.add(textField);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(ViewBookGUI.class.getResource("/design/g7642.png")));
-		lblNewLabel.setBounds(411, 276, 269, 123);
-		imagePanel.add(lblNewLabel);
-		
 		JLabel lblBookpicture = new JLabel("book_picture");
 		lblBookpicture.setBounds(448, 103, 184, 270);
 		lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
 		imagePanel.add(lblBookpicture);
-		
-		JLabel lblIdLabel = new JLabel("ID: "+book.get_bid());
-		lblIdLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblIdLabel.setBounds(42, 103, 58, 20);
-		imagePanel.add(lblIdLabel);
 		
 		JLabel lblLanguage = new JLabel("Language: "+book.get_language());
 		lblLanguage.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -159,5 +149,10 @@ public class ViewBookGUI extends JPanel {
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnSubmitReview.setBounds(545, 426, 135, 29);
 		imagePanel.add(btnSubmitReview);
+		
+		JLabel lblAuther = new JLabel("Author:");
+		lblAuther.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAuther.setBounds(42, 103, 184, 20);
+		imagePanel.add(lblAuther);
 	}
 }

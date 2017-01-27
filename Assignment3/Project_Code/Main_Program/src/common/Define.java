@@ -42,7 +42,7 @@ public class Define {
 	//Function to resize an icon to fit the size of a label/button
 	public static ImageIcon ResizeIcon(String path, int componentWidth, int componentHeight)
 	{
-		ImageIcon imageIcon = new ImageIcon(Define.class.getResource(path)); // load the image to a imageIcon
+		ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
 		
 		int IconWidth = imageIcon.getIconWidth();
