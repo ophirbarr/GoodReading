@@ -400,7 +400,6 @@ public class EditBookGUI extends JPanel
 		textToC.setText(book.get_TableOfContents());
 		textPrice.setText("" + book.get_price());
 		textDownloadPath.setText(book.get_bookFormat());
-		//textPicPath.setText(book.get_picPath());
 		textPicPath.setText(book.get_picPath());
 		
 		JLabel lblPicPath = new JLabel("Pic Path:");

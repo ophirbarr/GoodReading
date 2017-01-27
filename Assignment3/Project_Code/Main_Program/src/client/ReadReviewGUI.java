@@ -62,8 +62,8 @@ public class ReadReviewGUI extends JPanel {
 		imagePanel.add(textField);
 		
 		JLabel lblBookpicture = new JLabel("book_picture");
-		lblBookpicture.setIcon(new ImageIcon(ReadReviewGUI.class.getResource("/design/harry_potter2.png")));
 		lblBookpicture.setBounds(445, 101, 184, 270);
+		lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
 		imagePanel.add(lblBookpicture);
 		
 		JButton btnSubmitReview = new JButton("Submit A Review");

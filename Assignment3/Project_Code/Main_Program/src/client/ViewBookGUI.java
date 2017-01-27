@@ -1,24 +1,29 @@
 package client;
 
 import java.awt.Color;
-
 import javax.swing.JPanel;
-
 import good_reading.Book;
+import good_reading.Book_Author;
 import good_reading.Customer;
+import good_reading.Subject;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-
 import common.Define;
+import common.Message;
 import controllers.CustomerController;
-
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
+import javax.swing.JList;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import javax.swing.JTextField;
 /**
  * @author yair
  * GUI class. Extends JPanel. Displays a book, all its details and different actions to do with it.
@@ -28,7 +33,10 @@ public class ViewBookGUI extends JPanel {
 
 	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
-	private JLabel textField;
+	private JLabel lblTitle;
+	private Message bookDetails;
+	private JTextField textAuthors;
+	private JTextField textSubjects;
 	
 	/**
 	 * Constructor that creates the panel.
@@ -42,74 +50,65 @@ public class ViewBookGUI extends JPanel {
 		this.clientInterface = clientInterface;
 		setLayout(null);
 		
+		// get book details through Database controller
+		try {
+			Message msg1 = new Message("GetBookDetails", "DatabaseManagementController");
+			msg1.add(book.get_bid());
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg1);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		clientInterface.waitForServer();
+		bookDetails = (Message) clientInterface.getMsgFromServer();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 727, 588);
+		add(scrollPane);
+		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(0, 0, 727, 588);
+		scrollPane.setViewportView(imagePanel);
 		imagePanel.setBackground(new Color(250, 243, 232));
-		add(imagePanel);
 		imagePanel.setLayout(null);
 		
-		textField = new JLabel(book.get_title());
-		textField.setHorizontalAlignment(SwingConstants.LEFT);
-		textField.setFont(new Font("Tahoma", Font.BOLD, 19));
-		textField.setBounds(42, 41, 226, 51);
-		imagePanel.add(textField);
+		JPanel panelTitle = new JPanel();
+		panelTitle.setBackground(new Color(250, 235, 215));
+		panelTitle.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		panelTitle.setBounds(24, 16, 439, 65);
+		imagePanel.add(panelTitle);
+		panelTitle.setLayout(null);
 		
-		JLabel lblBookpicture = new JLabel("book_picture");
-		lblBookpicture.setBounds(448, 103, 184, 270);
+		lblTitle = new JLabel(book.get_title());
+		lblTitle.setBounds(10, 11, 419, 43);
+		panelTitle.add(lblTitle);
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setFont(new Font("Aharoni", Font.BOLD, 24));
+		
+		JPanel panelPic = new JPanel();
+		panelPic.setBackground(new Color(250, 235, 215));
+		panelPic.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		panelPic.setBounds(488, 16, 204, 307);
+		imagePanel.add(panelPic);
+		panelPic.setLayout(null);
+		
+		JLabel lblBookpicture = new JLabel("");
+		lblBookpicture.setBackground(new Color(255, 245, 238));
+		lblBookpicture.setBounds(10, 11, 184, 285);
+		panelPic.add(lblBookpicture);
 		lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
-		imagePanel.add(lblBookpicture);
 		
-		JLabel lblLanguage = new JLabel("Language: "+book.get_language());
-		lblLanguage.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblLanguage.setBounds(42, 134, 184, 20);
-		imagePanel.add(lblLanguage);
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(250, 235, 215));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		panel.setBounds(488, 334, 204, 121);
+		imagePanel.add(panel);
+		panel.setLayout(null);
 		
-		JLabel lblPrice = new JLabel("Price: "+book.get_price()+" $");
-		lblPrice.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPrice.setBounds(42, 354, 135, 38);
-		imagePanel.add(lblPrice);
-		
-		JButton btnBuyNow = new JButton("Buy Now");
-		btnBuyNow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) 
-			{
-				if(clientInterface.user instanceof Customer)
-				{
-					if(CustomerController.BuyBook(clientInterface, (Customer)(clientInterface.user), book))
-						new PopUpMessageGUI(clientInterface.frame, "Thank you for choosing GoodReading.<br>The book had been added to 'MyBooks'.", Define.Like);
-				}
-				else
-					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to purchase a book.", Define.Notice);
-			}
-		});
-		btnBuyNow.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnBuyNow.setBounds(54, 403, 112, 29);
-		imagePanel.add(btnBuyNow);
-		
-		JLabel lblSummary = new JLabel("Summary: ");
-		lblSummary.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblSummary.setBounds(42, 165, 184, 20);
-		imagePanel.add(lblSummary);
-		
-		JTextArea textArea = new JTextArea(book.get_summary());
-		textArea.setFont(new Font("Courier New", Font.PLAIN, 14));
-		textArea.setEditable(false);
-		textArea.setBounds(42, 196, 346, 38);
-		imagePanel.add(textArea);
-		
-		JLabel lblTableOfContents = new JLabel("Table Of Contents: ");
-		lblTableOfContents.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTableOfContents.setBounds(42, 245, 184, 20);
-		imagePanel.add(lblTableOfContents);
-		
-		JTextArea textArea_1 = new JTextArea((String)book.get_TableOfContents());
-		textArea_1.setFont(new Font("Courier New", Font.PLAIN, 14));
-		textArea_1.setEditable(false);
-		textArea_1.setBounds(42, 276, 346, 38);
-		imagePanel.add(textArea_1);
-		
-		JButton btnReadReviews = new JButton("Read Reviews");
+		JButton btnReadReviews = new JButton("Display Reviews");
+		btnReadReviews.setBackground(new Color(222, 184, 135));
+		btnReadReviews.setHorizontalAlignment(SwingConstants.LEFT);
+		btnReadReviews.setBounds(10, 11, 184, 25);
+		panel.add(btnReadReviews);
 		btnReadReviews.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
@@ -118,16 +117,19 @@ public class ViewBookGUI extends JPanel {
 				clientInterface.mainPanel.currentPanel.setBackground(new Color(255, 255, 255));
 				clientInterface.mainPanel.add(clientInterface.mainPanel.currentPanel);
 				clientInterface.mainPanel.currentPanel.setLayout(null);
-				clientInterface.mainPanel.currentPanel.revalidate(); // For Java 1.7 or above.
-				// frame.getContentPane().validate(); // For Java 1.6 or below.
+				clientInterface.mainPanel.currentPanel.revalidate();
 				clientInterface.mainPanel.currentPanel.repaint();
 			}
 		});
 		btnReadReviews.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnReadReviews.setBounds(397, 426, 135, 29);
-		imagePanel.add(btnReadReviews);
 		
-		JButton btnSubmitReview = new JButton("Submit Review");
+		JButton btnSubmitReview = new JButton("Write Review");
+		if (!(clientInterface.user instanceof Customer) || (clientInterface.user instanceof Customer && ((Customer)clientInterface.user).get_waitingForChangeType() == Define.FROM_USER_TO_CUSTOMER)) 
+			btnSubmitReview.setEnabled(false);
+		btnSubmitReview.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSubmitReview.setBounds(10, 47, 184, 25);
+		btnSubmitReview.setBackground(new Color(222, 184, 135));
+		panel.add(btnSubmitReview);
 		btnSubmitReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -147,12 +149,64 @@ public class ViewBookGUI extends JPanel {
 			}
 		});
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnSubmitReview.setBounds(545, 426, 135, 29);
-		imagePanel.add(btnSubmitReview);
 		
-		JLabel lblAuther = new JLabel("Author:");
-		lblAuther.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAuther.setBounds(42, 103, 184, 20);
-		imagePanel.add(lblAuther);
+		JButton btnBuyNow = new JButton("Buy Now - $" + book.get_price());
+		if (!(clientInterface.user instanceof Customer) || (clientInterface.user instanceof Customer && ((Customer)clientInterface.user).get_waitingForChangeType() == Define.FROM_USER_TO_CUSTOMER))
+			btnBuyNow.setEnabled(false);
+		btnBuyNow.setHorizontalAlignment(SwingConstants.LEFT);
+		btnBuyNow.setBounds(10, 83, 184, 25);
+		btnBuyNow.setBackground(new Color(222, 184, 135));
+		panel.add(btnBuyNow);
+		btnBuyNow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				if(clientInterface.user instanceof Customer)
+				{
+					if(CustomerController.BuyBook(clientInterface, (Customer)(clientInterface.user), book))
+						new PopUpMessageGUI(clientInterface.frame, "Thank you for choosing GoodReading.<br>The book had been added to 'MyBooks'.", Define.Like);
+				}
+				else
+					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to purchase a book.", Define.Notice);
+			}
+		});
+		btnBuyNow.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel lblAuthors = new JLabel("Author(s):");
+		lblAuthors.setBounds(24, 92, 68, 14);
+		imagePanel.add(lblAuthors);
+		
+		textAuthors = new JTextField();
+		textAuthors.setEditable(false);
+		Book_Author[] authors = ((Book_Author[]) bookDetails.getParameters().get(0));
+		if (authors.length > 0)
+		{
+			String authorStr = new String("");
+			for (Book_Author a : authors)
+				authorStr = authorStr + a.get_author() + ", ";
+			authorStr = authorStr.substring(0, authorStr.length() - 2);
+			textAuthors.setText(authorStr);
+		}
+		textAuthors.setBounds(101, 89, 362, 20);
+		imagePanel.add(textAuthors);
+		textAuthors.setColumns(10);
+		
+		JLabel lblSubjects = new JLabel("Subject(s):");
+		lblSubjects.setBounds(24, 117, 68, 14);
+		imagePanel.add(lblSubjects);
+		
+		textSubjects = new JTextField();
+		textSubjects.setEditable(false);
+		Subject[] subjects = ((Subject[]) bookDetails.getParameters().get(1));
+		if (authors.length > 0)
+		{
+			String subjectStr = new String("");
+			for (Subject s : subjects)
+				subjectStr = subjectStr + s.get_name() + ", ";
+			subjectStr = subjectStr.substring(0, subjectStr.length() - 2);
+			textSubjects.setText(subjectStr);
+		}
+		textSubjects.setBounds(101, 114, 362, 20);
+		imagePanel.add(textSubjects);
+		textSubjects.setColumns(10);
 	}
 }
