@@ -59,7 +59,8 @@ public class MyBooksGUI extends JPanel {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
 		JList<String> list = new JList<String>(listModel);
-		
+		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
+
 		scrollPane.setViewportView(list);
 		
 		JLabel lblResultTitle = new JLabel("ID            Title                                                       Language            Price           Summary");

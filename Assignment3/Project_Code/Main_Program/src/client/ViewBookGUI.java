@@ -163,7 +163,7 @@ public class ViewBookGUI extends JPanel {
 				if(clientInterface.user instanceof Customer)
 				{
 					if(CustomerController.BuyBook(clientInterface, (Customer)(clientInterface.user), book))
-						new PopUpMessageGUI(clientInterface.frame, "Thank you for choosing GoodReading.<br>The book had been added to 'MyBooks'.", Define.Like);
+						new PopUpMessageGUI(clientInterface.frame, "Thank you for choosing GoodReading.<br>The book has been added to 'MyBooks'.", Define.Like);
 				}
 				else
 					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to purchase a book.", Define.Notice);

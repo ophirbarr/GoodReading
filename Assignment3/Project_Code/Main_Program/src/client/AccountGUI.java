@@ -82,17 +82,17 @@ public class AccountGUI extends JPanel
 		{
 			Date endDate = ((Customer)clientInterface.user).get_endDate();
 			Date today = new Date();
-			if (endDate != null)
+			if (endDate != null && (endDate.getTime() - today.getTime() > 0))
 			{
 				lblTimeLeft.setText("" + (endDate.getTime() - today.getTime())/(1000 * 60 * 60 * 24) + " Days");
 				lblTimeLeft.setForeground(new Color(0, 100, 0));
 			}
 		}
 		lblTimeLeft.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblTimeLeft.setBounds(176, 47, 83, 20);
+		lblTimeLeft.setBounds(176, 47, 156, 20);
 		panel.add(lblTimeLeft);
 		
-		JButton btnOpenAccount = new JButton("Apply request to open  an account");
+		JButton btnOpenAccount = new JButton("Open request for a new account");
 		btnOpenAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
@@ -128,7 +128,7 @@ public class AccountGUI extends JPanel
 		
 		String [] comboBoxOp = {"No change","Monthly","Annualy"};
 		JComboBox comboBox = new JComboBox(comboBoxOp);
-		comboBox.setBounds(444, 103, 107, 25);
+		comboBox.setBounds(420, 103, 107, 25);
 		add(comboBox);
 		if(!(clientInterface.user instanceof Customer))
 			comboBox.setEnabled(false);
@@ -144,7 +144,7 @@ public class AccountGUI extends JPanel
 					CustomerController.WaitForAccountTypeChange(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
 			}
 		});
-		btnUpdateAccountType.setBounds(420, 58, 153, 34);
+		btnUpdateAccountType.setBounds(420, 58, 173, 34);
 		if(!(clientInterface.user instanceof Customer))
 			btnUpdateAccountType.setEnabled(false);
 		add(btnUpdateAccountType);
