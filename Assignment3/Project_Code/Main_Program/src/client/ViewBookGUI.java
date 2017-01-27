@@ -6,27 +6,23 @@ import good_reading.Book;
 import good_reading.Book_Author;
 import good_reading.Customer;
 import good_reading.Subject;
-
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import common.Define;
 import common.Message;
 import controllers.CustomerController;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 /**
- * @author yair
+ * @author yair, ophir
  * GUI class. Extends JPanel. Displays a book, all its details and different actions to do with it.
  */
 @SuppressWarnings("serial")

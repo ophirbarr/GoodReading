@@ -25,6 +25,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for editing a book. Accessed through database management screen.
+ * @author ophir
+ *
+ */
 public class EditBookGUI extends JPanel
 {
 	private ClientInterface clientInterface;

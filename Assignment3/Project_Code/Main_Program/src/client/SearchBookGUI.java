@@ -11,7 +11,6 @@ import common.Message;
 import controllers.BookController;
 import good_reading.Book;
 import good_reading.BookReview;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -24,6 +23,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for searching either books or reviews.
+ * @author ophir
+ *
+ */
 public class SearchBookGUI extends JPanel
 {
 	private ClientInterface clientInterface;
@@ -69,7 +73,7 @@ public class SearchBookGUI extends JPanel
 					rdbtnReview.setSelected(false);
 					lblResultTitle.setText("ID            Title                                                                  Language            Price           Summary");
 					btnDisplay.setText("DISPLAY BOOK");
-					listModel.clear();
+					searchAll();
 				}
 				else if (!rdbtnBook.isSelected() && !rdbtnReview.isSelected())
 				{
@@ -89,7 +93,7 @@ public class SearchBookGUI extends JPanel
 					rdbtnBook.setSelected(false);
 					lblResultTitle.setText("ID            Title                                                       Reviewer's Name");
 					btnDisplay.setText("DISPLAY REVIEW");
-					listModel.clear();
+					searchAll();
 				}
 				else if (!rdbtnBook.isSelected() && !rdbtnReview.isSelected())
 				{
@@ -341,50 +345,7 @@ public class SearchBookGUI extends JPanel
 		btnShowAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-
-				Message msg = new Message("GetAllBooks", "SystemUserController");
-				msg.add(true); // search in catalog
-				try {
-					clientInterface.client.openConnection();
-					clientInterface.client.sendToServer(msg);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				clientInterface.waitForServer();
-				result = (Book[])clientInterface.getMsgFromServer();
-				listModel.clear();
-				
-				if (rdbtnBook.isSelected())
-				{
-					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-					if (result.length == 0) listModel.addElement("There are no matching results to your query.");
-				}
-				else if (rdbtnReview.isSelected())
-				{
-					reviewsArr = new ArrayList<BookReview[]>();
-					for (int i = 0; i < result.length ; i++)
-					{
-						msg = new Message("ReadReviews", "SystemUserController");
-						msg.add(result[i]);
-						try {
-							clientInterface.client.openConnection();
-							clientInterface.client.sendToServer(msg);
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						clientInterface.waitForServer();
-						reviewsArr.add((BookReview[]) clientInterface.getMsgFromServer());
-					}
-					listModel.clear();
-					for (int i = 0; i < result.length ; i++)
-					{
-						for (BookReview review : reviewsArr.get(i))
-							listModel.addElement(String.format("%-6d%-24s%-11s", review.get_rid(), ((Book) result[i]).get_title(), review.get_costumerName()));
-					}
-					if (result.length == 0 || listModel.size() == 0) listModel.addElement("There are no matching results to your query.");
-				}
-				
+				searchAll();
 			}
 		});
 		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -455,5 +416,55 @@ public class SearchBookGUI extends JPanel
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
 		
+		searchAll();
 	}
+	
+	// Get all books (or reviews) from catalog
+	private void searchAll()
+	{
+		Message msg = new Message("GetAllBooks", "SystemUserController");
+		msg.add(true); // search in catalog
+		try {
+			clientInterface.client.openConnection();
+			clientInterface.client.sendToServer(msg);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		clientInterface.waitForServer();
+		result = (Book[])clientInterface.getMsgFromServer();
+		listModel.clear();
+		
+		if (rdbtnBook.isSelected())
+		{
+			for (Object book : result)
+				listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+			if (result.length == 0) listModel.addElement("There are no matching results to your query.");
+		}
+		else if (rdbtnReview.isSelected())
+		{
+			// searchAllReviews();
+			reviewsArr = new ArrayList<BookReview[]>();
+			for (int i = 0; i < result.length ; i++)
+			{
+				msg = new Message("ReadReviews", "SystemUserController");
+				msg.add(result[i]);
+				try {
+					clientInterface.client.openConnection();
+					clientInterface.client.sendToServer(msg);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				clientInterface.waitForServer();
+				reviewsArr.add((BookReview[]) clientInterface.getMsgFromServer());
+			}
+			listModel.clear();
+			for (int i = 0; i < result.length ; i++)
+			{
+				for (BookReview review : reviewsArr.get(i))
+					listModel.addElement(String.format("%-6d%-24s%-11s", review.get_rid(), ((Book) result[i]).get_title(), review.get_costumerName()));
+			}
+			if (result.length == 0 || listModel.size() == 0) listModel.addElement("There are no matching results to your query.");
+		}
+	}
+
 }

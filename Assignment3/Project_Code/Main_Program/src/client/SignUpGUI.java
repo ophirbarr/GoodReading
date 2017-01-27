@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for signing up as a new SystemUser. The newly created SystemUser will be locked untill a librarian approves it.
+ * @author ophir
+ *
+ */
 public class SignUpGUI extends JPanel 
 {
 	private ClientInterface clientInterface;

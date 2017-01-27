@@ -7,7 +7,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -17,13 +16,11 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeListener;
-
 import common.Message;
 import controllers.BookController;
 import good_reading.Book;
 import good_reading.Domain;
 import good_reading.Subject;
-
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +28,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 
+/**
+ * GUI class for database management. A worker will be able to add/edit/delete the following: books, subjects, domains.
+ * @author ophir
+ *
+ */
 public class ManageDatabaseGUI extends JPanel
 {
 	private ClientInterface clientInterface;
@@ -45,6 +47,10 @@ public class ManageDatabaseGUI extends JPanel
 	private JButton btnAdd;
 	private JButton btnEdit;
 	private JButton btnDelete;
+	private JRadioButton rdbtnBooks;
+	private DefaultListModel<String> listModel;
+	private JRadioButton rdbtnSubjects;
+	private JRadioButton rdbtnDomains;
 	
 	public ManageDatabaseGUI(ClientInterface clientInterface)
 	{
@@ -63,7 +69,7 @@ public class ManageDatabaseGUI extends JPanel
 		scrollPane.setBounds(22, 274, 630, 152);
 		add(scrollPane);
 		
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		listModel = new DefaultListModel<String>();
 		JList<String> list = new JList<String>( listModel );
 		list.setFont( new Font("monospaced", Font.PLAIN, 14) );
 		scrollPane.setViewportView(list);
@@ -235,16 +241,16 @@ public class ManageDatabaseGUI extends JPanel
 		typePanel.setBounds(339, 42, 100, 90);
 		add(typePanel);
 		
-		JRadioButton rdbtnBooks = new JRadioButton("books");
+		rdbtnBooks = new JRadioButton("books");
 		rdbtnBooks.setSelected(true);
 		rdbtnBooks.setBounds(6, 7, 88, 23);
 		typePanel.add(rdbtnBooks);
 		
-		JRadioButton rdbtnSubjects = new JRadioButton("subjects");
+		rdbtnSubjects = new JRadioButton("subjects");
 		rdbtnSubjects.setBounds(6, 33, 88, 23);
 		typePanel.add(rdbtnSubjects);
 		
-		JRadioButton rdbtnDomains = new JRadioButton("domains");
+		rdbtnDomains = new JRadioButton("domains");
 		rdbtnDomains.setBounds(6, 60, 88, 23);
 		typePanel.add(rdbtnDomains);
 		
@@ -267,7 +273,7 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					btnAdd.setText("ADD NEW BOOK");
 					lblResultTitle.setText("ID            Title                                                                  Language            Price           Summary");
-					listModel.clear();
+					searchAll();
 				}
 				else rdbtnBooks.setSelected(true);
 			}
@@ -291,7 +297,7 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setFont(new Font("Tahoma", Font.PLAIN, 11));
 					btnAdd.setText("ADD NEW SUBJECT");
 					lblResultTitle.setText("SID          Name                                  DID");
-					listModel.clear();
+					searchAll();
 				}
 				else rdbtnSubjects.setSelected(true);
 			}
@@ -315,7 +321,7 @@ public class ManageDatabaseGUI extends JPanel
 					chckbxDomain.setFont(new Font("Tahoma", Font.BOLD, 12));
 					btnAdd.setText("ADD NEW DOMAIN");
 					lblResultTitle.setText("DID         Name");
-					listModel.clear();
+					searchAll();
 				}
 				else rdbtnDomains.setSelected(true);
 			}
@@ -684,62 +690,7 @@ public class ManageDatabaseGUI extends JPanel
 		btnShowAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				if (rdbtnBooks.isSelected())
-				{
-					Message msg = new Message("GetAllBooks", "SystemUserController");
-					msg.add(false); // search in entire DB
-					try {
-						clientInterface.client.openConnection();
-						clientInterface.client.sendToServer(msg);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					clientInterface.waitForServer();
-					
-					//result = (Book[])clientInterface.getMsgFromServer();
-					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
-					listModel.clear();
-					for (Object book : result)
-						listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
-				}
-				
-				else if (rdbtnSubjects.isSelected())
-				{
-					Message msg = new Message("GetAllSubjects", "DatabaseManagementController");
-					try {
-						clientInterface.client.openConnection();
-						clientInterface.client.sendToServer(msg);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					clientInterface.waitForServer();
-					
-					//result = (Subject[])clientInterface.getMsgFromServer();
-					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
-					listModel.clear();
-					for (Object subject : result)
-						listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
-					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
-				}
-				
-				else if (rdbtnDomains.isSelected())
-				{
-					Message msg = new Message("GetAllDomains", "DatabaseManagementController");
-					try {
-						clientInterface.client.openConnection();
-						clientInterface.client.sendToServer(msg);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					clientInterface.waitForServer();
-					
-					//result = (Domain[])clientInterface.getMsgFromServer();
-					result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
-					listModel.clear();
-					for (Object domain : result)
-						listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
-					if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
-				}
+				searchAll();
 			}
 		});
 		btnShowAll.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -751,5 +702,67 @@ public class ManageDatabaseGUI extends JPanel
 		imagePanel.setBounds(-79, -25, 907, 649);
 		add(imagePanel);
 		
+		searchAll();
+		
+	}
+	
+	private void searchAll()
+	{
+		if (rdbtnBooks.isSelected())
+		{
+			Message msg = new Message("GetAllBooks", "SystemUserController");
+			msg.add(false); // search in entire DB
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			clientInterface.waitForServer();
+			
+			//result = (Book[])clientInterface.getMsgFromServer();
+			result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
+			listModel.clear();
+			for (Object book : result)
+				listModel.addElement(String.format("%-6d%-28s%-11s%-8.2f%s", ((Book)book).get_bid(), ((Book)book).get_title(), ((Book)book).get_language(), ((Book)book).get_price(), ((Book)book).get_summary()));
+		}
+		
+		else if (rdbtnSubjects.isSelected())
+		{
+			Message msg = new Message("GetAllSubjects", "DatabaseManagementController");
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			clientInterface.waitForServer();
+			
+			//result = (Subject[])clientInterface.getMsgFromServer();
+			result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
+			listModel.clear();
+			for (Object subject : result)
+				listModel.addElement(String.format("%-6d%-17s%d", ((Subject) subject).get_sid(), ((Subject) subject).get_name(), ((Subject) subject).get_did()));
+			if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
+		}
+		
+		else if (rdbtnDomains.isSelected())
+		{
+			Message msg = new Message("GetAllDomains", "DatabaseManagementController");
+			try {
+				clientInterface.client.openConnection();
+				clientInterface.client.sendToServer(msg);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			clientInterface.waitForServer();
+			
+			//result = (Domain[])clientInterface.getMsgFromServer();
+			result = new ArrayList<Object>(Arrays.asList((Object[])clientInterface.getMsgFromServer()));
+			listModel.clear();
+			for (Object domain : result)
+				listModel.addElement(String.format("%-6d%-17s", ((Domain) domain).get_did(), ((Domain) domain).get_name()));
+			if (result.size() == 0) listModel.addElement("There are no matching results to your query.");	
+		}
 	}
 }
