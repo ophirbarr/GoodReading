@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 /**
  * @author yair
  * GUI class. Extends JPanel. Displays a book, all its details and different actions to do with it.
@@ -37,6 +38,7 @@ public class ViewBookGUI extends JPanel {
 	private Message bookDetails;
 	private JTextField textAuthors;
 	private JTextField textSubjects;
+	private JTextField textLanguage;
 	
 	/**
 	 * Constructor that creates the panel.
@@ -208,5 +210,43 @@ public class ViewBookGUI extends JPanel {
 		textSubjects.setBounds(101, 114, 362, 20);
 		imagePanel.add(textSubjects);
 		textSubjects.setColumns(10);
+		
+		JLabel lblLanguage = new JLabel("Language:");
+		lblLanguage.setBounds(24, 142, 68, 14);
+		imagePanel.add(lblLanguage);
+		
+		textLanguage = new JTextField(book.get_language());
+		textLanguage.setEditable(false);
+		textLanguage.setBounds(101, 139, 362, 20);
+		imagePanel.add(textLanguage);
+		textLanguage.setColumns(10);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(24, 192, 439, 131);
+		imagePanel.add(scrollPane_1);
+		
+		JTextPane textSummary = new JTextPane();
+		scrollPane_1.setViewportView(textSummary);
+		textSummary.setEditable(false);
+		textSummary.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		textSummary.setText(book.get_summary());
+		
+		JLabel lblSummary = new JLabel("Summary:");
+		lblSummary.setBounds(24, 167, 68, 14);
+		imagePanel.add(lblSummary);
+		
+		JLabel lblTableOfContents = new JLabel("Table of Contents:");
+		lblTableOfContents.setBounds(24, 334, 109, 14);
+		imagePanel.add(lblTableOfContents);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(24, 359, 439, 96);
+		imagePanel.add(scrollPane_2);
+		
+		JTextPane textToC = new JTextPane();
+		textToC.setEditable(false);
+		scrollPane_2.setViewportView(textToC);
+		textToC.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		textToC.setText(book.get_TableOfContents());
 	}
 }
