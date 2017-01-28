@@ -47,10 +47,10 @@ public class ClientInterface extends ClientConsole
 	public SignUpGUI signUpPanel;
 	private JTextField fieldUsername;
 	private JPasswordField fieldPassword;
-
-
+	
 	/**
 	 * Launch the application.
+	 * @param args program args (not used)
 	 */
 	public static void main(String[] args) 
 	{

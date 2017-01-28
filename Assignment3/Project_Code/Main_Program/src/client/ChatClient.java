@@ -12,6 +12,8 @@ import java.io.*;
 
 import javax.swing.JOptionPane;
 
+import org.orm.PersistentException;
+
 /**
  * This class overrides some of the methods defined in the abstract
  * superclass in order to give more functionality to the client.
@@ -40,8 +42,9 @@ public class ChatClient extends AbstractClient
    * @param host The server to connect to.
    * @param port The port number to connect on.
    * @param clientUI The interface type variable.
+   * @throws PersistentException extends PersistentException class
+
    */
-  
   public ChatClient(String host, int port, ChatIF clientUI) 
     throws IOException 
   {
