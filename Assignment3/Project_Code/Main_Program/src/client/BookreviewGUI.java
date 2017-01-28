@@ -16,6 +16,9 @@ import common.Message;
 
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 
 /**
  * 
@@ -31,7 +34,7 @@ public class BookreviewGUI extends JPanel {
 	private ClientInterface clientInterface;
 	@SuppressWarnings("unused")
 	private String nameBook;
-	private JTextArea theReview;  //String of review
+	private JTextPane theReview;  //String of review
 	private JButton btnEdit;
 	
 	/**
@@ -139,12 +142,16 @@ public class BookreviewGUI extends JPanel {
 		btnEdit.setBounds(332, 45, 135, 23);
 		add(btnEdit);
 		
-		theReview = new JTextArea();
-		theReview.setText(br.get_review());
-		theReview.setFont(new Font("Courier New", Font.ITALIC, 15));
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 139, 482, 294);
+		add(scrollPane);
+		
+		theReview = new JTextPane();
 		theReview.setEditable(false);
-		theReview.setBounds(87, 109, 335, 239);
-		add(theReview);
+		theReview.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		theReview.setText(br.get_review());
+		scrollPane.setViewportView(theReview);
+		
 	
 	}
 public void Publish_Reject_Review(ClientInterface clientInterface,int rid,String typeMessage,String theReview){

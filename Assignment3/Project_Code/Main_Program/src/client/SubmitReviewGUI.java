@@ -7,6 +7,8 @@ import good_reading.BookReview;
 import java.awt.Rectangle;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
 import common.Define;
 import common.Message;
 import javax.swing.JLabel;
@@ -15,6 +17,8 @@ import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 /**
  * @author Yair
  * GUI class. Extends JPanel. Displays a window to submit a new book review. 
@@ -25,6 +29,7 @@ public class SubmitReviewGUI extends JPanel {
 	@SuppressWarnings("unused")
 	private ClientInterface clientInterface;
 	private JLabel textField;
+	private JTextPane textArea;
 	
 	/**
 	 * Constructor that creates the panel.
@@ -74,10 +79,6 @@ public class SubmitReviewGUI extends JPanel {
 		btnReadReviews.setBounds(471, 426, 135, 29);
 		imagePanel.add(btnReadReviews);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(32, 103, 371, 270);
-		imagePanel.add(textArea);
-		
 		JButton btnSubmitReview = new JButton("Submit Review");
 		btnSubmitReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -125,5 +126,14 @@ public class SubmitReviewGUI extends JPanel {
 		lblBookReview.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblBookReview.setBounds(32, 56, 184, 20);
 		imagePanel.add(lblBookReview);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(32, 122, 382, 264);
+		imagePanel.add(scrollPane);
+		
+		textArea = new JTextPane();
+		textArea.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		scrollPane.setViewportView(textArea);
+		
 	}
 }

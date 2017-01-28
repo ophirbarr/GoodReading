@@ -60,33 +60,6 @@ public class viewReviewGUI extends JPanel{
 		theReview.setText(br.get_review());
 		
 		
-		/*
-		//Arrange rows review
-		String[] review = br.get_review().split(" ");
-		String str = "";
-		int count = 0;    //The number of words in a row
-		int flag = 0;     //The beginning of the line
-		for(int i=0;i<review.length;i++,count++,flag++)
-		{
-			if(flag==0) str = str+review[i];
-			else str = str+" "+review[i];
-			if(count == 5)     //new row
-			{
-				count = -1;
-				flag = -1;
-				str = str +"\n";
-			}
-		}
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(61, 126, 399, 209);
-		add(scrollPane);
-		
-		JTextArea theReview = new JTextArea(str);
-		theReview.setFont(new Font("Monospaced", Font.PLAIN, 14));
-		theReview.setEditable(false);
-		scrollPane.setViewportView(theReview);
-		*/
 		
 	}
 }
