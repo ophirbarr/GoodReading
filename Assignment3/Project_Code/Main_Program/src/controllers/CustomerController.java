@@ -142,7 +142,7 @@ public class CustomerController {
 	/**
 	 * Adds a book to a customer's book list using Customer_Book to the data base.
 	 * This function is used by the server.
-	 * @param bid The ID of the book to be added.
+	 * @param book The book to be added.
 	 * @param uid The user ID.
 	 */
 	public static void AddBookToCustomer(Book book, int uid)
@@ -282,7 +282,7 @@ public class CustomerController {
 	/**
 	 * Notifies the customer about the validation of the account.
 	 * @param clientInterface The main class of the program.
-	 * @param isValid A flag to indicate the account validation status (WAIT, BLOCKED, EXPIRED).
+	 * @param print A flag to indicate the account validation status (WAIT, BLOCKED, EXPIRED).
 	 */
 	public static void ValidateAccountMessage(ClientInterface clientInterface, int print)
 	{

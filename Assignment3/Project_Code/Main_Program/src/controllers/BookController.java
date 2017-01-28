@@ -79,7 +79,7 @@ public class BookController {
 	/**
 	 * Adds the current date to a book's purchase log and updates the book in the data base.
 	 * This function is used by the server.
-	 * @param book The book that it's purchase log needs to be updated.
+	 * @param _bid The id of the book that it's purchase log needs to be updated.
 	 */
 	public static void AddToPurchaseLog(int _bid)
 	{
