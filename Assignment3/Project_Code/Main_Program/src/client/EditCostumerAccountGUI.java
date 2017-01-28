@@ -30,7 +30,7 @@ public class EditCostumerAccountGUI extends JPanel {
 
 	/**
 	 * constructor
-	 * @param clientInterface
+	 * @param clientInterface The main class of the program.
 	 */
 	
 	public EditCostumerAccountGUI(ClientInterface clientInterface) {
