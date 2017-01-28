@@ -4,7 +4,7 @@ USE `goodreading`;
 --
 -- Host: localhost    Database: goodreading
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -264,7 +264,7 @@ CREATE TABLE `systemuser` (
 
 LOCK TABLES `systemuser` WRITE;
 /*!40000 ALTER TABLE `systemuser` DISABLE KEYS */;
-INSERT INTO `systemuser` VALUES (1,300100,'admin','admin','admin','1234',0,NULL,NULL,NULL,NULL,NULL,'Admin','admin@goodreading.com','Server','SystemUser'),(2,300101,'Tommy Lee','Jones','tommy1','1',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser'),(3,300102,'Edward','Norton','edward1234','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser'),(4,300103,'Meryl','Streep','meryl2017','2017',0,0,NULL,1,0,NULL,NULL,NULL,NULL,'Customer'),(5,300104,'Cameron','Diaz','cameron66','66',0,1,'2017-02-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(6,300105,'Arnold','Schwarzenegger','arnold12','12',0,2,'2018-01-18',1,0,NULL,NULL,NULL,NULL,'Customer'),(7,300106,'Pierce','Brosnan','Pierce007','007',0,NULL,NULL,NULL,NULL,1,'Certified Editor','007@goodreading.com','Maintainance','Worker'),(8,300107,'Julia','Louis-Dreyfus','julia21','21',0,NULL,NULL,NULL,NULL,2,'Librarian','jld@goodreading.com','Customer Service','Worker'),(9,300108,'Ben','Stiller','ben101','101',0,NULL,NULL,NULL,NULL,3,'Manager','bens@goodreading.com','Corporate','Worker'),(10,300109,'temp','temp','l','l',0,NULL,NULL,NULL,NULL,4,'Librarian',NULL,NULL,'Worker'),(11,300110,'temp','temp','m','m',0,NULL,NULL,NULL,NULL,5,'Manager',NULL,NULL,'Worker'),(12,300,'temp','temp','a','a',0,NULL,NULL,NULL,NULL,6,'Admin',NULL,NULL,'Worker'),(13,300123,'temp','temp','t','t',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser');
+INSERT INTO `systemuser` VALUES (1,300100,'admin','admin','admin','1234',0,NULL,NULL,NULL,NULL,7,'Admin','admin@goodreading.com','Server','Worker'),(2,300101,'Tommy Lee','Jones','tommy1','1',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser'),(3,300102,'Edward','Norton','edward1234','1234',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser'),(4,300103,'Meryl','Streep','meryl2017','2017',0,0,NULL,1,0,NULL,NULL,NULL,NULL,'Customer'),(5,300104,'Cameron','Diaz','cameron66','66',0,1,'2017-02-17',1,0,NULL,NULL,NULL,NULL,'Customer'),(6,300105,'Arnold','Schwarzenegger','arnold12','12',0,2,'2018-01-18',1,0,NULL,NULL,NULL,NULL,'Customer'),(7,300106,'Pierce','Brosnan','Pierce007','007',0,NULL,NULL,NULL,NULL,1,'Certified Editor','007@goodreading.com','Maintainance','Worker'),(8,300107,'Julia','Louis-Dreyfus','julia21','21',0,NULL,NULL,NULL,NULL,2,'Librarian','jld@goodreading.com','Customer Service','Worker'),(9,300108,'Ben','Stiller','ben101','101',0,NULL,NULL,NULL,NULL,3,'Manager','bens@goodreading.com','Corporate','Worker'),(13,300123,'temp','temp','t','t',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'SystemUser');
 /*!40000 ALTER TABLE `systemuser` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -277,4 +277,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-28 18:31:40
+-- Dump completed on 2017-01-29  0:59:47
