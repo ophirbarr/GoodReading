@@ -23,7 +23,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * Class allows get different types of reports:
+ * 		Per user, a list of books purchased
+ *		Statistical information about the book is displayed as a histogram
+ * 		Popularity of book in relation to all the books in or about books with the same subject		
+ * @author avihai
+ *
+ */
 
 public class RequestReportGUI extends JPanel{
 	
@@ -43,7 +50,10 @@ public class RequestReportGUI extends JPanel{
 		private Book[] book;
 		private String action;
 		
-		
+		/**
+		 * constructor
+		 * @param clientInterface user object
+		 */
 		public RequestReportGUI(ClientInterface clientInterface){
 			super();
 			this.clientInterface = clientInterface;
@@ -143,7 +153,7 @@ public class RequestReportGUI extends JPanel{
 					int index = list.getSelectedIndex();
 					int counter;
 					if(action.equals("Statistical information about book" ))
-						new HistogramGUI(clientInterface,book[index]);
+						new HistogramGUI(book[index]);
 					else if(action.equals("Absolute Rating")){
 						MessgaeToServer("GetCounterBooksPurchased",0,"ManagerController");
 						double popularity;
@@ -226,6 +236,12 @@ public class RequestReportGUI extends JPanel{
 			add(btnStatisticalInformationAbout);
 			
 		}
+		/**
+		 * The function sends a message to the server and asks specific
+		 * @param action Desired action
+		 * @param bid Book id
+		 * @param controller The name of Controller
+		 */
 		public void MessgaeToServer(String action,int bid,String controller){
 			Message msg = new Message(action, controller);
 			if(action.equals("GetAllBooks"))msg.add(false); // get all books

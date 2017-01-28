@@ -14,7 +14,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.plot.PlotOrientation;
 
 
-
+/**
+ * Class displays statistical information on book using a histogram
+ * @author avihai
+ *
+ */
 
 public class HistogramGUI {
 	
@@ -25,8 +29,12 @@ public class HistogramGUI {
 	private String[] searchesDate;
 	private ClientInterface clientInterface;
 	
-	public HistogramGUI(ClientInterface clientInterface,Book book){
-		this.clientInterface = clientInterface;
+	/**
+	 * constructor
+	 * @param book displayed
+	 */
+	public HistogramGUI(Book book){
+
 		this.book = book;
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		

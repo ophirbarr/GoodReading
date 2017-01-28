@@ -26,6 +26,12 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 
+/**
+ * The function shows users / clients, and allowing to edit them
+ * @author avihai
+ *
+ */
+
 public class PermissionManagementGUI extends JPanel{
 	
 	//Class variables
@@ -61,14 +67,17 @@ public class PermissionManagementGUI extends JPanel{
 		private JLabel lblWhichAccountTatus;
 		private JComboBox comboBox_1;
 		
-		
+		/**
+		 * constructor
+		 * @param clientInterface User Object
+		 */
 		
 		public PermissionManagementGUI(ClientInterface clientInterface){
 			super();
 			this.clientInterface = clientInterface;
 			setLayout(null);
 			model = new DefaultListModel();
-			flag = -1;
+			flag = -1;     //Initialization flag
 			
 			
 			
@@ -372,7 +381,9 @@ public class PermissionManagementGUI extends JPanel{
 			
 			
 		}
-		
+		/**
+		 * The function sends a message to the server and asks for a list of all customers on the system
+		 */
 		public void GetAllCustomers(){
 			Message msg = new Message("GetAllCustomers", "ManagerController");
 			clientInterface.msgFromServer = null;
@@ -385,7 +396,9 @@ public class PermissionManagementGUI extends JPanel{
 			clientInterface.waitForServer();  // Waiting for approval from the server
 		}
 		
-		
+		/**
+		 * The function sends a message to the server and asks for a list of all users on the system
+		 */
 		public void GetAllUsers(){
 			Message msg = new Message("GetAllUsers", "ManagerController");
 			clientInterface.msgFromServer = null;
@@ -397,7 +410,11 @@ public class PermissionManagementGUI extends JPanel{
 			}
 			clientInterface.waitForServer();  // Waiting for approval from the server
 		}
-		
+		/**
+		 * The function sends a message to the server and asks to change the user's status
+		 * @param index  The new status: index = 0: Disconnected else index = 1: Block
+		 * @param uid user id
+		 */
 		public void UpDateUserStatus(int index,int uid){
 			Message msg = new Message("UpDateUserStatus", "ManagerController");
 			clientInterface.msgFromServer = null;
@@ -411,6 +428,11 @@ public class PermissionManagementGUI extends JPanel{
 			}
 		
 		}
+		/**
+		 * The function sends a message to the server and asks to change the account status
+		 * @param index The new status: index = 0: NO PERMISSION else index = 1: FULL PERMISSION
+		 * @param uid user's account
+		 */
 		public void UpDateAccountStatus(int index, int uid){
 			Message msg = new Message("UpDateAccountStatus", "ManagerController");
 			clientInterface.msgFromServer = null;

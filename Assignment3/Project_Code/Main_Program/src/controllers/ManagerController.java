@@ -38,7 +38,10 @@ public class ManagerController {
 		return msg;
 	}
 	
-	
+	/**
+	 * Function gets a number of book and adds him the catalog
+	 * @param bid Book id
+	 */
 	public static void AddToCatalog(int bid){
 		
 		Book book;
@@ -48,7 +51,7 @@ public class ManagerController {
 			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
 			book = Book.getBookByORMID(bid);
-			book.set_viewStatus(true);
+			book.set_viewStatus(true);      // viewStatus == true : book in catalog else viewStatus = false
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
@@ -56,7 +59,10 @@ public class ManagerController {
 			
 		}
 	}
-	
+	/**
+	 * Function gets number book and removes him from the catalog
+	 * @param bid Book id
+	 */
 public static void RemoveFromCatalog(int bid){
 		
 		Book book;
@@ -66,7 +72,7 @@ public static void RemoveFromCatalog(int bid){
 			session = GoodReadingPersistentManager.instance().getSession();
 			PersistentTransaction t = session.beginTransaction();
 			book = Book.getBookByORMID(bid);
-			book.set_viewStatus(false);
+			book.set_viewStatus(false);     // viewStatus == true : book in catalog.  else: viewStatus = false
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {
@@ -122,6 +128,10 @@ public static Message CustomerOrders(){
 	return msg;
 	
 }
+/**
+ * The function calculates the quantity of the book purchased all always
+ * @return The quantity of the book purchased 
+ */
 public static int GetCounterBooksPurchased(){
 	Book[] books;
 	int counter=0;
@@ -136,6 +146,11 @@ public static int GetCounterBooksPurchased(){
 
 	return counter;
 }
+/**
+ * The function calculates the quantity of the book purchased by subject all always according to a number of book she gets
+ * @param bid Book id 
+ * @return The quantity of the book purchased
+ */
 public static int GetCounterBooksBySubject(int bid){
 	Book_Subject[] books;
 	int counter=0;
@@ -151,6 +166,10 @@ public static int GetCounterBooksBySubject(int bid){
 
 	return counter;
 }
+/**
+ * The function finds and returns a list of all users on the system
+ * @return list of all users
+ */
 public static SystemUser[] GetAllUsers(){
 	
 	SystemUser[] systemUsers = null;
@@ -163,6 +182,11 @@ public static SystemUser[] GetAllUsers(){
 	}
 	return systemUsers;
 }
+
+/**
+ * The function finds and returns a list of all customers on the system
+ * @return list of all customers
+ */
 public static Customer[] GetAllCustomers(){
 	
 	Customer[] customers = null;
@@ -176,6 +200,11 @@ public static Customer[] GetAllCustomers(){
 	return customers;
 }
 
+/**
+ * The function updates the user's status
+ * @param index The new status: index = 0: Disconnected else index = 1: Block
+ * @param uid user id
+ */
 public static void UpDateUserStatus(int index,int uid){
 	
 	PersistentSession session = null;
@@ -195,6 +224,11 @@ public static void UpDateUserStatus(int index,int uid){
 	
 	
 }
+/**
+ * The function updates the account status
+ * @param index The new status: index = 0: NO PERMISSION else index = 1: FULL PERMISSION
+ * @param uid user's account
+ */
 public static void UpDateAccountStatus(int index,int uid){
 	
 	PersistentSession session = null;

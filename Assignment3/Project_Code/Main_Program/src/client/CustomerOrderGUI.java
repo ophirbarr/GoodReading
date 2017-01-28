@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @SuppressWarnings("serial")
+/**
+ * Class presents a report: Per user, a list of books purchased
+ * @author avihai
+ *
+ */
 public class CustomerOrderGUI extends JPanel{
 	//Class variables
 	private ClientInterface clientInterface;
@@ -20,6 +25,10 @@ public class CustomerOrderGUI extends JPanel{
 	private ArrayList<Integer> id;
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	/**
+	 * constructor
+	 * @param clientInterface user object
+	 */
 	public CustomerOrderGUI(ClientInterface clientInterface){
 		super();
 		this.clientInterface = clientInterface;
@@ -52,6 +61,9 @@ public class CustomerOrderGUI extends JPanel{
 				list.setModel(model);
 		
 	}
+	/**
+	 * The function sends a message to the server and asks for a list customer's orders 
+	 */
 	public void customer_order(){
 		Message msg = new Message("CustomerOrders", "ManagerController");
 		clientInterface.msgFromServer = null;
