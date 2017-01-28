@@ -277,7 +277,7 @@ public class SystemUserController {
 	
 	/**
 	 * Sign-up request. if successful, a new SystemUser will be added to database
-	 * @param parameters signup input
+	 * @param parameters sign-up input
 	 * @return success or failure
 	 */
 	public static boolean SignUp(ArrayList<Object> peremeters)

@@ -84,6 +84,8 @@ public class ClientInterface extends ClientConsole
 
 	/**
 	 * Create the application.
+	 * @param host host
+	 * @param port port
 	 */
 	public ClientInterface(String host, int port) {
 		super(host, port);
