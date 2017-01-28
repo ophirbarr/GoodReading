@@ -1,20 +1,15 @@
 package client;
 
 import java.awt.Color;
-
 import javax.swing.JPanel;
-
 import good_reading.Book;
 import good_reading.BookReview;
-
 import java.awt.Rectangle;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-
 import common.Define;
 import common.Message;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
@@ -55,8 +50,8 @@ public class SubmitReviewGUI extends JPanel {
 		textField.setBounds(423, 39, 226, 51);
 		imagePanel.add(textField);
 		
-		JLabel lblBookpicture = new JLabel("book_picture");
-		lblBookpicture.setIcon(new ImageIcon(SubmitReviewGUI.class.getResource("/design/harry_potter2.png")));
+		JLabel lblBookpicture = new JLabel("");
+		//lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
 		lblBookpicture.setBounds(445, 101, 184, 270);
 		imagePanel.add(lblBookpicture);
 		
