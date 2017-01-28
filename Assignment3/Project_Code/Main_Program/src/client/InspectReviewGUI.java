@@ -15,9 +15,8 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 
 /**
- * 
+ * class GUI which displays a list of all awaiting approval reviews
  * @author avihai
- *class GUI which displays a list of all awaiting approval reviews
  */
 public class InspectReviewGUI extends JPanel  {
 	//Class variables
