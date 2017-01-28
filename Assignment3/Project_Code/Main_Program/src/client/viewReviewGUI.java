@@ -7,8 +7,10 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 /**
  * 
  * @author avihai
@@ -47,7 +49,18 @@ public class viewReviewGUI extends JPanel{
 		theWirtten.setBounds(168, 40, 260, 36);
 		add(theWirtten);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(61, 126, 366, 163);
+		add(scrollPane);
 		
+		JTextPane theReview = new JTextPane();
+		scrollPane.setViewportView(theReview);
+		theReview.setEditable(false);
+		theReview.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		theReview.setText(br.get_review());
+		
+		
+		/*
 		//Arrange rows review
 		String[] review = br.get_review().split(" ");
 		String str = "";
@@ -73,7 +86,7 @@ public class viewReviewGUI extends JPanel{
 		theReview.setFont(new Font("Monospaced", Font.PLAIN, 14));
 		theReview.setEditable(false);
 		scrollPane.setViewportView(theReview);
-		
+		*/
 		
 	}
 }

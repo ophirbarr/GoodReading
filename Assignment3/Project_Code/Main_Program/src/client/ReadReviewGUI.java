@@ -102,10 +102,11 @@ public class ReadReviewGUI extends JPanel {
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
 		JList<String> list = new JList<String>(listModel);
+		list.setFont(new Font("Monospaced", Font.PLAIN, 11));
 		
 		scrollPane.setViewportView(list);
 		
-		JLabel lblResultTitle = new JLabel("Writen by            Review");
+		JLabel lblResultTitle = new JLabel("Writen by:                       Review:");
 		lblResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(lblResultTitle);
 		
@@ -122,13 +123,12 @@ public class ReadReviewGUI extends JPanel {
 		
 		BookReview[] bookReview = (BookReview[])clientInterface.getMsgFromServer();
 		listModel.clear();
-		
 		if (bookReview.length == 0) 
 			listModel.addElement("There are no matching results to your query.");
 		else
 			for(int i=0; i< bookReview.length;i++)
 			{
-				listModel.addElement(String.format("%-25s%-30s", bookReview[i].get_costumerName(), bookReview[i].get_review()));
+				listModel.addElement(String.format("%-18s%s", bookReview[i].get_costumerName(), bookReview[i].get_review()));
 			}
 
 		list.addListSelectionListener(new ListSelectionListener() { 
