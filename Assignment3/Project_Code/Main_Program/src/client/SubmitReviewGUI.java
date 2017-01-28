@@ -51,9 +51,10 @@ public class SubmitReviewGUI extends JPanel {
 		imagePanel.add(textField);
 		
 		JLabel lblBookpicture = new JLabel("");
-		//lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
 		lblBookpicture.setBounds(445, 101, 184, 270);
 		imagePanel.add(lblBookpicture);
+		lblBookpicture.setIcon(Define.ResizeIcon(book.get_picPath(), lblBookpicture.getWidth(), lblBookpicture.getHeight()));
+
 		
 		JButton btnReadReviews = new JButton("Read Reviews");
 		btnReadReviews.addActionListener(new ActionListener() {
