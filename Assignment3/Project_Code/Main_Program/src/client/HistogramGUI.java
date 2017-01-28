@@ -96,7 +96,7 @@ public class HistogramGUI {
 		p.setRangeGridlinePaint(Color.BLACK);
 		ChartFrame frame = new ChartFrame("Statistical Information",chart);
 		frame.setVisible(true);
-		frame.setSize(550, 450);
+		frame.setSize(750, 450);
 	      
 		
 	}
