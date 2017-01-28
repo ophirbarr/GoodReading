@@ -311,10 +311,18 @@ public class CustomerController {
 	{
 		PersistentSession session;
 		try {
+			Customer id_customer = Customer.getCustomerByORMID(customer.get_uid());
+			
+			id_customer.set_accountStatus(customer.get_accountStatus());
+			id_customer.set_accountType(customer.get_accountType());
+			id_customer.set_endDate(customer.get_endDate());
+			id_customer.set_userStatus(customer.get_userStatus());
+			id_customer.set_waitingForChangeType(customer.get_waitingForChangeType());
+			
 			session = GoodReadingPersistentManager.instance().getSession();
 			//----update book in database
 			PersistentTransaction t = session.beginTransaction();
-			session.save(customer);
+			session.save(id_customer);
 			t.commit();
 			session.close();
 		} catch (PersistentException e) {

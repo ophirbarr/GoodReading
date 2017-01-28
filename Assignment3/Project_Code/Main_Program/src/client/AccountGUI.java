@@ -30,6 +30,8 @@ public class AccountGUI extends JPanel
 	{
 		super();
 		
+		CustomerController.ValidateAccount(clientInterface, (Customer)clientInterface.user);
+		
 		Message msg = new Message("RefreshUser", "SystemUserController");
 		msg.add(clientInterface.user.get_uid());
 		
