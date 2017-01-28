@@ -46,8 +46,8 @@ public class EraseUserGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name         LastName         ID");
-		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
+		JLabel ResultTitle = new JLabel("Name                                  LastName                          ID");
+		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));    
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
 		scrollPane.setViewportView(list);
@@ -73,7 +73,7 @@ public class EraseUserGUI extends JPanel {
 		{
 			for(int i=0;i<Allusers.length;i++)  
 			{
-			listModel.addElement(String.format("%-9s%-9s%s",Allusers[i].get_firstName(),Allusers[i].get_lastName(),Allusers[i].get_uid()));
+			listModel.addElement(String.format("%-17s%-17s%s",Allusers[i].get_firstName(),Allusers[i].get_lastName(),Allusers[i].get_uid()));
 			}
 		}
 		
@@ -115,7 +115,32 @@ public class EraseUserGUI extends JPanel {
 						
 						//clientInterface.waitForServer();
 						JOptionPane.showMessageDialog(null, "The user is deleted from the system");
+						listModel.clear();
+						
+						Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+						msg.add(4);
+						
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						clientInterface.waitForServer();  // Waiting for approval from the server
 
+						
+						Allusers = (SystemUser[])clientInterface.getMsgFromServer();
+						
+						if(Allusers.length==0) listModel.addElement("There is no users" );
+						else
+						{
+							for(int i=0;i<Allusers.length;i++)  
+							{
+							listModel.addElement(String.format("%-17s%-17s%s",Allusers[i].get_firstName(),Allusers[i].get_lastName(),Allusers[i].get_uid()));
+							}
+						}
+						
 						
 					}
 					

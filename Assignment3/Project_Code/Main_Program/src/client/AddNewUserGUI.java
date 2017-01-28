@@ -54,7 +54,7 @@ public class AddNewUserGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name         LastName         ID");
+		JLabel ResultTitle = new JLabel("Name                                  LastName                           ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -83,7 +83,7 @@ public class AddNewUserGUI extends JPanel {
 		{
 			for(int i=0;i<size;i++)  
 			{
-			listModel.addElement(String.format("%-9s%-9s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
+			listModel.addElement(String.format("%-17s%-17s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
 			}
 		}
 		JLabel lblusers = new JLabel("Users that waiting for approve:");
@@ -124,7 +124,35 @@ public class AddNewUserGUI extends JPanel {
 						
 						//clientInterface.waitForServer();
 	        			JOptionPane.showMessageDialog(clientInterface.frame, "The User Status Changed To DISCONNECTED");   
+	        			listModel.clear();
+	        			
+	        			Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+	        			msg.add(1);
+	        			
+	        			try {
+	        				clientInterface.client.openConnection();
+	        				clientInterface.client.sendToServer(msg);
+	        			} catch (IOException e) {
+	        				e.printStackTrace();
+	        			}
+	        			
+	        			clientInterface.waitForServer();  // Waiting for approval from the server
 
+	        			
+	        			users = (SystemUser[])clientInterface.getMsgFromServer();
+	        			
+	        			size=users.length;
+	        			
+	        			if(size==0) listModel.addElement("There is no users that waiting for approval!" );
+	        			else
+	        			{
+	        				for(int i=0;i<size;i++)  
+	        				{
+	        				listModel.addElement(String.format("%-12s%-12s%s",users[i].get_firstName(),users[i].get_lastName(),users[i].get_uid()));
+	        				}
+	        			}
+	        			
+	        			
 						
 					}
 					
@@ -136,6 +164,8 @@ public class AddNewUserGUI extends JPanel {
 		});
 			
 	}
+	
+
 }		
 					
 		

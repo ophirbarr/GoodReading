@@ -44,7 +44,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnApproveUser.setBounds(21, 11, 150, 23);
+		btnApproveUser.setBounds(44, 12, 173, 23);
 		menuPanel.add(btnApproveUser);
 		
 		JButton btnApproveCustomer = new JButton("Approve new customer");
@@ -61,7 +61,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnApproveCustomer.setBounds(21, 42, 150, 23);
+		btnApproveCustomer.setBounds(44, 46, 173, 23);
 		menuPanel.add(btnApproveCustomer);
 		
 		JButton btnNewButton_2 = new JButton("Edit existing account");
@@ -78,7 +78,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnNewButton_2.setBounds(239, 42, 156, 23);
+		btnNewButton_2.setBounds(279, 12, 173, 23);
 		menuPanel.add(btnNewButton_2);
 		
 		if (clientInterface.user instanceof Worker)
@@ -103,7 +103,7 @@ public class LibrarianGUI extends JPanel
 				repaint();
 			}
 		});
-		btnEraseExistingUser.setBounds(239, 11, 156, 23);
+		btnEraseExistingUser.setBounds(279, 46, 173, 23);
 		menuPanel.add(btnEraseExistingUser);
 		
 		currentPanel = new JPanel();

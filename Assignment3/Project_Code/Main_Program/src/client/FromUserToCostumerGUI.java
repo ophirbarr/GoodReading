@@ -49,7 +49,7 @@ public class FromUserToCostumerGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name          LastName         ID");
+		JLabel ResultTitle = new JLabel("Name                                  LastName                          ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -78,7 +78,7 @@ public class FromUserToCostumerGUI extends JPanel {
 		{
 			for(int i=0;i<customers.length;i++)  
 			{
-			listModel.addElement(String.format("%-9s%-9s%s",customers[i].get_firstName(),customers[i].get_lastName(),customers[i].get_uid()));
+			listModel.addElement(String.format("%-17s%-17s%s",customers[i].get_firstName(),customers[i].get_lastName(),customers[i].get_uid()));
 			}
 		}
 		
@@ -119,6 +119,35 @@ public class FromUserToCostumerGUI extends JPanel {
 						
 						//clientInterface.waitForServer();
 						JOptionPane.showMessageDialog(null, "The User Account Status Changed");
+						listModel.clear();
+						
+						Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+						msg.add(2);
+
+						
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						clientInterface.waitForServer();  // Waiting for approval from the server
+						
+
+						customers = (Customer[])clientInterface.getMsgFromServer();
+
+							
+						if(customers.length==0) listModel.addElement("There is no new customers that waiting for approval!" );
+						else
+						{
+							for(int i=0;i<customers.length;i++)  
+							{
+							listModel.addElement(String.format("%-17s%-17s%s",customers[i].get_firstName(),customers[i].get_lastName(),customers[i].get_uid()));
+							}
+						}
+						
+						
 					}
 					
 				});

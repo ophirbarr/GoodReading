@@ -43,7 +43,7 @@ public class EditCostumerAccountGUI extends JPanel {
 
 		DefaultListModel<String> listModel = new DefaultListModel<String>();
 		
-		JLabel ResultTitle = new JLabel("Name         LastName         ID");
+		JLabel ResultTitle = new JLabel("Name                                  LastName                          ID");
 		ResultTitle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		scrollPane.setColumnHeaderView(ResultTitle);
 		JList<String> list = new JList<String>( listModel );
@@ -72,7 +72,7 @@ public class EditCostumerAccountGUI extends JPanel {
 		{
 			for(int i=0;i<customerAccount.length;i++)  
 			{
-			listModel.addElement(String.format("%-9s%-9s%s",customerAccount[i].get_firstName(),customerAccount[i].get_lastName(),customerAccount[i].get_uid()));
+			listModel.addElement(String.format("%-17s%-17s%s",customerAccount[i].get_firstName(),customerAccount[i].get_lastName(),customerAccount[i].get_uid()));
 			}
 		}
 		
@@ -107,6 +107,36 @@ public class EditCostumerAccountGUI extends JPanel {
 						
 						//clientInterface.waitForServer();
 						JOptionPane.showMessageDialog(null, "The User Account Type Changed");
+						listModel.clear();
+						
+						Message msg = new Message("ViewUsersWithCondition", "LibrarianController");
+						msg.add(3);
+
+						
+						try {
+							clientInterface.client.openConnection();
+							clientInterface.client.sendToServer(msg);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						
+						clientInterface.waitForServer();  // Waiting for approval from the server
+						
+
+						customerAccount = (Customer[])clientInterface.getMsgFromServer();
+
+							
+						if(customerAccount.length==0) listModel.addElement("There is no customers that waiting for a update account!" );
+						else
+						{
+							for(int i=0;i<customerAccount.length;i++)  
+							{
+							listModel.addElement(String.format("%-17s%-17s%s",customerAccount[i].get_firstName(),customerAccount[i].get_lastName(),customerAccount[i].get_uid()));
+							}
+						}
+						
+						
+						
 					}
 					
 				});
