@@ -13,7 +13,7 @@ public class InspectReviewController {
 	/**
 	 * The function find out a list BookReview for all awaiting approval review (_approved == 0)
 	 * @return  returns Message that containing the list
-	 * @throws PersistentException
+	 * @throws PersistentException extends PersistentException class
 	 */
 	public static Message InspectReviews() throws PersistentException{
 		
