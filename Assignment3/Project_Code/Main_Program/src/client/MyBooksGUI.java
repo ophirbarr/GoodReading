@@ -115,7 +115,7 @@ public class MyBooksGUI extends JPanel {
 				}
 			}
 		});
-		btnViewBook.setBounds(568, 294, 118, 30);
+		btnViewBook.setBounds(553, 296, 136, 30);
 		imagePanel.add(btnViewBook);
 		
 		JLabel lblMyBooks = new JLabel("My Books");
@@ -237,7 +237,7 @@ public class MyBooksGUI extends JPanel {
 					new PopUpMessageGUI(clientInterface.frame, "You need to choose a book first.", Define.Error);
 			}
 		});
-		lblDownloadBook.setBounds(568, 253, 118, 30);
+		lblDownloadBook.setBounds(553, 253, 136, 30);
 		imagePanel.add(lblDownloadBook);
 		
 	}
