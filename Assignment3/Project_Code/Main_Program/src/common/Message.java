@@ -10,10 +10,6 @@ import java.util.ArrayList;
  * 		Message msg = new Message("get_user_id");
  * 		msg.add(123);
  * 		client.handleMessageFromClientUI(msg);
- * 
- * @param action A string code through which the server knows what action to perform
- * @param controller A string code through which the server knows what controller the action is stored in
- * @param parameters The parameters of the above action
  *
  */
 @SuppressWarnings("serial")
@@ -23,7 +19,11 @@ public class Message implements Serializable
 	private String controller;
 	private ArrayList<Object> parameters;
 	
-	// constructor 
+	/**
+	 *  
+	 * @param action A string code through which the server knows what action to perform
+	 * @param controller A string code through which the server knows what controller the action is stored in
+	 */
 	public Message(String action, String controller)
 	{
 		parameters = new ArrayList<Object>();

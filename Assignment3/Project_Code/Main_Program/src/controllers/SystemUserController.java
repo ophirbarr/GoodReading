@@ -255,6 +255,7 @@ public class SystemUserController {
 	
 	/**
 	 * Get a list of all books available in the catalog
+	 * @param catalog Whether we search in entire DB or only in catalog
 	 * @return full list of books
 	 */
 	public static Book[] GetAllBooks(boolean catalog)
@@ -276,6 +277,7 @@ public class SystemUserController {
 	
 	/**
 	 * Sign-up request. if successful, a new SystemUser will be added to database
+	 * @param parameters signup input
 	 * @return success or failure
 	 */
 	public static boolean SignUp(ArrayList<Object> peremeters)
@@ -316,9 +318,6 @@ public class SystemUserController {
 		
 		return true;
 	}
-	
-	
-	// UNTESTED -- WAITING FOR GUI IMPLEMENTATION
 	
 	/**
 	 * Create a locked(=cannot purchase) Customer and replace it with given SystemUser in DB.
