@@ -1,0 +1,7 @@
+1.
+Program connects to MySQL database as
+username: root
+password: 4521
+
+2.
+GoodReading folder should be placed in C:\
