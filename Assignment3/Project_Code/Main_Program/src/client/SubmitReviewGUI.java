@@ -97,7 +97,7 @@ public class SubmitReviewGUI extends JPanel {
 					e.printStackTrace();
 				}
 				
-				msg = new Message("ServerMessage", "NewReview");
+				msg = new Message("NewReview", "ServerMessage");
 				msg.add(review);
 				try {
 					clientInterface.client.openConnection();
