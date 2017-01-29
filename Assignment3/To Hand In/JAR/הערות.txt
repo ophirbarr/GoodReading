@@ -1,0 +1,18 @@
+1.
+JAR files were too big for moodle and so we could not have included them here.
+
+download links:
+https://github.com/ophirbarr/GoodReading/raw/master/Assignment3/gRead5_client.jar
+https://github.com/ophirbarr/GoodReading/raw/master/Assignment3/gRead5_server.jar
+OR:
+https://www.dropbox.com/s/py4cdgvi3fxba41/Jars.zip?dl=0 
+
+
+2.
+Program connects to MySQL database as
+username: root
+password: 4521
+
+
+3.
+GoodReading folder should be placed in C:\

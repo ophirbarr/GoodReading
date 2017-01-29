@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Ort Braude College
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="good_reading.SystemUser" table="SystemUser" lazy="false" discriminator-value="SystemUser">
+		<id name="_uid" column="_uid" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<discriminator column="Discriminator" type="string"/>
+		<property name="_firstName" column="_firstName" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_lastName" column="_lastName" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_userName" column="_userName" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_password" column="_password" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="_userStatus" column="_userStatus" type="integer" length="10" not-null="true" lazy="false"/>
+		<property name="_ssn" column="_ssn" type="integer" length="11" not-null="true" lazy="false"/>
+		<subclass name="good_reading.Customer" discriminator-value="Customer" lazy="false">
+			<property name="_accountType" column="_accountType" type="integer" length="10" not-null="false" lazy="false"/>
+			<property name="_endDate" column="_endDate" type="date" not-null="false" lazy="false"/>
+			<property name="_accountStatus" column="_accountStatus" type="boolean" not-null="false" lazy="false"/>
+			<property name="_waitingForChangeType" column="_waitingForChangeType" type="integer" length="10" not-null="false" lazy="false"/>
+		</subclass>
+		<subclass name="good_reading.Worker" discriminator-value="Worker" lazy="false">
+			<property name="_wid" column="_wid" type="integer" length="10" not-null="false" lazy="false"/>
+			<property name="_role" column="_role" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="_email" column="_email" type="string" length="255" not-null="false" lazy="false"/>
+			<property name="_department" column="_department" type="string" length="255" not-null="false" lazy="false"/>
+		</subclass>
+	</class>
+</hibernate-mapping>
