@@ -7,15 +7,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 import good_reading.SystemUser;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import common.Define;
 import common.Message;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -28,6 +32,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Rectangle;
+import javax.swing.SwingConstants;
+import java.awt.ComponentOrientation;
 /**
  * The main program class. Contains the main function and creates the first log-in frame. Extends ClientConsole.
  */
@@ -96,7 +102,7 @@ public class ClientInterface extends ClientConsole
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Good Reading");
+		frame = new JFrame("Good Reading");		
 		frame.setBounds(250, 70, 900, 617);
 		frame.setResizable(false);
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\design\\g10628.png"));

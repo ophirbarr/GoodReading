@@ -124,8 +124,8 @@ public class MyBooksGUI extends JPanel {
 		imagePanel.add(lblMyBooks);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(MyBooksGUI.class.getResource("/design/g27726.png")));
-		label.setBounds(600, 355, 61, 100);
+		label.setBounds(553, 337, 150, 83);
+		label.setIcon(Define.ResizeIcon(MyBooksGUI.class.getResource("/design/g372.png").getPath(), label.getWidth(), label.getWidth()));
 		imagePanel.add(label);
 		
 		JPanel typePanel = new JPanel();
@@ -234,7 +234,7 @@ public class MyBooksGUI extends JPanel {
 					} 
 				}
 				else
-					new PopUpMessageGUI(clientInterface.frame, "You need to choose a book first.", Define.Error);
+					Define.PopUp("You need to choose a book first.", Define.Error);
 			}
 		});
 		lblDownloadBook.setBounds(553, 253, 136, 30);

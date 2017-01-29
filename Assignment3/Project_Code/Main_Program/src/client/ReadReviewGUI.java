@@ -82,7 +82,7 @@ public class ReadReviewGUI extends JPanel {
 					clientInterface.mainPanel.currentPanel.repaint();
 				}
 				else
-					new PopUpMessageGUI(clientInterface.frame, "Please open an account in order to submit a review.", Define.Notice);
+					Define.PopUp("Please open an account in order to submit a review.", Define.Notice);
 			}
 		});
 		btnSubmitReview.setFont(new Font("Tahoma", Font.PLAIN, 14));

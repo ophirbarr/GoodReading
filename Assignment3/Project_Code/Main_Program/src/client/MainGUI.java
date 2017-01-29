@@ -20,6 +20,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 /**
  * @author Yair
  * The main GUI class of the program after signing up. Extends JPanel.
@@ -70,7 +72,7 @@ public class MainGUI extends JPanel {
 			{
 				clientInterface.logOut();
 					
-				new PopUpMessageGUI(clientInterface.frame, "Thank you for using Good Reading!", Define.Like);
+				Define.PopUp("Thank you for using Good Reading!", Define.Like);
 
 				clientInterface.frame.remove(clientInterface.mainPanel);
 				clientInterface.frame.getContentPane().add(clientInterface.loginPanel);
@@ -135,7 +137,7 @@ public class MainGUI extends JPanel {
 					currentPanel.repaint();
 				}
 				else
-					new PopUpMessageGUI(clientInterface.frame, "You may open an account to have your own book shelve.", Define.Like);
+					Define.PopUp("You may open an account to have your own book shelve.", Define.Like);
 			}
 		});
 		if((clientInterface.user instanceof Worker))
@@ -268,5 +270,18 @@ public class MainGUI extends JPanel {
 		lblName.setBounds(176, 208, 371, 31);
 		panel.add(lblName);
 
+		lblGoodReading_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				remove(currentPanel);
+				currentPanel = panel;
+				currentPanel.setBounds(176, 1, 724, 475);
+				currentPanel.setBackground(new Color(250, 243, 232));
+				add(currentPanel);
+				currentPanel.setLayout(null);
+				currentPanel.revalidate();
+				currentPanel.repaint();	
+			}
+		});
 	}
 }

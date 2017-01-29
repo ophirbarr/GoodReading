@@ -105,7 +105,7 @@ public class SubmitReviewGUI extends JPanel {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				new PopUpMessageGUI(clientInterface.frame, "Your review has been submited. Thank you!", Define.Edit);
+				Define.PopUp("Your review has been submited. Thank you!", Define.Edit);
 			    
 				clientInterface.mainPanel.remove(clientInterface.mainPanel.currentPanel);
 				clientInterface.mainPanel.currentPanel = new ViewBookGUI(clientInterface, book);

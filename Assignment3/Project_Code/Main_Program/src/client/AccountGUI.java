@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class AccountGUI extends JPanel
@@ -30,7 +32,8 @@ public class AccountGUI extends JPanel
 	{
 		super();
 		
-		CustomerController.ValidateAccount(clientInterface, (Customer)clientInterface.user);
+		if(clientInterface.user instanceof Customer)
+			CustomerController.ValidateAccount(clientInterface, (Customer)clientInterface.user);
 		
 		Message msg = new Message("RefreshUser", "SystemUserController");
 		msg.add(clientInterface.user.get_uid());
@@ -50,7 +53,7 @@ public class AccountGUI extends JPanel
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(20, 58, 390, 85);
+		panel.setBounds(20, 71, 390, 85);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -123,14 +126,14 @@ public class AccountGUI extends JPanel
 				else JOptionPane.showMessageDialog(clientInterface.frame, "Something went wrong! Please contact tech support.");
 			}
 		});
-		btnOpenAccount.setBounds(20, 154, 230, 41);
+		btnOpenAccount.setBounds(20, 167, 244, 41);
 		add(btnOpenAccount);
 		if (!(clientInterface.user instanceof Customer) && !(clientInterface.user instanceof Worker)) btnOpenAccount.setEnabled(true);
 		else btnOpenAccount.setEnabled(false);
 		
 		String [] comboBoxOp = {"No change","Monthly","Annualy"};
 		JComboBox comboBox = new JComboBox(comboBoxOp);
-		comboBox.setBounds(420, 103, 107, 25);
+		comboBox.setBounds(456, 116, 107, 25);
 		add(comboBox);
 		if(!(clientInterface.user instanceof Customer))
 			comboBox.setEnabled(false);
@@ -139,17 +142,31 @@ public class AccountGUI extends JPanel
 		btnUpdateAccountType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(((Customer)clientInterface.user).get_accountType() != Define.ACCOUNT_PER_BOOK)
-					new PopUpMessageGUI(clientInterface.frame, "You already have an active subscription.", Define.Notice);
+					Define.PopUp("You already have an active subscription.", Define.Notice);
 				else if(((Customer)clientInterface.user).get_waitingForChangeType() != Define.DO_NOT_CHANGE)
-					new PopUpMessageGUI(clientInterface.frame, "Your previous request to update subscription is being handled.", Define.Notice);
+					Define.PopUp("Your previous request to update subscription is being handled.", Define.Notice);
 				else
+				{
 					CustomerController.WaitForAccountTypeChange(clientInterface, (Customer)clientInterface.user, comboBox.getSelectedIndex());
+					Define.PopUp("A librarian has been notified and will review your request shortly.", Define.Notice);
+				}
 			}
 		});
-		btnUpdateAccountType.setBounds(420, 58, 173, 34);
+		btnUpdateAccountType.setBounds(420, 71, 183, 34);
 		if(!(clientInterface.user instanceof Customer))
 			btnUpdateAccountType.setEnabled(false);
 		add(btnUpdateAccountType);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(AccountGUI.class.getResource("/design/g5908.png")));
+		label.setBounds(120, 251, 421, 183);
+		add(label);
+		
+		JLabel lblMyAccount = new JLabel("My Account");
+		lblMyAccount.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMyAccount.setBounds(257, 21, 153, 34);
+		add(lblMyAccount);
+		lblMyAccount.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
 		
 		

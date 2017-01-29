@@ -13,7 +13,6 @@ import org.orm.PersistentTransaction;
 import common.Define;
 import common.Message;
 import client.ClientInterface;
-import client.PopUpMessageGUI;
 import good_reading.Book;
 import good_reading.BookReview;
 import good_reading.Customer;
@@ -117,7 +116,7 @@ public class CustomerController {
 					else if(customer.get_accountType() == Define.ACCOUNT_YEARLY)
 						price = price*(float)(1-0.5);
 					
-					new PopUpMessageGUI(clientInterface.frame, "You've got a discount. Only " + price + "$", Define.Like);
+					Define.PopUp("You've got a discount. Only " + price + "$", Define.Like);
 				}
 				
 				msg = new Message ("AddBookToCustomer", "CustomerController");
@@ -133,7 +132,7 @@ public class CustomerController {
 				isPurchase = true;
 			}
 			else
-				new PopUpMessageGUI(clientInterface.frame, "You already have this book.<br>Look up MyBooks", Define.Notice);
+				Define.PopUp("You already have this book.<br>Look up MyBooks", Define.Notice);
 		}
 
 		return isPurchase;
@@ -291,13 +290,13 @@ public class CustomerController {
 		switch(print)
 		{
 		case WAIT:
-			new PopUpMessageGUI(clientInterface.frame, "Your request to open an account is still being processed.", Define.Build);
+			Define.PopUp("Your request to open an account is still being processed.", Define.Build);
 			break;
 		case BLOCKED:
-			new PopUpMessageGUI(clientInterface.frame, "The account is blocked.<br>Please contact the manager.", Define.Error);
+			Define.PopUp("The account is blocked.<br>Please contact the manager.", Define.Error);
 			break;
 		case EXPIRED:
-			new PopUpMessageGUI(clientInterface.frame, "The subsciption date has been expired", Define.Notice);
+			Define.PopUp("The subsciption date has been expired", Define.Notice);
 			break;
 		}
 	}

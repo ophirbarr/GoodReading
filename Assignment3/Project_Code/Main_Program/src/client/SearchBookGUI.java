@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
+
+import common.Define;
 import common.Message;
 import controllers.BookController;
 import good_reading.Book;
@@ -22,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 /**
  * GUI class for searching either books or reviews.
@@ -412,9 +415,15 @@ public class SearchBookGUI extends JPanel
 		
 		
 		JPanel imagePanel = new JPanel();
-		imagePanel.setBounds(0, 0, 731, 599);
+		imagePanel.setBounds(0, 0, 731, 597);
 		imagePanel.setBackground(new Color(250, 243, 232));
 		add(imagePanel);
+		imagePanel.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(475, 63, 192, 149);
+		imagePanel.add(lblNewLabel);
+		lblNewLabel.setIcon(Define.ResizeIcon(SearchBookGUI.class.getResource("/design/g490.png").getPath(), lblNewLabel.getWidth(), lblNewLabel.getHeight()));
 		
 		searchAll();
 	}

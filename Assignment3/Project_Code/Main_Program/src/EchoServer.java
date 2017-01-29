@@ -7,6 +7,9 @@ import java.io.*;
 import javax.swing.JFrame;
 
 import org.orm.PersistentException;
+
+import client.ClientInterface;
+import common.Define;
 import common.Message;
 import controllers.BookController;
 import controllers.CustomerController;
@@ -20,8 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
@@ -451,12 +457,18 @@ public class EchoServer extends AbstractServer
     JFrame frame = new JFrame();
     frame.getContentPane().setBackground(new Color(250, 240, 230));
     frame.getContentPane().setLayout(null);
+    frame.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\design\\g10628.png"));
     
     JPanel login = new JPanel();
     login.setBackground(new Color(250, 240, 230));
-    login.setBounds(0, 0, 467, 261);
+    login.setBounds(0, 0, 434, 251);
     frame.getContentPane().add(login);
     login.setLayout(null);
+    
+    JLabel label = new JLabel("");
+    label.setBounds(46, 173, 127, 67);
+    label.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/g6365.png").getPath(),label.getWidth(),label.getHeight()));
+    login.add(label);
     
     JLabel lblGoodReadingServer = new JLabel("GOOD READING server startup");
     lblGoodReadingServer.setBounds(46, 35, 335, 42);
@@ -535,6 +547,10 @@ public class EchoServer extends AbstractServer
     btnStart.setBounds(247, 173, 89, 23);
     login.add(btnStart);
     
+    JLabel lblbackground = new JLabel("");
+    lblbackground.setBounds(0, 0, 434, 251);
+    lblbackground.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/path12.png").getPath(), lblbackground.getWidth(), lblbackground.getHeight()));
+    login.add(lblbackground);
     
     JButton btnShutDown = new JButton("SHUT DOWN");
     btnShutDown.setBounds(227, 172, 119, 23);
@@ -547,11 +563,25 @@ public class EchoServer extends AbstractServer
     
     JLabel lblGoodReadingServer_1 = new JLabel("GOOD READING server is running...");
     lblGoodReadingServer_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-    lblGoodReadingServer_1.setBounds(46, 35, 378, 42);
+    lblGoodReadingServer_1.setBounds(42, 35, 378, 42);
     server.add(lblGoodReadingServer_1);
     
+    JLabel label1 = new JLabel("");
+    label1.setBounds(70, 110, 90, 90);
+    label1.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/341.png").getPath(),label1.getWidth(),label1.getHeight()));
+    server.add(label1);
+    
+    
+    JLabel lblbackground1 = new JLabel("");
+    lblbackground1.setBounds(0, 0, 434, 251);
+    lblbackground1.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/path12.png").getPath(), lblbackground1.getWidth(), lblbackground1.getHeight()));
+    server.add(lblbackground1);
+    
+ 
+    
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(483,298);
+    frame.setBounds(450, 170, 450,290);
+    //setSize(483,298);
     frame.setVisible(true);
   }
 }

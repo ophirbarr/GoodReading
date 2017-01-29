@@ -1,10 +1,22 @@
 package common;
 
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+import client.ClientInterface;
+
 import java.lang.Math;
 
+/**
+ * This class contains defines for flags/statuses etc. and general help functions
+ * @author יאיר בלין
+ */
 public class Define {
 	
 //#SystemUser
@@ -39,7 +51,13 @@ public class Define {
 	public static final int Build = 4;
 	
 	
-	//Function to resize an icon to fit the size of a label/button
+	/**
+	 * Function to resize an icon to fit the size of a label/button
+	 * @param path The icon file path
+	 * @param componentWidth The component Width
+	 * @param componentHeight The component Height
+	 * @return An ImageIcon in the component size.
+	 */
 	public static ImageIcon ResizeIcon(String path, int componentWidth, int componentHeight)
 	{
 		ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
@@ -56,4 +74,45 @@ public class Define {
 		return imageIcon;
 	}
 	
+	
+	/**
+	 * @param messageText String of the message to be displayed.
+	 * @param Type The type of the message. May be: Error(0), Notice(1), Edit(2), Like(3), Build(4).
+	 */
+	public  static void PopUp(String msg, int type)
+	{
+		JLabel lblItIsA = new JLabel();
+		lblItIsA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblItIsA.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblItIsA.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblItIsA.setPreferredSize(new Dimension(350,110));
+		lblItIsA.setText("<html><div style='text-align: center;'>" + msg + "</div></html>");
+
+		String path = "", title = "";
+		switch(type)
+		{
+		case Define.Error:
+			path = "/design/image6481.png";
+			title = "Error";
+			break;
+		case Define.Notice:
+			path = "/design/g526.png";
+			title = "Notice";
+			break;
+		case Define.Edit:
+			path = "/design/g274.png";
+			title = "Edit";
+			break;
+		case Define.Like:
+			path = "/design/g362.png";
+			title = "Like";
+			break;
+		case Define.Build:
+			path = "/design/g450.png";
+			title = "Build";
+			break;
+		}
+		
+		JOptionPane.showOptionDialog(null, lblItIsA, title, JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, Define.ResizeIcon(Define.class.getResource(path).getPath(), 60, 60), null, null);
+	}
 }
