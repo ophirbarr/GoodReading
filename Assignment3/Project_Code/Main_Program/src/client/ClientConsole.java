@@ -25,7 +25,7 @@ public class ClientConsole implements ChatIF
 {
   //Class variables *************************************************
   
-	protected Object msgFromServer;
+	public Object msgFromServer;
 	protected boolean msgAvailable = false;
 	public SystemUser user;
 	

@@ -9,8 +9,8 @@ import org.orm.PersistentException;
 import org.orm.PersistentSession;
 import org.orm.PersistentTransaction;
 
+import book.ViewBookGUI;
 import client.ClientInterface;
-import client.ViewBookGUI;
 import good_reading.Book;
 import good_reading.GoodReadingPersistentManager;
 /**

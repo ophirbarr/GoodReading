@@ -11,6 +11,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import good_reading.SystemUser;
+import systemUser.SignUpGUI;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
