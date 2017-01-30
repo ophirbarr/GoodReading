@@ -127,7 +127,7 @@ public class MyBooksGUI extends JPanel {
 		
 		JLabel label = new JLabel("");
 		label.setBounds(553, 337, 150, 83);
-		label.setIcon(Define.ResizeIcon(MyBooksGUI.class.getResource("/design/g372.png").getPath(), label.getWidth(), label.getWidth()));
+		label.setIcon(Define.ResizeIcon("/design/g372.png", label.getWidth(), label.getWidth()));
 		imagePanel.add(label);
 		
 		JPanel typePanel = new JPanel();

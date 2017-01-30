@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import client.ClientInterface;
+import server.EchoServer;
 
 import java.lang.Math;
 
@@ -60,7 +61,13 @@ public class Define {
 	 */
 	public static ImageIcon ResizeIcon(String path, int componentWidth, int componentHeight)
 	{
-		ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
+		ImageIcon imageIcon;
+		
+		if(path.startsWith("/")) 
+			imageIcon = new ImageIcon(Define.class.getResource(path)); // load the image to a imageIcon
+		else
+			imageIcon = new ImageIcon(path); // load the image to a imageIcon	
+		
 		Image image = imageIcon.getImage(); // transform it 
 		
 		int IconWidth = imageIcon.getIconWidth();

@@ -425,7 +425,7 @@ public class SearchBookGUI extends JPanel
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(475, 63, 192, 149);
 		imagePanel.add(lblNewLabel);
-		lblNewLabel.setIcon(Define.ResizeIcon(SearchBookGUI.class.getResource("/design/g490.png").getPath(), lblNewLabel.getWidth(), lblNewLabel.getHeight()));
+		lblNewLabel.setIcon(Define.ResizeIcon("/design/g490.png", lblNewLabel.getWidth(), lblNewLabel.getHeight()));
 		
 		searchAll();
 	}

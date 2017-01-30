@@ -60,7 +60,7 @@ public class ClientInterface extends ClientConsole
 	 * Launch the application.
 	 * @param args program args (not used)
 	 */
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		host = (String)JOptionPane.showInputDialog(null, "Enter host address:", "GOOD READING", JOptionPane.QUESTION_MESSAGE, null, null, "localhost");
 	    port = 0;  //The port number

@@ -468,7 +468,7 @@ public class EchoServer extends AbstractServer
     
     JLabel label = new JLabel("");
     label.setBounds(46, 173, 127, 67);
-    label.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/g6365.png").getPath(),label.getWidth(),label.getHeight()));
+    label.setIcon(Define.ResizeIcon("/design/g6365.png",label.getWidth(),label.getHeight()));
     login.add(label);
     
     JLabel lblGoodReadingServer = new JLabel("GOOD READING server startup");
@@ -550,7 +550,7 @@ public class EchoServer extends AbstractServer
     
     JLabel lblbackground = new JLabel("");
     lblbackground.setBounds(0, 0, 434, 251);
-    lblbackground.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/path12.png").getPath(), lblbackground.getWidth(), lblbackground.getHeight()));
+    lblbackground.setIcon(Define.ResizeIcon("/design/path12.png", lblbackground.getWidth(), lblbackground.getHeight()));
     login.add(lblbackground);
     
     JButton btnShutDown = new JButton("SHUT DOWN");
@@ -569,13 +569,13 @@ public class EchoServer extends AbstractServer
     
     JLabel label1 = new JLabel("");
     label1.setBounds(70, 110, 90, 90);
-    label1.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/341.png").getPath(),label1.getWidth(),label1.getHeight()));
+    label1.setIcon(Define.ResizeIcon("/design/341.png",label1.getWidth(),label1.getHeight()));
     server.add(label1);
     
     
     JLabel lblbackground1 = new JLabel("");
     lblbackground1.setBounds(0, 0, 434, 251);
-    lblbackground1.setIcon(Define.ResizeIcon(EchoServer.class.getResource("/design/path12.png").getPath(), lblbackground1.getWidth(), lblbackground1.getHeight()));
+    lblbackground1.setIcon(Define.ResizeIcon("/design/path12.png", lblbackground1.getWidth(), lblbackground1.getHeight()));
     server.add(lblbackground1);
     
  
