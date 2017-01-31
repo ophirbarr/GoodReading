@@ -1,10 +1,9 @@
-/common/
 /controllers/
-/good_reading/
+/librarian/
+/manager/
 /org/
 /ormsamples/
-/client/
-/design/
 /server/
-/customer/
 /systemUser/
+/FitTests/
+/Fixtures/
