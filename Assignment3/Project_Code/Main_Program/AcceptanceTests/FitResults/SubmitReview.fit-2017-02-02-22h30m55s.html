@@ -1,4 +1,26 @@
-<html xmlns="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+<html><head><title>Suite SubmitReview.fit run at: Thu Feb 02 22:30:56 IST 2017</title>
+	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="screen"/>
+ 	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="print"/>
+<script language="JavaScript" type="text/javascript">
+var collapsableOpenCss = "collapsable"
+var collapsableClosedCss = "hidden"
+var collapsableOpenImg = "images/collapsableOpen.gif"
+var collapsableClosedImg = "images/collapsableClosed.gif"
+function toggleCollapsable(id){
+var div = document.getElementById(id);
+var img = document.getElementById("img" + id);
+if(div.className.indexOf(collapsableClosedCss) != -1) {
+div.className = collapsableOpenCss;
+img.src = collapsableOpenImg;
+} else {
+div.className = collapsableClosedCss;
+img.src = collapsableClosedImg;
+} }
+</script>
+
+</head>
+<body>
+<div> Suite is: C:/Users/yair/GoodReading/Assignment3/Project_Code/Main_Program/AcceptanceTests/FitTests/SubmitReview.fit</div><div class="test_output_name">Name: SubmitReview.fit</div><div> Suite executed at: Thu Feb 02 22:30:56 IST 2017 Elapsed time: 359 millseconds  </div><table><tr><td></td><td><a href="#5fd7d91b:15a0085d85a:-8000">SubmitReview.fit</a></td><td class="error">0 right, 0 wrong, 0 ignored, 2 exceptions</td></tr></table><div class="test_output_name"><a name="5fd7d91b:15a0085d85a:-8000"/><p>Test file: SubmitReview.fit</p></div><html xmlns="http://www.w3.org/TR/REC-html40" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
 	<head>
 		<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
 		<meta content="Word.Document" name="ProgId" />
@@ -15,48 +37,74 @@
 				<span lang="EN-US" style="mso-ansi-language: EN-US;">SubmitReview&nbsp;Acceptance Test <o:p></o:p></span></p>
 			<p class="style1">
 				&nbsp;</p>
-			<table border="1" cellpadding="0" cellspacing="0" class="MsoNormalTable" style="width: 573.75pt; mso-cellspacing: 0cm; mso-padding-alt: 3.75pt 3.75pt 3.75pt 3.75pt;" width="765">
-				<tbody>
-					<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
-						<td colspan="3" style="padding: 3.75pt;">
+			<table border="1" cellspacing="0"><tr><td>
 							<p class="MsoNormal">
 								<span style="font-family: Arial;">fit.ActionFixture<o:p></o:p></span></p>
-						</td>
-					</tr>
-					<tr style="mso-yfti-irow: 1;">
-						<td style="padding: 3.75pt;">
+						</td></tr><tr><td class="error">
 							<p class="MsoNormal">
 								<span style="font-family: Arial;">start<o:p></o:p></span></p>
-						</td>
-						<td style="padding: 3.75pt;">
+						<hr><pre><div class="fit_stacktrace">java.lang.NoClassDefFoundError: util/GracefulNamer
+	at fit.FixtureName.<init>(FixtureName.java:18)
+	at fit.FixtureLoader.disgraceThenLoad(FixtureLoader.java:43)
+	at fit.Fixture.loadFixture(Fixture.java:147)
+	at fit.ActionFixture.start(ActionFixture.java:39)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at fit.ActionFixture.doCells(ActionFixture.java:26)
+	at fit.Fixture.doRow(Fixture.java:173)
+	at fit.Fixture.doRows(Fixture.java:167)
+	at fit.Fixture.doTable(Fixture.java:160)
+	at fitlibrary.traverse.FitHandler.doTable(FitHandler.java:18)
+	at fitlibrary.flow.DoFlowOnTable.runTable(DoFlowOnTable.java:110)
+	at fitlibrary.flow.DoFlowOnTable.runTable(DoFlowOnTable.java:56)
+	at fitlibrary.flow.DoFlow.runTable(DoFlow.java:104)
+	at fitlibrary.flow.DoFlow.runSingleTable(DoFlow.java:89)
+	at fitlibrary.flow.DoFlowWithExtraTableAddedWhenNeeded.runStorytest(DoFlowWithExtraTableAddedWhenNeeded.java:33)
+	at fitlibrary.suite.BatchFitLibrary.doTables(BatchFitLibrary.java:92)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.doTables(FitLibraryFitProvider.java:153)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.generateParseResult(FitLibraryFitProvider.java:96)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runSingleFITTest(FitLibraryFitProvider.java:78)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runValidTestFile(FitLibraryFitProvider.java:58)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runFIT(FitLibraryFitProvider.java:39)
+	at com.luxoft.fitpro.core.testcase.SequentialRunnerStrategy.run(SequentialRunnerStrategy.java:18)
+	at com.luxoft.fitpro.core.tester.RunnerVisitor.runTest(RunnerVisitor.java:59)
+	at com.luxoft.fitpro.core.tester.RunnerVisitor.visit(RunnerVisitor.java:51)
+	at com.luxoft.fitpro.core.testcase.TestFile.accept(TestFile.java:51)
+	at com.luxoft.fitpro.runner.TestCaseRunner.run(TestCaseRunner.java:100)
+	at com.luxoft.fitpro.runner.TestCaseRunner.main(TestCaseRunner.java:55)
+Caused by: java.lang.ClassNotFoundException: util.GracefulNamer
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	... 34 more
+</div></pre></td><td>
 							<p class="MsoNormal">
 								<span lang="EN-US" style="font-family: Arial; mso-ansi-language: EN-US;">Fixtures.SubmitReview</span></p>
-						</td>
-						<td style="padding: 3.75pt;">
+						</td><td>
 							<p class="MsoNormal">
 								<span lang="EN-US" style="font-family: Arial; mso-ansi-language: EN-US;">&nbsp;<o:p></o:p></span></p>
-						</td>
-					</tr>
-					<tr style="mso-yfti-irow: 2;">
-						<td style="padding: 3.75pt;">
+						</td></tr><tr><td class="error">
 							<p class="MsoNormal">
 								<font face="Arial">press</font></p>
-						</td>
-						<td style="padding: 3.75pt;">
+						<hr/> <span class="fit_label">You must start a fixture using the 'start' keyword.</span></td><td>
 							<p class="MsoNormal">
-								initialize</p>
-						</td>
-						<td style="padding: 3.75pt;">
+								Initialize</p>
+						</td><td>
 							<p class="MsoNormal">
 								&nbsp;</p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						</td></tr></table>
 			<p>
 				&nbsp;</p>
 			<p class="style1">
 				<span lang="EN-US" style="mso-ansi-language: EN-US;">Submit Review&nbsp;FIT Test &copy; 2004 Dr. Laurie Williams, Sarah Smith </span></p>
-		</div>
-	</body>
+		</div></body>
 </html>
+
+</body></html>
