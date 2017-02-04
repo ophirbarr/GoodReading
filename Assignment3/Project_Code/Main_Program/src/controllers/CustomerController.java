@@ -31,19 +31,24 @@ public class CustomerController {
 	 * Adds a new book review to the data base. This function is used by the server.
 	 * @param review The review to be added.
 	 */
-	public static void SubmitReview(BookReview review)
+	public static boolean SubmitReview(BookReview review)
 	{
-		PersistentSession session;
-		try {
-			session = GoodReadingPersistentManager.instance().getSession();
-			//----update book in database
-			PersistentTransaction t = session.beginTransaction();
-			session.save(review);
-			t.commit();
-			session.close();
-		} catch (PersistentException e) {
-			e.printStackTrace();
+		if(!(review.get_review().isEmpty()))
+		{
+			PersistentSession session;
+			try {
+				session = GoodReadingPersistentManager.instance().getSession();
+				//----update book in database
+				PersistentTransaction t = session.beginTransaction();
+				session.save(review);
+				t.commit();
+				session.close();
+			} catch (PersistentException e) {
+				e.printStackTrace();
+			}
+			return true;
 		}
+		return false;
 	}
 	
 	public static byte[] DownloadBook(String format, String paths)
